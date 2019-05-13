@@ -1,0 +1,8 @@
+version: '2'
+services:
+  eap-fast:
+    image: openea/fast
+    ports:
+      - "8080:8080"
+    environment:
+      - spring.profiles.active=dev
