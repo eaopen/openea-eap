@@ -11,6 +11,17 @@ CREATE TABLE `sys_menu` (
   PRIMARY KEY (`menu_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='菜单管理';
 
+
+-- 部门
+CREATE TABLE `sys_dept` (
+  `dept_id` bigint NOT NULL AUTO_INCREMENT,
+  `parent_id` bigint COMMENT '上级部门ID，一级部门为0',
+  `name` varchar(50) COMMENT '部门名称',
+  `order_num` int COMMENT '排序',
+  `del_flag` tinyint DEFAULT 0 COMMENT '是否删除  -1：已删除  0：正常',
+  PRIMARY KEY (`dept_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='部门管理';
+
 -- 系统用户
 CREATE TABLE `sys_user` (
   `user_id` bigint NOT NULL AUTO_INCREMENT,
@@ -70,6 +81,14 @@ CREATE TABLE `sys_role_menu` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色与菜单对应关系';
 
+-- 角色与部门对应关系
+CREATE TABLE `sys_role_dept` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `role_id` bigint COMMENT '角色ID',
+  `dept_id` bigint COMMENT '部门ID',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色与部门对应关系';
+
 -- 系统配置信息
 CREATE TABLE `sys_config` (
 	`id` bigint NOT NULL AUTO_INCREMENT,
@@ -81,6 +100,19 @@ CREATE TABLE `sys_config` (
 	UNIQUE INDEX (`param_key`)
 ) ENGINE=`InnoDB` DEFAULT CHARACTER SET utf8 COMMENT='系统配置信息表';
 
+-- 数据字典
+CREATE TABLE `sys_dict` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL COMMENT '字典名称',
+  `type` varchar(100) NOT NULL COMMENT '字典类型',
+  `code` varchar(100) NOT NULL COMMENT '字典码',
+  `value` varchar(1000) NOT NULL COMMENT '字典值',
+  `order_num` int DEFAULT 0 COMMENT '排序',
+  `remark` varchar(255) COMMENT '备注',
+  `del_flag` tinyint DEFAULT 0 COMMENT '删除标记  -1：已删除  0：正常',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY(`type`,`code`)
+) ENGINE=InnoDB DEFAULT CHARACTER SET utf8 COMMENT='数据字典表';
 
 -- 系统日志
 CREATE TABLE `sys_log` (

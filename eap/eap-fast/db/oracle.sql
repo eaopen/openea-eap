@@ -11,6 +11,16 @@ CREATE TABLE sys_menu (
   PRIMARY KEY (menu_id)
 );
 
+-- 部门
+CREATE TABLE sys_dept (
+  dept_id NUMBER(20, 0) NOT NULL,
+  parent_id NUMBER(20, 0) NOT NULL,
+  name varchar2(50),
+  order_num NUMBER(10, 0) NOT NULL,
+  del_flag NUMBER(2, 0) DEFAULT 0 NOT NULL,
+  PRIMARY KEY (dept_id)
+);
+
 -- 系统用户
 CREATE TABLE sys_user (
   user_id NUMBER(20, 0) NOT NULL,
@@ -70,6 +80,15 @@ CREATE TABLE sys_role_menu (
   PRIMARY KEY (id)
 );
 
+-- 角色与部门对应关系
+CREATE TABLE sys_role_dept (
+  id NUMBER(20, 0) NOT NULL,
+  role_id NUMBER(20, 0) NOT NULL,
+  dept_id NUMBER(20, 0) NOT NULL,
+  PRIMARY KEY (id)
+);
+
+
 -- 系统配置信息
 CREATE TABLE sys_config (
   id NUMBER(20, 0) NOT NULL,
@@ -81,6 +100,19 @@ CREATE TABLE sys_config (
 );
 CREATE UNIQUE INDEX index_param_key on sys_config(param_key);
 
+-- 数据字典
+CREATE TABLE sys_dict (
+  id NUMBER(20, 0) NOT NULL,
+  name varchar2(100) NOT NULL,
+  type varchar2(100) NOT NULL,
+  code varchar2(100) NOT NULL,
+  value varchar2(1000) NOT NULL,
+  order_num NUMBER(10, 0) DEFAULT 0 NOT NULL,
+  remark varchar2(255),
+  del_flag NUMBER(2, 0) DEFAULT 0 NOT NULL,
+  PRIMARY KEY (id)
+);
+CREATE UNIQUE INDEX index_type_code on sys_dict(type, code);
 
 -- 系统日志
 CREATE TABLE sys_log (

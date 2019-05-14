@@ -5,10 +5,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
 @SpringBootApplication
-public class EapApplication {
+public class EapFastApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(EapApplication.class, args);
+		SpringApplication.run(EapFastApplication.class, args);
 	}
 
 }

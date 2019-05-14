@@ -37,7 +37,7 @@ public class SwaggerConfig implements WebMvcConfigurer {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-            .title("Open EIP")
+            .title("Open EAP")
             .description("eap-fast文档")
             //.termsOfServiceUrl("")
             .version("3.0.0")

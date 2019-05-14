@@ -1,8 +1,8 @@
 swagger: '2.0'
 info:
-  description: eap-fast是一个轻量级的企业应用快速开发平台(Java)
+  description: eap-fast是一个轻量级的敏捷企业应用平台(Java)
   version: 1.0.0
-  title: 企业快速开发平台
+  title: 敏捷企业应用平台
 
 basePath: /eap-fast
 
