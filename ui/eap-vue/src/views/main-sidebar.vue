@@ -10,6 +10,12 @@
           <icon-svg name="shouye" class="site-sidebar__menu-icon"></icon-svg>
           <span slot="title">首页</span>
         </el-menu-item>
+        <sub-menu
+          v-for="menu in menuList"
+          :key="menu.menuId"
+          :menu="menu"
+          :dynamicMenuRoutes="dynamicMenuRoutes">
+        </sub-menu>
         <el-submenu index="demo">
           <template slot="title">
             <icon-svg name="shoucang" class="site-sidebar__menu-icon"></icon-svg>
@@ -24,12 +30,6 @@
             <span slot="title">ueditor</span>
           </el-menu-item>
         </el-submenu>
-        <sub-menu
-          v-for="menu in menuList"
-          :key="menu.menuId"
-          :menu="menu"
-          :dynamicMenuRoutes="dynamicMenuRoutes">
-        </sub-menu>
       </el-menu>
     </div>
   </aside>
