@@ -11,7 +11,6 @@ import java.util.Date;
 /**
  * 系统日志
  *
- * @author Mark sunlightcs@gmail.com
  */
 @Data
 @TableName("sys_log")

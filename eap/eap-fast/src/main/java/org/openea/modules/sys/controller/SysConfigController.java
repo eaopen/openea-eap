@@ -16,7 +16,6 @@ import java.util.Map;
 /**
  * 系统配置信息
  *
- * @author Mark sunlightcs@gmail.com
  */
 @RestController
 @RequestMapping("/sys/config")

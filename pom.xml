@@ -3,11 +3,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.openea.eap</groupId>
-    <artifactId>eip</artifactId>
+    <artifactId>eap-pom</artifactId>
     <packaging>pom</packaging>
     <version>1.0.0</version>
-    <name>eap</name>
-    <description>eap</description>
+    <name>eap-package</name>
+    <description>eap all</description>
 
     <modules>
         <!--
@@ -15,7 +15,7 @@
         <module>ui</module>
         -->
         <module>eap/eap-fast</module>
-        <module>dev/eap-generator</module>
+        <module>refer/jeecg-boot/jeecg-boot</module>
     </modules>
 
 </project>

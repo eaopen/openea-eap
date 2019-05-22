@@ -9,7 +9,6 @@ import org.apache.shiro.subject.Subject;
 /**
  * Shiro工具类
  *
- * @author Mark sunlightcs@gmail.com
  */
 public class ShiroUtils {
 

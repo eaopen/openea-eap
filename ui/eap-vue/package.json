@@ -1,7 +1,7 @@
 {
-  "name": "eip-fast-vue",
+  "name": "eap-fast-vue",
   "version": "1.2.2",
-  "description": "eip-fast-vue基于vue、element-ui构建开发，实现eip-fast后台管理前端功能，提供一套更优的前端解决方案。(base on renren-fast-vue, daxiong.yang <daxiong.yang@qq.com>)",
+  "description": "eap-fast-vue基于vue、element-ui构建开发，实现eip-fast后台管理前端功能，提供一套更优的前端解决方案。(base on renren-fast-vue, daxiong.yang <daxiong.yang@qq.com>)",
   "author": "",
   "private": true,
   "scripts": {

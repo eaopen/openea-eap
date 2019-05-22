@@ -15,7 +15,6 @@ import java.util.Map;
 /**
  * 定时任务
  *
- * @author Mark sunlightcs@gmail.com
  */
 @RestController
 @RequestMapping("/sys/schedule")

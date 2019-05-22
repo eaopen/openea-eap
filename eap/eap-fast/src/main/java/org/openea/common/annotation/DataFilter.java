@@ -5,7 +5,6 @@ import java.lang.annotation.*;
 /**
  * 数据过滤
  *
- * @author Mark sunlightcs@gmail.com
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)

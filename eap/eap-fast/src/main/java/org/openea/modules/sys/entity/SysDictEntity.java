@@ -11,7 +11,6 @@ import java.io.Serializable;
 /**
  * 数据字典
  *
- * @author Mark sunlightcs@gmail.com
  */
 @Data
 @TableName("sys_dict")

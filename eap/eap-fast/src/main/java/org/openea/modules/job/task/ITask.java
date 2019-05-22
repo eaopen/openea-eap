@@ -3,7 +3,6 @@ package org.openea.modules.job.task;
 /**
  * 定时任务接口，所有定时任务都要实现该接口
  *
- * @author Mark sunlightcs@gmail.com
  */
 public interface ITask {
 

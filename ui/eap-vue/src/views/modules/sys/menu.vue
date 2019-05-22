@@ -17,6 +17,7 @@
         min-width="150"
         label="名称" >
       </el-table-column>
+      <!--
       <el-table-column
         prop="parentName"
         header-align="center"
@@ -24,6 +25,7 @@
         width="120"
         label="上级菜单">
       </el-table-column>
+      -->
       <el-table-column
         header-align="center"
         align="center"

@@ -19,7 +19,6 @@ import java.lang.reflect.Method;
 /**
  * 多数据源，切面处理类
  *
- * @author Mark sunlightcs@gmail.com
  */
 @Aspect
 @Component

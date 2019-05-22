@@ -8,7 +8,6 @@ import org.openea.modules.app.form.LoginForm;
 /**
  * 用户
  *
- * @author Mark sunlightcs@gmail.com
  */
 public interface UserService extends IService<UserEntity> {
 

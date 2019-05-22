@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * 测试多数据源
  *
- * @author Mark sunlightcs@gmail.com
  */
 @Service
 //@DataSource("slave1")

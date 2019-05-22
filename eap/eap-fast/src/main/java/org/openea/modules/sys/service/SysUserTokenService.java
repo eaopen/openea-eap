@@ -7,7 +7,6 @@ import org.openea.modules.sys.entity.SysUserTokenEntity;
 /**
  * 用户Token
  *
- * @author Mark sunlightcs@gmail.com
  */
 public interface SysUserTokenService extends IService<SysUserTokenEntity> {
 
