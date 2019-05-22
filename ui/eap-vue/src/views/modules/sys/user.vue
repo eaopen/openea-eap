@@ -36,6 +36,12 @@
         label="用户名">
       </el-table-column>
       <el-table-column
+        prop="deptName"
+        header-align="center"
+        align="center"
+        label="所属部门">
+      </el-table-column>
+      <el-table-column
         prop="email"
         header-align="center"
         align="center"

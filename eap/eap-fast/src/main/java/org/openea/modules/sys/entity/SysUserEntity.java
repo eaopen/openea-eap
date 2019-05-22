@@ -35,6 +35,14 @@ public class SysUserEntity implements Serializable {
 	private String username;
 
 	/**
+	 * 所属部门
+	 */
+	private Long deptId;
+
+	//@TableField(exist=false)
+	private String deptName;
+
+	/**
 	 * 密码
 	 */
 	@NotBlank(message="密码不能为空", groups = AddGroup.class)
