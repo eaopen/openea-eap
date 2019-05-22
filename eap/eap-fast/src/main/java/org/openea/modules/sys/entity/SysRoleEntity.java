@@ -41,8 +41,13 @@ public class SysRoleEntity implements Serializable {
 	 */
 	private Long createUserId;
 
+
 	@TableField(exist=false)
 	private List<Long> menuIdList;
+
+
+	@TableField(exist=false)
+	private List<Long> deptIdList;
 	
 	/**
 	 * 创建时间

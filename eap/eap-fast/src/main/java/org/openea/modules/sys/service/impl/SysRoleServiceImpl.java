@@ -9,10 +9,7 @@ import org.openea.common.utils.PageUtils;
 import org.openea.common.utils.Query;
 import org.openea.modules.sys.dao.SysRoleDao;
 import org.openea.modules.sys.entity.SysRoleEntity;
-import org.openea.modules.sys.service.SysRoleMenuService;
-import org.openea.modules.sys.service.SysRoleService;
-import org.openea.modules.sys.service.SysUserRoleService;
-import org.openea.modules.sys.service.SysUserService;
+import org.openea.modules.sys.service.*;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,6 +28,8 @@ import java.util.Map;
 public class SysRoleServiceImpl extends ServiceImpl<SysRoleDao, SysRoleEntity> implements SysRoleService {
 	@Autowired
 	private SysRoleMenuService sysRoleMenuService;
+	@Autowired
+	private SysRoleDeptService sysRoleDeptService;
 	@Autowired
 	private SysUserService sysUserService;
     @Autowired
@@ -62,6 +61,9 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleDao, SysRoleEntity> i
 
         //保存角色与菜单关系
         sysRoleMenuService.saveOrUpdate(role.getRoleId(), role.getMenuIdList());
+
+        //保存角色与部门关系
+		sysRoleDeptService.saveOrUpdate(role.getRoleId(), role.getDeptIdList());
     }
 
     @Override
@@ -74,6 +76,9 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleDao, SysRoleEntity> i
 
         //更新角色与菜单关系
         sysRoleMenuService.saveOrUpdate(role.getRoleId(), role.getMenuIdList());
+
+		//更新角色与部门关系
+		sysRoleDeptService.saveOrUpdate(role.getRoleId(), role.getDeptIdList());
     }
 
     @Override
@@ -87,6 +92,9 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleDao, SysRoleEntity> i
 
         //删除角色与用户关联
         sysUserRoleService.deleteBatch(roleIds);
+
+        //删除角色与部门关联
+		sysRoleDeptService.deleteBatch(roleIds);
     }
 
 

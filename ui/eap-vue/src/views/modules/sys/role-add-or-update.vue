@@ -10,16 +10,33 @@
       <el-form-item label="备注" prop="remark">
         <el-input v-model="dataForm.remark" placeholder="备注"></el-input>
       </el-form-item>
-      <el-form-item size="mini" label="授权">
-        <el-tree
-          :data="menuList"
-          :props="menuListTreeProps"
-          node-key="menuId"
-          ref="menuListTree"
-          :default-expand-all="true"
-          show-checkbox>
-        </el-tree>
-      </el-form-item>
+      <el-row>
+        <el-col :span="12">
+          <el-form-item size="mini" label="菜单授权">
+            <el-tree
+              :data="menuList"
+              :props="menuListTreeProps"
+              node-key="menuId"
+              ref="menuListTree"
+              :default-expand-all="true"
+              show-checkbox>
+            </el-tree>
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item size="mini" label="数据授权">
+            <el-tree
+              :data="deptList"
+              :props="deptListTreeProps"
+              node-key="deptId"
+              ref="deptListTree"
+              :default-expand-all="true"
+              show-checkbox>
+            </el-tree>
+          </el-form-item>
+        </el-col>
+      </el-row>
+
     </el-form>
     <span slot="footer" class="dialog-footer">
       <el-button @click="visible = false">取消</el-button>
@@ -36,6 +53,11 @@
         visible: false,
         menuList: [],
         menuListTreeProps: {
+          label: 'name',
+          children: 'children'
+        },
+        deptList: [],
+        deptListTreeProps: {
           label: 'name',
           children: 'children'
         },
@@ -61,11 +83,21 @@
           params: this.$http.adornParams()
         }).then(({data}) => {
           this.menuList = treeDataTranslate(data, 'menuId')
-        }).then(() => {
+        }).then(()=>{
+          this.$http({
+            url: this.$http.adornUrl('/sys/dept/list'),
+            method: 'get',
+            params: this.$http.adornParams()
+          }).then(({data}) => {
+            this.deptList = treeDataTranslate(data, 'deptId')
+          })
+        }
+        ).then(() => {
           this.visible = true
           this.$nextTick(() => {
             this.$refs['dataForm'].resetFields()
             this.$refs.menuListTree.setCheckedKeys([])
+            this.$refs.deptListTree.setCheckedKeys([])
           })
         }).then(() => {
           if (this.dataForm.id) {
@@ -77,11 +109,19 @@
               if (data && data.code === 0) {
                 this.dataForm.roleName = data.role.roleName
                 this.dataForm.remark = data.role.remark
+
                 var idx = data.role.menuIdList.indexOf(this.tempKey)
                 if (idx !== -1) {
                   data.role.menuIdList.splice(idx, data.role.menuIdList.length - idx)
                 }
                 this.$refs.menuListTree.setCheckedKeys(data.role.menuIdList)
+
+                var idx2 = data.role.deptIdList.indexOf(this.tempKey)
+                if (idx2 !== -1) {
+                  data.role.deptIdList.splice(idx2, data.role.deptIdList.length - idx2)
+                }
+                this.$refs.deptListTree.setCheckedKeys(data.role.deptIdList)
+
               }
             })
           }
@@ -98,7 +138,8 @@
                 'roleId': this.dataForm.id || undefined,
                 'roleName': this.dataForm.roleName,
                 'remark': this.dataForm.remark,
-                'menuIdList': [].concat(this.$refs.menuListTree.getCheckedKeys(), [this.tempKey], this.$refs.menuListTree.getHalfCheckedKeys())
+                'menuIdList': [].concat(this.$refs.menuListTree.getCheckedKeys(), [this.tempKey], this.$refs.menuListTree.getHalfCheckedKeys()),
+                'deptIdList': [].concat(this.$refs.deptListTree.getCheckedKeys(), [this.tempKey], this.$refs.deptListTree.getHalfCheckedKeys())
               })
             }).then(({data}) => {
               if (data && data.code === 0) {

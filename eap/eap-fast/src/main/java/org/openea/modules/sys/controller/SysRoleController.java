@@ -6,6 +6,7 @@ import org.openea.common.utils.PageUtils;
 import org.openea.common.utils.R;
 import org.openea.common.validator.ValidatorUtils;
 import org.openea.modules.sys.entity.SysRoleEntity;
+import org.openea.modules.sys.service.SysRoleDeptService;
 import org.openea.modules.sys.service.SysRoleMenuService;
 import org.openea.modules.sys.service.SysRoleService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -25,8 +26,12 @@ import java.util.Map;
 public class SysRoleController extends AbstractController {
 	@Autowired
 	private SysRoleService sysRoleService;
+
 	@Autowired
 	private SysRoleMenuService sysRoleMenuService;
+
+	@Autowired
+	private SysRoleDeptService sysRoleDeptService;
 
 	/**
 	 * 角色列表
@@ -72,6 +77,11 @@ public class SysRoleController extends AbstractController {
 		//查询角色对应的菜单
 		List<Long> menuIdList = sysRoleMenuService.queryMenuIdList(roleId);
 		role.setMenuIdList(menuIdList);
+
+		//查询角色对应的部门
+		List<Long> deptIdList = sysRoleDeptService.queryDeptIdList(new Long[]{roleId});
+		role.setDeptIdList(deptIdList);
+
 		
 		return R.ok().put("role", role);
 	}

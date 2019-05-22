@@ -32,7 +32,12 @@ public class SysDeptController extends AbstractController {
 	@RequiresPermissions("sys:dept:list")
 	public List<SysDeptEntity> list(){
 		List<SysDeptEntity> deptList = sysDeptService.queryList(new HashMap<String, Object>());
-
+//		for(SysDeptEntity sysDeptEntity : deptList){
+//			SysDeptEntity parentDeptEntity = sysDeptService.getById(sysDeptEntity.getParentId());
+//			if(parentDeptEntity != null){
+//				sysDeptEntity.setParentName(parentDeptEntity.getName());
+//			}
+//		}
 		return deptList;
 	}
 
