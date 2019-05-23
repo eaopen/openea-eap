@@ -83,7 +83,7 @@
           params: this.$http.adornParams()
         }).then(({data}) => {
           this.menuList = treeDataTranslate(data, 'menuId')
-        }).then(()=>{
+        }).then(() => {
           this.$http({
             url: this.$http.adornUrl('/sys/dept/list'),
             method: 'get',
@@ -109,19 +109,18 @@
               if (data && data.code === 0) {
                 this.dataForm.roleName = data.role.roleName
                 this.dataForm.remark = data.role.remark
-
+                // menu list
                 var idx = data.role.menuIdList.indexOf(this.tempKey)
                 if (idx !== -1) {
                   data.role.menuIdList.splice(idx, data.role.menuIdList.length - idx)
                 }
                 this.$refs.menuListTree.setCheckedKeys(data.role.menuIdList)
-
+                // dept list
                 var idx2 = data.role.deptIdList.indexOf(this.tempKey)
                 if (idx2 !== -1) {
                   data.role.deptIdList.splice(idx2, data.role.deptIdList.length - idx2)
                 }
                 this.$refs.deptListTree.setCheckedKeys(data.role.deptIdList)
-
               }
             })
           }
