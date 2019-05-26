@@ -6,7 +6,7 @@
     <artifactId>eap-pom</artifactId>
     <packaging>pom</packaging>
     <version>1.0.0</version>
-    <name>eap-package</name>
+    <name>eap-pom</name>
     <description>eap all</description>
 
     <modules>

@@ -1,7 +1,7 @@
-FROM java:8
-EXPOSE 8080
-
+FROM openjdk:8-jdk-alpine
 VOLUME /tmp
-ADD eap-fast.jar  /app.jar
-RUN bash -c 'touch /app.jar'
-ENTRYPOINT ["java","-jar","/app.jar"]
+ARG JAR_FILE
+ARG PORT
+ENV port ${PORT}
+COPY ${JAR_FILE} app.jar
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","-Dspring.profiles.active=${SPRING_PROFILES_ACTIVE}","/app.jar"]

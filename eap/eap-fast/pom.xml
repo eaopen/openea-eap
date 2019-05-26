@@ -42,7 +42,7 @@
 		<lombok.version>1.18.8</lombok.version>
 
 		<!--wagon plugin 配置-->
-		<service-path>/work/renren</service-path>
+		<service-path>/work/eap</service-path>
 		<pack-name>${project.artifactId}-${project.version}.jar</pack-name>
 		<remote-addr>192.168.1.10:22</remote-addr>
 		<remote-username>root</remote-username>
@@ -268,8 +268,8 @@
 					<commands>
 						<!-- Kill Old Process -->
 						<command>kill -9 `ps -ef |grep ${project.artifactId}.jar|grep -v "grep" |awk '{print $2}'`</command>
-						<!-- Restart jar package，write result into renren.log -->
-						<command><![CDATA[nohup java -jar ${service-path}/${pack-name} --spring.profiles.active=test > ${service-path}/renren.log 2>&1 & ]]></command>
+						<!-- Restart jar package，write result into eap.log -->
+						<command><![CDATA[nohup java -jar ${service-path}/${pack-name} --spring.profiles.active=test > ${service-path}/eap.log 2>&1 & ]]></command>
 						<command><![CDATA[netstat -nptl]]></command>
 						<command><![CDATA[ps -ef | grep java | grep -v grep]]></command>
 					</commands>
@@ -291,7 +291,7 @@
 					<!--</execution>-->
 				<!--</executions>-->
 				<configuration>
-					<imageName>openea/fast</imageName>
+					<imageName>openea/eap-fast</imageName>
 					<dockerDirectory>${project.basedir}</dockerDirectory>
 					<resources>
 						<resource>

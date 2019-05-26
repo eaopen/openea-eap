@@ -37,7 +37,7 @@ eap-fast
 │  ├─oss 文件服务模块
 │  └─sys 权限模块
 │ 
-├─RenrenApplication 项目启动类
+├─EapFastApplication 项目启动类
 │  
 ├──resources 
 │  ├─mapper SQL对应的XML文件
@@ -61,10 +61,10 @@ eap-fast
  **后端部署**
 - 通过git下载源码
 - idea、eclipse需安装lombok插件，不然会提示找不到entity的get set方法
-- 创建数据库renren_fast，数据库编码为UTF-8
+- 创建数据库eap_fast，数据库编码为UTF-8
 - 执行db/mysql.sql文件，初始化数据
 - 修改application-dev.yml，更新MySQL账号和密码
-- Eclipse、IDEA运行RenrenApplication.java，则可启动项目
+- Eclipse、IDEA运行EapFastApplication.java，则可启动项目
 - Swagger文档路径：http://localhost:8080/eap-fast/swagger/index.html
 - Swagger注解路径：http://localhost:8080/eap-fast/swagger-ui.html
 

@@ -3,8 +3,8 @@ spring:
         type: com.alibaba.druid.pool.DruidDataSource
         druid:
             driver-class-name: com.mysql.jdbc.Driver
-            url: jdbc:mysql://localhost:3306/renren_fast?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false
-            username: renren
+            url: jdbc:mysql://localhost:3306/eap_fast?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false
+            username:eap
             password: 123456
             initial-size: 10
             max-active: 100
@@ -39,11 +39,11 @@ spring:
 #  datasource:
 #    slave1:
 #      driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
-#      url: jdbc:sqlserver://localhost:1433;DatabaseName=renren_security
+#      url: jdbc:sqlserver://localhost:1433;DatabaseName=eap_security
 #      username: sa
 #      password: 123456
 #    slave2:
 #      driver-class-name: org.postgresql.Driver
-#      url: jdbc:postgresql://localhost:5432/renren_security
-#      username: renren
+#      url: jdbc:postgresql://localhost:5432/eap_security
+#      username:eap
 #      password: 123456
