@@ -1,0 +1,41 @@
+version: '3'
+networks:
+  net-openea:
+
+services:
+  consul-server1:
+    image: consul
+    container_name: consul-server1
+    command: agent -server -bootstrap-expect=3 -node=consul-server1 -bind=0.0.0.0 -client=0.0.0.0 -datacenter=dc1
+    networks:
+      - net-openea
+
+  consul-server2:
+    image: consul
+    container_name: consul-server2
+    command: agent -server -retry-join=consul-server1 -node=consul-server2 -bind=0.0.0.0 -client=0.0.0.0 -datacenter=dc1
+    depends_on:
+      - consul-server1
+    networks:
+      - net-openea
+
+  consul-server3:
+    image: consul
+    container_name: consul-server3
+    command: agent -server -retry-join=consul-server1 -node=consul-server3 -bind=0.0.0.0 -client=0.0.0.0 -datacenter=dc1
+    depends_on:
+      - consul-server1
+    networks:
+      - net-openea
+
+  consul-ui:
+    image: consul
+    container_name: consul-ui
+    command: agent -retry-join=consul-server1 -node=consul-ui -bind=0.0.0.0 -client=0.0.0.0 -datacenter=dc1 -ui
+    ports:
+      - 8500:8500
+    depends_on:
+      - consul-server2
+      - consul-server3
+    networks:
+      - net-openea

@@ -2,7 +2,7 @@ version: '2'
 services:
   eap-fast:
     #image: openea/eap-fast
-    build: ../eap/eap-fast
+    build: ../../eap/eap-fast
     ports:
       - "7010:8080"
     environment:
@@ -14,4 +14,5 @@ services:
       io.rancher.project.name: eap-demo
       io.rancher.container.hostname_override: container_name
   eap-vue:
+    build: ../../ui/eap-vue
 
