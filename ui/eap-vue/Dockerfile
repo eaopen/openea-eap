@@ -1,13 +1,12 @@
-FROM node:10.15.1-alpine
-MAINTAINER openbea
-#移动当前目录下面的文件到app目录下
-ADD ./dist /app/
-#进入到app目录下面，类似cd
+FROM node:10 as builder
+ADD . /app/
 WORKDIR /app
-#安装依赖
-RUN npm config set unsafe-perm true
-RUN npm install -g serve
-#对外暴露的端口
-EXPOSE 8001
-#程序启动脚本
-ENTRYPOINT ["serve","-s", "."]
+RUN npm config set unsafe-perm true  && \
+    npm config set registry https://registry.npm.taobao.org  && \
+    npm install node-sass@latest && \
+    npm install  && \
+    npm run build
+
+FROM nginx:1.15-alpine
+WORKDIR /app
+COPY --from=builder /app/dist /usr/share/nginx/html

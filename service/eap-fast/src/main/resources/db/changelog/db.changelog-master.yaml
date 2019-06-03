@@ -1,0 +1,11 @@
+databaseChangeLog:
+  - changeSet:
+      id: 10
+      author: OpenEA
+      preConditions:
+        - dbms:
+            type: mysql
+      changes:
+        - sqlFile:
+            encoding: utf8
+            path: classpath:db/mysql/mysql.sql

@@ -5,7 +5,8 @@
   window.SITE_CONFIG = {};
 
   // api接口请求地址
-  window.SITE_CONFIG['baseUrl'] = 'http://localhost:7080/eap-fast';
+  //window.SITE_CONFIG['baseUrl'] = 'http://localhost:7080/eap-fast';
+  window.SITE_CONFIG['baseUrl'] = 'http://eap-fast:8080';
 
   // cdn地址 = 域名 + 版本号
   window.SITE_CONFIG['domain']  = './'; // 域名

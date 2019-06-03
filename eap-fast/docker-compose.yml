@@ -1,0 +1,56 @@
+version: '3'
+
+services:
+  eap-fast:
+    image: eap-fast
+    #build:
+    #  context: ../service/eap-fast
+    #  dockerfile: Dockerfile
+    container_name: eap-fast
+    #ports:
+    #- 8080:8080
+    environment:
+      - spring.profiles.active=test
+    depends_on:
+      - eap-mysql
+      - eap-redis
+    links:
+      - eap-mysql:mysql
+      - eap-redis:redis
+  eap-vue:
+    image: eap-vue
+    #build:
+    #  context: ../ui/eap-vue
+    #  dockerfile: Dockerfile
+    container_name: eap-vue
+    ports:
+      - 8001:80
+    depends_on:
+      - eap-fast
+    links:
+      - eap-fast
+  eap-mysql:
+    image: mysql/mysql-server:5.7
+    container_name: eap-mysql
+    environment:
+      - TZ=Asia/Shanghai
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_ROOT_HOST="%"
+      - MYSQL_DATABASE=eap_fast
+    command:
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_general_ci
+      --explicit_defaults_for_timestamp=true
+      #--lower_case_table_names=1
+      --max_allowed_packet=128M
+      --sql-mode="STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION,NO_ZERO_DATE,NO_ZERO_IN_DATE,ERROR_FOR_DIVISION_BY_ZERO"
+    volumes:
+      - eap-mysql-data:/var/lib/mysql
+  eap-redis:
+    image: redis:5
+    container_name: eap-redis
+    volumes:
+      - eap-redis-data:/data
+volumes:
+  eap-mysql-data:
+  eap-redis-data:

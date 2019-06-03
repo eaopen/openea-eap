@@ -3,8 +3,8 @@
     <div class="site-content__wrapper">
       <div class="site-content">
         <div class="brand-info">
-          <h2 class="brand-info__text">Agile EAP</h2>
-          <p class="brand-info__intro">敏捷企业应用平台</p>
+          <h2 class="brand-info__text">OpenEA EAP</h2>
+          <p class="brand-info__intro">开放企业应用平台</p>
         </div>
         <div class="login-main">
           <h3 class="login-title">用户登录</h3>

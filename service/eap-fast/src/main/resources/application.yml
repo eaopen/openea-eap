@@ -7,7 +7,7 @@ server:
   port: 7080
   connection-timeout: 5000ms
   servlet:
-    context-path: /eap-fast
+    context-path: /
 
 spring:
   # 环境 dev|test|prod
@@ -32,11 +32,14 @@ spring:
     jedis:
       pool:
         max-active: 1000  # 连接池最大连接数（使用负值表示没有限制）
-        max-wait: -1ms      # 连接池最大阻塞等待时间（使用负值表示没有限制）
+        max-wait: -1ms    # 连接池最大阻塞等待时间（使用负值表示没有限制）
         max-idle: 10      # 连接池中的最大空闲连接
         min-idle: 5       # 连接池中的最小空闲连接
   mvc:
     throw-exception-if-no-handler-found: true
+  liquibase:
+    enabled: true
+    change-log: classpath:/db/changelog/db.changelog-master.yaml
 #  resources:
 #    add-mappings: false
 

@@ -12,7 +12,7 @@
 ### 开发
 ```bash
 # 克隆项目
-git clone https://github.com/openea/open-eap.git
+git clone https://github.com/openea-eap.git
 cd ./ui/eap-vue
 
 # 安装依赖

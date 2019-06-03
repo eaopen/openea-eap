@@ -14,7 +14,8 @@
         <module>eip</module>
         <module>ui</module>
         -->
-        <module>eap/eap-fast</module>
+        <module>service/eap-fast</module>
+        <module>eap-cloud/oauth</module>
         <module>refer/jeecg-boot/jeecg-boot</module>
     </modules>
 
