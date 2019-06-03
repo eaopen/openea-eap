@@ -9,6 +9,20 @@
 
 前后端分离的企业应用管理后台
 
+```
+cd eap-fast
+docker-compose up -d 
+```
+运行前需要执行创建image脚本
+```
+# eap-fast
+sh ./service/eap-fast/buid-eap-fast-image.sh
+
+# eap-vue
+
+sh ./ui/eap-vue/buid-eap-vue-image.sh
+```
+
 * 微服务版 eap-cloud
 
 基础版增加微服务框架以及OAuth2认证
