@@ -2,6 +2,7 @@ package org.openea.modules.job.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 
 import javax.sql.DataSource;
@@ -15,6 +16,7 @@ import java.util.Properties;
 public class ScheduleConfig {
 
     @Bean
+    @DependsOn("liquibase")
     public SchedulerFactoryBean schedulerFactoryBean(DataSource dataSource) {
         SchedulerFactoryBean factory = new SchedulerFactoryBean();
         factory.setDataSource(dataSource);
@@ -50,8 +52,8 @@ public class ScheduleConfig {
         //可选，QuartzScheduler 启动时更新己存在的Job，这样就不用每次修改targetObject后删除qrtz_job_details表对应记录了
         factory.setOverwriteExistingJobs(true);
         //设置自动启动，默认为true
-        //factory.setAutoStartup(true);
-        factory.setAutoStartup(false);
+        factory.setAutoStartup(true);
+        //factory.setAutoStartup(false);
 
         return factory;
     }
