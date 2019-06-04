@@ -1,16 +1,7 @@
 #!/usr/bin/env bash
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd ${DIR}
-# test on node 10 and node 12 is not work
-node -v
-npm config set unsafe-perm true
-npm config set registry https://registry.npm.taobao.org
-npm install node-sass@latest
-npm install
-#npm audit fix
-npm run build
-
-docker build -t eap-vue:latest  -f ./Dockerfile .
+docker build -t eap-vue:latest  -f ./Dockerfile_builder .
 if [ ! -d "target" ];then
   mkdir target
 fi

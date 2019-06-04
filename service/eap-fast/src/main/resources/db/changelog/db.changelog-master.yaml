@@ -8,4 +8,10 @@ databaseChangeLog:
       changes:
         - sqlFile:
             encoding: utf8
-            path: classpath:db/mysql/mysql.sql
+            path: classpath:db/mysql/sys.sql
+        - sqlFile:
+            encoding: utf8
+            path: classpath:db/mysql/schedule.sql
+        - sqlFile:
+            encoding: utf8
+            path: classpath:db/mysql/oss.sql

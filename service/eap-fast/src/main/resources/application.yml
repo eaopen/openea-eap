@@ -22,6 +22,14 @@ spring:
       max-file-size: 100MB
       max-request-size: 100MB
       enabled: true
+  liquibase:
+    enabled: true
+    change-log: classpath:/db/changelog/db.changelog-master.yaml
+    drop-first: false
+  data:
+    redis:
+      repositories:
+        enabled: false
   redis:
     open: false  # 是否开启redis缓存  true开启   false关闭
     database: 0
@@ -37,12 +45,11 @@ spring:
         min-idle: 5       # 连接池中的最小空闲连接
   mvc:
     throw-exception-if-no-handler-found: true
-  liquibase:
-    enabled: true
-    change-log: classpath:/db/changelog/db.changelog-master.yaml
+
 #  resources:
 #    add-mappings: false
-
+#liquibase:
+#  path: classpath:/db/changelog/db.changelog-master.yaml
 
 #mybatis
 mybatis-plus:
@@ -69,7 +76,7 @@ mybatis-plus:
     jdbc-type-for-null: 'null'
 
 eap:
-  datasource: mysql
+  #datasource: mysql
   redis:
     open: false
   shiro:
