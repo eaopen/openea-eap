@@ -15,8 +15,9 @@
         <module>ui</module>
         -->
         <module>service/eap-fast</module>
-        <module>eap-cloud/oauth</module>
+        <!--
         <module>refer/jeecg-boot/jeecg-boot</module>
+        -->
     </modules>
 
 </project>

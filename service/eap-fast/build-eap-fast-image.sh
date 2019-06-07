@@ -11,6 +11,6 @@ cd ..
 mkdir -p target/dependency
 (cd target/dependency; jar -xf ../*.jar)
 
-docker build --build-arg JAR_FILE=target/*.jar --build-arg PORT=${port} -t ${artifactId}:latest -f ./Dockerfile .
-docker save -o ./target/${artifactId}-latest-image.tar ${artifactId}:latest
+sudo docker build --build-arg JAR_FILE=target/*.jar --build-arg PORT=${port} -t ${artifactId}:latest -f ./Dockerfile .
+sudo docker save -o ./target/${artifactId}-latest-image.tar ${artifactId}:latest
 echo "${artifactId}:latest镜像构建成功,已导出到target目录"

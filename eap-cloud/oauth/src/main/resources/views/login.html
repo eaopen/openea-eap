@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${loginPageTitle}">登录</title>
+</head>
+
+<style>
+    .login-container {
+        margin: 0px;
+        width: 100%;
+    }
+
+    .form-container {
+        margin: 0px auto;
+        width: 50%;
+        max-width: 400px;
+        min-width: 300px;
+        text-align: center;
+        height: 350px;
+        padding-top: 50px;
+    }
+
+    input {
+        margin: 10px 0;
+        width: 100%;
+        height: 40px;
+        border: 1px #d2d2d2 solid;
+        padding: 0 10px;
+        box-sizing: border-box;
+        font-size: 14px;
+        outline: none;
+    }
+
+    input:focus {
+        outline: none;
+        border: 1px solid #0052cc;
+        -webkit-transition: none;
+        -moz-transition: none;
+        -o-transition: none;
+        transition: none;
+        -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3);
+        -moz-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3);
+        box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3);
+    }
+
+    input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
+        color: #777777;
+    }
+
+    input:-moz-placeholder, textarea:-moz-placeholder {
+        color: #777777;
+    }
+
+    input::-moz-placeholder, textarea::-moz-placeholder {
+        color: #777777;
+    }
+
+    input:-ms-input-placeholder, textarea:-ms-input-placeholder {
+        color: #777777;
+    }
+
+    .btn {
+        width: 100%;
+        height: 40px;
+        font-size: 14px;
+        cursor: pointer;
+        margin-top: 20px;
+        border-radius: 3px;
+        background-color: #06f;
+        color: white;
+        border: none;
+        outline: none;
+    }
+
+    .btn:hover {
+        background-color: #055de2;
+        border: 1px solid #055de2;
+    }
+
+    .title {
+        font-size: 24px;
+        color: #000;
+        margin-bottom: 40px;
+        font-weight: 500;
+        letter-spacing: 0;
+    }
+</style>
+<body>
+<div class="login-container">
+    <div class="form-container">
+        <p class="title" th:text="${loginPageTitle}">EAP统一认证中心</p>
+        <form name="loginForm" method="post" th:action="${loginProcessUrl}">
+            <div>
+                <input type="text" name="username" placeholder="请输入用户名"/>
+            </div>
+            <div>
+                <input type="password" name="password" placeholder="请输入密码"/>
+            </div>
+            <button type="submit" class="btn">登    录</button>
+        </form>
+        <p style="color: red;font-size: 13px;" th:if="${param.error}">用户名或密码错误</p>
+    </div>
+</div>
+</body>
+</html>

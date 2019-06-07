@@ -5,7 +5,7 @@ https://mirror.tuna.tsinghua.edu.cn/alpine/v3.4/community" > /etc/apk/repositori
 RUN apk --update add curl bash ttf-dejavu && \
       rm -rf /var/cache/apk/*
 VOLUME /tmp
-ARG DEPENDENCY=target/dependency
+ARG DEPENDENCY=./target/dependency
 COPY ${DEPENDENCY}/BOOT-INF/lib /app/lib
 COPY ${DEPENDENCY}/META-INF /app/META-INF
 COPY ${DEPENDENCY}/BOOT-INF/classes /app

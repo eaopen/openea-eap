@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.openea.eap.cloud.gateway.dao.SecureDao" >
+  <select id="listByUserName" parameterType="string" resultType="string">
+    SELECT M.API
+    FROM GE_AUTHORITY M
+           LEFT JOIN GE_ROLE_AUTHORITY RP ON M.ID = RP.AUTHORITY_ID
+           LEFT JOIN GE_ROLE R ON RP.ROLE_ID = R.ID
+           LEFT JOIN GE_USER_ROLE UR ON UR.ROLE_ID = R.ID
+           LEFT JOIN GE_USER U ON U.ID = UR.USER_ID
+    WHERE 1 = 1 AND M.API IS NOT NULL and U.CODE=#{value}
+  </select>
+</mapper>
