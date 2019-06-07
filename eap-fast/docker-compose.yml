@@ -1,12 +1,12 @@
 version: '3'
 
 services:
-  eap-vue:
-    image: eap-vue
+  eap-admin-vue:
+    image: eap-admin-vue
     #build:
-    #  context: ../ui/eap-vue
+    #  context: ../ui/eap-admin-vue
     #  dockerfile: Dockerfile
-    container_name: eap-vue
+    container_name: eap-admin-vue
     ports:
       - 8001:80
     depends_on:

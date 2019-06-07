@@ -5,7 +5,7 @@
 
 ## solution解决方案
 
-* 基础版 eap-fast
+### 基础版 eap-fast
 
 前后端分离的企业应用管理后台
 
@@ -18,18 +18,25 @@ docker-compose up -d
 # eap-fast
 sh ./service/eap-fast/buid-eap-fast-image.sh
 
-# eap-vue
+# eap-admin-vue
 
-sh ./ui/eap-vue/buid-eap-vue-image.sh
+sh ./ui/eap-admin-vue/buid-eap-admin-vue-image.sh
 ```
 
-* 微服务版 eap-cloud
+### 微服务版 eap-cloud
 
 基础版增加微服务框架以及OAuth2认证
 
-* bpm集成版 eap-bpm
+* oauth  认证服务(OAuth2+JWT)
+
+* gateway 服务网关(spring cloud gateway)
+
+
+### bpm集成版 eap-bpm
 
 在微服务版之上集成工作流相关内容
+
+
 
 # 企业应用平台主要模块
 
@@ -38,20 +45,29 @@ sh ./ui/eap-vue/buid-eap-vue-image.sh
 
 * eap-fast 企业应用管理Admin
 
+组织人员角色
+
+菜单及权限
+
 ## ui - eap前端UI
 
-企业应用接触平台的前端部分
+企业应用接触平台的前端部分，默认选择eap-admin-vue
 
-* eap-vue VUE版本的eap-fast前端功能
+* eap-admin-vue 
+
+VUE版本的eap-fast前端功能(基于renren-fast-vue)
+
+* eap-admin-iview
+
+基于iview-admin改进版本（未完成）
+
+* eap-admin-element
+
+基于vue-element-admin改进版本(未完成)
 
 ## support - 支持内容 
 
 * eap-generator 代码生成工具
-
-* auth  认证服务(OAuth2+JWT)
-
-* gateway 服务网关(spring cloud gateway)
-
 
 
 # 参考项目 refer
