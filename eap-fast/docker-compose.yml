@@ -1,59 +1,53 @@
 version: '3'
+networks:
+  net-openea:
 
 services:
   eap-admin-vue:
-    image: eap-admin-vue
-    #build:
-    #  context: ../ui/eap-admin-vue
-    #  dockerfile: Dockerfile
-    container_name: eap-admin-vue
+    image: szopen/eap-fast-vue:1.0.0
+    container_name: eap-fast-vue
     ports:
-      - 8001:80
+      - 7086:80
     depends_on:
-      - eap-fast
+      - eap-fast-rest
     links:
-      - eap-fast
-  eap-fast:
-    image: eap-fast
-    #build:
-    #  context: ../service/eap-fast
-    #  dockerfile: Dockerfile
-    container_name: eap-fast
-    #ports:
-    #- 8080:8080
+      - eap-fast-rest:eap-fast
+    networks:
+      - net-openea
+  eap-fast-rest:
+    image: szopen/eap-fast:1.0.0
+    container_name: eap-fast-rest
     environment:
       - spring.profiles.active=test
     depends_on:
-      - eap-mysql
+      - eap-fast-mysql
       - eap-redis
     links:
-      - eap-mysql
+      - eap-fast-mysql:eap-mysql
       - eap-redis:redis
-  eap-mysql:
-    image: mysql/mysql-server:5.7
-    container_name: eap-mysql
+    networks:
+      - net-openea
+  eap-fast-mysql:
+    image: szopen/mysql:5.7-utf8
+    container_name: eap-fast-mysql
     environment:
       - TZ=Asia/Shanghai
       - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_ROOT_HOST=%
+      - MYSQL_ROOT_HOST=localhost
       - MYSQL_DATABASE=eap_fast
       - MYSQL_USER=eap
       - MYSQL_PASSWORD=eap
-    command:
-      --character-set-server=utf8mb4
-      --collation-server=utf8mb4_general_ci
-      --explicit_defaults_for_timestamp=true
-      --lower_case_table_names=0
-      --max_allowed_packet=128M
-      --sql-mode="STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION,NO_ZERO_DATE,NO_ZERO_IN_DATE,ERROR_FOR_DIVISION_BY_ZERO"
     volumes:
-      - eap-mysql-data:/var/lib/mysql
-      #- ../service/eap-fast/src/main/resources/db/mysql:/docker-entrypoint-initdb.d/
+      - eap-fast-mysql-data:/var/lib/mysql
+    networks:
+      - net-openea
   eap-redis:
     image: redis:5
     container_name: eap-redis
     volumes:
       - eap-redis-data:/data
+    networks:
+      - net-openea
 volumes:
-  eap-mysql-data:
+  eap-fast-mysql-data:
   eap-redis-data:
