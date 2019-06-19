@@ -21,10 +21,8 @@ services:
       - spring.profiles.active=test
     depends_on:
       - eap-fast-mysql
-      - eap-redis
     links:
       - eap-fast-mysql:eap-mysql
-      - eap-redis:redis
     networks:
       - net-openea
   eap-fast-mysql:
@@ -41,13 +39,6 @@ services:
       - eap-fast-mysql-data:/var/lib/mysql
     networks:
       - net-openea
-  eap-redis:
-    image: redis:5
-    container_name: eap-redis
-    volumes:
-      - eap-redis-data:/data
-    networks:
-      - net-openea
+
 volumes:
   eap-fast-mysql-data:
-  eap-redis-data:

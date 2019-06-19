@@ -39,3 +39,14 @@ services:
       - consul-server3
     networks:
       - net-openea
+
+  eap-redis:
+    image: redis:5
+    container_name: eap-redis
+    volumes:
+      - eap-redis-data:/data
+    networks:
+      - net-openea
+
+volumes:
+  eap-redis-data:
