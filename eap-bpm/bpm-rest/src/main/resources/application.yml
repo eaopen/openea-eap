@@ -1,0 +1,55 @@
+server:
+  port: ${port:8080}
+  servlet:
+    context-path: ${context-path:/api}
+
+spring:
+  datasource:
+    driver-class-name: ${jdbc_driver:com.mysql.jdbc.Driver}
+    url: ${jdbc_url:jdbc:mysql://eap-bpm-mysql:3306/eap_bpm?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false}
+    username: ${jdbc_user:eap}
+    password: ${jdbc_password:eap}
+    dbType: ${db_type:mysql}
+  activemq:
+    broker-url: ${activemq_url:tcp://127.0.0.1:61616}
+    in-memory: false
+    packages:
+      trust-all: true
+  redis:
+    host: ${redis_host:eap-redis}
+    port: ${redis_port:6379}
+    password: ${redis_password:}
+    database: ${redis_database:0}
+  liquibase:
+    enabled: false
+
+logging:
+  level:
+    root: INFO
+    org.springframework.data.redis: INFO
+
+## security:
+##  ignored:  [/explorer/** ,/css/**, /js/**,/images/**,/webjars/**,/**/favicon.ico]
+## /swagger-*,/v2/api-docs*,   swagger 免登陆
+eap:
+  jwt:
+    enabled: ${jwt_enabled:true}
+  security:
+    auth-ingores: /*/login/*,login.*,logout,explorer*,/index.html,/swagger-*,/v2/api-docs,/webjars/*
+    csrf-ingores: localhost,localhost:*,openbpm*,bpm*,127.0.0.1,0.0.0.0,192.168.*.*,192.168.*.*:*
+  redis:
+    use-redis-cache: false
+  mail:
+    mail-address: xxx@qq.com
+    nick-name: open-bpm
+    password: xxx
+    send-host: smtp.qq.com
+    send-port: 465
+  simple-mq:
+    message-queue-type: synchronous
+
+
+
+## 上传配置 mysql 存数据库 ，具体请看 IUploader 实现类
+uploader:
+  default: mysql

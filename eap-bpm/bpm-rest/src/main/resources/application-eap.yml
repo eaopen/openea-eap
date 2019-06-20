@@ -1,0 +1,27 @@
+server:
+  port: ${port:8080}
+  servlet:
+    context-path: ${context-path:/api}
+
+spring:
+  datasource:
+    driver-class-name: ${jdbc_driver:com.mysql.jdbc.Driver}
+    url: ${jdbc_url:jdbc:mysql://eap-bpm-mysql:3306/eap_bpm?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false}
+    username: ${jdbc_user:eap}
+    password: ${jdbc_password:eap}
+    dbType: ${db_type:mysql}
+
+logging:
+  level:
+    root: INFO
+    org.springframework.data.redis: INFO
+
+## security:
+##  ignored:  [/explorer/** ,/css/**, /js/**,/images/**,/webjars/**,/**/favicon.ico]
+## /swagger-*,/v2/api-docs*,   swagger 免登陆
+eap:
+  jwt:
+    enabled: ${jwt_enabled:false}
+  security:
+    auth-ingores: /*/login/*,login.*,logout,explorer*,/index.html,/swagger-*,/v2/api-docs,/webjars/*
+    csrf-ingores: localhost,localhost:*,openbpm*,bpm*,127.0.0.1,0.0.0.0,192.168.*.*,192.168.*.*:*

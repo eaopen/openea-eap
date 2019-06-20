@@ -23,6 +23,8 @@ iview版本，需要实现用户任务中心
 
 基于openbpm的org和sys模块实现，独立数据库eap-admin-mysql
 
+# bpm主要组件
+
 * eap-bpm-ui
 
 OpenBPM UI界面

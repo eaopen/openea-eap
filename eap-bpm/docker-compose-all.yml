@@ -3,6 +3,49 @@ networks:
   net-openea:
 
 services:
+  eap-oauth:
+    image: szopen/eap-oauth:bpm-1.0.0
+    container_name: eap-oauth
+    ports:
+      - 7010:80
+    depends_on:
+      - eap-admin-rest
+    networks:
+      - net-openea
+
+  eap-gateway:
+    image: szopen/eap-gateway:bpm-1.0.0
+    container_name: eap-gateway
+    ports:
+      - 7000:80
+    depends_on:
+      - eap-admin-rest
+    networks:
+      - net-openea
+
+  eap-admin-ui:
+    image: szopen/eap-admin:iview-1.0.0
+    container_name: eap-admin-ui
+    ports:
+      - 7020:80
+    depends_on:
+      - eap-admin-rest
+    networks:
+      - net-openea
+
+  eap-admin-rest:
+    image: szopen/eap-admin-rest:bpm-1.0.0
+    container_name: eap-admin-rest
+    environment:
+      - spring.profiles.active=eap
+      - redis_host=eap-redis
+    depends_on:
+      - eap-admin-mysql
+    links:
+      - eap-admin-mysql:mysql
+    restart: always
+    networks:
+      - net-openea
 
   eap-bpm-ui:
     image: szopen/eap-bpm-ui:1.0.0
@@ -22,7 +65,6 @@ services:
     environment:
       - spring.profiles.active=eap
       - redis_host=eap-redis
-      - jwt_enabled=false
     depends_on:
       - eap-bpm-mysql
     links:
