@@ -1,6 +1,8 @@
-package org.openea.eap.cloud.oauth.component;
- 
-import org.openea.eap.cloud.oauth.entity.User;
+package org.openea.cloud.oauth.token;
+
+
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
@@ -17,7 +19,8 @@ public class AuthTokenEnhancer implements TokenEnhancer {
     public OAuth2AccessToken enhance(OAuth2AccessToken accessToken, OAuth2Authentication authentication) {
         Map<String, Object> info = new HashMap<>();
 
-        info.put("user_id", ((User)authentication.getPrincipal()).getId());
+        info.put("username", ((UserDetails)authentication.getPrincipal()).getUsername());
+        //用户唯一编号，如工号/身份证等
         ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(info);
 
         return accessToken;

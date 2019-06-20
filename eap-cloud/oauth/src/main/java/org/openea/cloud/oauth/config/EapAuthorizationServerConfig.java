@@ -1,10 +1,9 @@
-package org.openea.eap.cloud.oauth.config;
+package org.openea.cloud.oauth.config;
 
-import org.openea.eap.cloud.oauth.component.AuthTokenEnhancer;
-import org.openea.eap.cloud.oauth.component.CustomClaimAccessTokenConverter;
-import org.openea.eap.cloud.oauth.service.impl.OauthClientDetailsServiceImpl;
+import org.openea.cloud.oauth.token.AuthTokenEnhancer;
+import org.openea.cloud.oauth.token.CustomClaimAccessTokenConverter;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -17,6 +16,8 @@ import org.springframework.security.oauth2.config.annotation.configurers.ClientD
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.ClientDetailsService;
+import org.springframework.security.oauth2.provider.client.JdbcClientDetailsService;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.TokenStore;
@@ -25,22 +26,25 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFactory;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
 
+import javax.annotation.Resource;
 import javax.sql.DataSource;
 import java.util.Arrays;
 
-@Configuration
-public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
+@Configuration
+public class EapAuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
+
+    @Resource
+    private UserDetailsService userDetailsService;
 
     @Autowired
-    @Qualifier("userServiceImpl")
-    private UserDetailsService userDetailsService;
+    private ClientDetailsService oauthClientDetailsService;
 
     @Autowired
     private AuthenticationManager authenticationManager;
 
     @Autowired
-    private ApplicationProperties applicationProperties;
+    private EapOauthProperties eapOauthProperties;
 
     @Autowired
     private AuthTokenEnhancer authTokenEnhancer;
@@ -62,9 +66,10 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         configurer.pathMapping("/oauth/confirm_access","/custom/confirm_access");
     }
 
+
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-        clients.withClientDetails(new OauthClientDetailsServiceImpl(dataSource));
+        clients.withClientDetails(oauthClientDetailsService);
     }
 
     @Override
@@ -80,8 +85,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Bean
     public JwtAccessTokenConverter accessTokenConverter() {
         JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
-        KeyStoreKeyFactory keyStoreKeyFactory = new KeyStoreKeyFactory(new ClassPathResource(applicationProperties.getAuth().getKfName()),
-                applicationProperties.getAuth().getKsPass().toCharArray());
+        KeyStoreKeyFactory keyStoreKeyFactory = new KeyStoreKeyFactory(new ClassPathResource(eapOauthProperties.getAuth().getKfName()),
+                eapOauthProperties.getAuth().getKsPass().toCharArray());
         converter.setKeyPair(keyStoreKeyFactory.getKeyPair("demo"));
         converter.setAccessTokenConverter(customClaimAccessTokenConverter);
         return converter;
@@ -100,9 +105,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         defaultTokenServices.setTokenEnhancer(tokenEnhancerChain);
 
         defaultTokenServices.setReuseRefreshToken(false);
-        defaultTokenServices.setAccessTokenValiditySeconds(applicationProperties.getAuth().getDefaultAccessTokenTimeout());
-        defaultTokenServices.setRefreshTokenValiditySeconds(applicationProperties.getAuth().getDefaultRefreshTokenTimeout());
-        defaultTokenServices.setClientDetailsService(new OauthClientDetailsServiceImpl(dataSource));
+        defaultTokenServices.setAccessTokenValiditySeconds(eapOauthProperties.getAuth().getDefaultAccessTokenTimeout());
+        defaultTokenServices.setRefreshTokenValiditySeconds(eapOauthProperties.getAuth().getDefaultRefreshTokenTimeout());
+        defaultTokenServices.setClientDetailsService(oauthClientDetailsService);
 
         defaultTokenServices.setAuthenticationManager(authentication -> {
             UserDetails userDetails = userDetailsService.loadUserByUsername(authentication.getName());
@@ -115,4 +120,12 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
         return defaultTokenServices;
     }
+
+
+    @Bean("oauthClientDetailsService")
+    public ClientDetailsService clientDetailsService(){
+        return new JdbcClientDetailsService(dataSource);
+    }
+
+
 }

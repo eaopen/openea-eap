@@ -3,6 +3,15 @@ networks:
   net-openea:
 
 services:
+  eap-oauth:
+    image: szopen/eap-oauth:bpm-1.0.0
+    container_name: eap-oauth
+    ports:
+      - 7010:80
+    #depends_on:
+    #  - eap-admin-rest
+    networks:
+      - net-openea
 
   eap-bpm-ui:
     image: szopen/eap-bpm-ui:1.0.0

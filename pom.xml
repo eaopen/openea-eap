@@ -10,15 +10,9 @@
     <description>eap all</description>
 
     <modules>
-        <!--
-        <module>eip</module>
-        <module>ui</module>
-        -->
-        <module>eap-service/eap-fast</module>
+
         <module>eap-bpm/bpm-rest</module>
-        <!--
-        <module>refer/jeecg-boot/jeecg-boot</module>
-        -->
+        <module>eap-cloud/oauth</module>
     </modules>
 
 </project>

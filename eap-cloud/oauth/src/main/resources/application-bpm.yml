@@ -1,0 +1,3 @@
+app:
+  login-page-title: Eap OAuth Center(bpm based)
+  oauth-adapter: ${oauth-adapter:bpm}

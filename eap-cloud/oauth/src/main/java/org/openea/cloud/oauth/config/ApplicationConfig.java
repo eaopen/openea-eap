@@ -1,4 +1,4 @@
-package org.openea.eap.cloud.oauth.config;
+package org.openea.cloud.oauth.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,7 +22,7 @@ public class ApplicationConfig extends WebSecurityConfigurerAdapter {
     @Value("${spring.application.name}")
     private String appName;
     @Autowired
-    private ApplicationProperties applicationProperties;
+    private EapOauthProperties eapOauthProperties;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -35,9 +35,9 @@ public class ApplicationConfig extends WebSecurityConfigurerAdapter {
 //                .antMatchers("/login", "/oauth/authorize")
 //                .antMatchers(HttpMethod.OPTIONS, "/oauth/token")
                 .antMatchers(HttpMethod.OPTIONS, "/oauth/*")
-                .antMatchers("/auth/login", applicationProperties.getLoginProcessUrl(), "/oauth/authorize")
+                .antMatchers("/auth/login", eapOauthProperties.getLoginProcessUrl(), "/oauth/authorize")
                 .and().authorizeRequests()
-                .antMatchers("/auth/login", applicationProperties.getLoginProcessUrl()).permitAll()
+                .antMatchers("/auth/login", eapOauthProperties.getLoginProcessUrl()).permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .cors()
@@ -49,7 +49,7 @@ public class ApplicationConfig extends WebSecurityConfigurerAdapter {
                 // 登录页面
                 .loginPage("/auth/login")
                 // 登录处理url
-                .loginProcessingUrl(applicationProperties.getLoginProcessUrl());
+                .loginProcessingUrl(eapOauthProperties.getLoginProcessUrl());
     }
 
 

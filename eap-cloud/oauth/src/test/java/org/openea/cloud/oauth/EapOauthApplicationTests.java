@@ -1,4 +1,4 @@
-package org.openea.eap.cloud.oauth;
+package org.openea.cloud.oauth;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,7 +7,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class OauthApplicationTests {
+public class EapOauthApplicationTests {
 
     @Test
     public void contextLoads() {

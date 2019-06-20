@@ -1,0 +1,11 @@
+app:
+  login-page-title: Eap OAuth Center(bpm based)
+  oauth-adapter: bpm
+
+spring:
+  datasource:
+    driver-class-name: ${jdbc_driver:com.mysql.jdbc.Driver}
+    url: ${jdbc_url:jdbc:mysql://localhost:3306/bpm_dev?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false}
+    username: ${jdbc_user:bpm}
+    password: ${jdbc_password:bpm}
+    dbType: ${db_type:mysql}

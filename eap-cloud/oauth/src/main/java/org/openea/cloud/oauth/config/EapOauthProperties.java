@@ -1,4 +1,4 @@
-package org.openea.eap.cloud.oauth.config;
+package org.openea.cloud.oauth.config;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -7,9 +7,10 @@ import org.springframework.context.annotation.Configuration;
 @Data
 @ConfigurationProperties("app")
 @Configuration
-public class ApplicationProperties {
+public class EapOauthProperties {
 
     private Auth auth;
+    private String oauthAdapter;  //bpm
 
     private String loginProcessUrl = "/auth/authorize";
     private String loginPageTitle = "/auth/authorize";

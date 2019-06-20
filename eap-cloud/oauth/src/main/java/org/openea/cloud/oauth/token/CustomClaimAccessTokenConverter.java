@@ -1,4 +1,4 @@
-package org.openea.eap.cloud.oauth.component;
+package org.openea.cloud.oauth.token;
 
 import org.springframework.boot.autoconfigure.security.oauth2.resource.JwtAccessTokenConverterConfigurer;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;

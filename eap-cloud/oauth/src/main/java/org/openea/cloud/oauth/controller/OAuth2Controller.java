@@ -1,10 +1,9 @@
-package org.openea.eap.cloud.oauth.controller;
+package org.openea.cloud.oauth.controller;
 
-import org.openea.eap.cloud.oauth.config.ApplicationProperties;
+import org.openea.cloud.oauth.config.EapOauthProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.oauth2.provider.AuthorizationRequest;
-import org.springframework.security.oauth2.provider.token.AuthorizationServerTokenServices;
 import org.springframework.security.oauth2.provider.token.ConsumerTokenServices;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -22,7 +21,7 @@ import java.util.Map;
 @SessionAttributes("authorizationRequest")
 public class OAuth2Controller {
     @Autowired
-    private ApplicationProperties properties;
+    private EapOauthProperties properties;
 
     @Resource
     private JwtAccessTokenConverter converter;

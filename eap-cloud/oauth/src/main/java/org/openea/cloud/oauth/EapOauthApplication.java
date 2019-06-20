@@ -1,25 +1,21 @@
-package org.openea.eap.cloud.oauth;
+package org.openea.cloud.oauth;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+@ComponentScan({"org.openea.cloud.oauth.**","org.openbpm.**"})
 @EnableAuthorizationServer
 @Configuration
-@EnableDiscoveryClient
 @EnableTransactionManagement
-@EnableFeignClients
 @SpringBootApplication
-@EnableScheduling
-public class OauthApplication {
+public class EapOauthApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(OauthApplication.class, args);
+        SpringApplication.run(EapOauthApplication.class, args);
     }
 
 }

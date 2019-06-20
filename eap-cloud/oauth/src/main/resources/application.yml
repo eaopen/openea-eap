@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: eap-oauth
+  session:
+    flush-mode: IMMEDIATE
+    #    flush-mode: on-save
+    namespace: spring:session
+    #store-type: redis
+  datasource:
+    driver-class-name: ${jdbc_driver:com.mysql.jdbc.Driver}
+    url: ${jdbc_url:jdbc:mysql://eap-admin-mysql:3306/eap_admin?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false}
+    username: ${jdbc_user:eap}
+    password: ${jdbc_password:eap}
+    dbType: ${db_type:mysql}
+  jackson:
+    default-property-inclusion: non_null
+  thymeleaf:
+    prefix: classpath:/views/
+    suffix: .html
+    cache: false
+
+app:
+  login-page-title: Eap OAuth Center
+  oauth-adapter: ${oauth-adapter:default}
+  auth:
+    resourceId: OAUTH_DEMO
+    default-access-token-timeout: 1800
+    default-refresh-token-timeout: 86400
+    kf-name: demo.jks
+    ks-pass: Za6{ApH5S}W4Pud
+    max-failed-login-attempts-for-account-lock: 5
+    failed-login-attempt-account-lock-timeout: 900
