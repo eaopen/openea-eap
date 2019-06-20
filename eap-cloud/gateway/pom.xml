@@ -9,8 +9,8 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>org.openea.eap.cloud</groupId>
-    <artifactId>gateway</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <artifactId>eap-gateway</artifactId>
+    <version>1.0.0</version>
     <name>gateway</name>
     <description>eap gateway</description>
 

@@ -1,10 +1,10 @@
 server:
-  port: ${port:9001}
+  port: ${port:80}
 spring:
   application:
     name: gateway
   datasource:
-    url: ${jdbc_url:jdbc:mysql://eap-mysql:3306/eap_fast?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false}
+    url: ${jdbc_url:jdbc:mysql://eap-admin-mysql:3306/eap_admin?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false}
     username: ${jdbc_user:eap}
     password: ${jdbc_password:eap}
     driver-class-name: com.mysql.jdbc.Driver
@@ -18,19 +18,26 @@ spring:
           lowerCaseServiceId: true
       routes:
         - id: myRoute
-          uri: lb://eap
+          uri: lb://eap-admin-rest
           predicates:
-            - Path=/api/eap/**
+            - Path=/eap/api/**
           filters:
-            - StripPrefix=2
+            - StripPrefix=1
         - id: myRoute
-          uri: lb://oauth
+          uri: lb://eap-oauth
           predicates:
             - Path=/sso/**
+            - Path=/oauth/**
+          filters:
+            - StripPrefix=1
+        - id: myRoute
+          uri: lb://eap-bpm-rest
+          predicates:
+            - Path=/bpm/api/**
           filters:
             - StripPrefix=1
     consul:
-      host: ${consul_host:127.0.0.1}
+      host: ${consul_host:consul-ui}
       port: ${consul_port:8500}
       config:
         enabled: true
@@ -62,7 +69,7 @@ mybatis:
   configuration:
     map-underscore-to-camel-case: true
 redisson:
-  address: redis://${redis_host:127.0.0.1}:${redis_port:6379}
+  address: redis://${redis_host:eap-redis}:${redis_port:6379}
 logging:
   level:
     org.springframework.cloud.gateway: TRACE

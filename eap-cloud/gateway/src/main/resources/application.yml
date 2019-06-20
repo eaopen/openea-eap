@@ -1,4 +1,4 @@
 app:
-  sso-server-url: http://127.0.0.1:8081
-  jwt-public-key-url: http://127.0.0.1:8081/oauth/public_key
+  sso-server-url: http://eap-oauth:8080
+  jwt-public-key-url: http://eap-oauth:8080/oauth/public_key
   jwt-public-key: -----BEGIN PUBLIC KEY-----|MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAn5wUVR753QU/FdoMKBY2xvDsRKDf7b/3SImg8vtRnpgrCO/NR2VcV6m0oKRWnfQ54qLxJCSn34xVrJ/Yjx3wyCvxHm0JIxjKgyb0D/AZOPlDnhQf5ITfuXQ9nQAoUxv6elp4OrSWRJgOWGhUNKRjMbFguM8CZakSHXjC/nYi9zKt3OUI0OX/FYLUtYaYIeeRj67n1It6gvUv0TttHBDS7bFdyCv1p/hMnNIHk/gt647/YKxkdf6BV8z/3bMOwIV9gUVjC1OEoOKVm7DfMEy3OMh43NmPbTIx0b74mKnATj8YjRa9GBTh93inZYDpPi5R6jK+J/oblCHP1fQTkS+d8wIDAQAB|-----END PUBLIC KEY-----

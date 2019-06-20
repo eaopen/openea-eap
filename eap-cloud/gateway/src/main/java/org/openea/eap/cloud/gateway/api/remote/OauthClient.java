@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Map;
 
-@FeignClient("oauth")
+@FeignClient("eap-oauth")
 public interface  OauthClient {
     @RequestMapping("/oauth/public_key")
     @ResponseBody

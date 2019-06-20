@@ -42,7 +42,7 @@ public class AuthFilter implements GlobalFilter {
         ServerHttpRequest request = (ServerHttpRequest) exchange.getRequest();
         HttpHeaders header = request.getHeaders();
         MultiValueMap params = request.getQueryParams();
-        if (uri.toString().startsWith("lb://oauth")) {
+        if (uri.toString().startsWith("lb://eap-oauth")) {
             String referer = header.getFirst("Referer");
             ServerHttpRequest.Builder mutate = request.mutate();
 //            mutate.header("Referer", referer);

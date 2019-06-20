@@ -1,4 +1,4 @@
-package org.openea.admin.rest.config;
+package org.openea.bpm.rest.config;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

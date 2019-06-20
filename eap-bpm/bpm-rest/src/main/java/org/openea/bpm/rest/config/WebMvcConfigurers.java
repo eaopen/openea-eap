@@ -1,4 +1,4 @@
-package org.openea.admin.rest.config;
+package org.openea.bpm.rest.config;
 
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
