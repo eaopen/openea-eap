@@ -18,6 +18,8 @@ spring:
     prefix: classpath:/views/
     suffix: .html
     cache: false
+  liquibase:
+    enabled: false
 
 app:
   login-page-title: Eap OAuth Center

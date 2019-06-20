@@ -1,4 +1,4 @@
-package org.openea.bpm.rest.config;
+package org.openea.admin.rest.config;
 
 import java.io.IOException;
 
@@ -13,8 +13,8 @@ import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSONObject;
-import org.openbpm.base.api.constant.BaseStatusCode;
-import org.openbpm.base.api.response.impl.ResultMsg;
+import org.openea.base.api.constant.BaseStatusCode;
+import org.openea.base.api.response.impl.ResultMsg;
 /**
  * 处理 没有@cathErr 的控制器
  *

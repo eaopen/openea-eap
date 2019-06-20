@@ -12,7 +12,10 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.security.core.userdetails.UserDetailsService;
+
+import javax.sql.DataSource;
 
 //@ConditionalOnExpression("'${app.oauth-adapter}'.toLowerCase() == 'bpm'")
 @Configuration

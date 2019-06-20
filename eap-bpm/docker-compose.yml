@@ -6,10 +6,26 @@ services:
   eap-oauth:
     image: szopen/eap-oauth:bpm-1.0.0
     container_name: eap-oauth
+    environment:
+      - spring.profiles.active=bpm
     ports:
-      - 7010:80
-    #depends_on:
-    #  - eap-admin-rest
+      - 7010:8080
+    depends_on:
+      - eap-admin-rest
+    networks:
+      - net-openea
+
+  eap-admin-rest:
+    image: szopen/eap-admin-rest:bpm-1.0.0
+    container_name: eap-admin-rest
+    environment:
+      - spring.profiles.active=bpm
+      - redis_host=eap-redis
+    depends_on:
+      - eap-admin-mysql
+    links:
+      - eap-admin-mysql:mysql
+    restart: always
     networks:
       - net-openea
 

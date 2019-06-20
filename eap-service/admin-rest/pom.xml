@@ -12,7 +12,7 @@
     </parent>
 
     <groupId>org.openea.eap</groupId>
-    <artifactId>eap-bpm-rest</artifactId>
+    <artifactId>eap-admin-rest</artifactId>
     <version>1.0.0</version>
 
     <properties>
@@ -21,7 +21,8 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <servlet-api.version>3.1.0</servlet-api.version>
-        <bpm-starter.version>3.2.0</bpm-starter.version>
+        <bpm-support.version>3.3.0</bpm-support.version>
+        <bpm-autoconf.version>3.2.0</bpm-autoconf.version>
     </properties>
 
     <dependencies>
@@ -66,9 +67,28 @@
 
         <dependency>
             <groupId>org.openbpm.bpm</groupId>
-            <artifactId>bpm-starter</artifactId>
-            <version>${bpm-starter.version}</version>
+            <artifactId>base-autoconf</artifactId>
+            <version>${bpm-autoconf.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.openbpm.bpm</groupId>
+            <artifactId>security-autoconf</artifactId>
+            <version>${bpm-autoconf.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.openbpm.bpm</groupId>
+            <artifactId>sys-autoconf</artifactId>
+            <version>${bpm-autoconf.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.openbpm.bpm</groupId>
+            <artifactId>org-core-default</artifactId>
+            <version>${bpm-support.version}</version>
+        </dependency>
+
 
 
         <dependency>
@@ -118,6 +138,11 @@
             <groupId>org.javassist</groupId>
             <artifactId>javassist</artifactId>
             <version>3.23.1-GA</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.57</version>
         </dependency>
 
 
