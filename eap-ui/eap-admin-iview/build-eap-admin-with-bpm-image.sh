@@ -12,12 +12,12 @@ cd ..
 
 sh ../tool/npm-build-all.sh
 
-artifactId=eap-fast-vue
-version=1.0.0
+artifactId=eap-admin-ui
+version=iview-1.0.0
 
 
 # docker
-docker build -t ${artifactId}:${version} -f ./Dockerfile .
+docker build -t ${artifactId}:${version} -f ./admin_Dockerfile .
 docker tag  ${artifactId}:${version}  ${artifactId}:latest
 
 # hub.docker.com/szopen

@@ -15,6 +15,16 @@ services:
     networks:
       - net-openea
 
+  eap-admin-ui:
+    image: szopen/eap-admin-ui:iview-1.0.0
+    container_name: eap-admin-ui
+    ports:
+      - 7020:80
+    depends_on:
+      - eap-admin-rest
+    networks:
+      - net-openea
+
   eap-admin-rest:
     image: szopen/eap-admin-rest:bpm-1.0.0
     container_name: eap-admin-rest
