@@ -16,6 +16,7 @@
         <module>eap-service/admin-rest</module>
         <module>eap-bpm/bpm-rest</module>
         -->
+        <module>eap-service/eapboot-core</module>
         <module>eap-service/eapboot-rest</module>
     </modules>
 

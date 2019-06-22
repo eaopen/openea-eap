@@ -20,6 +20,7 @@
             </FormItem>
           </Form>
         </TabPane>
+        <!-- //todo 增加后台配置是否允许手机登陆
         <TabPane label="手机号登录" name="mobile" icon="ios-phone-portrait">
           <Form ref="mobileLoginForm" :model="form" :rules="rules" class="form" v-if="tabName=='mobile'">
             <FormItem prop="mobile">
@@ -37,6 +38,7 @@
             </FormItem>
           </Form>
         </TabPane>
+        -->
       </Tabs>
   
       <Row type="flex" justify="space-between">
@@ -47,7 +49,9 @@
           </a>
           <DropdownMenu slot="list">
             <DropdownItem name="showAccount">体验测试账号</DropdownItem>
+            <!-- //todo 增加后台配置是否可使用手机
             <DropdownItem name="resetByMobile">使用手机号重置密码</DropdownItem>
+            -->
             <DropdownItem name="resetByEmail">使用邮箱重置密码</DropdownItem>
           </DropdownMenu>
         </Dropdown>
@@ -59,6 +63,8 @@
                         </Button>
       </Row>
       <Row type="flex" justify="space-between" class="other-login">
+
+        <!-- //TODO 增加后台配置其他登陆方式
         <div class="other-way icons">
           其它方式登录
           <div class="other-icon" @click="toGithubLogin">
@@ -74,7 +80,10 @@
             <icon scale="1.2" name="brands/weixin"></icon>
           </div>
         </div>
+        -->
+        <!-- //TODO 后台配置是否允许注册账户
         <router-link to="/regist"><a class="forget-pass">注册账户</a></router-link>
+        -->
       </Row>
     </Row>
     <div v-if="socialLogining" class="spinner">
@@ -133,7 +142,7 @@ export default {
       form: {
         username: "admin",
         password: "123456",
-        mobile: "阿里云短信0.045/条 若余额不足联系作者充值",
+        mobile: "",
         code: ""
       },
       rules: {
@@ -329,7 +338,7 @@ export default {
       });
     },
     toWeixinLogin() {
-      this.$Message.error("开通微信登录官方收费300/年");
+      this.$Message.error("开通微信登录需要首先申请微信公众号");
     },
     relatedLogin() {
       let q = this.$route.query;
@@ -401,7 +410,7 @@ export default {
       this.$Notice.info({
         title: "体验账号密码",
         desc:
-          "账号1：test 密码：123456 <br>账号2：test2 密码：123456 已开放注册！",
+          "管理员: admin 密码: 123456 <br/>账号1：test 密码：123456 <br/>账号2：test2 密码：123456",
         duration: 10
       });
     },
@@ -415,7 +424,7 @@ export default {
   },
   mounted() {
     //this.showMessage();
-    //this.showAccount();
+    this.showAccount();
     this.relatedLogin();
   }
 };

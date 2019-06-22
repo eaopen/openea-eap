@@ -107,7 +107,7 @@
       </Row>
 
       <Drawer title="文件上传" closable v-model="uploadVisible" width="500">
-        <Upload action="/xboot/upload/file"
+        <Upload action="/eapboot/upload/file"
           :headers="accessToken" 
           :on-success="handleSuccess"
           :on-error="handleError"

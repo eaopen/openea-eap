@@ -53,7 +53,7 @@
         <FormItem label="任务类引用路径" prop="jobClassName">
           <Input
             v-model="form.jobClassName"
-            placeholder="例如 org.openea.eapboot.quartz.jobs.Job"
+            placeholder="例如 org.openea.eapboot.modules.job.jobs.Job"
             clearable
           />
         </FormItem>

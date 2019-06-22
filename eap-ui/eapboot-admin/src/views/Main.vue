@@ -284,11 +284,6 @@ export default {
         this.$router.push({
           name: "ownspace_index"
         });
-      } else if (name == "ownSpaceOld") {
-        util.openNewPage(this, "ownspace_old");
-        this.$router.push({
-          name: "ownspace_old"
-        });
       } else if (name == "changePass") {
         util.openNewPage(this, "change_pass");
         this.$router.push({

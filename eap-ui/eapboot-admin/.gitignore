@@ -19,3 +19,9 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.sw?
+
+
+# ignore activiti, move to another module
+src/api/activiti.js
+src/views/activiti/*
+src/views/my-components/xboot/process-*.vue
