@@ -1,6 +1,7 @@
-**/DS_Store
 .idea
 **/.idea
+
+**/.DS_Store
 
 # Compiled class file
 *.class

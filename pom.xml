@@ -10,12 +10,13 @@
     <description>eap all</description>
 
     <modules>
-
-
         <module>common/base/base-api</module>
         <module>eap-cloud/oauth</module>
+        <!--
         <module>eap-service/admin-rest</module>
         <module>eap-bpm/bpm-rest</module>
+        -->
+        <module>eap-service/eapboot-rest</module>
     </modules>
 
 </project>

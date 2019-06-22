@@ -1,0 +1,40 @@
+version: '3'
+networks:
+  net-openea:
+
+services:
+  eapboot-admin:
+    image: szopen/eapboot-admin:1.0.0
+    container_name: eapboot-admin
+    ports:
+      - 7086:80
+    depends_on:
+      - eapboot-rest
+    networks:
+      - net-openea
+  eapboot-rest:
+    image: szopen/eapboot-rest:1.0.0
+    container_name: eapboot-rest
+    environment:
+      - spring.profiles.active=test
+    depends_on:
+      - eapboot-mysql
+    networks:
+      - net-openea
+  eapboot-mysql:
+    image: szopen/mysql:5.7-utf8
+    container_name: eapboot-mysql
+    environment:
+      - TZ=Asia/Shanghai
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_ROOT_HOST=localhost
+      - MYSQL_DATABASE=eap_boot
+      - MYSQL_USER=eap
+      - MYSQL_PASSWORD=eap
+    volumes:
+      - eapboot-mysql-data:/var/lib/mysql
+    networks:
+      - net-openea
+
+volumes:
+  eapboot-mysql-data:
