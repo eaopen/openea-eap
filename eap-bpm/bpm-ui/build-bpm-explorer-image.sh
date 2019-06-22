@@ -12,7 +12,6 @@ cp -R ${bpm_explorer_path} explorer
 # update config and new file
 cp -Rf bpm-explorer/** explorer/
 
-
 # docker运行npm
 cd explorer
 sh ../tool/npm-run-build.sh

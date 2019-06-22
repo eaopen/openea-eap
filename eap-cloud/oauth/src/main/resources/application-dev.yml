@@ -1,3 +1,5 @@
+server:
+  port: ${port:7010}
 app:
   login-page-title: Eap OAuth Center(bpm based)
   oauth-adapter: bpm
