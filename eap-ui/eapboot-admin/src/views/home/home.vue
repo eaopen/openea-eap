@@ -180,22 +180,7 @@ export default {
     }
   },
   mounted() {
-    this.init();
-    var gitalk = new Gitalk({
-      clientID: "a128de2dd7383614273a",
-      clientSecret: "a77691ecb662a8303a6c686ae651ae035868da6e",
-      repo: "xboot-comments",
-      owner: "Exrick",
-      admin: ["Exrick"],
-      distractionFreeMode: false // 遮罩效果
-    });
-    gitalk.render("comments");
-    // 宣传视频
-    let xbootVideo = Boolean(Cookies.get("xbootVideo"));
-    if (!xbootVideo) {
-      this.showVideo = true;
-      Cookies.set("xbootVideo", true);
-    }
+
   }
 };
 </script>

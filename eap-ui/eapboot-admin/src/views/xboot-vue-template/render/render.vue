@@ -399,33 +399,33 @@ export default {
       this.data = [
         {
           id: "1",
-          name: "XBoot(点我查看详细信息)",
-          email: "1012139570@qq.com",
-          birth: "2018-08-08",
-          website: "http://xboot.exrick.cn",
-          mobile: "18782059033",
-          github: "https://github.com/Exrick/XBoot",
-          avatar: "https://s1.ax1x.com/2018/05/19/CcdVQP.png",
+          name: "SpringBoot(点我查看详细信息)",
+          email: "xx@qq.com",
+          birth: "",
+          website: "",
+          mobile: "",
+          github: "",
+          avatar: "",
           value: 0,
           status: 0,
           price: 18.88,
           date: "2018-08-08",
-          desc: "XBoot开发平台"
+          desc: ""
         },
         {
           id: "2",
-          name: "Exrick(点我查看详细信息)",
-          email: "1012139570@qq.com",
+          name: "xxx(点我查看详细信息)",
+          email: "xx@qq.com",
           birth: "2018-08-08",
-          website: "http://exrick.cn",
-          mobile: "18782059032",
-          github: "https://github.com/Exrick",
-          avatar: "https://i.loli.net/2018/10/14/5bc2ccaa3149c.png",
+          website: "",
+          mobile: "",
+          github: "",
+          avatar: "",
           value: 1,
           status: -1,
           price: 66.66,
-          date: "2018-08-08",
-          desc: "XBoot作者"
+          date: "",
+          desc: ""
         }
       ];
     },

@@ -115,7 +115,6 @@
                 </a>
                 <DropdownMenu slot="list">
                   <DropdownItem name="ownSpace">{{ $t('userCenter') }}</DropdownItem>
-                  <DropdownItem name="ownSpaceOld">{{ $t('userCenterOld') }}</DropdownItem>
                   <DropdownItem name="changePass">{{ $t('changePass') }}</DropdownItem>
                   <DropdownItem name="loginout" divided>{{ $t('logout') }}</DropdownItem>
                 </DropdownMenu>

@@ -7,7 +7,7 @@ export const loginRouter = {
     meta: {
         title: '登录 - EapBoot企业应用平台 '
     },
-    component: () => import('@/views/account/login.vue')
+    component: () => import('@/views/login.vue')
 };
 
 export const registRouter = {
@@ -16,7 +16,7 @@ export const registRouter = {
     meta: {
         title: '注册 - EapBoot企业应用平台'
     },
-    component: () => import('@/views/account/regist.vue')
+    component: () => import('@/views/regist.vue')
 };
 
 export const registResult = {
@@ -25,7 +25,7 @@ export const registResult = {
     meta: {
         title: '注册结果 - EapBoot企业应用平台'
     },
-    component: () => import('@/views/account/regist-result.vue')
+    component: () => import('@/views/regist-result.vue')
 };
 
 export const reset = {
@@ -34,7 +34,7 @@ export const reset = {
     meta: {
         title: '重置密码 - EapBoot企业应用平台'
     },
-    component: () => import('@/views/account/reset.vue')
+    component: () => import('@/views/reset.vue')
 };
 
 export const relateRouter = {
@@ -43,7 +43,7 @@ export const relateRouter = {
     meta: {
         title: '绑定账号 - EapBoot企业应用平台 '
     },
-    component: () => import('@/views/account/relate.vue')
+    component: () => import('@/views/relate.vue')
 };
 
 // export const page404 = {
@@ -88,12 +88,16 @@ export const otherRouter = {
     children: [
         { path: 'home', title: { i18n: 'home' }, name: 'home_index', component: () => import('@/views/home/home.vue') },
         { path: 'ownspace', title: '个人中心', name: 'ownspace_index', component: () => import('@/views/own-space/own-space.vue') },
+        { path: 'ownspace-old', title: '个人中心(旧)', name: 'ownspace_old', component: () => import('@/views/own-space/own-space-old.vue') },
         { path: 'change-pass', title: '修改密码', name: 'change_pass', component: () => import('@/views/change-pass/change-pass.vue') },
         { path: 'message', title: '消息中心', name: 'message_index', component: () => import('@/views/message/message.vue') },
         { path: 'add', title: '添加', name: 'add', component: () => import('@/views/xboot-vue-template/new-window/add.vue') },
         { path: 'edit', title: '编辑', name: 'edit', component: () => import('@/views/xboot-vue-template/new-window/edit.vue') },
         { path: 'add-edit-message', title: '消息详情', name: 'add_edit_message', component: () => import('@/views/sys/message-manage/addOrEditMessage.vue') },
-        { path: 'message-send-detail', title: '消息发送详情', name: 'message_send_detail', component: () => import('@/views/sys/message-manage/messageSendDetail.vue') }
+        { path: 'message-send-detail', title: '消息发送详情', name: 'message_send_detail', component: () => import('@/views/sys/message-manage/messageSendDetail.vue') },
+        { path: 'process-node-edit', title: '流程节点设置', name: 'process_node_edit', component: () => import('@/views/activiti/process-manage/processNodeEdit.vue') },
+        { path: 'leave', title: '请假申请', name: 'leave', component: () => import('@/views/activiti/business/leave.vue') },
+        { path: 'historic-detail', title: '流程进度历史详情', name: 'historic_detail', component: () => import('@/views/activiti/historic-detail/historicDetail.vue') }
     ]
 };
 

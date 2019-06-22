@@ -19,14 +19,12 @@
               <MenuItem name="1-5">用户抽屉选择</MenuItem>
               <MenuItem name="1-6">图片上传输入框</MenuItem>
             </Submenu>
-            <!--
             <Submenu name="2">
               <template slot="title"><Icon type="md-git-compare"/>工作流组件</template>
               <MenuItem name="2-1">工作流程选择发起</MenuItem>
               <MenuItem name="2-2">通过流程key直接发起</MenuItem>
               <MenuItem name="2-3">取消撤回申请</MenuItem>
             </Submenu>
-            -->
           </Menu>
         </Sider>
         <Content
@@ -98,7 +96,6 @@
             <Table :columns="events" :data="data12" border size="small" width="1000"></Table>
           </div>
 
-          <!--
           <div v-show="currName=='2-1'">
             <Alert
               type="warning"
@@ -140,12 +137,10 @@
             <h3 class="article">methods</h3>
             <Table :columns="methods" :data="data19" border size="small" width="1000"></Table>
           </div>
-          -->
         </Content>
       </Layout>
     </Card>
 
-    <!--
     <Drawer title="选择流程" closable v-model="processModalVisible" :width="800" draggable>
       <process-choose ref="processChoose"/>
     </Drawer>
@@ -156,7 +151,6 @@
       @on-loaded="processLoading=false"
     />
     <process-cancel ref="processCancel"/>
-    -->
   </div>
 </template>
 
@@ -167,9 +161,9 @@ import departmentChoose from "@/views/my-components/xboot/department-choose";
 import departmentTreeChoose from "@/views/my-components/xboot/department-tree-choose";
 import userChoose from "@/views/my-components/xboot/user-choose";
 import uploadPicInput from "@/views/my-components/xboot/upload-pic-input";
-//import processChoose from "@/views/my-components/xboot/process-choose";
-//import processStart from "@/views/my-components/xboot/process-start";
-//import processCancel from "@/views/my-components/xboot/process-cancel";
+import processChoose from "@/views/my-components/xboot/process-choose";
+import processStart from "@/views/my-components/xboot/process-start";
+import processCancel from "@/views/my-components/xboot/process-cancel";
 export default {
   name: "xboot-components",
   components: {

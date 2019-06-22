@@ -71,12 +71,8 @@ export default {
       let url;
       if (this.currNav == "doc") {
         url = "https://www.kancloud.cn/exrick/xboot/content";
-      } else if (this.currNav == "xboot-show") {
-        url = "http://xb.exrick.cn";
-      } else if (this.currNav == "xpay") {
-        url = "http://xpay.exrick.cn";
-      } else if (this.currNav == "xmall") {
-        url = "http://xmall.exrick.cn";
+      } else if (this.currNav == "baidu") {
+        url = "https://www.baidu.com";
       }
       if (url) {
         this.url = url;

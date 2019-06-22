@@ -188,7 +188,7 @@
               > 
               <FormItem label="应用部署域名：" prop="domain">
                 <Tooltip placement="right" content="拼接部分资源访问链接使用">
-                  <Input type="text" v-model="other.domain" placeholder="请输入应用部署域名前缀，如http://xboot.exrick.cn" style="width: 350px"/>
+                  <Input type="text" v-model="other.domain" placeholder="请输入应用部署域名前缀，如http://xxx.xxx.com" style="width: 350px"/>
                 </Tooltip>
               </FormItem>
               <FormItem label="IP黑名单：" prop="blacklist">

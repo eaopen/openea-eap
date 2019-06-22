@@ -1,5 +1,5 @@
 <style lang="less">
-@import "./message.less";
+@import "message.less";
 </style>
 
 <template>

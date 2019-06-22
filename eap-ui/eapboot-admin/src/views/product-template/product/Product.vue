@@ -49,10 +49,10 @@
               </div>
             </TabPane>
             <TabPane label="电商类2" name="3">
-              待开发，如果需要尽早购买，购买后持续免费更新，避免涨价
+              待开发
               <br>
               <br>
-              <Button to="http://xpay.exrick.cn/pay?xboot" target="_blank" type="error" icon="md-paper-plane">立即获取</Button>
+              <Button to="" target="_blank" type="error" icon="md-paper-plane">立即获取</Button>
             </TabPane>
           </Tabs>
               
