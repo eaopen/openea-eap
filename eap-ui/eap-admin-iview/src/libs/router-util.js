@@ -1,6 +1,5 @@
 /**
- * ①添
- * @@新增 定义初始化菜单
+ * 定义初始化菜单
  */
 // import axios from 'axios'
 import { getToken, localSave, localRead } from '@/libs/util'
@@ -17,6 +16,7 @@ import parentView from '@/components/parent-view' // 获取组件的方法
 var gotRouter
 // 初始化路由
 export const initRouter = () => {
+  console.log('initRouter')
   if (!getToken()) {
     return
   }
@@ -52,7 +52,7 @@ export const initRouter = () => {
 export const dynamicRouterAdd = () => {
   let dynamicRouter = []
   let data = localRead('dynamicRouter')
-  console.log('从本地加载出来', data)
+  // console.log('从本地加载出来', data)
   if (!data) {
     return dynamicRouter
   }
@@ -82,4 +82,14 @@ export const filterAsyncRouter = asyncRouterMap => {
     return true
   })
   return accessedRouters
+}
+
+export const loadMenuList = (stateMenuList = [], demoRouter = []) => {
+  let menuList = []
+  if (stateMenuList.length > 0) {
+    menuList = stateMenuList
+    return menuList
+  }
+  menuList = [...dynamicRouterAdd(), ...demoRouter]
+  return menuList
 }

@@ -31,6 +31,7 @@ router.beforeEach((to, from, next) => {
     })
   } else if (!token && to.name === LOGIN_PAGE_NAME) {
     // 未登陆且要跳转的页面是登录页
+    initRouter() // 登录页刷新重新获取,确保路由跳转前即beforeEach获取到动态路由表
     next() // 跳转
   } else if (token && to.name === LOGIN_PAGE_NAME) {
     // 已登录且要跳转的页面是登录页
@@ -38,7 +39,7 @@ router.beforeEach((to, from, next) => {
       name: homeName // 跳转到homeName页
     })
   } else {
-    initRouter() // 增加初始化路由
+    // initRouter() // 增加初始化路由
     if (store.state.user.hasGetInfo) {
       turnTo(to, store.state.user.access, next)
     } else {

@@ -13,8 +13,8 @@ import {
 } from '@/libs/util'
 import { saveErrorLogger } from '@/api/data'
 import router from '@/router'
-// import routers from '@/router/routers'
-import { dynamicRouterAdd } from '@/libs/router-util' // 引入加载菜单
+import { demoRouter } from '@/router/routers'
+import { loadMenuList } from '@/libs/router-util' // 引入加载菜单
 import config from '@/config'
 const { homeName } = config
 
@@ -37,14 +37,14 @@ export default {
     menuList: []
   },
   getters: {
-    menuList: (state, getters, rootState) => getMenuByRouter(dynamicRouterAdd(), rootState.user.access),
+    menuList: (state, getters, rootState) => getMenuByRouter(loadMenuList(state.menuList, demoRouter), rootState.user.access),
     errorCount: state => state.errorList.length
   },
   mutations: {
     updateMenuList (state, routes) {
       // 接受前台数组，刷新菜单
       router.addRoutes(routes) // 动态添加路由
-      state.menuList = routes
+      state.menuList = [...routes, ...demoRouter]
       console.log('updateMenuList 添  menuList', state.menuList)
     },
     setBreadCrumb (state, route) {

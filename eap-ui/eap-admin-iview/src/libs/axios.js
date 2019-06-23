@@ -40,6 +40,7 @@ class HttpRequest {
         // Spin.show() // 不建议开启，因为界面不友好
       }
       this.queue[url] = true
+      // todo support jwt,add accessToken in header
       return config
     }, error => {
       return Promise.reject(error)
@@ -48,6 +49,8 @@ class HttpRequest {
     instance.interceptors.response.use(res => {
       this.destroy(url)
       const { data, status } = res
+      // 根据返回的code值来做不同的处理(和后端约定)
+      // todo switch(data.code)
       return { data, status }
     }, error => {
       this.destroy(url)
