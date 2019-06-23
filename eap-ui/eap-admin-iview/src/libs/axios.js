@@ -41,6 +41,9 @@ class HttpRequest {
       }
       this.queue[url] = true
       // todo support jwt,add accessToken in header
+      if (store.state.user.token) {
+        config.headers.common['Authorization'] = 'Bearer ' + store.state.user.token
+      }
       return config
     }, error => {
       return Promise.reject(error)
