@@ -213,3 +213,5 @@ export const objEqual = (obj1, obj2) => {
   /* eslint-disable-next-line */
   else return !keysArr1.some(key => obj1[key] != obj2[key])
 }
+
+export const lazyLoadingCop = file => require('@/view/' + file + '.vue').default

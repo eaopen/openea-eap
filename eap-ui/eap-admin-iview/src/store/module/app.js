@@ -13,7 +13,7 @@ import {
 } from '@/libs/util'
 import { saveErrorLogger } from '@/api/data'
 import router from '@/router'
-import routers from '@/router/routers'
+// import routers from '@/router/routers'
 import config from '@/config'
 const { homeName } = config
 
@@ -27,6 +27,7 @@ const closePage = (state, route) => {
 
 export default {
   state: {
+    menuList: [],
     breadCrumbList: [],
     tagNavList: [],
     homeRoute: {},
@@ -35,10 +36,18 @@ export default {
     hasReadErrorPage: false
   },
   getters: {
-    menuList: (state, getters, rootState) => getMenuByRouter(routers, rootState.user.access),
+    menuList: (state, getters, rootState) => getMenuByRouter(state.menuList, rootState.user.access),
     errorCount: state => state.errorList.length
+    // menuList: (state, getters, rootState) => getMenuByRouter(routers, rootState.user.access),
+    // errorCount: state => state.errorList.length
   },
   mutations: {
+    updateMenuList (state, routes) {
+      // 接受前台数组，刷新菜单
+      router.addRoutes(routes) // 动态添加路由
+      state.menuList = routes
+      console.log('updateMenuList 添  menuList', state.menuList)
+    },
     setBreadCrumb (state, route) {
       state.breadCrumbList = getBreadCrumbList(route, state.homeRoute)
     },

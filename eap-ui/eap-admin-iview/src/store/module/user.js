@@ -10,6 +10,7 @@ import {
   getUnreadCount
 } from '@/api/user'
 import { setToken, getToken } from '@/libs/util'
+import { initRouter } from '@/libs/router-util' // ①新增  引入动态菜单渲染
 
 export default {
   state: {
@@ -83,6 +84,9 @@ export default {
         }).then(res => {
           const data = res.data
           commit('setToken', data.token)
+          console.log('token', getToken())
+          // 初始化路由
+          initRouter()
           resolve()
         }).catch(err => {
           reject(err)
@@ -93,8 +97,10 @@ export default {
     handleLogOut ({ state, commit }) {
       return new Promise((resolve, reject) => {
         logout(state.token).then(() => {
+          console.log('退出', res)
           commit('setToken', '')
           commit('setAccess', [])
+          localSave('dynamicRouter', []) // 清空本地路由
           resolve()
         }).catch(err => {
           reject(err)

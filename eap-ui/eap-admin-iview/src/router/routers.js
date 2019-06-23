@@ -1,4 +1,5 @@
 import Main from '@/components/main'
+import { dynamicRouterAdd } from '@/libs/router-util' // ①添 引入加载菜单
 import parentView from '@/components/parent-view'
 
 /**
@@ -17,7 +18,7 @@ import parentView from '@/components/parent-view'
  * }
  */
 
-export default [
+export const otherRouter = [
   {
     path: '/login',
     name: 'login',
@@ -28,28 +29,76 @@ export default [
     component: () => import('@/view/login/login.vue')
   },
   {
-    path: '/',
-    name: '_home',
-    redirect: '/home',
-    component: Main,
+    path: '/401',
+    name: 'error_401',
     meta: {
-      hideInMenu: true,
-      notCache: true
+      hideInMenu: true
     },
-    children: [
-      {
-        path: '/home',
-        name: 'home',
-        meta: {
-          hideInMenu: true,
-          title: '首页',
-          notCache: true,
-          icon: 'md-home'
-        },
-        component: () => import('@/view/single-page/home')
-      }
-    ]
+    component: () => import('@/view/error-page/401.vue')
   },
+  {
+    path: '/500',
+    name: 'error_500',
+    meta: {
+      hideInMenu: true
+    },
+    component: () => import('@/view/error-page/500.vue')
+  },
+  {
+    path: '*',
+    name: 'error_404',
+    meta: {
+      hideInMenu: true
+    },
+    component: () => import('@/view/error-page/404.vue')
+  }
+]
+
+// 作为Main组件的子页面展示但是不在左侧菜单显示的路由写在mainRouter里
+export const mainRouter = [{
+  path: '/',
+  name: '_home',
+  redirect: '/home',
+  component: Main,
+  meta: {
+    hideInMenu: true,
+    notCache: true
+  },
+  children: [
+    {
+      path: '/home',
+      name: 'home',
+      meta: {
+        hideInMenu: true,
+        title: '首页',
+        notCache: true,
+        icon: 'md-home'
+      },
+      component: () => import('@/view/single-page/home')
+    }
+  ]
+}, {
+  path: '/message',
+  name: 'message',
+  component: Main,
+  meta: {
+    hideInBread: true,
+    hideInMenu: true
+  },
+  children: [
+    {
+      path: 'message_page',
+      name: 'message_page',
+      meta: {
+        icon: 'md-notifications',
+        title: '消息中心'
+      },
+      component: () => import('@/view/single-page/message/index.vue')
+    }
+  ]
+}]
+
+export const demoRouter = [
   {
     path: '',
     name: 'doc',
@@ -75,26 +124,6 @@ export default [
           title: 'QQ群'
         },
         component: () => import('@/view/join-page.vue')
-      }
-    ]
-  },
-  {
-    path: '/message',
-    name: 'message',
-    component: Main,
-    meta: {
-      hideInBread: true,
-      hideInMenu: true
-    },
-    children: [
-      {
-        path: 'message_page',
-        name: 'message_page',
-        meta: {
-          icon: 'md-notifications',
-          title: '消息中心'
-        },
-        component: () => import('@/view/single-page/message/index.vue')
       }
     ]
   },
@@ -462,29 +491,17 @@ export default [
         component: () => import('@/view/argu-page/query.vue')
       }
     ]
-  },
-  {
-    path: '/401',
-    name: 'error_401',
-    meta: {
-      hideInMenu: true
-    },
-    component: () => import('@/view/error-page/401.vue')
-  },
-  {
-    path: '/500',
-    name: 'error_500',
-    meta: {
-      hideInMenu: true
-    },
-    component: () => import('@/view/error-page/500.vue')
-  },
-  {
-    path: '*',
-    name: 'error_404',
-    meta: {
-      hideInMenu: true
-    },
-    component: () => import('@/view/error-page/404.vue')
   }
 ]
+
+// 作为Main组件的子页面展示并且在左侧菜单显示的路由写在appRouter里
+export const appRouter = [...dynamicRouterAdd()]
+
+export const routers = [
+  ...otherRouter,
+  ...mainRouter,
+  ...appRouter,
+  ...demoRouter
+]
+
+export default routers
