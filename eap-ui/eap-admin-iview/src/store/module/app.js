@@ -14,6 +14,7 @@ import {
 import { saveErrorLogger } from '@/api/data'
 import router from '@/router'
 // import routers from '@/router/routers'
+import { dynamicRouterAdd } from '@/libs/router-util' // 引入加载菜单
 import config from '@/config'
 const { homeName } = config
 
@@ -27,19 +28,17 @@ const closePage = (state, route) => {
 
 export default {
   state: {
-    menuList: [],
     breadCrumbList: [],
     tagNavList: [],
     homeRoute: {},
     local: localRead('local'),
     errorList: [],
-    hasReadErrorPage: false
+    hasReadErrorPage: false,
+    menuList: []
   },
   getters: {
-    menuList: (state, getters, rootState) => getMenuByRouter(state.menuList, rootState.user.access),
+    menuList: (state, getters, rootState) => getMenuByRouter(dynamicRouterAdd(), rootState.user.access),
     errorCount: state => state.errorList.length
-    // menuList: (state, getters, rootState) => getMenuByRouter(routers, rootState.user.access),
-    // errorCount: state => state.errorList.length
   },
   mutations: {
     updateMenuList (state, routes) {

@@ -4,7 +4,7 @@ import routes from './routers'
 import store from '@/store'
 import iView from 'iview'
 import { setToken, getToken, canTurnTo, setTitle } from '@/libs/util'
-import { dynamicRouterAdd } from '@/libs/router-util'
+import { initRouter } from '@/libs/router-util'
 import config from '@/config'
 const { homeName } = config
 
@@ -17,7 +17,7 @@ const router = new Router({
 const LOGIN_PAGE_NAME = 'login'
 
 const turnTo = (to, access, next) => {
-  if (canTurnTo(to.name, access, [...routes, ...dynamicRouterAdd()])) next() // 有权限，可访问
+  if (canTurnTo(to.name, access, routes)) next() // 有权限，可访问
   else next({ replace: true, name: 'error_401' }) // 无权限，重定向到401页面
 }
 
@@ -38,6 +38,7 @@ router.beforeEach((to, from, next) => {
       name: homeName // 跳转到homeName页
     })
   } else {
+    initRouter() // 增加初始化路由
     if (store.state.user.hasGetInfo) {
       turnTo(to, store.state.user.access, next)
     } else {

@@ -52,7 +52,7 @@ export const getTreeSelectData = () => {
 
 export const getMockMenuData = () => {
   return axios.request({
-    url: 'system/mock_menu',
+    url: 'get_mock_menu_data',
     method: 'post'
   })
 }

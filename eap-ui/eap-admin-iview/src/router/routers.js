@@ -1,6 +1,6 @@
 import Main from '@/components/main'
-import { dynamicRouterAdd } from '@/libs/router-util' // ①添 引入加载菜单
-import parentView from '@/components/parent-view'
+import { dynamicRouterAdd } from '@/libs/router-util' // 引入加载菜单
+// import parentView from '@/components/parent-view'
 
 /**
  * iview-admin中meta除了原生参数外可配置的参数:
@@ -18,6 +18,7 @@ import parentView from '@/components/parent-view'
  * }
  */
 
+// 不作为Main组件的子页面展示的页面单独写
 export const otherRouter = [
   {
     path: '/login',
@@ -99,34 +100,6 @@ export const mainRouter = [{
 }]
 
 export const demoRouter = [
-  {
-    path: '',
-    name: 'doc',
-    meta: {
-      title: '文档',
-      href: 'https://lison16.github.io/iview-admin-doc/#/',
-      icon: 'ios-book'
-    }
-  },
-  {
-    path: '/join',
-    name: 'join',
-    component: Main,
-    meta: {
-      hideInBread: true
-    },
-    children: [
-      {
-        path: 'join_page',
-        name: 'join_page',
-        meta: {
-          icon: '_qq',
-          title: 'QQ群'
-        },
-        component: () => import('@/view/join-page.vue')
-      }
-    ]
-  },
   {
     path: '/components',
     name: 'components',
@@ -400,108 +373,17 @@ export const demoRouter = [
         component: () => import('@/view/directive/directive.vue')
       }
     ]
-  },
-  {
-    path: '/multilevel',
-    name: 'multilevel',
-    meta: {
-      icon: 'md-menu',
-      title: '多级菜单'
-    },
-    component: Main,
-    children: [
-      {
-        path: 'level_2_1',
-        name: 'level_2_1',
-        meta: {
-          icon: 'md-funnel',
-          title: '二级-1'
-        },
-        component: () => import('@/view/multilevel/level-2-1.vue')
-      },
-      {
-        path: 'level_2_2',
-        name: 'level_2_2',
-        meta: {
-          access: ['super_admin'],
-          icon: 'md-funnel',
-          showAlways: true,
-          title: '二级-2'
-        },
-        component: parentView,
-        children: [
-          {
-            path: 'level_2_2_1',
-            name: 'level_2_2_1',
-            meta: {
-              icon: 'md-funnel',
-              title: '三级'
-            },
-            component: () => import('@/view/multilevel/level-2-2/level-2-2-1.vue')
-          },
-          {
-            path: 'level_2_2_2',
-            name: 'level_2_2_2',
-            meta: {
-              icon: 'md-funnel',
-              title: '三级'
-            },
-            component: () => import('@/view/multilevel/level-2-2/level-2-2-2.vue')
-          }
-        ]
-      },
-      {
-        path: 'level_2_3',
-        name: 'level_2_3',
-        meta: {
-          icon: 'md-funnel',
-          title: '二级-3'
-        },
-        component: () => import('@/view/multilevel/level-2-3.vue')
-      }
-    ]
-  },
-  {
-    path: '/argu',
-    name: 'argu',
-    meta: {
-      hideInMenu: true
-    },
-    component: Main,
-    children: [
-      {
-        path: 'params/:id',
-        name: 'params',
-        meta: {
-          icon: 'md-flower',
-          title: route => `{{ params }}-${route.params.id}`,
-          notCache: true,
-          beforeCloseName: 'before_close_normal'
-        },
-        component: () => import('@/view/argu-page/params.vue')
-      },
-      {
-        path: 'query',
-        name: 'query',
-        meta: {
-          icon: 'md-flower',
-          title: route => `{{ query }}-${route.query.id}`,
-          notCache: true
-        },
-        component: () => import('@/view/argu-page/query.vue')
-      }
-    ]
   }
 ]
 
 // 作为Main组件的子页面展示并且在左侧菜单显示的路由写在appRouter里
 export const appRouter = [...dynamicRouterAdd()]
 
-export const routers = [
+export const routes = [
   ...otherRouter,
   ...mainRouter,
   ...appRouter,
   ...demoRouter
 ]
 
-export default routers
+export default routes

@@ -9,8 +9,8 @@ import {
   restoreTrash,
   getUnreadCount
 } from '@/api/user'
-import { setToken, getToken } from '@/libs/util'
-import { initRouter } from '@/libs/router-util' // ①新增  引入动态菜单渲染
+import { setToken, getToken, localSave } from '@/libs/util'
+import { initRouter } from '@/libs/router-util' // 引入动态菜单渲染
 
 export default {
   state: {
@@ -97,10 +97,10 @@ export default {
     handleLogOut ({ state, commit }) {
       return new Promise((resolve, reject) => {
         logout(state.token).then(() => {
-          console.log('退出', res)
           commit('setToken', '')
           commit('setAccess', [])
           localSave('dynamicRouter', []) // 清空本地路由
+          localSave('tagNaveList', []) // 清空localStorage中的tagNaveList记录
           resolve()
         }).catch(err => {
           reject(err)

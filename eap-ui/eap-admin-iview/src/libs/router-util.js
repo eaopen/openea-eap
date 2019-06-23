@@ -5,18 +5,18 @@
 // import axios from 'axios'
 import { getToken, localSave, localRead } from '@/libs/util'
 // import config from '@/config'
+import store from '@/store'
 import { lazyLoadingCop } from '@/libs/tools'
 import { getMockMenuData } from '@/api/data'
 import Main from '@/components/main' // Main 是架构组件，不在后台返回，在文件里单独引入
 import parentView from '@/components/parent-view' // 获取组件的方法
-import store from '@/store' // parentView 是二级架构组件，不在后台返回，在文件里单独引入
+// parentView 是二级架构组件，不在后台返回，在文件里单独引入
 // eslint-disable-next-line no-unused-vars
-const _import = require('@/router/_import_' + process.env.NODE_ENV)
+// const _import = require('@/router/_import_' + process.env.NODE_ENV)
 
 var gotRouter
 // 初始化路由
 export const initRouter = () => {
-  console.log('----------------开始初始化路由--------------------')
   if (!getToken()) {
     return
   }
@@ -29,14 +29,18 @@ export const initRouter = () => {
     gotRouter=formatMenu(menuData);
     vm.$store.commit('updateMenuList',gotRouter);
   }); */
-  var routerData
+  gotRouter = localRead('dynamicRouter')
   if (!gotRouter) {
     getMockMenuData().then(res => {
-      routerData = res.data // 后台拿到路由
-      localSave('dynamicRouter', JSON.stringify(routerData)) // 存储路由到localStorage
-      gotRouter = filterAsyncRouter(routerData) // 过滤路由,路由组件转换
-      store.commit('updateMenuList', gotRouter)
-      dynamicRouterAdd()
+      if (res.status === 200) {
+        var routerData = res.data // 后台拿到路由
+        localSave('dynamicRouter', JSON.stringify(routerData)) // 存储路由到localStorage
+        gotRouter = filterAsyncRouter(routerData) // 过滤路由,路由组件转换
+        store.commit('updateMenuList', gotRouter)
+        dynamicRouterAdd()
+      } else {
+        console.log('请求失败')
+      }
     })
   } else {
     gotRouter = dynamicRouterAdd()
