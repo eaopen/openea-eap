@@ -48,15 +48,6 @@ class HttpRequest {
     instance.interceptors.response.use(res => {
       this.destroy(url)
       const { data, status } = res
-      // adapter for eap-fast
-      if(status==200 && data["code"] != undefined ){
-         if(data["code"]==0){
-           data["status"] = status;
-         }else{
-           data["status"] = data["code"]
-         }
-         return data
-      }
       return { data, status }
     }, error => {
       this.destroy(url)

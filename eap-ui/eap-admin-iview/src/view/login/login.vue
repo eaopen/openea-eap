@@ -29,10 +29,6 @@ export default {
     ]),
     handleSubmit ({ userName, password }) {
       this.handleLogin({ userName, password }).then(res => {
-        if (data && data.code === 0) {
-          this.$cookie.set('token', data.token)
-          //this.$router.replace({ name: 'home' })
-        }
         this.getUserInfo().then(res => {
           this.$router.push({
             name: this.$config.homeName

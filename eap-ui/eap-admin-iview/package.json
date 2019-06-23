@@ -1,8 +1,8 @@
 {
-  "name": "eap-iview",
-  "version": "2.0.0",
-  "description": "base on iview-admin 2.5(Lison<lison.modern@gmail.com>)",
+  "name": "eap-admin-iview",
+  "version": "1.0.0",
   "author": "openea",
+  "description": "EapBoot企业应用平台, based on iview-admin 2.0.0 (Lison<lison.modern@gmail.com>)",
   "private": true,
   "scripts": {
     "dev": "vue-cli-service serve --open",
@@ -20,20 +20,20 @@
     "dayjs": "^1.7.7",
     "echarts": "^4.0.4",
     "html2canvas": "^1.0.0-alpha.12",
-    "iview": "^3.2.2",
-    "iview-area": "^1.5.17",
+    "iview": "^3.4.2",
+    "iview-area": "^1.6.0",
     "js-cookie": "^2.2.0",
     "simplemde": "^1.11.2",
     "sortablejs": "^1.7.0",
     "tree-table-vue": "^1.1.0",
     "v-org-tree": "^1.0.6",
-    "vue": "^2.5.10",
+    "vue": "^2.6.10",
     "vue-i18n": "^7.8.0",
-    "vue-router": "^3.0.1",
+    "vue-router": "^3.0.3",
     "vuedraggable": "^2.16.0",
     "vuex": "^3.0.1",
     "wangeditor": "^3.1.1",
-    "xlsx": "^0.13.3"
+    "xlsx": "^0.14.3"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.0.1",

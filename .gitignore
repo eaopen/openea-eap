@@ -37,3 +37,6 @@ hs_err_pid*
 **/package-lock.json
 
 refer/**
+
+*-logs/
+**/*-logs/
