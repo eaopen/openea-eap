@@ -42,6 +42,9 @@ spring:
         stat:
           # 显示慢sql 默认当超过3秒显示
           log-slow-sql: true
+    initialization-mode: always
+    schema: classpath:db/eapboot-schema-demo.sql
+    data: classpath:db/eapboot-data-demo.sql
   jpa:
     # 显示sql
     show-sql: true
