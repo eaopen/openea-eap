@@ -16,12 +16,15 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.common.exceptions.InvalidScopeException;
+import org.springframework.security.oauth2.common.exceptions.OAuth2Exception;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
-import org.springframework.security.oauth2.provider.ClientDetailsService;
+import org.springframework.security.oauth2.provider.*;
 import org.springframework.security.oauth2.provider.client.JdbcClientDetailsService;
+import org.springframework.security.oauth2.provider.endpoint.RedirectResolver;
 import org.springframework.security.oauth2.provider.token.AuthorizationServerTokenServices;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
@@ -76,6 +79,26 @@ public class EapAuthorizationServerConfig extends AuthorizationServerConfigurerA
                 .tokenServices(defaultTokenServices)
                 .tokenStore(tokenStore())
                 .accessTokenConverter(accessTokenConverter());
+
+        // set RedirectResolver
+        configurer.redirectResolver(new RedirectResolver(){
+            @Override
+            public String resolveRedirect(String requestedRedirect, ClientDetails clientDetails) throws OAuth2Exception {
+                return requestedRedirect;
+            }
+        });
+        // set requestValidator
+        configurer.requestValidator(new OAuth2RequestValidator() {
+            @Override
+            public void validateScope(AuthorizationRequest authorizationRequest, ClientDetails clientDetails) throws InvalidScopeException {
+
+            }
+
+            @Override
+            public void validateScope(TokenRequest tokenRequest, ClientDetails clientDetails) throws InvalidScopeException {
+
+            }
+        });
         configurer.pathMapping("/oauth/confirm_access","/custom/confirm_access");
     }
 

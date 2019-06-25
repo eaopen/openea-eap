@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 import javax.sql.DataSource;
 
-@Service("oauthClientDetailsService")
+//@Service("oauthClientDetailsService")
 public class CustJdbcClientDetailsService extends JdbcClientDetailsService {
     public CustJdbcClientDetailsService(@Autowired DataSource dataSource) {
         super(dataSource);

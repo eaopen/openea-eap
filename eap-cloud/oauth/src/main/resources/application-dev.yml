@@ -6,6 +6,11 @@ eap-oauth:
   oauth-adapter: bpm
   cust-users-by-username-query: select account_,password_,status_ from org_user where account_ = ?
   cust-pwd-encoder: customPwdEncoder
+  clients:
+    - client-id: ETECH_ADMIN
+      client-secret: $2a$10$cEnjtK3Eso.uEtT.ZFXbyuh7DPm5dWgR7JLvp7r4LDMDcnXEy5gU.
+    - client-id: EAP_ADMIN
+      client-secret: $2a$10$cEnjtK3Eso.uEtT.ZFXbyuh7DPm5dWgR7JLvp7r4LDMDcnXEy5gU.
 spring:
   datasource:
     driver-class-name: ${jdbc_driver:com.mysql.jdbc.Driver}

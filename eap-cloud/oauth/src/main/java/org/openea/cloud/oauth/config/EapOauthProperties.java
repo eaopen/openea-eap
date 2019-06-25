@@ -1,9 +1,12 @@
 package org.openea.cloud.oauth.config;
 
 import lombok.Data;
+import org.springframework.boot.autoconfigure.security.oauth2.OAuth2ClientProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.NestedConfigurationProperty;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.List;
 
 @Data
 @ConfigurationProperties(
@@ -12,8 +15,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class EapOauthProperties {
 
-    @NestedConfigurationProperty
-    private Auth auth;
+
     private String oauthAdapter;  //bpm
 
     private String custUsersByUsernameQuery;
@@ -21,6 +23,12 @@ public class EapOauthProperties {
 
     private String loginProcessUrl = "/auth/authorize";
     private String loginPageTitle = "/auth/authorize";
+
+    @NestedConfigurationProperty
+    private Auth auth;
+
+    @NestedConfigurationProperty
+    private List<OAuth2ClientProperties> clients;
 
     @Data
     public static class Auth {

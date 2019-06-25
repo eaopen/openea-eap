@@ -9,6 +9,9 @@ import org.springframework.stereotype.Component;
 
 import java.security.MessageDigest;
 
+/**
+ * CustomPwdEncoder 定制密码加密方式（OpenBpm使用）
+ */
 @ConditionalOnExpression("'${eap-oauth.cust-pwd-encoder}'=='customPwdEncoder'")
 @Component("passwordEncoder")
 public class CustomPwdEncoder implements PasswordEncoder {

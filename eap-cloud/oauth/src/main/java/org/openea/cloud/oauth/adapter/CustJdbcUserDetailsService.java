@@ -32,7 +32,7 @@ public class CustJdbcUserDetailsService extends JdbcDaoImpl {
         this.setDataSource(dataSource);
 
         defaultAuthorities = new ArrayList<GrantedAuthority>();
-        defaultAuthorities.add(new SimpleGrantedAuthority("user"));
+        defaultAuthorities.add(new SimpleGrantedAuthority("ROLE_USER"));
     }
 
     @Override
