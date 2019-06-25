@@ -5,6 +5,7 @@ server:
 
 spring:
   datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: ${jdbc_driver:com.mysql.jdbc.Driver}
     url: ${jdbc_url:jdbc:mysql://eap-bpm-mysql:3306/eap_bpm?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false}
     username: ${jdbc_user:eap}
