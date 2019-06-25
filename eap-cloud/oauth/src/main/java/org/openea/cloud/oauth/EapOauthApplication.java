@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-@ComponentScan({"org.openea.cloud.oauth.**","org.openbpm.**"})
+@ComponentScan({"org.openea.cloud.oauth.**"})
 @EnableAuthorizationServer
 @Configuration
 @EnableTransactionManagement

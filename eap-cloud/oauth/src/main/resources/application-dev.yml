@@ -1,9 +1,11 @@
 server:
   port: ${port:7010}
-app:
+
+eap-oauth:
   login-page-title: Eap OAuth Center(bpm based)
   oauth-adapter: bpm
-
+  cust-users-by-username-query: select account_,password_,status_ from org_user where account_ = ?
+  cust-pwd-encoder: customPwdEncoder
 spring:
   datasource:
     driver-class-name: ${jdbc_driver:com.mysql.jdbc.Driver}

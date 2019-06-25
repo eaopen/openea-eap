@@ -24,10 +24,6 @@ public class ApplicationConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private EapOauthProperties eapOauthProperties;
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -56,12 +52,6 @@ public class ApplicationConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public StaticApplicationContext staticApplicationContext() {
         return new StaticApplicationContext();
-    }
-
-    @Override
-    @Bean
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
     }
 
 }

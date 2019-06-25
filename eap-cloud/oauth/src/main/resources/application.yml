@@ -23,9 +23,10 @@ spring:
   liquibase:
     enabled: false
 
-app:
+eap-oauth:
   login-page-title: Eap OAuth Center
   oauth-adapter: ${oauth-adapter:default}
+  cust-pwd-encoder: BCryptPasswordEncoder
   auth:
     resourceId: OAUTH_DEMO
     default-access-token-timeout: 1800

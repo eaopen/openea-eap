@@ -83,31 +83,6 @@
             <scope>test</scope>
         </dependency>
 
-
-        <!-- eap-oauth implement by bpm  -->
-        <dependency>
-            <groupId>org.openbpm.bpm</groupId>
-            <artifactId>base-autoconf</artifactId>
-            <version>${bpm-rest.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.openbpm.bpm</groupId>
-            <artifactId>org-api</artifactId>
-            <version>${bpm-support.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.openbpm.bpm</groupId>
-            <artifactId>org-core-default</artifactId>
-            <version>${bpm-support.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.openbpm.bpm</groupId>
-            <artifactId>security-jwt-default</artifactId>
-            <version>${bpm-support.version}</version>
-        </dependency>
-
     </dependencies>
 
     <build>
