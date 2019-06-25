@@ -1,3 +1,20 @@
-app:
+server:
+  port: ${port:7010}
+
+eap-oauth:
   login-page-title: Eap OAuth Center(bpm based)
-  oauth-adapter: ${oauth-adapter:bpm}
+  oauth-adapter: bpm
+  cust-users-by-username-query: select account_,password_,status_ from org_user where account_ = ?
+  cust-pwd-encoder: customPwdEncoder
+  clients:
+    - client-id: EAP_ADMIN
+      client-secret: $2a$10$cEnjtK3Eso.uEtT.ZFXbyuh7DPm5dWgR7JLvp7r4LDMDcnXEy5gU.
+    - client-id: BPM
+      client-secret: $2a$10$cEnjtK3Eso.uEtT.ZFXbyuh7DPm5dWgR7JLvp7r4LDMDcnXEy5gU.
+spring:
+  datasource:
+    driver-class-name: ${jdbc_driver:com.mysql.jdbc.Driver}
+    url: ${jdbc_url:jdbc:mysql://eap-bpm-mysql:3306/eap_bpm?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false}
+    username: ${jdbc_user:bpm}
+    password: ${jdbc_password:bpm}
+    dbType: ${db_type:mysql}
