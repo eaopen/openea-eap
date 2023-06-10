@@ -17,13 +17,13 @@ import java.util.Set;
 @Data
 public class UserBaseVO {
 
-    @Schema(description = "用户账号", requiredMode = Schema.RequiredMode.REQUIRED, example = "yudao")
+    @Schema(description = "用户账号", required = true, example = "yudao")
     @NotBlank(message = "用户账号不能为空")
     @Pattern(regexp = "^[a-zA-Z0-9]{4,30}$", message = "用户账号由 数字、字母 组成")
     @Size(min = 4, max = 30, message = "用户账号长度为 4-30 个字符")
     private String username;
 
-    @Schema(description = "用户昵称", requiredMode = Schema.RequiredMode.REQUIRED, example = "芋艿")
+    @Schema(description = "用户昵称", required = true, example = "芋艿")
     @Size(max = 30, message = "用户昵称长度不能超过30个字符")
     private String nickname;
 
@@ -45,7 +45,7 @@ public class UserBaseVO {
     @Mobile
     private String mobile;
 
-    @Schema(description = "用户性别,参见 SexEnum 枚举类", example = "1")
+    @Schema(description = "用户性别，参见 SexEnum 枚举类", example = "1")
     private Integer sex;
 
     @Schema(description = "用户头像", example = "https://www.iocoder.cn/xxx.png")

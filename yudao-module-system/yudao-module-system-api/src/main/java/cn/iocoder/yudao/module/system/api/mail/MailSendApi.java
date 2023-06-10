@@ -1,34 +1,27 @@
 package cn.iocoder.yudao.module.system.api.mail;
 
+import cn.iocoder.yudao.framework.common.pojo.CommonResult;
 import cn.iocoder.yudao.module.system.api.mail.dto.MailSendSingleToUserReqDTO;
+import cn.iocoder.yudao.module.system.enums.ApiConstants;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
 
-/**
- * 邮箱发送 API 接口
- *
- * @author 芋道源码
- */
+@FeignClient(name = ApiConstants.NAME) // TODO 芋艿：fallbackFactory =
+@Tag(name =  "RPC 服务 - 邮件发送")
 public interface MailSendApi {
 
-    /**
-     * 发送单条邮箱给 Admin 用户
-     *
-     * 在 mail 为空时，使用 userId 加载对应 Admin 的邮箱
-     *
-     * @param reqDTO 发送请求
-     * @return 发送日志编号
-     */
-    Long sendSingleMailToAdmin(@Valid MailSendSingleToUserReqDTO reqDTO);
+    String PREFIX = ApiConstants.PREFIX + "/mail/send";
 
-    /**
-     * 发送单条邮箱给 Member 用户
-     *
-     * 在 mail 为空时，使用 userId 加载对应 Member 的邮箱
-     *
-     * @param reqDTO 发送请求
-     * @return 发送日志编号
-     */
-    Long sendSingleMailToMember(@Valid MailSendSingleToUserReqDTO reqDTO);
+    @PostMapping(PREFIX + "/send-single-admin")
+    @Operation(summary = "发送单条邮件给 Admin 用户", description = "在 mail 为空时，使用 userId 加载对应 Admin 的邮箱")
+    CommonResult<Long> sendSingleMailToAdmin(@Valid MailSendSingleToUserReqDTO reqDTO);
+
+    @PostMapping(PREFIX + "/send-single-member")
+    @Operation(summary = "发送单条邮件给 Member 用户", description = "在 mail 为空时，使用 userId 加载对应 Member 的邮箱")
+    CommonResult<Long> sendSingleMailToMember(@Valid MailSendSingleToUserReqDTO reqDTO);
 
 }

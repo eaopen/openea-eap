@@ -107,7 +107,7 @@ public class JmReportTokenServiceImpl implements JmReportTokenServiceI {
         TenantContextHolder.setIgnore(true); // 忽略租户，保证可查询到 token 信息
         LoginUser user = null;
         try {
-            OAuth2AccessTokenCheckRespDTO accessToken = oauth2TokenApi.checkAccessToken(token);
+            OAuth2AccessTokenCheckRespDTO accessToken = oauth2TokenApi.checkAccessToken(token).getCheckedData();
             if (accessToken == null) {
                 return null;
             }

@@ -1,8 +1,7 @@
 package cn.iocoder.yudao.module.system.mq.message.permission;
 
-import cn.iocoder.yudao.framework.mq.core.pubsub.AbstractChannelMessage;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
+import org.springframework.cloud.bus.event.RemoteApplicationEvent;
 
 /**
  * 用户与角色的数据刷新 Message
@@ -10,12 +9,13 @@ import lombok.EqualsAndHashCode;
  * @author 芋道源码
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
-public class UserRoleRefreshMessage extends AbstractChannelMessage {
+public class UserRoleRefreshMessage extends RemoteApplicationEvent {
 
-    @Override
-    public String getChannel() {
-        return "system.user-role.refresh";
+    public UserRoleRefreshMessage() {
+    }
+
+    public UserRoleRefreshMessage(Object source, String originService, String destinationService) {
+        super(source, originService, DEFAULT_DESTINATION_FACTORY.getDestination(destinationService));
     }
 
 }

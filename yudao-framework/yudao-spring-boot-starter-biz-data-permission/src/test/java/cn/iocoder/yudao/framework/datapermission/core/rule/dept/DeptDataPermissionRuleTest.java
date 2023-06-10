@@ -4,11 +4,11 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ReflectUtil;
 import cn.iocoder.yudao.framework.common.enums.UserTypeEnum;
 import cn.iocoder.yudao.framework.common.util.collection.SetUtils;
-import cn.iocoder.yudao.module.system.api.permission.PermissionApi;
-import cn.iocoder.yudao.module.system.api.permission.dto.DeptDataPermissionRespDTO;
 import cn.iocoder.yudao.framework.security.core.LoginUser;
 import cn.iocoder.yudao.framework.security.core.util.SecurityFrameworkUtils;
 import cn.iocoder.yudao.framework.test.core.ut.BaseMockitoUnitTest;
+import cn.iocoder.yudao.module.system.api.permission.PermissionApi;
+import cn.iocoder.yudao.module.system.api.permission.dto.DeptDataPermissionRespDTO;
 import net.sf.jsqlparser.expression.Alias;
 import net.sf.jsqlparser.expression.Expression;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,10 +19,12 @@ import org.mockito.MockedStatic;
 
 import java.util.Map;
 
+import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
 import static cn.iocoder.yudao.framework.datapermission.core.rule.dept.DeptDataPermissionRule.EXPRESSION_NULL;
 import static cn.iocoder.yudao.framework.test.core.util.RandomUtils.randomPojo;
 import static cn.iocoder.yudao.framework.test.core.util.RandomUtils.randomString;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.ArgumentMatchers.same;
 import static org.mockito.Mockito.mockStatic;
 import static org.mockito.Mockito.when;
@@ -73,6 +75,8 @@ class DeptDataPermissionRuleTest extends BaseMockitoUnitTest {
             LoginUser loginUser = randomPojo(LoginUser.class, o -> o.setId(1L)
                     .setUserType(UserTypeEnum.ADMIN.getValue()));
             securityFrameworkUtilsMock.when(SecurityFrameworkUtils::getLoginUser).thenReturn(loginUser);
+            // mock 方法（permissionApi 返回 null）
+            when(permissionApi.getDeptDataPermission(eq(loginUser.getId()))).thenReturn(success(null));
 
             // 调用
             NullPointerException exception = assertThrows(NullPointerException.class,
@@ -95,7 +99,7 @@ class DeptDataPermissionRuleTest extends BaseMockitoUnitTest {
             securityFrameworkUtilsMock.when(SecurityFrameworkUtils::getLoginUser).thenReturn(loginUser);
             // mock 方法（DeptDataPermissionRespDTO）
             DeptDataPermissionRespDTO deptDataPermission = new DeptDataPermissionRespDTO().setAll(true);
-            when(permissionApi.getDeptDataPermission(same(1L))).thenReturn(deptDataPermission);
+            when(permissionApi.getDeptDataPermission(same(1L))).thenReturn(success(deptDataPermission));
 
             // 调用
             Expression expression = rule.getExpression(tableName, tableAlias);
@@ -118,7 +122,7 @@ class DeptDataPermissionRuleTest extends BaseMockitoUnitTest {
             securityFrameworkUtilsMock.when(SecurityFrameworkUtils::getLoginUser).thenReturn(loginUser);
             // mock 方法（DeptDataPermissionRespDTO）
             DeptDataPermissionRespDTO deptDataPermission = new DeptDataPermissionRespDTO();
-            when(permissionApi.getDeptDataPermission(same(1L))).thenReturn(deptDataPermission);
+            when(permissionApi.getDeptDataPermission(same(1L))).thenReturn(success(deptDataPermission));
 
             // 调用
             Expression expression = rule.getExpression(tableName, tableAlias);
@@ -142,7 +146,7 @@ class DeptDataPermissionRuleTest extends BaseMockitoUnitTest {
             // mock 方法（DeptDataPermissionRespDTO）
             DeptDataPermissionRespDTO deptDataPermission = new DeptDataPermissionRespDTO()
                     .setDeptIds(SetUtils.asSet(10L, 20L)).setSelf(true);
-            when(permissionApi.getDeptDataPermission(same(1L))).thenReturn(deptDataPermission);
+            when(permissionApi.getDeptDataPermission(same(1L))).thenReturn(success(deptDataPermission));
 
             // 调用
             Expression expression = rule.getExpression(tableName, tableAlias);
@@ -166,7 +170,7 @@ class DeptDataPermissionRuleTest extends BaseMockitoUnitTest {
             // mock 方法（DeptDataPermissionRespDTO）
             DeptDataPermissionRespDTO deptDataPermission = new DeptDataPermissionRespDTO()
                     .setSelf(true);
-            when(permissionApi.getDeptDataPermission(same(1L))).thenReturn(deptDataPermission);
+            when(permissionApi.getDeptDataPermission(same(1L))).thenReturn(success(deptDataPermission));
             // 添加 user 字段配置
             rule.addUserColumn("t_user", "id");
 
@@ -192,7 +196,7 @@ class DeptDataPermissionRuleTest extends BaseMockitoUnitTest {
             // mock 方法（DeptDataPermissionRespDTO）
             DeptDataPermissionRespDTO deptDataPermission = new DeptDataPermissionRespDTO()
                     .setDeptIds(CollUtil.newLinkedHashSet(10L, 20L));
-            when(permissionApi.getDeptDataPermission(same(1L))).thenReturn(deptDataPermission);
+            when(permissionApi.getDeptDataPermission(same(1L))).thenReturn(success(deptDataPermission));
             // 添加 dept 字段配置
             rule.addDeptColumn("t_user", "dept_id");
 
@@ -218,7 +222,7 @@ class DeptDataPermissionRuleTest extends BaseMockitoUnitTest {
             // mock 方法（DeptDataPermissionRespDTO）
             DeptDataPermissionRespDTO deptDataPermission = new DeptDataPermissionRespDTO()
                     .setDeptIds(CollUtil.newLinkedHashSet(10L, 20L)).setSelf(true);
-            when(permissionApi.getDeptDataPermission(same(1L))).thenReturn(deptDataPermission);
+            when(permissionApi.getDeptDataPermission(same(1L))).thenReturn(success(deptDataPermission));
             // 添加 user 字段配置
             rule.addUserColumn("t_user", "id");
             // 添加 dept 字段配置

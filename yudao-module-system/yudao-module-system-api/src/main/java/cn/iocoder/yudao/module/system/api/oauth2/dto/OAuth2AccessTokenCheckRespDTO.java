@@ -1,33 +1,26 @@
 package cn.iocoder.yudao.module.system.api.oauth2.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.util.List;
 
-/**
- * OAuth2.0 访问令牌的校验 Response DTO
- *
- * @author 芋道源码
- */
+@Schema(description = "RPC 服务 - OAuth2 访问令牌的校验 Response DTO")
 @Data
 public class OAuth2AccessTokenCheckRespDTO implements Serializable {
 
-    /**
-     * 用户编号
-     */
+    @Schema(description = "用户编号", required = true, example = "10")
     private Long userId;
-    /**
-     * 用户类型
-     */
+
+    @Schema(description = "用户类型,参见 UserTypeEnum 枚举", required = true, example = "1")
     private Integer userType;
-    /**
-     * 租户编号
-     */
+
+    @Schema(description = "租户编号", required = true, example = "1024")
     private Long tenantId;
-    /**
-     * 授权范围的数组
-     */
+
+    @Schema(description = "授权范围的数组", example = "user_info")
     private List<String> scopes;
 
 }

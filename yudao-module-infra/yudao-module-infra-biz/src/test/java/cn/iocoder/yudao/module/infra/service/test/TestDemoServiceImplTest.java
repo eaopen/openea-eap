@@ -2,6 +2,7 @@ package cn.iocoder.yudao.module.infra.service.test;
 
 import cn.iocoder.yudao.framework.common.enums.CommonStatusEnum;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
+import cn.iocoder.yudao.framework.common.util.date.DateUtils;
 import cn.iocoder.yudao.framework.test.core.ut.BaseDbUnitTest;
 import cn.iocoder.yudao.module.infra.controller.admin.test.vo.TestDemoCreateReqVO;
 import cn.iocoder.yudao.module.infra.controller.admin.test.vo.TestDemoExportReqVO;
@@ -16,7 +17,7 @@ import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static cn.iocoder.yudao.framework.common.util.date.LocalDateTimeUtils.buildTime;
+import static cn.iocoder.yudao.framework.common.util.date.DateUtils.buildLocalDateTime;
 import static cn.iocoder.yudao.framework.common.util.object.ObjectUtils.cloneIgnoreId;
 import static cn.iocoder.yudao.framework.test.core.util.AssertUtils.assertPojoEquals;
 import static cn.iocoder.yudao.framework.test.core.util.AssertUtils.assertServiceException;
@@ -111,7 +112,7 @@ public class TestDemoServiceImplTest extends BaseDbUnitTest {
             o.setType(1);
             o.setCategory(2);
             o.setRemark("哈哈哈");
-            o.setCreateTime(buildTime(2021, 11, 11));
+            o.setCreateTime(DateUtils.buildLocalDateTime(2021, 11, 11));
         });
         testDemoMapper.insert(dbTestDemo);
         // 测试 name 不匹配
@@ -125,7 +126,7 @@ public class TestDemoServiceImplTest extends BaseDbUnitTest {
         // 测试 remark 不匹配
         testDemoMapper.insert(cloneIgnoreId(dbTestDemo, o -> o.setRemark("呵呵呵")));
         // 测试 createTime 不匹配
-        testDemoMapper.insert(cloneIgnoreId(dbTestDemo, o -> o.setCreateTime(buildTime(2021, 12, 12))));
+        testDemoMapper.insert(cloneIgnoreId(dbTestDemo, o -> o.setCreateTime(DateUtils.buildLocalDateTime(2021, 12, 12))));
         // 准备参数
         TestDemoPageReqVO reqVO = new TestDemoPageReqVO();
         reqVO.setName("芋道");
@@ -133,7 +134,7 @@ public class TestDemoServiceImplTest extends BaseDbUnitTest {
         reqVO.setType(1);
         reqVO.setCategory(2);
         reqVO.setRemark("哈哈哈");
-        reqVO.setCreateTime((new LocalDateTime[]{buildTime(2021, 11, 10),buildTime(2021, 11, 12)}));
+        reqVO.setCreateTime((new LocalDateTime[]{buildLocalDateTime(2021, 11, 10),buildLocalDateTime(2021, 11, 12)}));
 
         // 调用
         PageResult<TestDemoDO> pageResult = testDemoService.getTestDemoPage(reqVO);
@@ -152,7 +153,7 @@ public class TestDemoServiceImplTest extends BaseDbUnitTest {
             o.setType(1);
             o.setCategory(2);
             o.setRemark("哈哈哈");
-            o.setCreateTime(buildTime(2021, 11, 11));
+            o.setCreateTime(DateUtils.buildLocalDateTime(2021, 11, 11));
         });
         testDemoMapper.insert(dbTestDemo);
         // 测试 name 不匹配
@@ -166,7 +167,7 @@ public class TestDemoServiceImplTest extends BaseDbUnitTest {
         // 测试 remark 不匹配
         testDemoMapper.insert(cloneIgnoreId(dbTestDemo, o -> o.setRemark("呵呵呵")));
         // 测试 createTime 不匹配
-        testDemoMapper.insert(cloneIgnoreId(dbTestDemo, o -> o.setCreateTime(buildTime(2021, 12, 12))));
+        testDemoMapper.insert(cloneIgnoreId(dbTestDemo, o -> o.setCreateTime(DateUtils.buildLocalDateTime(2021, 12, 12))));
         // 准备参数
         TestDemoExportReqVO reqVO = new TestDemoExportReqVO();
         reqVO.setName("芋道");
@@ -174,7 +175,7 @@ public class TestDemoServiceImplTest extends BaseDbUnitTest {
         reqVO.setType(1);
         reqVO.setCategory(2);
         reqVO.setRemark("哈哈哈");
-        reqVO.setCreateTime((new LocalDateTime[]{buildTime(2021, 11, 10),buildTime(2021, 11, 12)}));
+        reqVO.setCreateTime((new LocalDateTime[]{buildLocalDateTime(2021, 11, 10),buildLocalDateTime(2021, 11, 12)}));
 
         // 调用
         List<TestDemoDO> list = testDemoService.getTestDemoList(reqVO);

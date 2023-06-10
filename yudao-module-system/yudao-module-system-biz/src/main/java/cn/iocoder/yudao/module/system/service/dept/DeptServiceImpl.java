@@ -76,9 +76,9 @@ public class DeptServiceImpl implements DeptService {
             // 第二步：构建缓存
             ImmutableMap.Builder<Long, DeptDO> builder = ImmutableMap.builder();
             ImmutableMultimap.Builder<Long, DeptDO> parentBuilder = ImmutableMultimap.builder();
-            depts.forEach(deptDO -> {
-                builder.put(deptDO.getId(), deptDO);
-                parentBuilder.put(deptDO.getParentId(), deptDO);
+            depts.forEach(sysRoleDO -> {
+                builder.put(sysRoleDO.getId(), sysRoleDO);
+                parentBuilder.put(sysRoleDO.getParentId(), sysRoleDO);
             });
             deptCache = builder.build();
             parentDeptCache = parentBuilder.build();
@@ -140,9 +140,9 @@ public class DeptServiceImpl implements DeptService {
         }
         List<DeptDO> result = new ArrayList<>();
         // 递归，简单粗暴
-       getDeptsByParentIdFromCache(result, parentId,
-               recursive ? Integer.MAX_VALUE : 1, // 如果递归获取，则无限；否则，只递归 1 次
-               parentDeptCache);
+        getDeptsByParentIdFromCache(result, parentId,
+                recursive ? Integer.MAX_VALUE : 1, // 如果递归获取，则无限；否则，只递归 1 次
+                parentDeptCache);
         return result;
     }
 

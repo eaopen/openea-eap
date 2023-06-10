@@ -38,7 +38,7 @@ import static cn.iocoder.yudao.framework.security.core.util.SecurityFrameworkUti
 import static cn.iocoder.yudao.framework.security.core.util.SecurityFrameworkUtils.obtainAuthorization;
 import static java.util.Collections.singleton;
 
-@Tag(name = "管理后台 - 认证")
+@Tag(name =  "管理后台 - 认证")
 @RestController
 @RequestMapping("/system/auth")
 @Validated
@@ -55,6 +55,7 @@ public class AuthController {
     private PermissionService permissionService;
     @Resource
     private SocialUserService socialUserService;
+
     @Resource
     private SecurityProperties securityProperties;
 
@@ -108,7 +109,7 @@ public class AuthController {
 
     @GetMapping("/list-menus")
     @Operation(summary = "获得登录用户的菜单列表")
-    public CommonResult<List<AuthMenuRespVO>> getMenuList() {
+    public CommonResult<List<AuthMenuRespVO>> getMenus() {
         // 获得角色列表
         Set<Long> roleIds = permissionService.getUserRoleIdsFromCache(getLoginUserId(), singleton(CommonStatusEnum.ENABLE.getStatus()));
         // 获得用户拥有的菜单列表
@@ -148,7 +149,7 @@ public class AuthController {
             @Parameter(name = "redirectUri", description = "回调路径")
     })
     public CommonResult<String> socialLogin(@RequestParam("type") Integer type,
-                                                    @RequestParam("redirectUri") String redirectUri) {
+                                            @RequestParam("redirectUri") String redirectUri) {
         return CommonResult.success(socialUserService.getAuthorizeUrl(type, redirectUri));
     }
 

@@ -1,21 +1,25 @@
 package cn.iocoder.yudao.module.system.api.dept;
 
+import cn.iocoder.yudao.framework.common.pojo.CommonResult;
+import cn.iocoder.yudao.module.system.enums.ApiConstants;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import java.util.Collection;
 
-/**
- * 岗位 API 接口
- *
- * @author 芋道源码
- */
+@FeignClient(name = ApiConstants.NAME) // TODO 芋艿：fallbackFactory =
+@Tag(name = "RPC 服务 - 岗位")
 public interface PostApi {
 
-    /**
-     * 校验岗位们是否有效。如下情况，视为无效：
-     * 1. 岗位编号不存在
-     * 2. 岗位被禁用
-     *
-     * @param ids 岗位编号数组
-     */
-    void validPostList(Collection<Long> ids);
+    String PREFIX = ApiConstants.PREFIX + "/post";
+
+    @GetMapping(PREFIX + "/valid")
+    @Operation(summary = "校验岗位是否合法")
+    @Parameter(name = "ids", description = "岗位编号数组", example = "1,2", required = true)
+    CommonResult<Boolean> validPostList(@RequestParam("ids") Collection<Long> ids);
 
 }

@@ -2,6 +2,7 @@ package cn.iocoder.yudao.module.system.service.permission;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.iocoder.yudao.framework.common.exception.util.ServiceExceptionUtil;
 import cn.iocoder.yudao.framework.common.util.collection.CollectionUtils;
 import cn.iocoder.yudao.module.system.controller.admin.permission.vo.menu.MenuCreateReqVO;
 import cn.iocoder.yudao.module.system.controller.admin.permission.vo.menu.MenuListReqVO;
@@ -185,7 +186,7 @@ public class MenuServiceImpl implements MenuService {
         }
         // 创建新数组，避免缓存被修改
         return menuCache.values().stream().filter(menu -> menuTypes.contains(menu.getType())
-                && menusStatuses.contains(menu.getStatus()))
+                        && menusStatuses.contains(menu.getStatus()))
                 .collect(Collectors.toList());
     }
 
@@ -197,8 +198,8 @@ public class MenuServiceImpl implements MenuService {
             return Collections.emptyList();
         }
         return menuCache.values().stream().filter(menu -> menuIds.contains(menu.getId())
-                && menuTypes.contains(menu.getType())
-                && menusStatuses.contains(menu.getStatus()))
+                        && menuTypes.contains(menu.getType())
+                        && menusStatuses.contains(menu.getStatus()))
                 .collect(Collectors.toList());
     }
 
@@ -238,7 +239,7 @@ public class MenuServiceImpl implements MenuService {
         }
         // 父菜单必须是目录或者菜单类型
         if (!MenuTypeEnum.DIR.getType().equals(menu.getType())
-            && !MenuTypeEnum.MENU.getType().equals(menu.getType())) {
+                && !MenuTypeEnum.MENU.getType().equals(menu.getType())) {
             throw exception(MENU_PARENT_NOT_DIR_OR_MENU);
         }
     }

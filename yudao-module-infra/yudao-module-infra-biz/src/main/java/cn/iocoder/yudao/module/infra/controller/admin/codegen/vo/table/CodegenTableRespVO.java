@@ -1,6 +1,7 @@
 package cn.iocoder.yudao.module.infra.controller.admin.codegen.vo.table;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -13,16 +14,16 @@ import java.time.LocalDateTime;
 @ToString(callSuper = true)
 public class CodegenTableRespVO extends CodegenTableBaseVO {
 
-    @Schema(description = "编号", requiredMode = Schema.RequiredMode.REQUIRED, example = "1")
+    @Schema(description = "编号", required = true, example = "1")
     private Long id;
 
-    @Schema(description = "主键编号", requiredMode = Schema.RequiredMode.REQUIRED, example = "1024")
+    @Schema(description = "主键编号", required = true, example = "1024")
     private Integer dataSourceConfigId;
 
-    @Schema(description = "创建时间", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(description = "创建时间", required = true)
     private LocalDateTime createTime;
 
-    @Schema(description = "更新时间", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(description = "更新时间", required = true)
     private LocalDateTime updateTime;
 
 }

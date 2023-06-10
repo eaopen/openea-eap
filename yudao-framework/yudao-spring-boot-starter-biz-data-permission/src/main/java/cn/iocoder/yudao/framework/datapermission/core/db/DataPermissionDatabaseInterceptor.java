@@ -539,8 +539,8 @@ public class DataPermissionDatabaseInterceptor extends JsqlParserSupport impleme
         /**
          * 该 {@link MappedStatement} 对应的规则
          */
-        private static final ThreadLocal<List<DataPermissionRule>> RULES = ThreadLocal.withInitial(Collections::emptyList);
-        /**
+        private static final ThreadLocal<List<DataPermissionRule>> RULES = ThreadLocal.withInitial(Collections::emptyList);        /**
+         *
          * SQL 是否进行重写
          */
         private static final ThreadLocal<Boolean> REWRITE = ThreadLocal.withInitial(() -> Boolean.FALSE);

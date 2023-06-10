@@ -1,9 +1,9 @@
 package cn.iocoder.yudao.module.system.mq.consumer.permission;
 
-import cn.iocoder.yudao.framework.mq.core.pubsub.AbstractChannelMessageListener;
 import cn.iocoder.yudao.module.system.mq.message.permission.MenuRefreshMessage;
 import cn.iocoder.yudao.module.system.service.permission.MenuService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -15,15 +15,14 @@ import javax.annotation.Resource;
  */
 @Component
 @Slf4j
-public class MenuRefreshConsumer extends AbstractChannelMessageListener<MenuRefreshMessage> {
+public class MenuRefreshConsumer {
 
     @Resource
     private MenuService menuService;
 
-    @Override
-    public void onMessage(MenuRefreshMessage message) {
-        log.info("[onMessage][收到 Menu 刷新消息]");
+    @EventListener
+    public void execute(MenuRefreshMessage menuRefreshMessage) {
+        log.info("[execute][收到 Menu 刷新消息]");
         menuService.initLocalCache();
     }
-
 }

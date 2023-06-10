@@ -11,10 +11,10 @@ import java.time.LocalDateTime;
 @ToString(callSuper = true)
 public class BpmUserGroupRespVO extends BpmUserGroupBaseVO {
 
-    @Schema(description = "编号", requiredMode = Schema.RequiredMode.REQUIRED, example = "1024")
+    @Schema(description = "编号", required = true, example = "1024")
     private Long id;
 
-    @Schema(description = "创建时间", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(description = "创建时间", required = true)
     private LocalDateTime createTime;
 
 }

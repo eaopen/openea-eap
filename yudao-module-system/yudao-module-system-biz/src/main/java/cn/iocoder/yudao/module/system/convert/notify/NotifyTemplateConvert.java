@@ -1,15 +1,14 @@
 package cn.iocoder.yudao.module.system.convert.notify;
 
-import java.util.*;
-
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
-
 import cn.iocoder.yudao.module.system.controller.admin.notify.vo.template.NotifyTemplateCreateReqVO;
 import cn.iocoder.yudao.module.system.controller.admin.notify.vo.template.NotifyTemplateRespVO;
 import cn.iocoder.yudao.module.system.controller.admin.notify.vo.template.NotifyTemplateUpdateReqVO;
+import cn.iocoder.yudao.module.system.dal.dataobject.notify.NotifyTemplateDO;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
-import cn.iocoder.yudao.module.system.dal.dataobject.notify.NotifyTemplateDO;
+
+import java.util.List;
 
 /**
  * 站内信模版 Convert

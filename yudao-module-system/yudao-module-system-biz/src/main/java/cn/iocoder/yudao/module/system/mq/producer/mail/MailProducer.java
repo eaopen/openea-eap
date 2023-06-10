@@ -1,10 +1,11 @@
 package cn.iocoder.yudao.module.system.mq.producer.mail;
 
-import cn.iocoder.yudao.framework.mq.core.RedisMQTemplate;
+import cn.iocoder.yudao.framework.mq.core.bus.AbstractBusProducer;
 import cn.iocoder.yudao.module.system.mq.message.mail.MailAccountRefreshMessage;
 import cn.iocoder.yudao.module.system.mq.message.mail.MailSendMessage;
 import cn.iocoder.yudao.module.system.mq.message.mail.MailTemplateRefreshMessage;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -17,25 +18,23 @@ import javax.annotation.Resource;
  */
 @Slf4j
 @Component
-public class MailProducer {
+public class MailProducer extends AbstractBusProducer {
 
     @Resource
-    private RedisMQTemplate redisMQTemplate;
+    private StreamBridge streamBridge;
 
     /**
      * 发送 {@link MailTemplateRefreshMessage} 消息
      */
     public void sendMailTemplateRefreshMessage() {
-        MailTemplateRefreshMessage message = new MailTemplateRefreshMessage();
-        redisMQTemplate.send(message);
+        publishEvent(new MailTemplateRefreshMessage(this, getBusId(), selfDestinationService()));
     }
 
     /**
      * 发送 {@link MailAccountRefreshMessage} 消息
      */
     public void sendMailAccountRefreshMessage() {
-        MailAccountRefreshMessage message = new MailAccountRefreshMessage();
-        redisMQTemplate.send(message);
+        publishEvent(new MailAccountRefreshMessage(this, getBusId(), selfDestinationService()));
     }
 
     /**
@@ -53,7 +52,7 @@ public class MailProducer {
         MailSendMessage message = new MailSendMessage()
                 .setLogId(sendLogId).setMail(mail).setAccountId(accountId)
                 .setNickname(nickname).setTitle(title).setContent(content);
-        redisMQTemplate.send(message);
+        streamBridge.send("mailSend-out-0", message);
     }
 
 }

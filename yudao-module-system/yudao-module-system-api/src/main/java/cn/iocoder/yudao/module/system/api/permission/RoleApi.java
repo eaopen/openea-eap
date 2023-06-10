@@ -1,21 +1,25 @@
 package cn.iocoder.yudao.module.system.api.permission;
 
+import cn.iocoder.yudao.framework.common.pojo.CommonResult;
+import cn.iocoder.yudao.module.system.enums.ApiConstants;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Operation;
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import java.util.Collection;
 
-/**
- * 角色 API 接口
- *
- * @author 芋道源码
- */
+@FeignClient(name = ApiConstants.NAME) // TODO 芋艿：fallbackFactory =
+@Tag(name = "RPC 服务 - 角色")
 public interface RoleApi {
 
-    /**
-     * 校验角色们是否有效。如下情况，视为无效：
-     * 1. 角色编号不存在
-     * 2. 角色被禁用
-     *
-     * @param ids 角色编号数组
-     */
-    void validRoleList(Collection<Long> ids);
+    String PREFIX = ApiConstants.PREFIX + "/role";
+
+    @GetMapping(PREFIX + "/valid")
+    @Operation(summary = "校验角色是否合法")
+    @Parameter(name = "ids", description = "角色编号数组", example = "1,2", required = true)
+    CommonResult<Boolean> validRoleList(@RequestParam("ids") Collection<Long> ids);
 
 }

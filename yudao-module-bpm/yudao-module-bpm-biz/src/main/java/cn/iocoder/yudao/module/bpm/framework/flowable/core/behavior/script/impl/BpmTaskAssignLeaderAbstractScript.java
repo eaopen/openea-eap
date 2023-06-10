@@ -49,7 +49,7 @@ public abstract class BpmTaskAssignLeaderAbstractScript implements BpmTaskAssign
                     return emptySet();
                 }
             } else {
-                DeptRespDTO parentDept = deptApi.getDept(dept.getParentId());
+                DeptRespDTO parentDept = deptApi.getDept(dept.getParentId()).getCheckedData();
                 if (parentDept == null) { // 找不到父级部门，所以只好结束寻找。原因是：例如说，级别比较高的人，所在部门层级比较少
                     break;
                 }
@@ -60,11 +60,11 @@ public abstract class BpmTaskAssignLeaderAbstractScript implements BpmTaskAssign
     }
 
     private DeptRespDTO getStartUserDept(Long startUserId) {
-        AdminUserRespDTO startUser = adminUserApi.getUser(startUserId);
+        AdminUserRespDTO startUser = adminUserApi.getUser(startUserId).getCheckedData();
         if (startUser.getDeptId() == null) { // 找不到部门，所以无法使用该规则
             return null;
         }
-        return deptApi.getDept(startUser.getDeptId());
+        return deptApi.getDept(startUser.getDeptId()).getCheckedData();
     }
 
 }

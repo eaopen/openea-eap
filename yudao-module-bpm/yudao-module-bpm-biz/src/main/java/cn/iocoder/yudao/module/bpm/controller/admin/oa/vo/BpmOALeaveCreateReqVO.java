@@ -1,4 +1,5 @@
 package cn.iocoder.yudao.module.bpm.controller.admin.oa.vo;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -16,5 +17,6 @@ public class BpmOALeaveCreateReqVO extends BpmOALeaveBaseVO {
     public boolean isEndTimeValid() {
         return !getEndTime().isBefore(getStartTime());
     }
+
 
 }

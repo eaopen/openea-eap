@@ -1,4 +1,5 @@
 package cn.iocoder.yudao.module.infra.controller.admin.test.vo;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 import javax.validation.constraints.*;
@@ -10,19 +11,19 @@ import javax.validation.constraints.*;
 @Data
 public class TestDemoBaseVO {
 
-    @Schema(description = "名字", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(description = "名字", required = true)
     @NotNull(message = "名字不能为空")
     private String name;
 
-    @Schema(description = "状态", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(description = "状态", required = true)
     @NotNull(message = "状态不能为空")
     private Integer status;
 
-    @Schema(description = "类型", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(description = "类型", required = true)
     @NotNull(message = "类型不能为空")
     private Integer type;
 
-    @Schema(description = "分类", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(description = "分类", required = true)
     @NotNull(message = "分类不能为空")
     private Integer category;
 

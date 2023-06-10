@@ -7,7 +7,6 @@ import cn.iocoder.yudao.module.system.dal.dataobject.dict.DictDataDO;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-import java.util.Collection;
 import java.util.List;
 
 @Mapper
@@ -28,5 +27,6 @@ public interface DictDataConvert {
     List<DictDataExcelVO> convertList02(List<DictDataDO> bean);
 
     DictDataRespDTO convert02(DictDataDO bean);
+
 
 }

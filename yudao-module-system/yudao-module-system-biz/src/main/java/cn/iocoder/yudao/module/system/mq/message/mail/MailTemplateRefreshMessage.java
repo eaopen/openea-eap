@@ -1,8 +1,8 @@
 package cn.iocoder.yudao.module.system.mq.message.mail;
 
-import cn.iocoder.yudao.framework.mq.core.pubsub.AbstractChannelMessage;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.springframework.cloud.bus.event.RemoteApplicationEvent;
 
 /**
  * 邮箱模板的数据刷新 Message
@@ -11,11 +11,13 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class MailTemplateRefreshMessage extends AbstractChannelMessage {
+public class MailTemplateRefreshMessage extends RemoteApplicationEvent {
 
-    @Override
-    public String getChannel() {
-        return "system.mail-template.refresh";
+    public MailTemplateRefreshMessage() {
+    }
+
+    public MailTemplateRefreshMessage(Object source, String originService, String destinationService) {
+        super(source, originService, DEFAULT_DESTINATION_FACTORY.getDestination(destinationService));
     }
 
 }

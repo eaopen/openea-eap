@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>cn.iocoder.boot</groupId>
+    <groupId>cn.iocoder.cloud</groupId>
     <artifactId>yudao-dependencies</artifactId>
     <version>${revision}</version>
     <packaging>pom</packaging>
@@ -17,18 +17,26 @@
         <revision>1.7.3-snapshot</revision>
         <!-- 统一依赖管理 -->
         <spring.boot.version>2.7.11</spring.boot.version>
+        <spring.cloud.version>2021.0.5</spring.cloud.version>
+        <spring.cloud.alibaba.version>2021.0.4.0</spring.cloud.alibaba.version>
         <!-- Web 相关 -->
+        <servlet.versoin>2.5</servlet.versoin>
+        <swagger.version>2.2.8</swagger.version>
         <springdoc.version>1.6.15</springdoc.version>
         <knife4j.version>4.1.0</knife4j.version>
-        <servlet.versoin>2.5</servlet.versoin>
         <!-- DB 相关 -->
         <druid.version>1.2.16</druid.version>
         <mybatis-plus.version>3.5.3.1</mybatis-plus.version>
         <mybatis-plus-generator.version>3.5.3.1</mybatis-plus-generator.version>
         <dynamic-datasource.version>3.6.1</dynamic-datasource.version>
-        <mybatis-plus-join-boot-starter.version>1.4.3.2</mybatis-plus-join-boot-starter.version>
         <redisson.version>3.18.0</redisson.version>
         <dm8.jdbc.version>8.1.2.141</dm8.jdbc.version>
+        <!-- RPC 相关 -->
+        <dubbo.version>2.7.18</dubbo.version>
+        <!-- Config 配置中心相关 -->
+        <apollo.version>1.9.2</apollo.version>
+        <!-- Job 定时任务相关 -->
+        <xxl-job.version>2.3.1</xxl-job.version>
         <!-- 服务保障相关 -->
         <lock4j.version>2.2.3</lock4j.version>
         <resilience4j.version>1.7.1</resilience4j.version>
@@ -60,6 +68,7 @@
         <tika-core.version>2.7.0</tika-core.version>
         <netty-all.version>4.1.90.Final</netty-all.version>
         <ip2region.version>2.7.0</ip2region.version>
+        <reflections.version>0.10.2</reflections.version>
         <!-- 三方云服务相关 -->
         <okio.version>3.0.0</okio.version>
         <okhttp3.version>4.10.0</okhttp3.version>
@@ -71,7 +80,6 @@
         <justauth.version>1.4.0</justauth.version>
         <jimureport.version>1.5.6</jimureport.version>
         <xercesImpl.version>2.12.2</xercesImpl.version>
-        <wx-java-mp.version>4.3.0</wx-java-mp.version>
     </properties>
 
     <dependencyManagement>
@@ -84,70 +92,84 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring.cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${spring.cloud.alibaba.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
 
             <!-- 业务组件 -->
             <dependency>
-                <groupId>cn.iocoder.boot</groupId>
+                <groupId>cn.iocoder.cloud</groupId>
                 <artifactId>yudao-spring-boot-starter-banner</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>cn.iocoder.boot</groupId>
+                <groupId>cn.iocoder.cloud</groupId>
                 <artifactId>yudao-spring-boot-starter-biz-operatelog</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>cn.iocoder.boot</groupId>
+                <groupId>cn.iocoder.cloud</groupId>
                 <artifactId>yudao-spring-boot-starter-biz-dict</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>cn.iocoder.boot</groupId>
+                <groupId>cn.iocoder.cloud</groupId>
                 <artifactId>yudao-spring-boot-starter-biz-sms</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>cn.iocoder.boot</groupId>
+                <groupId>cn.iocoder.cloud</groupId>
                 <artifactId>yudao-spring-boot-starter-biz-pay</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>cn.iocoder.boot</groupId>
+                <groupId>cn.iocoder.cloud</groupId>
                 <artifactId>yudao-spring-boot-starter-biz-weixin</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>cn.iocoder.boot</groupId>
+                <groupId>cn.iocoder.cloud</groupId>
                 <artifactId>yudao-spring-boot-starter-biz-tenant</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>cn.iocoder.boot</groupId>
+                <groupId>cn.iocoder.cloud</groupId>
                 <artifactId>yudao-spring-boot-starter-biz-data-permission</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>cn.iocoder.boot</groupId>
+                <groupId>cn.iocoder.cloud</groupId>
                 <artifactId>yudao-spring-boot-starter-biz-social</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>cn.iocoder.boot</groupId>
+                <groupId>cn.iocoder.cloud</groupId>
                 <artifactId>yudao-spring-boot-starter-biz-error-code</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>cn.iocoder.boot</groupId>
+                <groupId>cn.iocoder.cloud</groupId>
                 <artifactId>yudao-spring-boot-starter-biz-ip</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>cn.iocoder.boot</groupId>
+                <groupId>cn.iocoder.cloud</groupId>
                 <artifactId>yudao-spring-boot-starter-captcha</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
-                <groupId>cn.iocoder.boot</groupId>
+                <groupId>cn.iocoder.cloud</groupId>
                 <artifactId>yudao-spring-boot-starter-desensitize</artifactId>
                 <version>${revision}</version>
             </dependency>
@@ -160,35 +182,76 @@
                 <version>${spring.boot.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>cn.iocoder.cloud</groupId>
+                <artifactId>yudao-spring-boot-starter-env</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
             <!-- Web 相关 -->
             <dependency>
-                <groupId>cn.iocoder.boot</groupId>
+                <groupId>cn.iocoder.cloud</groupId>
                 <artifactId>yudao-spring-boot-starter-web</artifactId>
                 <version>${revision}</version>
             </dependency>
 
             <dependency>
-                <groupId>cn.iocoder.boot</groupId>
+                <groupId>cn.iocoder.cloud</groupId>
                 <artifactId>yudao-spring-boot-starter-security</artifactId>
                 <version>${revision}</version>
             </dependency>
 
             <dependency>
-                <groupId>com.github.xiaoymin</groupId>
+                <groupId>io.swagger.core.v3</groupId> <!-- 接口文档：使用最新版本的 Swagger 模型 -->
+                <artifactId>swagger-annotations</artifactId>
+                <version>${swagger.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.swagger.core.v3</groupId> <!-- 接口文档：使用最新版本的 Swagger 模型 -->
+                <artifactId>swagger-models</artifactId>
+                <version>${swagger.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springdoc</groupId> <!-- 接口文档 UI：解决 knife4j 引入的 Spring Doc 版本太老 -->
+                <artifactId>springdoc-openapi-common</artifactId>
+                <version>${springdoc.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springdoc</groupId> <!-- 接口文档 UI：解决 knife4j 引入的 Spring Doc 版本太老 -->
+                <artifactId>springdoc-openapi-webmvc-core</artifactId>
+                <version>${springdoc.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springdoc</groupId> <!-- 接口文档 UI：解决 knife4j 引入的 Spring Doc 版本太老 -->
+                <artifactId>springdoc-openapi-webflux-core</artifactId>
+                <version>${springdoc.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springdoc</groupId> <!-- 接口文档 UI：默认 -->
+                <artifactId>springdoc-openapi-ui</artifactId>
+                <version>${springdoc.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId> <!-- 接口文档 UI：knife4j -->
                 <artifactId>knife4j-openapi3-spring-boot-starter</artifactId>
                 <version>${knife4j.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.springdoc</groupId>
-                <artifactId>springdoc-openapi-ui</artifactId>
-                <version>${springdoc.version}</version>
+                <groupId>com.github.xiaoymin</groupId> <!-- 接口文档 UI：knife4j【网关专属】 -->
+                <artifactId>knife4j-gateway-spring-boot-starter</artifactId>
+                <version>${knife4j.version}</version>
             </dependency>
 
             <!-- DB 相关 -->
             <dependency>
-                <groupId>cn.iocoder.boot</groupId>
+                <groupId>cn.iocoder.cloud</groupId>
                 <artifactId>yudao-spring-boot-starter-mybatis</artifactId>
                 <version>${revision}</version>
+            </dependency>
+            <dependency> <!-- TODO 芋艿：说不清楚 -->
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-webflux-ui</artifactId>
+                <version>${springdoc.version}</version>
             </dependency>
 
             <dependency>
@@ -213,13 +276,7 @@
             </dependency>
 
             <dependency>
-                <groupId>com.github.yulichang</groupId>
-                <artifactId>mybatis-plus-join-boot-starter</artifactId>
-                <version>${mybatis-plus-join-boot-starter.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>cn.iocoder.boot</groupId>
+                <groupId>cn.iocoder.cloud</groupId>
                 <artifactId>yudao-spring-boot-starter-redis</artifactId>
                 <version>${revision}</version>
             </dependency>
@@ -236,23 +293,54 @@
                 <version>${dm8.jdbc.version}</version>
             </dependency>
 
+            <!-- RPC 远程调用相关 -->
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo-common</artifactId> <!-- 兜底，保证在不引入 spring-cloud-starter-dubbo 时，注解等不报错 -->
+                <version>${dubbo.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo-cluster</artifactId> <!-- 兜底，保证在不引入 spring-cloud-starter-dubbo 时，注解等不报错 -->
+                <version>${dubbo.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo-rpc-api</artifactId> <!-- 兜底，保证在不引入 spring-cloud-starter-dubbo 时，注解等不报错 -->
+                <version>${dubbo.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.iocoder.cloud</groupId>
+                <artifactId>yudao-spring-boot-starter-rpc</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <!-- Registry 注册中心相关 -->
+
+            <!-- Config 配置中心相关 -->
+
             <!-- Job 定时任务相关 -->
             <dependency>
-                <groupId>cn.iocoder.boot</groupId>
+                <groupId>com.xuxueli</groupId>
+                <artifactId>xxl-job-core</artifactId>
+                <version>${xxl-job.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.iocoder.cloud</groupId>
                 <artifactId>yudao-spring-boot-starter-job</artifactId>
                 <version>${revision}</version>
             </dependency>
 
             <!-- 消息队列相关 -->
             <dependency>
-                <groupId>cn.iocoder.boot</groupId>
+                <groupId>cn.iocoder.cloud</groupId>
                 <artifactId>yudao-spring-boot-starter-mq</artifactId>
                 <version>${revision}</version>
             </dependency>
 
             <!-- 服务保障相关 -->
             <dependency>
-                <groupId>cn.iocoder.boot</groupId>
+                <groupId>cn.iocoder.cloud</groupId>
                 <artifactId>yudao-spring-boot-starter-protection</artifactId>
                 <version>${revision}</version>
             </dependency>
@@ -282,7 +370,7 @@
 
             <!-- 监控相关 -->
             <dependency>
-                <groupId>cn.iocoder.boot</groupId>
+                <groupId>cn.iocoder.cloud</groupId>
                 <artifactId>yudao-spring-boot-starter-monitor</artifactId>
                 <version>${revision}</version>
             </dependency>
@@ -341,7 +429,7 @@
 
             <!-- Test 测试相关 -->
             <dependency>
-                <groupId>cn.iocoder.boot</groupId>
+                <groupId>cn.iocoder.cloud</groupId>
                 <artifactId>yudao-spring-boot-starter-test</artifactId>
                 <version>${revision}</version>
                 <scope>test</scope>
@@ -383,7 +471,7 @@
 
             <!-- 工作流相关 -->
             <dependency>
-                <groupId>cn.iocoder.boot</groupId>
+                <groupId>cn.iocoder.cloud</groupId>
                 <artifactId>yudao-spring-boot-starter-flowable</artifactId>
                 <version>${revision}</version>
             </dependency>
@@ -401,13 +489,13 @@
 
             <!-- 工具类相关 -->
             <dependency>
-                <groupId>cn.iocoder.boot</groupId>
+                <groupId>cn.iocoder.cloud</groupId>
                 <artifactId>yudao-common</artifactId>
                 <version>${revision}</version>
             </dependency>
 
             <dependency>
-                <groupId>cn.iocoder.boot</groupId>
+                <groupId>cn.iocoder.cloud</groupId>
                 <artifactId>yudao-spring-boot-starter-excel</artifactId>
                 <version>${revision}</version>
             </dependency>
@@ -445,11 +533,13 @@
                 <artifactId>easyexcel</artifactId>
                 <version>${easyexcel.verion}</version>
             </dependency>
+
             <dependency>
                 <groupId>commons-io</groupId>
                 <artifactId>commons-io</artifactId>
                 <version>${commons-io.version}</version>
             </dependency>
+
             <dependency>
                 <groupId>org.apache.tika</groupId>
                 <artifactId>tika-core</artifactId> <!-- 文件类型的识别 -->
@@ -507,7 +597,6 @@
                 <artifactId>commons-net</artifactId> <!-- 解决 ftp 连接 -->
                 <version>${commons-net.version}</version>
             </dependency>
-
             <dependency>
                 <groupId>com.jcraft</groupId>
                 <artifactId>jsch</artifactId> <!-- 解决 sftp 连接 -->
@@ -538,6 +627,12 @@
                 <version>${jsoup.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>org.reflections</groupId>
+                <artifactId>reflections</artifactId>
+                <version>${reflections.version}</version>
+            </dependency>
+
             <!-- 三方云服务相关 -->
             <dependency>
                 <groupId>com.squareup.okio</groupId>
@@ -550,7 +645,7 @@
                 <version>${okhttp3.version}</version>
             </dependency>
             <dependency>
-                <groupId>cn.iocoder.boot</groupId>
+                <groupId>cn.iocoder.cloud</groupId>
                 <artifactId>yudao-spring-boot-starter-file</artifactId>
                 <version>${revision}</version>
             </dependency>
@@ -592,12 +687,12 @@
                 <groupId>com.xkcoding.justauth</groupId>
                 <artifactId>justauth-spring-boot-starter</artifactId> <!-- 社交登陆（例如说，个人微信、企业微信等等） -->
                 <version>${justauth.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.github.binarywang</groupId>
-                <artifactId>wx-java-mp-spring-boot-starter</artifactId>
-                <version>${wx-java-mp.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>cn.hutool</groupId>
+                        <artifactId>hutool-core</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
 
             <!-- 积木报表-->
@@ -617,12 +712,7 @@
                 <artifactId>xercesImpl</artifactId>
                 <version>${xercesImpl.version}</version>
             </dependency>
-            <!-- SpringBoot Websocket -->
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-websocket</artifactId>
-                <version>${spring.boot.version}</version>
-            </dependency>
+
         </dependencies>
     </dependencyManagement>
 

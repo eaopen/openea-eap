@@ -6,6 +6,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * 社交平台的类型枚举
@@ -46,7 +49,7 @@ public enum SocialTypeEnum implements IntArrayValuable {
      * 微信小程序
      * 文档链接：https://developers.weixin.qq.com/miniprogram/dev/framework/open-ability/login.html
      */
-    WECHAT_MINI_APP(34, "WECHAT_MINI_APP"),
+    WECHAT_MINI_PROGRAM(33, "WECHAT_MINI_PROGRAM"),
     ;
 
     public static final int[] ARRAYS = Arrays.stream(values()).mapToInt(SocialTypeEnum::getType).toArray();

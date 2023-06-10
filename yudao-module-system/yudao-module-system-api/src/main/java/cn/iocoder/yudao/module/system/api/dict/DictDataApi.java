@@ -1,42 +1,49 @@
 package cn.iocoder.yudao.module.system.api.dict;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.Operation;
+import cn.iocoder.yudao.framework.common.pojo.CommonResult;
 import cn.iocoder.yudao.module.system.api.dict.dto.DictDataRespDTO;
+import cn.iocoder.yudao.module.system.enums.ApiConstants;
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Collection;
 
-/**
- * 字典数据 API 接口
- *
- * @author 芋道源码
- */
+@FeignClient(name = ApiConstants.NAME) // TODO 芋艿：fallbackFactory =
+@Tag(name =  "RPC 服务 - 字典数据")
 public interface DictDataApi {
 
-    /**
-     * 校验字典数据们是否有效。如下情况，视为无效：
-     * 1. 字典数据不存在
-     * 2. 字典数据被禁用
-     *
-     * @param dictType 字典类型
-     * @param values 字典数据值的数组
-     */
-    void validateDictDataList(String dictType, Collection<String> values);
+    String PREFIX = ApiConstants.PREFIX + "/dict-data";
 
-    /**
-     * 获得指定的字典数据，从缓存中
-     *
-     * @param type 字典类型
-     * @param value 字典数据值
-     * @return 字典数据
-     */
-    DictDataRespDTO getDictData(String type, String value);
+    @GetMapping(PREFIX + "/valid")
+    @Operation(summary = "校验字典数据们是否有效")
+    @Parameters({
+        @Parameter(name = "dictType", description = "字典类型", example = "SEX", required = true),
+        @Parameter(name = "descriptions", description = "字典数据值的数组", example = "1,2", required = true)
+    })
+    CommonResult<Boolean> validateDictDatas(@RequestParam("dictType") String dictType,
+                                            @RequestParam("values") Collection<String> values);
 
-    /**
-     * 解析获得指定的字典数据，从缓存中
-     *
-     * @param type 字典类型
-     * @param label 字典数据标签
-     * @return 字典数据
-     */
-    DictDataRespDTO parseDictData(String type, String label);
+    @GetMapping(PREFIX + "/get")
+    @Operation(summary = "获得指定的字典数据")
+    @Parameters({
+            @Parameter(name = "dictType", description = "字典类型", example = "SEX", required = true),
+            @Parameter(name = "description", description = "字典数据值", example = "1", required = true)
+    })
+    CommonResult<DictDataRespDTO> getDictData(@RequestParam("dictType") String dictType,
+                                              @RequestParam("value") String value);
+
+    @GetMapping(PREFIX + "/parse")
+    @Operation(summary = "解析获得指定的字典数据")
+    @Parameters({
+            @Parameter(name = "dictType", description = "字典类型", example = "SEX", required = true),
+            @Parameter(name = "label", description = "字典标签", example = "男", required = true)
+    })
+    CommonResult<DictDataRespDTO> parseDictData(@RequestParam("dictType") String dictType,
+                                                @RequestParam("label") String label);
 
 }

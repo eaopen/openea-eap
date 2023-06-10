@@ -1,6 +1,7 @@
 package cn.iocoder.yudao.module.system.controller.admin.logger.vo.loginlog;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -14,17 +15,17 @@ import java.time.LocalDateTime;
 @ToString(callSuper = true)
 public class LoginLogRespVO extends LoginLogBaseVO {
 
-    @Schema(description = "日志编号", requiredMode = Schema.RequiredMode.REQUIRED, example = "1024")
+    @Schema(description = "日志编号", required = true, example = "1024")
     private Long id;
 
     @Schema(description = "用户编号", example = "666")
     private Long userId;
 
-    @Schema(description = "用户类型,参见 UserTypeEnum 枚举", requiredMode = Schema.RequiredMode.REQUIRED, example = "2")
+    @Schema(description = "用户类型，参见 UserTypeEnum 枚举", required = true, example = "2")
     @NotNull(message = "用户类型不能为空")
     private Integer userType;
 
-    @Schema(description = "登录时间", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(description = "登录时间", required = true)
     private LocalDateTime createTime;
 
 }

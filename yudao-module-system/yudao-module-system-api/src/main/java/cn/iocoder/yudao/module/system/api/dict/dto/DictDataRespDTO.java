@@ -1,33 +1,21 @@
 package cn.iocoder.yudao.module.system.api.dict.dto;
 
 import cn.iocoder.yudao.framework.common.enums.CommonStatusEnum;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
-/**
- * 字典数据 Response DTO
- *
- * @author 芋道源码
- */
+@Schema(description = "RPC 服务 - 字典数据 Response DTO")
 @Data
 public class DictDataRespDTO {
 
-    /**
-     * 字典标签
-     */
+    @Schema(description = "字典标签", required = true, example = "芋道")
     private String label;
-    /**
-     * 字典值
-     */
+    @Schema(description = "字典值", required = true, example = "iocoder")
     private String value;
-    /**
-     * 字典类型
-     */
+    @Schema(description = "字典类型", required = true, example = "sys_common_sex")
     private String dictType;
-    /**
-     * 状态
-     *
-     * 枚举 {@link CommonStatusEnum}
-     */
+    @Schema(description = "状态,见 CommonStatusEnum 枚举", required = true, example = "1")
     private Integer status;
 
 }

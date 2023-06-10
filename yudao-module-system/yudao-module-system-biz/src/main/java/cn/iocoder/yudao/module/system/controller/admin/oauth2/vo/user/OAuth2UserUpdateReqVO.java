@@ -1,6 +1,7 @@
 package cn.iocoder.yudao.module.system.controller.admin.oauth2.vo.user;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,7 +16,7 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 public class OAuth2UserUpdateReqVO {
 
-    @Schema(description = "用户昵称", requiredMode = Schema.RequiredMode.REQUIRED, example = "芋艿")
+    @Schema(description = "用户昵称", required = true, example = "芋艿")
     @Size(max = 30, message = "用户昵称长度不能超过 30 个字符")
     private String nickname;
 

@@ -103,7 +103,7 @@ public interface ErrorCodeConstants {
     ErrorCode TENANT_DISABLE = new ErrorCode(1002015001, "名字为【{}】的租户已被禁用");
     ErrorCode TENANT_EXPIRE = new ErrorCode(1002015002, "名字为【{}】的租户已过期");
     ErrorCode TENANT_CAN_NOT_UPDATE_SYSTEM = new ErrorCode(1002015003, "系统租户不能进行修改、删除等操作！");
-    ErrorCode TENANT_NAME_DUPLICATE = new ErrorCode(1002015004, "名字为【{}】的租户已存在");
+    ErrorCode TENANT_NAME_DUPLICATE = new ErrorCode(1002015004, "已经存在该名称的租户");
 
     // ========== 租户套餐 1002016000 ==========
     ErrorCode TENANT_PACKAGE_NOT_EXISTS = new ErrorCode(1002016000, "租户套餐不存在");
@@ -152,7 +152,7 @@ public interface ErrorCodeConstants {
 
     // ========== 邮件发送 1002025000 ==========
     ErrorCode MAIL_SEND_TEMPLATE_PARAM_MISS = new ErrorCode(1002025000, "模板参数({})缺失");
-    ErrorCode MAIL_SEND_MAIL_NOT_EXISTS = new ErrorCode(1002025000, "邮箱不存在");
+    ErrorCode MAIL_SEND_MAIL_NOT_EXISTS = new ErrorCode(1002025001, "邮箱不存在");
 
     // ========== 站内信模版 1002026000 ==========
     ErrorCode NOTIFY_TEMPLATE_NOT_EXISTS = new ErrorCode(1002026000, "站内信模版不存在");
@@ -161,6 +161,6 @@ public interface ErrorCodeConstants {
     // ========== 站内信模版 1002027000 ==========
 
     // ========== 站内信发送 1002028000 ==========
-    ErrorCode NOTIFY_SEND_TEMPLATE_PARAM_MISS = new ErrorCode(1002025000, "模板参数({})缺失");
+    ErrorCode NOTIFY_SEND_TEMPLATE_PARAM_MISS = new ErrorCode(1002028000, "模板参数({})缺失");
 
 }

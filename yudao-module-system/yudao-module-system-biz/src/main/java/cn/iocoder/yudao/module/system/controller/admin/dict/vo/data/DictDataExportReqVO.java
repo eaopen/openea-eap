@@ -1,6 +1,7 @@
 package cn.iocoder.yudao.module.system.controller.admin.dict.vo.data;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import javax.validation.constraints.Size;
@@ -17,7 +18,7 @@ public class DictDataExportReqVO {
     @Size(max = 100, message = "字典类型类型长度不能超过100个字符")
     private String dictType;
 
-    @Schema(description = "展示状态,参见 CommonStatusEnum 枚举类", example = "1")
+    @Schema(description = "展示状态，参见 CommonStatusEnum 枚举类", example = "1")
     private Integer status;
 
 }

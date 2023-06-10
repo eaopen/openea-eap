@@ -1,4 +1,5 @@
 package cn.iocoder.yudao.module.infra.controller.admin.test.vo;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 import javax.validation.constraints.*;
@@ -9,7 +10,7 @@ import javax.validation.constraints.*;
 @ToString(callSuper = true)
 public class TestDemoUpdateReqVO extends TestDemoBaseVO {
 
-    @Schema(description = "编号", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(description = "编号", required = true)
     @NotNull(message = "编号不能为空")
     private Long id;
 

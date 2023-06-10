@@ -20,7 +20,7 @@ import java.util.List;
 
 import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
 
-@Tag(name = "管理后台 - 部门")
+@Tag(name =  "管理后台 - 部门")
 @RestController
 @RequestMapping("/system/dept")
 @Validated
@@ -57,7 +57,7 @@ public class DeptController {
     @GetMapping("/list")
     @Operation(summary = "获取部门列表")
     @PreAuthorize("@ss.hasPermission('system:dept:query')")
-    public CommonResult<List<DeptRespVO>> getDeptList(DeptListReqVO reqVO) {
+    public CommonResult<List<DeptRespVO>> listDepts(DeptListReqVO reqVO) {
         List<DeptDO> list = deptService.getDeptList(reqVO);
         list.sort(Comparator.comparing(DeptDO::getSort));
         return success(DeptConvert.INSTANCE.convertList(list));
@@ -65,7 +65,7 @@ public class DeptController {
 
     @GetMapping("/list-all-simple")
     @Operation(summary = "获取部门精简信息列表", description = "只包含被开启的部门，主要用于前端的下拉选项")
-    public CommonResult<List<DeptSimpleRespVO>> getSimpleDeptList() {
+    public CommonResult<List<DeptSimpleRespVO>> getSimpleDepts() {
         // 获得部门列表，只要开启状态的
         DeptListReqVO reqVO = new DeptListReqVO();
         reqVO.setStatus(CommonStatusEnum.ENABLE.getStatus());

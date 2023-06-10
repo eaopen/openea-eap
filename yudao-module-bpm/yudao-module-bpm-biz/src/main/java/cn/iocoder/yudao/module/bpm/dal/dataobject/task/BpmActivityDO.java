@@ -91,7 +91,7 @@ public class BpmActivityDO {
 
     private Integer transactionOrder;
 
-    private LocalDateTime duration;
+    private Long duration;
 
     /**
      * 删除结果

@@ -1,40 +1,36 @@
 package cn.iocoder.yudao.module.system.api.sms;
 
-import cn.iocoder.yudao.framework.common.exception.ServiceException;
+import cn.iocoder.yudao.framework.common.pojo.CommonResult;
 import cn.iocoder.yudao.module.system.api.sms.dto.code.SmsCodeValidateReqDTO;
 import cn.iocoder.yudao.module.system.api.sms.dto.code.SmsCodeSendReqDTO;
 import cn.iocoder.yudao.module.system.api.sms.dto.code.SmsCodeUseReqDTO;
+import cn.iocoder.yudao.module.system.enums.ApiConstants;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.validation.Valid;
 
-/**
- * 短信验证码 API 接口
- *
- * @author 芋道源码
- */
+@FeignClient(name = ApiConstants.NAME) // TODO 芋艿：fallbackFactory =
+@Tag(name =  "RPC 服务 - 短信验证码")
 public interface SmsCodeApi {
 
-    /**
-     * 创建短信验证码，并进行发送
-     *
-     * @param reqDTO 发送请求
-     */
-    void sendSmsCode(@Valid SmsCodeSendReqDTO reqDTO);
+    String PREFIX = ApiConstants.PREFIX + "/oauth2/sms/code";
 
-    /**
-     * 验证短信验证码，并进行使用
-     * 如果正确，则将验证码标记成已使用
-     * 如果错误，则抛出 {@link ServiceException} 异常
-     *
-     * @param reqDTO 使用请求
-     */
-    void useSmsCode(@Valid SmsCodeUseReqDTO reqDTO);
+    @PostMapping(PREFIX + "/send")
+    @Operation(summary = "创建短信验证码，并进行发送")
+    CommonResult<Boolean> sendSmsCode(@Valid @RequestBody SmsCodeSendReqDTO reqDTO);
 
-    /**
-     * 检查验证码是否有效
-     *
-     * @param reqDTO 校验请求
-     */
-    void validateSmsCode(@Valid SmsCodeValidateReqDTO reqDTO);
+    @PutMapping(PREFIX + "/use")
+    @Operation(summary = "验证短信验证码，并进行使用")
+    CommonResult<Boolean> useSmsCode(@Valid @RequestBody SmsCodeUseReqDTO reqDTO);
+
+    @GetMapping(PREFIX + "/validate")
+    @Operation(summary = "检查验证码是否有效")
+    CommonResult<Boolean> validateSmsCode(@Valid @RequestBody SmsCodeValidateReqDTO reqDTO);
 
 }

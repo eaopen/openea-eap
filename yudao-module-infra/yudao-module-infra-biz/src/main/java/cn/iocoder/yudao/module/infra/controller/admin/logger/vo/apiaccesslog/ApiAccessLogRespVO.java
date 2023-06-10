@@ -1,6 +1,7 @@
 package cn.iocoder.yudao.module.infra.controller.admin.logger.vo.apiaccesslog;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -13,10 +14,10 @@ import java.time.LocalDateTime;
 @ToString(callSuper = true)
 public class ApiAccessLogRespVO extends ApiAccessLogBaseVO {
 
-    @Schema(description = "日志主键", requiredMode = Schema.RequiredMode.REQUIRED, example = "1024")
+    @Schema(description = "日志主键", required = true, example = "1024")
     private Long id;
 
-    @Schema(description = "创建时间", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(description = "创建时间", required = true)
     private LocalDateTime createTime;
 
 }

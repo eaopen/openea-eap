@@ -21,11 +21,14 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.*;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Properties;
+import java.util.Set;
 
 import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
 
-@Tag(name = "管理后台 - Redis 监控")
+@Tag(name =  "管理后台 - Redis 监控")
 @RestController
 @RequestMapping("/infra/redis")
 public class RedisController {

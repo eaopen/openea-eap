@@ -1,6 +1,7 @@
 package cn.iocoder.yudao.module.infra.controller.admin.logger.vo.apierrorlog;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 

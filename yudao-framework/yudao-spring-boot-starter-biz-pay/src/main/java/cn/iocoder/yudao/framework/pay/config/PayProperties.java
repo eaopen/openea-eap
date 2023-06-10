@@ -13,23 +13,26 @@ import javax.validation.constraints.NotEmpty;
 public class PayProperties {
 
     /**
-     * 回调地址
-     *
-     * 实际上，对应的 PayNotifyController 的 notifyCallback 方法的 URL
-     *
+     * 支付回调地址
      * 注意，支付渠道统一回调到 payNotifyUrl 地址，由支付模块统一处理；然后，自己的支付模块，在回调 PayAppDO.payNotifyUrl 地址
      */
-    @NotEmpty(message = "回调地址不能为空")
-    @URL(message = "回调地址的格式必须是 URL")
-    private String callbackUrl;
+    @NotEmpty(message = "支付回调地址不能为空")
+    @URL(message = "支付回调地址的格式必须是 URL")
+    private String payNotifyUrl;
+    /**
+     * 退款回调地址
+     * 注意点，同 {@link #payNotifyUrl} 属性
+     */
+    @NotEmpty(message = "退款回调地址不能为空")
+    @URL(message = "退款回调地址的格式必须是 URL")
+    private String refundNotifyUrl;
+
 
     /**
-     * 回跳地址
-     *
-     * 实际上，对应的 PayNotifyController 的 returnCallback 方法的 URL
+     * 支付完成的返回地址
      */
-    @URL(message = "回跳地址的格式必须是 URL")
-    @NotEmpty(message = "回跳地址不能为空")
-    private String returnUrl;
+    @URL(message = "支付返回的地址的格式必须是 URL")
+    @NotEmpty(message = "支付返回的地址不能为空")
+    private String payReturnUrl;
 
 }

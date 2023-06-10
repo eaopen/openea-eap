@@ -3,26 +3,21 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>cn.iocoder.boot</groupId>
+    <groupId>cn.iocoder.cloud</groupId>
     <artifactId>yudao</artifactId>
     <version>${revision}</version>
     <packaging>pom</packaging>
     <modules>
         <module>yudao-dependencies</module>
+        <module>yudao-gateway</module>
         <module>yudao-framework</module>
-        <!-- Server 主项目 -->
-        <module>yudao-server</module>
-        <!-- 各种 module 拓展 -->
-        <module>yudao-module-member</module>
+        <!--  各种 module 拓展 -->
+<!--        <module>yudao-module-member</module>-->
+        <module>yudao-module-bpm</module>
         <module>yudao-module-system</module>
         <module>yudao-module-infra</module>
-<!--        <module>yudao-module-pay</module>-->
-<!--        <module>yudao-module-bpm</module>-->
-<!--        <module>yudao-module-report</module>-->
-<!--        <module>yudao-module-mp</module>-->
-<!--        <module>yudao-module-mall</module>-->
-        <!-- 示例项目 -->
-        <module>yudao-example</module>
+        <!--        <module>yudao-module-pay</module>-->
+        <module>yudao-module-report</module>
     </modules>
 
     <name>${project.artifactId}</name>
@@ -47,7 +42,7 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>cn.iocoder.boot</groupId>
+                <groupId>cn.iocoder.cloud</groupId>
                 <artifactId>yudao-dependencies</artifactId>
                 <version>${revision}</version>
                 <type>pom</type>
@@ -66,7 +61,7 @@
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>${maven-surefire-plugin.version}</version>
                 </plugin>
-                <!-- maven-compiler-plugin 插件，解决 spring-boot-configuration-processor + Lombok + MapStruct 组合 -->
+                <!-- maven-compiler-plugin 插件，解决 Lombok + MapStruct 组合 -->
                 <!-- https://stackoverflow.com/questions/33483697/re-run-spring-boot-configuration-annotation-processor-to-update-generated-metada -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>

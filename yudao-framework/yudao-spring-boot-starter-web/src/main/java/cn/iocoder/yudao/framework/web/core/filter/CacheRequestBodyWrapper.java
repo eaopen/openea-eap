@@ -1,6 +1,6 @@
 package cn.iocoder.yudao.framework.web.core.filter;
 
-import cn.iocoder.yudao.framework.common.util.servlet.ServletUtils;
+import cn.hutool.extra.servlet.ServletUtil;
 
 import javax.servlet.ReadListener;
 import javax.servlet.ServletInputStream;
@@ -25,7 +25,7 @@ public class CacheRequestBodyWrapper extends HttpServletRequestWrapper {
 
     public CacheRequestBodyWrapper(HttpServletRequest request) {
         super(request);
-        body = ServletUtils.getBodyBytes(request);
+        body = ServletUtil.getBodyBytes(request);
     }
 
     @Override

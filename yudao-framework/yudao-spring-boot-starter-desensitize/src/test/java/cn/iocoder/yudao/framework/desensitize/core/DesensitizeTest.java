@@ -12,7 +12,6 @@ import cn.iocoder.yudao.framework.desensitize.core.slider.annotation.IdCardDesen
 import cn.iocoder.yudao.framework.desensitize.core.slider.annotation.PasswordDesensitize;
 import cn.iocoder.yudao.framework.desensitize.core.slider.annotation.MobileDesensitize;
 import cn.iocoder.yudao.framework.desensitize.core.slider.annotation.SliderDesensitize;
-import cn.iocoder.yudao.framework.test.core.ut.BaseMockitoUnitTest;
 import lombok.Data;
 import org.junit.jupiter.api.Test;
 
@@ -21,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * {@link DesensitizeTest} 的单元测试
  */
-public class DesensitizeTest extends BaseMockitoUnitTest {
+public class DesensitizeTest {
 
     @Test
     public void test() {

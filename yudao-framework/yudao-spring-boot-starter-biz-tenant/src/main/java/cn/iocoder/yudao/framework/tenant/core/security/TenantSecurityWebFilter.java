@@ -1,6 +1,8 @@
 package cn.iocoder.yudao.framework.tenant.core.security;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.StrUtil;
+import cn.iocoder.yudao.framework.common.enums.RpcConstants;
 import cn.iocoder.yudao.framework.common.exception.enums.GlobalErrorCodeConstants;
 import cn.iocoder.yudao.framework.common.pojo.CommonResult;
 import cn.iocoder.yudao.framework.common.util.servlet.ServletUtils;
@@ -12,6 +14,7 @@ import cn.iocoder.yudao.framework.tenant.core.service.TenantFrameworkService;
 import cn.iocoder.yudao.framework.web.config.WebProperties;
 import cn.iocoder.yudao.framework.web.core.filter.ApiRequestFilter;
 import cn.iocoder.yudao.framework.web.core.handler.GlobalExceptionHandler;
+import cn.iocoder.yudao.framework.web.core.util.WebFrameworkUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.AntPathMatcher;
 
@@ -27,6 +30,8 @@ import java.util.Objects;
  * 1. 如果是登陆的用户，校验是否有权限访问该租户，避免越权问题。
  * 2. 如果请求未带租户的编号，检查是否是忽略的 URL，否则也不允许访问。
  * 3. 校验租户是合法，例如说被禁用、到期
+ *
+ * 校验用户访问的租户，是否是其所在的租户，
  *
  * @author 芋道源码
  */
@@ -52,9 +57,16 @@ public class TenantSecurityWebFilter extends ApiRequestFilter {
     }
 
     @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) {
+        return super.shouldNotFilter(request) &&
+                !StrUtil.startWithAny(request.getRequestURI(), RpcConstants.RPC_API_PREFIX); // 因为 RPC API 也会透传租户编号
+    }
+
+    @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws ServletException, IOException {
         Long tenantId = TenantContextHolder.getTenantId();
+        boolean isRpcRequest = WebFrameworkUtils.isRpcRequest(request);
         // 1. 登陆的用户，校验是否有权限访问该租户，避免越权问题。
         LoginUser user = SecurityFrameworkUtils.getLoginUser();
         if (user != null) {
@@ -63,7 +75,8 @@ public class TenantSecurityWebFilter extends ApiRequestFilter {
                 tenantId = user.getTenantId();
                 TenantContextHolder.setTenantId(tenantId);
             // 如果传递了租户编号，则进行比对租户编号，避免越权问题
-            } else if (!Objects.equals(user.getTenantId(), TenantContextHolder.getTenantId())) {
+            } else if (!Objects.equals(user.getTenantId(), TenantContextHolder.getTenantId())
+                && !isRpcRequest) { // Cloud 特殊逻辑：如果是 RPC 请求，就不校验了。主要考虑，一些场景下，会调用 TenantUtils 去切换租户
                 log.error("[doFilterInternal][租户({}) User({}/{}) 越权访问租户({}) URL({}/{})]",
                         user.getTenantId(), user.getId(), user.getUserType(),
                         TenantContextHolder.getTenantId(), request.getRequestURI(), request.getMethod());
@@ -79,7 +92,7 @@ public class TenantSecurityWebFilter extends ApiRequestFilter {
             if (tenantId == null) {
                 log.error("[doFilterInternal][URL({}/{}) 未传递租户编号]", request.getRequestURI(), request.getMethod());
                 ServletUtils.writeJSON(response, CommonResult.error(GlobalErrorCodeConstants.BAD_REQUEST.getCode(),
-                        "请求的租户标识未传递，请进行排查"));
+                        "租户的请求未传递，请进行排查"));
                 return;
             }
             // 3. 校验租户是合法，例如说被禁用、到期

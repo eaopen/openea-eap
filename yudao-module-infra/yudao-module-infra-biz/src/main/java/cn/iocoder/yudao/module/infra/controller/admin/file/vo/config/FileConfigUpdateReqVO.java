@@ -1,6 +1,7 @@
 package cn.iocoder.yudao.module.infra.controller.admin.file.vo.config;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -14,11 +15,11 @@ import java.util.Map;
 @ToString(callSuper = true)
 public class FileConfigUpdateReqVO extends FileConfigBaseVO {
 
-    @Schema(description = "编号", requiredMode = Schema.RequiredMode.REQUIRED, example = "1")
+    @Schema(description = "编号", required = true, example = "1")
     @NotNull(message = "编号不能为空")
     private Long id;
 
-    @Schema(description = "存储配置,配置是动态参数，所以使用 Map 接收", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(description = "存储配置,配置是动态参数，所以使用 Map 接收", required = true)
     @NotNull(message = "存储配置不能为空")
     private Map<String, Object> config;
 

@@ -1,11 +1,9 @@
 package cn.iocoder.yudao.module.system.mq.producer.notify;
 
-import cn.iocoder.yudao.framework.mq.core.RedisMQTemplate;
+import cn.iocoder.yudao.framework.mq.core.bus.AbstractBusProducer;
 import cn.iocoder.yudao.module.system.mq.message.notify.NotifyTemplateRefreshMessage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-
-import javax.annotation.Resource;
 
 /**
  * Notify 站内信相关消息的 Producer
@@ -15,18 +13,13 @@ import javax.annotation.Resource;
  */
 @Slf4j
 @Component
-public class NotifyProducer {
-
-    @Resource
-    private RedisMQTemplate redisMQTemplate;
-
+public class NotifyProducer extends AbstractBusProducer {
 
     /**
      * 发送 {@link NotifyTemplateRefreshMessage} 消息
      */
     public void sendNotifyTemplateRefreshMessage() {
-        NotifyTemplateRefreshMessage message = new NotifyTemplateRefreshMessage();
-        redisMQTemplate.send(message);
+        publishEvent(new NotifyTemplateRefreshMessage(this, getBusId(), selfDestinationService()));
     }
 
 

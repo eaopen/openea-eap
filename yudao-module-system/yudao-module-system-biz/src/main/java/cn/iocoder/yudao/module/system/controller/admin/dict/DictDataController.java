@@ -24,7 +24,7 @@ import java.util.List;
 import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
 import static cn.iocoder.yudao.framework.operatelog.core.enums.OperateTypeEnum.EXPORT;
 
-@Tag(name = "管理后台 - 字典数据")
+@Tag(name =  "管理后台 - 字典数据")
 @RestController
 @RequestMapping("/system/dict-data")
 @Validated
@@ -41,7 +41,7 @@ public class DictDataController {
         return success(dictDataId);
     }
 
-    @PutMapping("/update")
+    @PutMapping("update")
     @Operation(summary = "修改字典数据")
     @PreAuthorize("@ss.hasPermission('system:dict:update')")
     public CommonResult<Boolean> updateDictData(@Valid @RequestBody DictDataUpdateReqVO reqVO) {

@@ -1,57 +1,8 @@
-.idea
-**/.idea
 
-**/.DS_Store
-
-# Compiled class file
-*.class
-# Log file
-*.log
-
-# BlueJ files
-*.ctxt
-
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
-
-# Package Files #
-*.jar
-*.war
-*.ear
-*.zip
-*.tar.gz
-*.rar
-.idea
-*.iml
-
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
-/target/
-/.classpath
-/.project
-/.settings/
-
-**/target/
-
-**/node_modules/
-**/package-lock.json
-
-refer/**
-
-*-logs/
-**/*-logs/
-######################################################################
-# Build Tools
-
-.gradle
-/build/
-!gradle/wrapper/gradle-wrapper.jar
+# 查看更多 .gitignore 配置 -> https://help.github.com/articles/ignoring-files/
 
 target/
 !.mvn/wrapper/maven-wrapper.jar
-
-######################################################################
-# IDE
 
 ### STS ###
 .apt_generated
@@ -60,34 +11,63 @@ target/
 .project
 .settings
 .springBeans
+.sts4-cache
 
 ### IntelliJ IDEA ###
 .idea
 *.iws
 *.iml
 *.ipr
+*.class
+target/*
 
 ### NetBeans ###
-nbproject/private/
-build/*
-nbbuild/
-dist/
-nbdist/
-.nb-gradle/
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+/build/
 
-######################################################################
-# Others
+
+
+### admin-web ###
+
+# dependencies
+**/node_modules
+
+# roadhog-api-doc ignore
+/src/utils/request-temp.js
+_roadhog-api-doc
+
+# production
+/dist
+/.vscode
+
+# misc
+.DS_Store
+npm-debug.log*
+yarn-error.log
+
+/coverage
+.idea
+yarn.lock
+package-lock.json
+*bak
+.vscode
+
+# visual studio code
+.history
 *.log
-*.xml.versionsBackup
-*.swp
 
-!*/build/*.java
-!*/build/*.html
-!*/build/*.xml
+functions/mock
+.temp/**
 
-### JRebel ###
-rebel.xml
+# umi
+.umi
+.umi-production
 
-application-my.yaml
-
-/yudao-ui-app/unpackage/
+# screenshot
+screenshot
+.firebase
+sessionStore

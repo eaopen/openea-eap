@@ -1,9 +1,9 @@
 package cn.iocoder.yudao.module.system.mq.consumer.mail;
 
-import cn.iocoder.yudao.framework.mq.core.pubsub.AbstractChannelMessageListener;
 import cn.iocoder.yudao.module.system.mq.message.mail.MailTemplateRefreshMessage;
 import cn.iocoder.yudao.module.system.service.mail.MailTemplateService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -15,12 +15,12 @@ import javax.annotation.Resource;
  */
 @Component
 @Slf4j
-public class MailTemplateRefreshConsumer extends AbstractChannelMessageListener<MailTemplateRefreshMessage> {
+public class MailTemplateRefreshConsumer {
 
     @Resource
     private MailTemplateService mailTemplateService;
 
-    @Override
+    @EventListener
     public void onMessage(MailTemplateRefreshMessage message) {
         log.info("[onMessage][收到 Mail Template 刷新信息]");
         mailTemplateService.initLocalCache();

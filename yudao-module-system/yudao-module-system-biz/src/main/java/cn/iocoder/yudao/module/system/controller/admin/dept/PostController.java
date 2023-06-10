@@ -27,7 +27,7 @@ import java.util.List;
 import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
 import static cn.iocoder.yudao.framework.operatelog.core.enums.OperateTypeEnum.EXPORT;
 
-@Tag(name = "管理后台 - 岗位")
+@Tag(name =  "管理后台 - 岗位")
 @RestController
 @RequestMapping("/system/post")
 @Validated
@@ -70,7 +70,7 @@ public class PostController {
 
     @GetMapping("/list-all-simple")
     @Operation(summary = "获取岗位精简信息列表", description = "只包含被开启的岗位，主要用于前端的下拉选项")
-    public CommonResult<List<PostSimpleRespVO>> getSimplePostList() {
+    public CommonResult<List<PostSimpleRespVO>> getSimplePosts() {
         // 获得岗位列表，只要开启状态的
         List<PostDO> list = postService.getPostList(null, Collections.singleton(CommonStatusEnum.ENABLE.getStatus()));
         // 排序后，返回给前端

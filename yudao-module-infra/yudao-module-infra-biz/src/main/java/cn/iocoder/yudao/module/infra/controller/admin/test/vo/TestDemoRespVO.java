@@ -1,6 +1,10 @@
 package cn.iocoder.yudao.module.infra.controller.admin.test.vo;
+
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.*;
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import java.time.LocalDateTime;
 
@@ -10,10 +14,10 @@ import java.time.LocalDateTime;
 @ToString(callSuper = true)
 public class TestDemoRespVO extends TestDemoBaseVO {
 
-    @Schema(description = "编号", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(description = "编号", required = true)
     private Long id;
 
-    @Schema(description = "创建时间", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(description = "创建时间", required = true)
     private LocalDateTime createTime;
 
 }

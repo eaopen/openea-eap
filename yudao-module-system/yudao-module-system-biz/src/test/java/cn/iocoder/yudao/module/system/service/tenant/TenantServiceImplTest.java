@@ -34,7 +34,6 @@ import java.util.Collections;
 import java.util.List;
 
 import static cn.iocoder.yudao.framework.common.util.collection.SetUtils.asSet;
-import static cn.iocoder.yudao.framework.common.util.date.LocalDateTimeUtils.buildBetweenTime;
 import static cn.iocoder.yudao.framework.common.util.date.LocalDateTimeUtils.buildTime;
 import static cn.iocoder.yudao.framework.common.util.object.ObjectUtils.cloneIgnoreId;
 import static cn.iocoder.yudao.framework.test.core.util.AssertUtils.assertPojoEquals;
@@ -311,7 +310,7 @@ public class TenantServiceImplTest extends BaseDbUnitTest {
         reqVO.setContactName("艿");
         reqVO.setContactMobile("1560");
         reqVO.setStatus(CommonStatusEnum.ENABLE.getStatus());
-        reqVO.setCreateTime(buildBetweenTime(2020, 12, 1, 2020, 12, 24));
+        reqVO.setCreateTime(new LocalDateTime[]{buildTime(2020, 12, 1),buildTime(2020, 12, 24)});
 
         // 调用
         PageResult<TenantDO> pageResult = tenantService.getTenantPage(reqVO);
@@ -348,7 +347,7 @@ public class TenantServiceImplTest extends BaseDbUnitTest {
         reqVO.setContactName("艿");
         reqVO.setContactMobile("1560");
         reqVO.setStatus(CommonStatusEnum.ENABLE.getStatus());
-        reqVO.setCreateTime(buildBetweenTime(2020, 12, 1, 2020, 12, 24));
+        reqVO.setCreateTime(new LocalDateTime[]{buildTime(2020, 12, 1),buildTime(2020, 12, 24)});
 
         // 调用
         List<TenantDO> list = tenantService.getTenantList(reqVO);
@@ -356,6 +355,7 @@ public class TenantServiceImplTest extends BaseDbUnitTest {
         assertEquals(1, list.size());
         assertPojoEquals(dbTenant, list.get(0));
     }
+
 
     @Test
     public void testGetTenantByName() {
