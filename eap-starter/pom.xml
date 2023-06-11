@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>org.openea.eap</groupId>
+        <artifactId>eap</artifactId>
+        <version>${revision}</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>eap-starter</artifactId>
+    <packaging>jar</packaging>
+
+    <name>${project.artifactId}</name>
+    <description>
+        后端 Server 的主项目，通过引入需要 eap-module-xxx 的依赖，
+        从而实现提供 RESTful API 给 eap-ui-admin、eap-ui-user 等前端项目。
+        本质上来说，它就是个空壳（容器）！
+    </description>
+    <url>https://github.com/YunaiV/ruoyi-vue-pro</url>
+
+    <dependencies>
+
+
+        <dependency>
+            <groupId>org.openea.eap</groupId>
+            <artifactId>eap-module-system-biz</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openea.eap</groupId>
+            <artifactId>eap-module-infra-biz</artifactId>
+            <version>${revision}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openea.eap</groupId>
+            <artifactId>eap-spring-boot-starter-biz-error-code</artifactId>
+        </dependency>
+
+
+<!--        <dependency>-->
+<!--            <groupId>org.openea.eap</groupId>-->
+<!--            <artifactId>eap-module-member-biz</artifactId>-->
+<!--            <version>${revision}</version>-->
+<!--        </dependency>-->
+
+        <!-- 数据报表 -->
+<!--        <dependency>-->
+<!--            <groupId>org.openea.eap</groupId>-->
+<!--            <artifactId>eap-module-report-biz</artifactId>-->
+<!--            <version>${revision}</version>-->
+<!--        </dependency>-->
+        <!-- 工作流 -->
+<!--        <dependency>-->
+<!--            <groupId>org.openea.eap</groupId>-->
+<!--            <artifactId>eap-module-bpm-biz</artifactId>-->
+<!--            <version>${revision}</version>-->
+<!--        </dependency>-->
+
+        <!-- spring boot 配置所需依赖 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.openea.eap</groupId>
+            <artifactId>eap-spring-boot-starter-banner</artifactId>
+        </dependency>
+
+        <!-- 服务保障相关 -->
+        <dependency>
+            <groupId>org.openea.eap</groupId>
+            <artifactId>eap-spring-boot-starter-protection</artifactId>
+        </dependency>
+
+    </dependencies>
+
+</project>

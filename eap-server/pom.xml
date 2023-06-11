@@ -23,22 +23,15 @@
     <dependencies>
         <dependency>
             <groupId>org.openea.eap</groupId>
+            <artifactId>eap-starter</artifactId>
+            <version>${revision}</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.openea.eap</groupId>
             <artifactId>eap-module-member-biz</artifactId>
             <version>${revision}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.openea.eap</groupId>
-            <artifactId>eap-module-system-biz</artifactId>
-            <version>${revision}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.openea.eap</groupId>
-            <artifactId>eap-module-infra-biz</artifactId>
-            <version>${revision}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.openea.eap</groupId>
-            <artifactId>eap-spring-boot-starter-biz-error-code</artifactId>
         </dependency>
 
         <!-- 数据报表 -->
@@ -83,23 +76,6 @@
 <!--            <artifactId>eap-module-trade-biz</artifactId>-->
 <!--            <version>${revision}</version>-->
 <!--        </dependency>-->
-
-        <!-- spring boot 配置所需依赖 -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-configuration-processor</artifactId>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>org.openea.eap</groupId>
-            <artifactId>eap-spring-boot-starter-banner</artifactId>
-        </dependency>
-
-        <!-- 服务保障相关 -->
-        <dependency>
-            <groupId>org.openea.eap</groupId>
-            <artifactId>eap-spring-boot-starter-protection</artifactId>
-        </dependency>
 
     </dependencies>
 

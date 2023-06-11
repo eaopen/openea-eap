@@ -11,6 +11,7 @@
         <module>eap-dependencies</module>
         <module>eap-framework</module>
         <!-- Server 主项目 -->
+        <module>eap-starter</module>
         <module>eap-server</module>
         <!-- 各种 module 拓展 -->
 
