@@ -1,0 +1,2 @@
+org.openea.eap.framework.idempotent.config.EapIdempotentConfiguration
+org.openea.eap.framework.lock4j.config.EapLock4jConfiguration

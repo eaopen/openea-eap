@@ -1,0 +1,2 @@
+org.openea.eap.framework.datasource.config.EapDataSourceAutoConfiguration
+org.openea.eap.framework.mybatis.config.EapMybatisAutoConfiguration

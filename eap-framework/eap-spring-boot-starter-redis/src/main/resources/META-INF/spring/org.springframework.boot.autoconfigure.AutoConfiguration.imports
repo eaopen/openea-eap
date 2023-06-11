@@ -1,0 +1,2 @@
+org.openea.eap.framework.redis.config.EapRedisAutoConfiguration
+org.openea.eap.framework.redis.config.EapCacheAutoConfiguration

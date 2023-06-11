@@ -1,0 +1,2 @@
+org.openea.eap.framework.tracer.config.EapTracerAutoConfiguration
+org.openea.eap.framework.tracer.config.EapMetricsAutoConfiguration
