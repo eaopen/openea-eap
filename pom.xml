@@ -11,8 +11,8 @@
         <module>eap-dependencies</module>
         <module>eap-framework</module>
         <!-- Server 主项目 -->
-        <module>eap-starter</module>
         <module>eap-server</module>
+<!--        <module>eoa-server</module>-->
         <!-- 各种 module 拓展 -->
 
         <module>eap-module-system</module>
@@ -26,12 +26,11 @@
     </modules>
 
     <name>${project.artifactId}</name>
-    <description>芋道项目基础脚手架</description>
-    <url>https://github.com/YunaiV/ruoyi-vue-pro</url>
+    <description>openEAP项目基础脚手架</description>
+    <url>https://github.com/eaopen/openea-eap</url>
 
     <properties>
-        <revision>1.7.3-snapshot</revision>
-        <ea-version>1.0.1-snapshot</ea-version>
+        <revision>2.0.1c</revision>
         <!-- Maven 相关 -->
         <java.version>1.8</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
@@ -93,12 +92,38 @@
                         </annotationProcessorPaths>
                     </configuration>
                 </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>versions-maven-plugin</artifactId>
+                    <version>2.8.1</version>
+                    <configuration>
+                        <!-- Optional configuration -->
+                    </configuration>
+                </plugin>
             </plugins>
         </pluginManagement>
     </build>
 
+    <distributionManagement>
+        <repository>
+            <id>github-mvn-openea</id>
+            <url>https://maven.pkg.github.com/eaopen/mvn-repo</url>
+
+        </repository>
+    </distributionManagement>
     <!-- 使用 aliyun 的 Maven 源，提升下载速度 -->
     <repositories>
+        <repository>
+            <id>github-mvn-openea</id>
+            <url>https://maven.pkg.github.com/eaopen/mvn-repo</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
+        </repository>
         <repository>
             <id>aliyunmaven</id>
             <name>aliyun</name>

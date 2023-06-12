@@ -11,10 +11,10 @@
 
     <name>${project.artifactId}</name>
     <description>基础 bom 文件，管理整个项目的依赖版本</description>
-    <url>https://github.com/YunaiV/ruoyi-vue-pro</url>
+    <url>https://github.com/eaopen/openea-eap</url>
 
     <properties>
-        <revision>1.7.3-snapshot</revision>
+        <revision>2.0.1c</revision>
         <!-- 统一依赖管理 -->
         <spring.boot.version>2.7.11</spring.boot.version>
         <!-- Web 相关 -->
@@ -625,5 +625,12 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+
+    <distributionManagement>
+        <repository>
+            <id>github-mvn-openea</id>
+            <url>https://maven.pkg.github.com/eaopen/mvn-repo</url>
+        </repository>
+    </distributionManagement>
 
 </project>
