@@ -8,7 +8,7 @@ OpenEAP前后端分离，采用后端Spring boot 2.x单体多模块，前端vue2
 
 ## 🐯 平台简介
 
-![架构图](https://github.com/eaopen/openea-eap/blob/dev/doc/yudao/ruoyi-vue-pro-architecture.png)
+![架构图](https://raw.githubusercontent.com/eaopen/openea-eap/dev/doc/yudao/ruoyi-vue-pro-architecture.png)
 
 * 管理后台的电脑端：Vue2 提供 [element-ui] eap-ui-admin 版本
 * 管理后台的移动端：采用 [uni-app](https://github.com/dcloudio/uni-app) 方案，一份代码多终端适配，同时支持 APP、小程序、H5！
@@ -25,7 +25,7 @@ OpenEAP前后端分离，采用后端Spring boot 2.x单体多模块，前端vue2
 
 系统内置多种多种业务功能，可以用于快速你的业务系统：
 
-![功能分层](https://github.com/eaopen/openea-eap/blob/dev/doc/yudao/ruoyi-vue-pro-biz.png)
+![功能分层](https://raw.githubusercontent.com/eaopen/openea-eap/dev/doc/yudao/ruoyi-vue-pro-biz.png)
 
 * 系统功能
 * 基础设施
