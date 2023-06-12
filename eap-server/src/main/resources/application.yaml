@@ -131,9 +131,9 @@ eap:
       - org.openea.eap.module.bpm.enums.ErrorCodeConstants
       - org.openea.eap.module.infra.enums.ErrorCodeConstants
       - org.openea.eap.module.member.enums.ErrorCodeConstants
-      - org.openea.eap.module.pay.enums.ErrorCodeConstants
+      #- org.openea.eap.module.pay.enums.ErrorCodeConstants
       - org.openea.eap.module.system.enums.ErrorCodeConstants
-      - org.openea.eap.module.mp.enums.ErrorCodeConstants
+      #- org.openea.eap.module.mp.enums.ErrorCodeConstants
   tenant: # 多租户相关配置项
     enable: false
     ignore-urls:
