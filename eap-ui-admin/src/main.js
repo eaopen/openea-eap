@@ -13,7 +13,7 @@ import plugins from './plugins' // plugins
 
 import './assets/icons' // icon
 import './permission' // permission control
-import './tongji' // 百度统计
+//import './tongji' // 百度统计
 import { getDicts } from "@/api/system/dict/data";
 import { getConfigKey } from "@/api/infra/config";
 import { parseTime, resetForm, handleTree, addBeginAndEndTime, divide} from "@/utils/ruoyi";
