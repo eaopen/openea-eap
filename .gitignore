@@ -44,4 +44,4 @@ refer/**
 **/pom.xml.versionsBackup
 
 # eoa will move
-eoa-server/**
+#eoa-server/**
