@@ -46,7 +46,7 @@ docker compose --env-file docker.env up -d
 
 ```shell
 docker exec -i eap-mysql \
-    sh -c 'exec mysql -uroot -p"$MYSQL_ROOT_PASSWORD" ruoyi-vue-pro' \
+    sh -c 'exec mysql -uroot -p"$MYSQL_ROOT_PASSWORD" --default-character-set=utf8mb4 ruoyi-vue-pro' \
     < ./sql/mysql/ruoyi-vue-pro.sql
 ```
 
