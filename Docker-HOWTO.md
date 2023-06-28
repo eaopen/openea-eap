@@ -7,9 +7,14 @@
 ```text
 .
 ├── Docker-HOWTO.md
-├── docker-compose.yml
+├── docker-compose.yml             #eap单体版本
+├── docker-compose-eoa.yml         #eoa单体版本
+├── docker-compose-cloud.yml       #eoa cloud版本
 ├── docker.env
 ├── eap-server
+│   ├── Dockerfile
+│   └── nginx.conf
+├── eoa-server
 │   ├── Dockerfile
 │   └── nginx.conf
 └── eap-ui-admin
@@ -47,7 +52,7 @@ docker compose --env-file docker.env up -d
 ```shell
 docker exec -i eap-mysql \
     sh -c 'exec mysql -uroot -p"$MYSQL_ROOT_PASSWORD" --default-character-set=utf8mb4 ruoyi-vue-pro' \
-    < ./sql/mysql/ruoyi-vue-pro.sql
+    < ./sql/mysql/eap-db.sql
 ```
 
 注意：这里用docker compose exec 会出现 `the input device is not a TTY` 报错

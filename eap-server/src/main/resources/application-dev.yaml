@@ -45,23 +45,23 @@ spring:
       datasource:
         master:
           name: eap-db
-          url: jdbc:mysql://sh-cynosdbmysql-grp-1cn2v14s.sql.tencentcdb.com:21188/${spring.datasource.dynamic.datasource.master.name}?useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+          url: jdbc:mysql://${jdbc_host:sh-cynosdbmysql-grp-1cn2v14s.sql.tencentcdb.com:21188}/${spring.datasource.dynamic.datasource.master.name}?useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
           driver-class-name: com.mysql.cj.jdbc.Driver
-          username: eap
-          password: 3WLiVUBEwTbvAfsh
+          username: ${jdbc_user:eap}
+          password: ${jdbc_password:3WLiVUBEwTbvAfsh}
         slave: # 模拟从库，可根据自己需要修改 # 模拟从库，可根据自己需要修改
           name: eap-db
-          url: jdbc:mysql://sh-cynosdbmysql-grp-1cn2v14s.sql.tencentcdb.com:21188/${spring.datasource.dynamic.datasource.slave.name}?useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+          url: jdbc:mysql://${jdbc_host:sh-cynosdbmysql-grp-1cn2v14s.sql.tencentcdb.com:21188}/${spring.datasource.dynamic.datasource.slave.name}?useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
           driver-class-name: com.mysql.cj.jdbc.Driver
-          username: eap
-          password: 3WLiVUBEwTbvAfsh
+          username: ${jdbc_user:eap}
+          password: ${jdbc_password:3WLiVUBEwTbvAfsh}
 
   # Redis 配置。Redisson 默认的配置足够使用，一般不需要进行调优
   redis:
-    host: 124.223.81.114 # 地址
-    port: 6378 # 端口
-    database: 3 # 数据库索引
-    password: nopass # 密码，建议生产环境开启
+    host: ${redis_host:124.223.81.114} # 地址
+    port: ${redis_port:6378} # 端口
+    database: ${redis_db:3} # 数据库索引
+    password: ${redis_password:nopass} # 密码，建议生产环境开启
 
 --- #################### 定时任务相关配置 ####################
 

@@ -45,13 +45,13 @@ spring:
       datasource:
         master:
           name: ${jdbc_db:eoa-db}
-          url: jdbc:mysql://sh-cynosdbmysql-grp-1cn2v14s.sql.tencentcdb.com:21188/${spring.datasource.dynamic.datasource.master.name}?useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+          url: jdbc:mysql://${jdbc_host:sh-cynosdbmysql-grp-1cn2v14s.sql.tencentcdb.com:21188}/${spring.datasource.dynamic.datasource.master.name}?useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
           driver-class-name: com.mysql.cj.jdbc.Driver
           username: ${jdbc_user:eoa}
           password: ${jdbc_password:eoa}
         slave: # 模拟从库，可根据自己需要修改 # 模拟从库，可根据自己需要修改
           name: ${jdbc_db:eoa-db}
-          url: jdbc:mysql://sh-cynosdbmysql-grp-1cn2v14s.sql.tencentcdb.com:21188/${spring.datasource.dynamic.datasource.slave.name}?useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+          url: jdbc:mysql://${jdbc_host:sh-cynosdbmysql-grp-1cn2v14s.sql.tencentcdb.com:21188}/${spring.datasource.dynamic.datasource.slave.name}?useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
           driver-class-name: com.mysql.cj.jdbc.Driver
           username: ${jdbc_user:eoa}
           password: ${jdbc_password:eoa}

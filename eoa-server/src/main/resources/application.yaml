@@ -117,9 +117,9 @@ eap:
     description: 提供管理后台、用户 App 的所有功能
     version: ${eap.info.version}
     url: ${eap.web.admin-ui.url}
-    email: xingyu4j@vip.qq.com
+    email: admin@openea.org
     license: MIT
-    license-url: https://gitee.com/zhijiantianya/ruoyi-vue-pro/blob/master/LICENSE
+    license-url: https://raw.githubusercontent.com/eaopen/openea-eap/dev/doc/yudao/LICENSEx
   captcha:
     enable: false # 验证码的开关，默认为 true
   codegen:

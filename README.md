@@ -5,6 +5,8 @@
 
 本次改版以芋道开源 YunaiV/ruoyi-vue-pro (MIT许可)为基础改版，整合OBPM、MSP、Jeecg等开源项目的部分模块。
 OpenEAP前后端分离，采用后端Spring boot 2.x单体多模块，前端vue2+element-UI 主流路线，预留无缝升级机制。
+单体服务无缝切换为微服务（待实现）。
+
 
 ## 🐯 平台简介
 
