@@ -19,7 +19,7 @@ pipeline {
         //  DockerHub 账号名
         DOCKERHUB_NAMESPACE = 'docker_username'
         // GitHub 账号名
-        GITHUB_ACCOUNT = 'https://gitee.com/zhijiantianya/ruoyi-vue-pro'
+        GITHUB_ACCOUNT = 'https://github.com/eaopen/openea-eap'
         // 应用名称
         APP_NAME = 'eap-server'
         // 应用部署路径
@@ -29,7 +29,7 @@ pipeline {
     stages {
         stage('检出') {
             steps {
-                git url: "https://gitee.com/will-we/ruoyi-vue-pro.git",
+                git url: "https://github.com/eaopen/openea-eap.git",
                         branch: "devops"
             }
         }
