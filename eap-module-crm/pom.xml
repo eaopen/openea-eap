@@ -8,17 +8,28 @@
         <version>${revision}</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <modules>
-        <module>eap-module-member-api</module>
-        <module>eap-module-member-biz</module>
-    </modules>
-    <artifactId>eap-module-member</artifactId>
+    <artifactId>eap-module-crm</artifactId>
     <packaging>pom</packaging>
 
     <name>${project.artifactId}</name>
     <description>
-        member 模块，我们放会员业务。
-        例如说：会员中心等等
+        CRM相关
     </description>
+
+    <modules>
+
+        <!-- member 模块，我们放会员业务 -->
+        <module>eap-module-member-api</module>
+        <module>eap-module-member-biz</module>
+    </modules>
+
+    <profiles>
+        <!-- SpringCloud运行环境 -->
+        <profile>
+            <id>SpringCloud</id>
+            <modules>
+            </modules>
+        </profile>
+    </profiles>
 
 </project>

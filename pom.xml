@@ -153,11 +153,19 @@
             </properties>
         </profile>
 
+        <!-- crm -->
+        <profile>
+            <id>biz-crm</id>
+            <modules>
+                <module>eap-module-crm</module>
+            </modules>
+        </profile>
+
         <!-- mall -->
         <profile>
-            <id>mall</id>
+            <id>biz-mall</id>
             <modules>
-                <module>eap-module-member</module>
+                <module>eap-module-mall</module>
             </modules>
         </profile>
         <!-- EOA -->
