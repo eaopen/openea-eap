@@ -87,19 +87,18 @@ OpenEAP前后端分离，采用后端Spring boot 2.x单体多模块，前端vue2
 
 ### 模块
 
-| 项目                  | 说明                              |
-|---------------------|---------------------------------|
-| `eap-dependencies`  | Maven 依赖版本管理                    |
-| `eap-framework`     | Java 框架拓展                       |
-| `eap-module-system` | 系统功能的 Module 模块                 |
-| `eap-module-member` | 会员中心的 Module 模块                 |
-| `eap-module-infra`  | 基础设施的 Module 模块                 |
-| `eap-module-bpm`    | 工作流程的 Module 模块                 |
-| `eap-module-report` | 大屏报表 Module 模块                  |
-| `eap-server`        | 管理后台 + 用户 APP 的服务端              |
-| `eoa-server`        | OA + 管理后台 + 用户 APP 的服务端         |
-| `eap-msp`           | 微服务基础平台，包含网关APISIX/追踪Skywalking |
-| `eap-cloud`         | 微服务对应模块的服务，system和infra为必选      |
+| 项目                  | 说明                             |
+|---------------------|--------------------------------|
+| `eap-dependencies`  | Maven 依赖版本管理                   |
+| `eap-framework`     | Java 框架拓展                      |
+| `eap-module-system` | 系统功能的 Module 模块, 包含boot和cloud  |
+| `eap-module-member` | 会员中心的 Module 模块                |
+| `eap-module-infra`  | 基础设施的 Module 模块, 包含boot和cloud  |
+| `eap-module-bpm`    | 工作流程的 Module 模块                |
+| `eap-module-report` | 大屏报表 Module 模块                 |
+| `eap-server`        | 管理后台 + 用户 APP 的服务端             |
+| `eoa-server`        | OA + 管理后台 + 用户 APP 的服务端        |
+| `eap-cloud`         | 微服务基础平台，包含网关APISIX/追踪Skywalking |
 
 ### 框架
 
