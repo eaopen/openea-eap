@@ -37,11 +37,11 @@
         </dependency>
 
 
-        <dependency>
-            <groupId>org.openea.eap</groupId>
-            <artifactId>eap-module-member-biz</artifactId>
-            <version>${revision}</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.openea.eap</groupId>-->
+<!--            <artifactId>eap-module-member-biz</artifactId>-->
+<!--            <version>${revision}</version>-->
+<!--        </dependency>-->
 
         <!-- 数据报表 -->
 <!--        <dependency>-->

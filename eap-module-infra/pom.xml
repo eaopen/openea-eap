@@ -22,4 +22,15 @@
         2. 研发工具，提升研发效率与质量。 例如说：代码生成器、接口文档等等
     </description>
 
+    <profiles>
+        <!-- SpringCloud运行环境 -->
+        <profile>
+            <id>SpringCloud</id>
+            <modules>
+                <module>eap-cloud-infra-api</module>
+                <module>eap-cloud-infra-start</module>
+            </modules>
+        </profile>
+    </profiles>
+
 </project>

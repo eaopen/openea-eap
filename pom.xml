@@ -16,20 +16,19 @@
         <!-- boot only -->
         <!-- Server 主项目 -->
         <module>eap-server</module>
-        <module>eoa-server</module>
-        <!-- 各种 module 拓展 -->
 
+        <!-- cloud only -->
+        <!-- 增加maven profile=SpringCloud -->
+
+        <!-- 各种 module 拓展 -->
         <module>eap-module-system</module>
         <module>eap-module-infra</module>
-        <module>eap-module-member</module>
-<!--        <module>eap-module-bpm</module>-->
-<!--        <module>eap-module-report</module>-->
+        <module>eap-module-bpm</module>
+        <module>eap-module-report</module>
+
         <!-- 示例项目 -->
 <!--        <module>eap-example</module>-->
 
-        <!-- cloud only -->
-        <module>eap-msp</module>
-        <module>eap-cloud</module>
     </modules>
 
     <name>${project.artifactId}</name>
@@ -137,5 +136,55 @@
             <url>https://maven.aliyun.com/repository/public</url>
         </repository>
     </repositories>
+
+
+    <!-- 环境 -->
+    <profiles>
+        <!-- 开发 -->
+        <profile>
+            <id>dev</id>
+            <activation>
+                <!--默认激活配置-->
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <!--当前环境-->
+                <profile.name>dev</profile.name>
+            </properties>
+        </profile>
+
+        <!-- mall -->
+        <profile>
+            <id>mall</id>
+            <modules>
+                <module>eap-module-member</module>
+            </modules>
+        </profile>
+        <!-- EOA -->
+        <profile>
+            <id>eoaServer</id>
+            <modules>
+                <!-- eoa-server是基于eap-server的企业定制版本 -->
+                <module>eoa-server</module>
+            </modules>
+        </profile>
+        <!-- SpringCloud运行环境 -->
+        <profile>
+            <id>SpringCloud</id>
+            <properties>
+                <!--Nacos服务地址-->
+                <config.server-addr>eap-cloud-nacos:8848</config.server-addr>
+                <!--Nacos配置中心命名空间,用于支持多环境.这里必须使用ID，不能使用名称,默认为空-->
+                <config.namespace></config.namespace>
+                <!--Nacos配置分组名称-->
+                <config.group>DEFAULT_GROUP</config.group>
+            </properties>
+            <modules>
+                <!-- 微服务模块-->
+                <!-- eap-cloud 微服务平台框架，包含config/gateway/monitor等 -->
+                <module>eap-cloud</module>
+            </modules>
+        </profile>
+    </profiles>
 
 </project>

@@ -11,7 +11,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>eap-common</module>
-        <module>eap-spring-boot-starter-env</module> <!-- cloud -->
+
         <module>eap-spring-boot-starter-banner</module>
         <module>eap-spring-boot-starter-mybatis</module>
         <module>eap-spring-boot-starter-redis</module>
@@ -23,7 +23,6 @@
         <module>eap-spring-boot-starter-protection</module>
         <module>eap-spring-boot-starter-job</module>
         <module>eap-spring-boot-starter-mq</module>
-        <module>eap-spring-boot-starter-rpc</module> <!-- cloud -->
 
         <module>eap-spring-boot-starter-excel</module>
         <module>eap-spring-boot-starter-test</module>
@@ -58,5 +57,16 @@
         如果是业务组件，Maven 名字会包含 biz
     </description>
     <url>https://github.com/eaopen/openea-eap</url>
+
+    <profiles>
+        <!-- SpringCloud运行环境 -->
+        <profile>
+            <id>SpringCloud</id>
+            <modules>
+                <module>eap-spring-boot-starter-env</module> <!-- cloud -->
+                <module>eap-spring-boot-starter-rpc</module> <!-- cloud -->
+            </modules>
+        </profile>
+    </profiles>
 
 </project>

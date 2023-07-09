@@ -17,9 +17,7 @@
         <revision>2.0.3</revision>
         <!-- 统一依赖管理 -->
         <spring.boot.version>2.7.12</spring.boot.version>
-        <!-- cloud -->
-        <spring.cloud.version>2021.0.5</spring.cloud.version>
-        <spring.cloud.alibaba.version>2021.0.4.0</spring.cloud.alibaba.version>
+
         <!-- Web 相关 -->
         <servlet.versoin>2.5</servlet.versoin>
         <swagger.version>2.2.8</swagger.version>
@@ -34,12 +32,6 @@
         <redisson.version>3.18.0</redisson.version>
         <dm8.jdbc.version>8.1.2.141</dm8.jdbc.version>
 
-        <!-- RPC 相关 -->
-        <dubbo.version>2.7.18</dubbo.version>
-        <!-- Config 配置中心相关 cloud -->
-        <apollo.version>1.9.2</apollo.version>
-        <!-- Job 定时任务相关 -->
-        <xxl-job.version>2.3.1</xxl-job.version>
 
         <!-- 服务保障相关 -->
         <lock4j.version>2.2.3</lock4j.version>
@@ -84,6 +76,18 @@
         <jimureport.version>1.5.6</jimureport.version>
         <xercesImpl.version>2.12.2</xercesImpl.version>
         <wx-java-mp.version>4.3.0</wx-java-mp.version>
+
+
+        <!-- cloud -->
+        <spring.cloud.version>2021.0.5</spring.cloud.version>
+        <spring.cloud.alibaba.version>2021.0.4.0</spring.cloud.alibaba.version>
+
+        <!-- RPC 相关 -->
+        <dubbo.version>2.7.18</dubbo.version>
+        <!-- Config 配置中心相关 cloud -->
+        <apollo.version>1.9.2</apollo.version>
+        <!-- Job 定时任务相关 -->
+        <xxl-job.version>2.3.1</xxl-job.version>
     </properties>
 
     <dependencyManagement>
@@ -129,7 +133,6 @@
                 <artifactId>eap-spring-boot-starter-biz-dict</artifactId>
                 <version>${revision}</version>
             </dependency>
-
 
             <dependency>
                 <groupId>org.openea.eap</groupId>
@@ -308,6 +311,7 @@
                 <version>${dm8.jdbc.version}</version>
             </dependency>
 
+
             <!-- RPC 远程调用相关 -->
             <dependency>
                 <groupId>org.apache.dubbo</groupId>
@@ -340,6 +344,8 @@
                 <artifactId>xxl-job-core</artifactId>
                 <version>${xxl-job.version}</version>
             </dependency>
+
+            <!-- Job 定时任务相关 -->
             <dependency>
                 <groupId>org.openea.eap</groupId>
                 <artifactId>eap-spring-boot-starter-job</artifactId>
@@ -741,5 +747,22 @@
             <url>https://maven.pkg.github.com/eaopen/mvn-repo</url>
         </repository>
     </distributionManagement>
+
+
+    <profiles>
+        <!-- SpringCloud运行环境 -->
+        <profile>
+            <id>SpringCloud</id>
+            <properties>
+
+            </properties>
+            <dependencyManagement>
+                <dependencies>
+
+
+                </dependencies>
+            </dependencyManagement>
+        </profile>
+    </profiles>
 
 </project>

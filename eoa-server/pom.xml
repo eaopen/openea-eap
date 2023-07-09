@@ -17,7 +17,7 @@
     <description>
         后端 Server 的主项目，通过引入需要 eap-module-xxx 的依赖，
         从而实现提供 RESTful API 给 eap-ui-admin、eap-ui-user 等前端项目。
-        本质上来说，它就是个空壳（容器）！
+        定制整合企业内部系统的统一入口。
     </description>
     <url>https://github.com/eaopen/openea-eap</url>
 
@@ -41,11 +41,11 @@
         </dependency>
 
 
-        <dependency>
-            <groupId>org.openea.eap</groupId>
-            <artifactId>eap-module-member-biz</artifactId>
-            <version>${revision}</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.openea.eap</groupId>-->
+<!--            <artifactId>eap-module-member-biz</artifactId>-->
+<!--            <version>${revision}</version>-->
+<!--        </dependency>-->
 
         <!-- 数据报表 -->
 <!--        <dependency>-->

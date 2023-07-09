@@ -21,4 +21,15 @@
         例如说：用户、部门、权限、数据字典等等
     </description>
 
+    <profiles>
+        <!-- SpringCloud运行环境 -->
+        <profile>
+            <id>SpringCloud</id>
+            <modules>
+                <module>eap-cloud-system-api</module>
+                <module>eap-cloud-system-start</module>
+            </modules>
+        </profile>
+    </profiles>
+
 </project>
