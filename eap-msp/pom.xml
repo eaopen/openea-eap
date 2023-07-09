@@ -10,7 +10,8 @@
     </parent>
     <packaging>pom</packaging>
     <modules>
-<!--        <module>gateway</module>-->
+        <!-- gateway module, choose APISIX or eap-gateway(spring gateway) -->
+        <module>gateway/eap-gateway</module>
     </modules>
 
     <artifactId>eap-msp</artifactId>

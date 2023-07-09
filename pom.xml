@@ -28,8 +28,8 @@
 <!--        <module>eap-example</module>-->
 
         <!-- cloud only -->
-<!--        <module>eap-msp</module>-->
-<!--        <module>eap-cloud</module>-->
+        <module>eap-msp</module>
+        <module>eap-cloud</module>
     </modules>
 
     <name>${project.artifactId}</name>
