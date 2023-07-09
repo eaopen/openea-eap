@@ -1,0 +1,2 @@
+org.openea.eap.framework.env.config.EapEnvWebAutoConfiguration
+org.openea.eap.framework.env.config.EapEnvRpcAutoConfiguration

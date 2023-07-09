@@ -8,8 +8,12 @@
     <version>${revision}</version>
     <packaging>pom</packaging>
     <modules>
+
+        <!-- dependencies/framework, support boot & cloud -->
         <module>eap-dependencies</module>
         <module>eap-framework</module>
+
+        <!-- boot only -->
         <!-- Server 主项目 -->
         <module>eap-server</module>
         <module>eoa-server</module>
@@ -17,12 +21,15 @@
 
         <module>eap-module-system</module>
         <module>eap-module-infra</module>
-
         <module>eap-module-member</module>
 <!--        <module>eap-module-bpm</module>-->
 <!--        <module>eap-module-report</module>-->
         <!-- 示例项目 -->
 <!--        <module>eap-example</module>-->
+
+        <!-- cloud only -->
+<!--        <module>eap-msp</module>-->
+<!--        <module>eap-cloud</module>-->
     </modules>
 
     <name>${project.artifactId}</name>
@@ -30,7 +37,7 @@
     <url>https://github.com/eaopen/openea-eap</url>
 
     <properties>
-        <revision>2.0.2</revision>
+        <revision>2.0.3</revision>
         <!-- Maven 相关 -->
         <java.version>1.8</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>

@@ -13,7 +13,7 @@ Authorization: Bearer {{token}}
     "accessSecret": "kXM1l5ia1RvSX3QaOEcwI3RLz3Y2rmNszWonKZtP",
     "bucket": "ruoyi-vue-pro",
     "endpoint": "s3-cn-south-1.qiniucs.com",
-    "domain": "http://test.eap.iocoder.cn",
+    "domain": "http://test.eap.openea.org",
     "region": "oss-cn-beijing"
   }
 }
@@ -33,7 +33,7 @@ Authorization: Bearer {{token}}
     "accessSecret": "kXM1l5ia1RvSX3QaOEcwI3RLz3Y2rmNszWonKZtP",
     "bucket": "ruoyi-vue-pro",
     "endpoint": "s3-cn-south-1.qiniucs.com",
-    "domain": "http://test.eap.iocoder.cn",
+    "domain": "http://test.eap.openea.org",
     "region": "oss-cn-beijing"
   }
 }

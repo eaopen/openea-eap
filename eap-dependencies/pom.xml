@@ -14,13 +14,17 @@
     <url>https://github.com/eaopen/openea-eap</url>
 
     <properties>
-        <revision>2.0.2</revision>
+        <revision>2.0.3</revision>
         <!-- 统一依赖管理 -->
         <spring.boot.version>2.7.12</spring.boot.version>
+        <!-- cloud -->
+        <spring.cloud.version>2021.0.5</spring.cloud.version>
+        <spring.cloud.alibaba.version>2021.0.4.0</spring.cloud.alibaba.version>
         <!-- Web 相关 -->
+        <servlet.versoin>2.5</servlet.versoin>
+        <swagger.version>2.2.8</swagger.version>
         <springdoc.version>1.6.15</springdoc.version>
         <knife4j.version>4.1.0</knife4j.version>
-        <servlet.versoin>2.5</servlet.versoin>
         <!-- DB 相关 -->
         <druid.version>1.2.16</druid.version>
         <mybatis-plus.version>3.5.3.1</mybatis-plus.version>
@@ -29,6 +33,14 @@
         <mybatis-plus-join-boot-starter.version>1.4.3.2</mybatis-plus-join-boot-starter.version>
         <redisson.version>3.18.0</redisson.version>
         <dm8.jdbc.version>8.1.2.141</dm8.jdbc.version>
+
+        <!-- RPC 相关 -->
+        <dubbo.version>2.7.18</dubbo.version>
+        <!-- Config 配置中心相关 cloud -->
+        <apollo.version>1.9.2</apollo.version>
+        <!-- Job 定时任务相关 -->
+        <xxl-job.version>2.3.1</xxl-job.version>
+
         <!-- 服务保障相关 -->
         <lock4j.version>2.2.3</lock4j.version>
         <resilience4j.version>1.7.1</resilience4j.version>
@@ -76,11 +88,27 @@
 
     <dependencyManagement>
         <dependencies>
-            <!-- 统一依赖管理 -->
+            <!-- boot依赖管理 -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
                 <version>${spring.boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!-- cloud依赖管理 -->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring.cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${spring.cloud.alibaba.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -101,6 +129,8 @@
                 <artifactId>eap-spring-boot-starter-biz-dict</artifactId>
                 <version>${revision}</version>
             </dependency>
+
+
             <dependency>
                 <groupId>org.openea.eap</groupId>
                 <artifactId>eap-spring-boot-starter-biz-sms</artifactId>
@@ -173,16 +203,58 @@
                 <version>${revision}</version>
             </dependency>
 
+            <!-- 接口文档：使用最新版本的 Swagger 模型 -->
             <dependency>
-                <groupId>com.github.xiaoymin</groupId>
-                <artifactId>knife4j-openapi3-spring-boot-starter</artifactId>
-                <version>${knife4j.version}</version>
+                <groupId>io.swagger.core.v3</groupId>
+                <artifactId>swagger-annotations</artifactId>
+                <version>${swagger.version}</version>
             </dependency>
+            <dependency>
+                <groupId>io.swagger.core.v3</groupId>
+                <artifactId>swagger-models</artifactId>
+                <version>${swagger.version}</version>
+            </dependency>
+
+            <!-- 接口文档 UI：解决 knife4j 引入的 Spring Doc 版本太老 -->
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-common</artifactId>
+                <version>${springdoc.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-webmvc-core</artifactId>
+                <version>${springdoc.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-webflux-core</artifactId>
+                <version>${springdoc.version}</version>
+            </dependency>
+
+
+            <!-- 接口文档 UI：默认 -->
             <dependency>
                 <groupId>org.springdoc</groupId>
                 <artifactId>springdoc-openapi-ui</artifactId>
                 <version>${springdoc.version}</version>
             </dependency>
+
+            <!-- 接口文档 UI：knife4j -->
+
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-openapi3-spring-boot-starter</artifactId>
+                <version>${knife4j.version}</version>
+            </dependency>
+
+            <!-- 接口文档 UI：knife4j【网关专属】 -->
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-gateway-spring-boot-starter</artifactId>
+                <version>${knife4j.version}</version>
+            </dependency>
+
 
             <!-- DB 相关 -->
             <dependency>
@@ -236,7 +308,38 @@
                 <version>${dm8.jdbc.version}</version>
             </dependency>
 
+            <!-- RPC 远程调用相关 -->
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo-common</artifactId> <!-- 兜底，保证在不引入 spring-cloud-starter-dubbo 时，注解等不报错 -->
+                <version>${dubbo.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo-cluster</artifactId> <!-- 兜底，保证在不引入 spring-cloud-starter-dubbo 时，注解等不报错 -->
+                <version>${dubbo.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo-rpc-api</artifactId> <!-- 兜底，保证在不引入 spring-cloud-starter-dubbo 时，注解等不报错 -->
+                <version>${dubbo.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.openea.eap</groupId>
+                <artifactId>eap-spring-boot-starter-rpc</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <!-- Registry 注册中心相关 -->
+
+            <!-- Config 配置中心相关 -->
+
             <!-- Job 定时任务相关 -->
+            <dependency>
+                <groupId>com.xuxueli</groupId>
+                <artifactId>xxl-job-core</artifactId>
+                <version>${xxl-job.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.openea.eap</groupId>
                 <artifactId>eap-spring-boot-starter-job</artifactId>
@@ -277,6 +380,11 @@
             <dependency>
                 <groupId>io.github.resilience4j</groupId>
                 <artifactId>resilience4j-spring-boot2</artifactId>
+                <version>${resilience4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.resilience4j</groupId>
+                <artifactId>resilience4j-spring</artifactId>
                 <version>${resilience4j.version}</version>
             </dependency>
 
@@ -588,9 +696,10 @@
             </dependency>
             <!-- SMS SDK end -->
 
+            <!-- 社交登陆（例如说，个人微信、企业微信等等） -->
             <dependency>
                 <groupId>com.xkcoding.justauth</groupId>
-                <artifactId>justauth-spring-boot-starter</artifactId> <!-- 社交登陆（例如说，个人微信、企业微信等等） -->
+                <artifactId>justauth-spring-boot-starter</artifactId>
                 <version>${justauth.version}</version>
             </dependency>
 

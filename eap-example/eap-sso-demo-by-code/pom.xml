@@ -13,7 +13,7 @@
 
     <name>${project.artifactId}</name>
     <description>基于授权码模式，如何实现 SSO 单点登录？</description>
-    <url>https://github.com/YunaiV/ruoyi-vue-pro</url>
+    <url>https://github.com/eaopen/openea-eap</url>
 
     <properties>
         <!-- Maven 相关 -->

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>eap</artifactId>
+        <groupId>org.openea.eap</groupId>
+        <version>${revision}</version>
+    </parent>
+    <packaging>pom</packaging>
+    <modules>
+        <module>eap-cloud-system</module>
+        <module>eap-cloud-infra</module>
+<!--        <module>eap-cloud-bpm</module>-->
+    </modules>
+
+    <artifactId>eap-cloud</artifactId>
+    <description>
+        该包是云服务封装
+    </description>
+
+</project>

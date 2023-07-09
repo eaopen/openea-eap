@@ -11,7 +11,7 @@
 
     <artifactId>eoa-server</artifactId>
     <packaging>jar</packaging>
-    <version>${eoa.version}</version>
+    <version>2.0-snapshot</version>
 
     <name>${project.artifactId}</name>
     <description>
@@ -19,7 +19,7 @@
         从而实现提供 RESTful API 给 eap-ui-admin、eap-ui-user 等前端项目。
         本质上来说，它就是个空壳（容器）！
     </description>
-    <url>https://github.com/YunaiV/ruoyi-vue-pro</url>
+    <url>https://github.com/eaopen/openea-eap</url>
 
     <properties>
         <eoa.version>2.0-snapshot</eoa.version>

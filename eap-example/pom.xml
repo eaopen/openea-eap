@@ -17,6 +17,6 @@
 
     <name>${project.artifactId}</name>
     <description>提供各种示例，例如说：SSO 单点登录</description>
-    <url>https://github.com/YunaiV/ruoyi-vue-pro</url>
+    <url>https://github.com/eaopen/openea-eap</url>
 
 </project>
