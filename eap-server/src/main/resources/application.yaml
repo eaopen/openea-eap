@@ -34,6 +34,10 @@ spring:
     redis:
       time-to-live: 1h # 设置过期时间为 1 小时
 
+  messages:
+    basename: i18n/messages,i18n/sys
+    encoding: UTF-8
+
 --- #################### 接口文档配置 ####################
 
 springdoc:

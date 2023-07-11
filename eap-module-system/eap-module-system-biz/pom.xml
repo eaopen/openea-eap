@@ -44,6 +44,10 @@
         </dependency>
         <dependency>
             <groupId>org.openea.eap</groupId>
+            <artifactId>eap-spring-boot-starter-biz-i18n</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.openea.eap</groupId>
             <artifactId>eap-spring-boot-starter-biz-data-permission</artifactId>
         </dependency>
         <dependency>

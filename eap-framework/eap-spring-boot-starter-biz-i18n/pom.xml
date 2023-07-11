@@ -4,45 +4,39 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <groupId>org.openea.eap</groupId>
-        <artifactId>eap-module-system</artifactId>
+        <artifactId>eap-framework</artifactId>
         <version>${revision}</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>eap-cloud-system-start</artifactId>
+    <artifactId>eap-spring-boot-starter-biz-i18n</artifactId>
     <packaging>jar</packaging>
 
     <name>${project.artifactId}</name>
     <description>
-        system 模块下，我们放通用业务，支撑上层的核心业务。
+        i18n
     </description>
+    <url>https://github.com/eaopen/openea-eap</url>
 
     <dependencies>
-
-        <!-- Spring Cloud 基础 -->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-bootstrap</artifactId>
-        </dependency>
-
-
         <dependency>
             <groupId>org.openea.eap</groupId>
-            <artifactId>eap-module-system-api</artifactId>
-            <version>${revision}</version>
+            <artifactId>eap-common</artifactId>
         </dependency>
 
+        <!-- Spring 核心 -->
         <dependency>
-            <groupId>org.openea.eap</groupId>
-            <artifactId>eap-module-system-biz</artifactId>
-            <version>${revision}</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
         </dependency>
 
+        <!-- 业务组件 -->
         <dependency>
             <groupId>org.openea.eap</groupId>
-            <artifactId>eap-cloud-infra-api</artifactId>
+            <artifactId>eap-module-system-api</artifactId> <!-- 需要使用它，进行 Token 的校验 -->
             <version>${revision}</version>
+            <scope>compile</scope>
         </dependency>
+
 
     </dependencies>
-
 </project>

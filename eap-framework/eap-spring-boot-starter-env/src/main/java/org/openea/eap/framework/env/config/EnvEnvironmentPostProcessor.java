@@ -11,7 +11,7 @@ import java.util.Set;
 
 /**
  * 多环境的 {@link EnvEnvironmentPostProcessor} 实现类
- * 将 yudao.env.tag 设置到 dubbo、nacos 等组件对应的 tag 配置项，当且仅当它们不存在时
+ * 将 eap.env.tag 设置到 dubbo、nacos 等组件对应的 tag 配置项，当且仅当它们不存在时
  *
  */
 public class EnvEnvironmentPostProcessor implements EnvironmentPostProcessor {

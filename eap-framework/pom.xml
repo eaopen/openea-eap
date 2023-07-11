@@ -27,6 +27,7 @@
         <module>eap-spring-boot-starter-excel</module>
         <module>eap-spring-boot-starter-test</module>
 
+        <module>eap-spring-boot-starter-biz-i18n</module>
         <module>eap-spring-boot-starter-biz-operatelog</module>
         <module>eap-spring-boot-starter-biz-dict</module>
         <module>eap-spring-boot-starter-biz-sms</module>
@@ -43,6 +44,10 @@
         <module>eap-spring-boot-starter-captcha</module>
         <module>eap-spring-boot-starter-websocket</module>
         <module>eap-spring-boot-starter-desensitize</module>
+
+        <!-- cloud -->
+        <module>eap-spring-boot-starter-env</module>
+        <module>eap-spring-boot-starter-rpc</module>
     </modules>
 
     <artifactId>eap-framework</artifactId>
@@ -63,8 +68,8 @@
         <profile>
             <id>SpringCloud</id>
             <modules>
-                <module>eap-spring-boot-starter-env</module> <!-- cloud -->
-                <module>eap-spring-boot-starter-rpc</module> <!-- cloud -->
+<!--                <module>eap-spring-boot-starter-env</module>-->
+<!--                <module>eap-spring-boot-starter-rpc</module>-->
             </modules>
         </profile>
     </profiles>

@@ -136,6 +136,12 @@
 
             <dependency>
                 <groupId>org.openea.eap</groupId>
+                <artifactId>eap-spring-boot-starter-biz-i18n</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.openea.eap</groupId>
                 <artifactId>eap-spring-boot-starter-biz-sms</artifactId>
                 <version>${revision}</version>
             </dependency>

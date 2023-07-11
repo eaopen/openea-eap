@@ -27,7 +27,7 @@
 
         <dependency>
             <groupId>org.openea.eap</groupId>
-            <artifactId>eap-module-system-api</artifactId>
+            <artifactId>eap-cloud-system-api</artifactId>
             <version>${revision}</version>
         </dependency>
         <dependency>
@@ -37,7 +37,7 @@
         </dependency>
         <dependency>
             <groupId>org.openea.eap</groupId>
-            <artifactId>eap-module-system-biz</artifactId>
+            <artifactId>eap-module-infra-biz</artifactId>
             <version>${revision}</version>
         </dependency>
 
