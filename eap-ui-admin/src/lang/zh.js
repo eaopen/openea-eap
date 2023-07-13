@@ -69,6 +69,7 @@ export default {
     github: '项目地址',
     logOut: '退出登录',
     profile: '个人中心',
+    setting: '布局设置',
     theme: '换肤',
     size: '布局大小'
   },
@@ -175,10 +176,15 @@ export default {
     closeAll: '关闭所有'
   },
   settings: {
+    themeStyle: '主题风格设置',
     title: '系统布局配置',
     theme: '主题色',
+    topNav: '开启 TopNav',
     tagsView: '开启 Tags-View',
     fixedHeader: '固定 Header',
-    sidebarLogo: '侧边栏 Logo'
+    sidebarLogo: '侧边栏 Logo',
+    dynamicTitle: '动态标题',
+    saveSetting: '保存配置',
+    resetSetting: '重置配置'
   }
 }

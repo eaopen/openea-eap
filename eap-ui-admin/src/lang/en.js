@@ -69,6 +69,7 @@ export default {
     github: 'Github',
     logOut: 'Log Out',
     profile: 'Profile',
+    setting: 'Setting',
     theme: 'Theme',
     size: 'Global Size'
   },
@@ -176,9 +177,14 @@ export default {
   },
   settings: {
     title: 'Page style setting',
+    themeStyle: 'Theme Style',
     theme: 'Theme Color',
+    topNav: 'Open TopNav',
     tagsView: 'Open Tags-View',
     fixedHeader: 'Fixed Header',
-    sidebarLogo: 'Sidebar Logo'
+    sidebarLogo: 'Sidebar Logo',
+    dynamicTitle: 'Dynamic Title',
+    saveSetting: 'Save',
+    resetSetting: 'Reset'
   }
 }

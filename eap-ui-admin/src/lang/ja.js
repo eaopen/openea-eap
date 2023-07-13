@@ -69,6 +69,7 @@ export default {
     github: 'GitHub',
     logOut: 'ログアウト',
     profile: 'プロフィール',
+    setting: 'レイアウト',
     theme: 'テーマ変更',
     size: '画面サイズ'
   },
@@ -176,9 +177,14 @@ export default {
   },
   settings: {
     title: 'システムテーマ',
+    themeStyle: 'テーマ Style',
     theme: 'テーマ色',
+    topNav: 'Open TopNav',
     tagsView: 'Tags-View 開く',
     fixedHeader: 'Fixed Header',
-    sidebarLogo: 'Sidebar Logo'
+    sidebarLogo: 'Sidebar Logo',
+    dynamicTitle: 'Dynamic Title',
+    saveSetting: 'Save',
+    resetSetting: 'Reset'
   }
 }
