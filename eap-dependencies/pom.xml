@@ -65,7 +65,7 @@
         <netty-all.version>4.1.90.Final</netty-all.version>
         <ip2region.version>2.7.0</ip2region.version>
         <!-- 三方云服务相关 -->
-        <okio.version>3.0.0</okio.version>
+        <okio.version>3.4.0</okio.version>
         <okhttp3.version>4.10.0</okhttp3.version>
         <commons-io.version>2.11.0</commons-io.version>
         <minio.version>8.5.2</minio.version>
