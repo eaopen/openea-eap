@@ -12,19 +12,16 @@
         <!-- 站内信 -->
         <notify-message class="right-menu-item hover-effect" />
 
-<!--        <el-tooltip content="源码地址" effect="dark" placement="bottom">-->
-<!--          <ruo-yi-git id="ruoyi-git" class="right-menu-item hover-effect" />-->
-<!--        </el-tooltip>-->
-
-<!--        <el-tooltip content="文档地址" effect="dark" placement="bottom">-->
-<!--          <ruo-yi-doc id="ruoyi-doc" class="right-menu-item hover-effect" />-->
-<!--        </el-tooltip>-->
 
         <screenfull id="screenfull" class="right-menu-item hover-effect" />
+
+
 
         <el-tooltip content="布局大小" effect="dark" placement="bottom">
           <size-select id="size-select" class="right-menu-item hover-effect" />
         </el-tooltip>
+
+        <lang-select class="right-menu-item hover-effect" />
 
       </template>
 
@@ -57,6 +54,7 @@ import TopNav from '@/components/TopNav'
 import Hamburger from '@/components/Hamburger'
 import Screenfull from '@/components/Screenfull'
 import SizeSelect from '@/components/SizeSelect'
+import LangSelect from '@/components/LangSelect'
 import Search from '@/components/HeaderSearch'
 import NotifyMessage from '@/layout/components/Message'
 import {getPath} from "@/utils/ruoyi";
@@ -68,6 +66,7 @@ export default {
     Hamburger,
     Screenfull,
     SizeSelect,
+    LangSelect,
     Search,
     NotifyMessage
   },

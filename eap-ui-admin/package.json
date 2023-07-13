@@ -1,6 +1,6 @@
 {
   "name": "eap-ui-admin",
-  "version": "1.7.3-snapshot",
+  "version": "2.0.1",
   "description": "企业应用框架",
   "author": "EAP",
   "license": "MIT",
@@ -53,6 +53,7 @@
     "element-ui": "2.15.12",
     "file-saver": "2.0.5",
     "fuse.js": "6.6.2",
+    "js-cookie": "2.2.0",
     "highlight.js": "9.18.5",
     "js-beautify": "1.13.0",
     "jsencrypt": "3.3.1",
@@ -68,6 +69,7 @@
     "vue-cropper": "0.5.8",
     "vue-meta": "^2.4.0",
     "vue-quill-editor": "^3.0.6",
+    "vue-i18n": "7.3.2",
     "vue-router": "3.4.9",
     "vue-video-player": "^5.0.2",
     "vuedraggable": "2.24.3",
