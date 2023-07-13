@@ -5,6 +5,7 @@ import {getAccessToken, getRefreshToken, getTenantId, setToken} from '@/utils/au
 import errorCode from '@/utils/errorCode'
 import {getPath, getTenantEnable} from "@/utils/ruoyi";
 import {refreshToken} from "@/api/login";
+import { getLanguage } from '@/lang/index';
 
 // 需要忽略的提示。忽略后，自动 Promise.reject('error')
 const ignoreMsgs = [
@@ -37,6 +38,9 @@ service.interceptors.request.use(config => {
   if (getAccessToken() && !isToken) {
     config.headers['Authorization'] = 'Bearer ' + getAccessToken() // 让每个请求携带自定义token 请根据实际情况自行修改
   }
+
+  let language = getLanguage();
+  config.headers['Accept-Language'] = language || 'en';
   // 设置租户
   if (getTenantEnable()) {
     const tenantId = getTenantId();
@@ -44,6 +48,8 @@ service.interceptors.request.use(config => {
       config.headers['tenant-id'] = tenantId;
     }
   }
+
+
   // get请求映射params参数
   if (config.method === 'get' && config.params) {
     let url = config.url + '?';

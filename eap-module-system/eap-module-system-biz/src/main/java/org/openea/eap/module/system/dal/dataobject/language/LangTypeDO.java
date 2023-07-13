@@ -27,7 +27,7 @@ public class LangTypeDO extends BaseDO {
     /**
      * 别名，iso name
      */
-    protected String key;
+    protected String alias;
     /**
      * 名称
      */

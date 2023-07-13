@@ -2268,7 +2268,7 @@ COMMIT;
 DROP TABLE IF EXISTS `sys_lang_type`;
 CREATE TABLE `sys_lang_type` (
   `id` bigint NOT NULL,
-  `key` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT 'key/别名',
+  `alias` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT 'key/别名',
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '名称',
   `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '备注',
   `create_time` datetime DEFAULT NULL,
@@ -2284,9 +2284,9 @@ CREATE TABLE `sys_lang_type` (
 -- Records of sys_lang_type
 -- ----------------------------
 BEGIN;
-INSERT INTO `sys_lang_type` (`id`, `key`, `name`, `remark`, `create_time`, `creator`, `update_time`, `updater`, `version`, `deleted`) VALUES (101, 'en-US', 'English', NULL, NULL, NULL, NULL, NULL, NULL, 0);
-INSERT INTO `sys_lang_type` (`id`, `key`, `name`, `remark`, `create_time`, `creator`, `update_time`, `updater`, `version`, `deleted`) VALUES (201, 'zh-CN', '中文', NULL, NULL, NULL, NULL, NULL, NULL, 0);
-INSERT INTO `sys_lang_type` (`id`, `key`, `name`, `remark`, `create_time`, `creator`, `update_time`, `updater`, `version`, `deleted`) VALUES (301, 'ja-JP', '日本語', NULL, NULL, NULL, NULL, NULL, NULL, 0);
+INSERT INTO `sys_lang_type` (`id`, `alias`, `name`, `remark`, `create_time`, `creator`, `update_time`, `updater`, `version`, `deleted`) VALUES (101, 'en-US', 'English', NULL, NULL, NULL, NULL, NULL, NULL, 0);
+INSERT INTO `sys_lang_type` (`id`, `alias`, `name`, `remark`, `create_time`, `creator`, `update_time`, `updater`, `version`, `deleted`) VALUES (201, 'zh-CN', '中文', NULL, NULL, NULL, NULL, NULL, NULL, 0);
+INSERT INTO `sys_lang_type` (`id`, `alias`, `name`, `remark`, `create_time`, `creator`, `update_time`, `updater`, `version`, `deleted`) VALUES (301, 'ja-JP', '日本語', NULL, NULL, NULL, NULL, NULL, NULL, 0);
 COMMIT;
 
 
@@ -2297,14 +2297,14 @@ DROP TABLE IF EXISTS `sys_i18n_data`;
 CREATE TABLE `sys_i18n_data` (
   `id` bigint NOT NULL,
   `module` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '模块，可选',
-  `key` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'key/别名',
+  `alias` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'key/别名',
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '名称',
   `json` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '多语言设置json',
   `remark` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '备注',
   `create_time` datetime DEFAULT NULL,
   `creator` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `update_time` datetime DEFAULT NULL,
-  `updator` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `updater` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `version` int DEFAULT NULL COMMENT '版本号',
   `deleted` tinyint DEFAULT '0' COMMENT '逻辑删除标记',
   PRIMARY KEY (`id`) USING BTREE

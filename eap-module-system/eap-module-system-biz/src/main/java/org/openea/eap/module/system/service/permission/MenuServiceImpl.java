@@ -232,12 +232,10 @@ public class MenuServiceImpl implements MenuService {
 
     private String getI18nKey(MenuDO menu){
         String i18nKey = null;
-        if(MenuTypeEnum.MENU.getType().equals(menu.getType())){
-            i18nKey = "menu.";
-        }else if(MenuTypeEnum.BUTTON.getType().equals(menu.getType())){
+        if(MenuTypeEnum.BUTTON.getType().equals(menu.getType())){
             i18nKey = "button.";
         }else{
-            i18nKey = "m"+menu.getType()+".";
+            i18nKey = "menu.";
         }
         createAlias(menu);
         String alias =  menu.getAlias();
@@ -333,24 +331,24 @@ public class MenuServiceImpl implements MenuService {
         if(ObjectUtil.isEmpty(alias)){
             if (MenuTypeEnum.MENU.getType().equals(menu.getType())) {
                 // menu
-                if(ObjectUtil.isNotEmpty(menu.getComponentName()) && !"null".equalsIgnoreCase(menu.getComponentName())){
+                if(ObjectUtil.isNotEmpty(menu.getComponentName()) ){
                     alias = menu.getComponentName();
-                }else if(ObjectUtil.isNotEmpty(menu.getComponent())  && !"null".equalsIgnoreCase(menu.getComponent())) {
+                }else if(ObjectUtil.isNotEmpty(menu.getComponent()) ) {
                     // 转驼峰格式 infra/job/index => infraJob
                     alias = menu.getComponent();
                     if(alias.endsWith("/index")){
                         alias = alias.substring(0, alias.length()-6);
                     }
                     alias = StrUtil.toCamelCase(alias,'/');
-                    alias = menu.getComponent();
                 }
             }
             if(ObjectUtil.isEmpty(alias)){
-                if(ObjectUtil.isNotEmpty(menu.getPermission()) && !"null".equalsIgnoreCase(menu.getPermission())){
+                if(ObjectUtil.isNotEmpty(menu.getPermission()) ){
                     // 转驼峰格式: system:user:query => systemUserQuery
                     alias = menu.getPermission();
                     alias = StrUtil.toCamelCase(alias,':');
-                }else if (ObjectUtil.isNotEmpty(menu.getPath()) && !"null".equalsIgnoreCase(menu.getPath())){
+                    alias = StrUtil.toCamelCase(alias,'-');
+                }else if (ObjectUtil.isNotEmpty(menu.getPath()) ){
                     // /system 去首/
                     alias = menu.getPath();
                     if(alias.startsWith("/")){

@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.openea.eap.framework.common.util.spring.AppUtil;
 import org.openea.eap.framework.i18n.core.EapMessageResource;
 import org.openea.eap.module.system.api.i18n.I18nDataApi;
+import org.springframework.context.NoSuchMessageException;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.lang.Nullable;
 
@@ -34,7 +35,7 @@ public class I18nUtil {
 
     public static void reloadI18nApiData() throws Exception {
         // 从API获取i18n数据更新到messageResource中
-        if (I18nUtil.i18nDataApi != null || I18nUtil._messageSource==null) {
+        if (I18nUtil.i18nDataApi == null || I18nUtil._messageSource==null) {
             return;
         }
         // current language, current modules
@@ -65,6 +66,17 @@ public class I18nUtil {
         mLocal.keySet().forEach(locale ->{
             I18nUtil._messageSource.addMessages(mLocal.get(locale), locale);
         });
+
+        // zh-CN -> zh, en-US -> en
+        Set<Locale> setLocale = mLocal.keySet();
+        for(Locale locale: setLocale){
+            if(StrUtil.isNotEmpty(locale.getCountry())){
+                Locale noCountryLocale = Locale.forLanguageTag(locale.getLanguage());
+                if(!mLocal.containsKey(noCountryLocale)){
+                    I18nUtil._messageSource.addMessages(mLocal.get(locale), noCountryLocale);
+                }
+            }
+        }
     }
 
     public static EapMessageResource getMessageResource(){
@@ -86,12 +98,19 @@ public class I18nUtil {
     public static String getMessage(String code, @Nullable Object[] args, @Nullable String defaultMessage){
         // TODO 优先配置，配置找不到则自动翻译
         String lable = null;
-        try{
-            lable = getMessageResource().getMessage(code, args, getLocale());
-            if(StrUtil.isEmpty(lable) && StrUtil.isNotEmpty(defaultMessage)){
+        try {
+            Locale locale = getLocale();
+            lable = getMessageResource().getMessage(code, args, locale);
+            if (StrUtil.isEmpty(lable) && StrUtil.isNotEmpty(defaultMessage)) {
                 lable = defaultMessage;
             }
 //            return getMessageResource().getMessage(code, args, defaultMessage, getLocale());
+        }catch(NoSuchMessageException e){
+            log.warn(e.getMessage()+" (getMessage code="+code+")");
+            // default
+            if (StrUtil.isEmpty(lable) && StrUtil.isNotEmpty(defaultMessage)) {
+                lable = defaultMessage;
+            }
         }catch(Exception e){
             log.warn(e.getMessage()+" (getMessage code="+code+")", e);
         }

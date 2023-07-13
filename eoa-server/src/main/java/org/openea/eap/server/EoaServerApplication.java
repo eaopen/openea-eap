@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  *
  */
 @SuppressWarnings("SpringComponentScan") // 忽略 IDEA 无法识别 ${eap.info.base-package}
-@SpringBootApplication(scanBasePackages = {"${eap.info.base-package}.server", "${eap.info.base-package}.module"})
+@SpringBootApplication(scanBasePackages = {"org.openea.eap","${eap.info.base-package}.server", "${eap.info.base-package}.module"})
 public class EoaServerApplication {
 
     public static void main(String[] args) {

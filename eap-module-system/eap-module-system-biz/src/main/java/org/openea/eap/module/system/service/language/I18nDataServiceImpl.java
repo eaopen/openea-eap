@@ -44,7 +44,7 @@ public class I18nDataServiceImpl implements I18nDataService {
         // map<language, map<key, label>>
         Map<String, Map<String, String >> mLang = new HashMap<>();
         i18nJsonDataMapper.selectList(new QueryWrapper<I18nJsonDataDO>()).forEach(jsonData -> {
-            String i18nKey = jsonData.getKey();
+            String i18nKey = jsonData.getAlias();
             if(StrUtil.isEmpty(i18nKey)){
                 if(StrUtil.isNotEmpty(jsonData.getModule())){
                     i18nKey = jsonData.getModule() + "." + jsonData.getName();

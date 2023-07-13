@@ -20,7 +20,7 @@ public class I18nJsonDataDO extends BaseDO {
     @TableId
     private Long id;
     protected String module; //备用
-    protected String key;
+    protected String alias;
     protected String name;
     protected String json;
     protected String remark;
