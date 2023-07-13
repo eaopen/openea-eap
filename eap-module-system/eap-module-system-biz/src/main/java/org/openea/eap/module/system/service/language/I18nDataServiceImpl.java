@@ -63,4 +63,36 @@ public class I18nDataServiceImpl implements I18nDataService {
         });
         return mLang;
     }
+
+    @Override
+    public JSONObject getJsJson() {
+        JSONObject jsJson = new JSONObject();
+        // language
+        Map<String, Map<String, String>> mapI18nData = getI18nDataMap("", "");
+        mapI18nData.keySet().forEach( lang ->{
+            jsJson.set(lang, i18n2JsJson(mapI18nData.get(lang)));
+        });
+        return jsJson;
+    }
+
+    private JSONObject i18n2JsJson(Map<String, String> mI18nData){
+        JSONObject jsJson = new JSONObject();
+        JSONObject pageJson = new JSONObject();
+        mI18nData.keySet().forEach(key->{
+            // menu/button
+            if(key.startsWith("menu.") || key.startsWith("button.")){
+                return;
+            }
+            // page
+            if(key.startsWith("page.")){
+                JSONUtil.putByPath(pageJson, key.substring(5, key.length()), mI18nData.get(key));
+                return;
+            }
+            // other
+            JSONUtil.putByPath(jsJson, key, mI18nData.get(key));
+        });
+        jsJson.putAll(pageJson);
+        return jsJson;
+    }
+
 }
