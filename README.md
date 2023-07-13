@@ -5,7 +5,7 @@
 
 本次改版以芋道开源 YunaiV/ruoyi-vue-pro (MIT许可)为基础改版，整合OBPM、MSP、Jeecg等开源项目的部分模块。
 OpenEAP前后端分离，采用后端Spring boot 2.x单体多模块，前端vue2+element-UI 主流路线，预留无缝升级机制。
-单体服务无缝切换为微服务（待实现）。
+单体服务无缝切换为微服务（部分完成）。
 
 
 ## 🐯 平台简介
@@ -153,6 +153,9 @@ https://github.com/YunaiV/yudao-cloud
 
 https://github.com/zhangdaiscott/jeecg-boot
 
+https://help.jeecg.com/
+
+
 * eladmin
 
 基于 Spring Boot 2.1.0 、 Jpa、 Spring Security、redis、Vue的前后端分离的后台管理系统
@@ -170,6 +173,11 @@ https://gitee.com/JeeHuangBingGui/jeeSpringCloud
 https://github.com/renrenio/renren-fast-vue
 
 https://github.com/renrenio/renren-security
+
+* JNPF开发平台
+
+官方文档，非开源  
+https://service.jnpfsoft.com/index/index/operate.html?cid=331&product_id=89
 
 ## 🐶 参考--芋道开源新手必读
 * 演示地址【Vue2 + element-ui】：<http://dashboard.eap.iocoder.cn>

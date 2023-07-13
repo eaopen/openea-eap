@@ -1853,6 +1853,7 @@ DROP TABLE IF EXISTS `system_menu`;
 CREATE TABLE `system_menu` (
   `id` bigint NOT NULL AUTO_INCREMENT COMMENT '菜单ID',
   `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '菜单名称',
+  `alias` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '别名, i18n key',
   `permission` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '权限标识',
   `type` tinyint NOT NULL COMMENT '菜单类型',
   `sort` int NOT NULL DEFAULT '0' COMMENT '显示顺序',
@@ -2259,6 +2260,55 @@ INSERT INTO `system_menu` (`id`, `name`, `permission`, `type`, `sort`, `parent_i
 INSERT INTO `system_menu` (`id`, `name`, `permission`, `type`, `sort`, `parent_id`, `path`, `icon`, `component`, `component_name`, `status`, `visible`, `keep_alive`, `always_show`, `creator`, `create_time`, `updater`, `update_time`, `deleted`) VALUES (2160, 'Cloud 开发文档', '', 1, 102, 0, 'https://cloud.iocoder.cn', 'documentation', NULL, NULL, 1, b'1', b'1', b'1', '1', '2023-02-10 22:47:07', '1', '2023-06-12 19:04:51', b'0');
 INSERT INTO `system_menu` (`id`, `name`, `permission`, `type`, `sort`, `parent_id`, `path`, `icon`, `component`, `component_name`, `status`, `visible`, `keep_alive`, `always_show`, `creator`, `create_time`, `updater`, `update_time`, `deleted`) VALUES (2161, '接入示例', '', 2, 99, 1117, 'demo-order', 'drag', 'pay/demo/index', NULL, 0, b'1', b'1', b'1', '', '2023-02-11 14:21:42', '1', '2023-02-11 22:26:35', b'0');
 COMMIT;
+
+
+-- ----------------------------
+-- Table structure for sys_lang_type
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_lang_type`;
+CREATE TABLE `sys_lang_type` (
+  `id` bigint NOT NULL,
+  `key` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT 'key/别名',
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '名称',
+  `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '备注',
+  `create_time` datetime DEFAULT NULL,
+  `creator` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  `updater` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `version` int DEFAULT NULL COMMENT '版本号',
+  `deleted` tinyint DEFAULT '0' COMMENT '逻辑删除标记',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='多语言定义';
+
+-- ----------------------------
+-- Records of sys_lang_type
+-- ----------------------------
+BEGIN;
+INSERT INTO `sys_lang_type` (`id`, `key`, `name`, `remark`, `create_time`, `creator`, `update_time`, `updater`, `version`, `deleted`) VALUES (101, 'en-US', 'English', NULL, NULL, NULL, NULL, NULL, NULL, 0);
+INSERT INTO `sys_lang_type` (`id`, `key`, `name`, `remark`, `create_time`, `creator`, `update_time`, `updater`, `version`, `deleted`) VALUES (201, 'zh-CN', '中文', NULL, NULL, NULL, NULL, NULL, NULL, 0);
+INSERT INTO `sys_lang_type` (`id`, `key`, `name`, `remark`, `create_time`, `creator`, `update_time`, `updater`, `version`, `deleted`) VALUES (301, 'ja-JP', '日本語', NULL, NULL, NULL, NULL, NULL, NULL, 0);
+COMMIT;
+
+
+-- ----------------------------
+-- Table structure for sys_i18n_data
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_i18n_data`;
+CREATE TABLE `sys_i18n_data` (
+  `id` bigint NOT NULL,
+  `module` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '模块，可选',
+  `key` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'key/别名',
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '名称',
+  `json` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '多语言设置json',
+  `remark` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '备注',
+  `create_time` datetime DEFAULT NULL,
+  `creator` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  `updator` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `version` int DEFAULT NULL COMMENT '版本号',
+  `deleted` tinyint DEFAULT '0' COMMENT '逻辑删除标记',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='多语言翻译';
 
 -- ----------------------------
 -- Table structure for system_notice

@@ -12,9 +12,9 @@
           <h3 class="title">{{ $t('login.title') }}</h3>
         </h2>
 
-
         <!-- 表单 -->
         <div class="form-cont">
+          <!-- 切换语言 非必要选择 -->
           <lang-select class="set-language" />
 
           <el-tabs class="form" v-model="loginForm.loginType" style=" float:none;">

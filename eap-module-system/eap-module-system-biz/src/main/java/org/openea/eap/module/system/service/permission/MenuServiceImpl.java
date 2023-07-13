@@ -1,8 +1,11 @@
 package org.openea.eap.module.system.service.permission;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.extra.pinyin.PinyinUtil;
 import org.openea.eap.framework.common.util.collection.CollectionUtils;
+import org.openea.eap.framework.i18n.core.I18nUtil;
 import org.openea.eap.module.system.controller.admin.permission.vo.menu.MenuCreateReqVO;
 import org.openea.eap.module.system.controller.admin.permission.vo.menu.MenuListReqVO;
 import org.openea.eap.module.system.controller.admin.permission.vo.menu.MenuUpdateReqVO;
@@ -24,6 +27,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionSynchronization;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
@@ -211,6 +215,41 @@ public class MenuServiceImpl implements MenuService {
         return menuMapper.selectById(id);
     }
 
+    @Override
+    public List<MenuDO> toI18n(List<MenuDO> menus) {
+        if(!I18nUtil.enableI18n() || menus==null){
+            return menus;
+        }
+        for(MenuDO menu: menus){
+            String i18nKey = getI18nKey(menu);
+            String i18nLabel = I18nUtil.t(i18nKey, menu.getName());
+            if(StrUtil.isNotEmpty(i18nLabel) && !i18nLabel.equals(menu.getName())){
+                menu.setName(i18nLabel);
+            }
+        }
+        return menus;
+    }
+
+    private String getI18nKey(MenuDO menu){
+        String i18nKey = null;
+        if(MenuTypeEnum.MENU.getType().equals(menu.getType())){
+            i18nKey = "menu.";
+        }else if(MenuTypeEnum.BUTTON.getType().equals(menu.getType())){
+            i18nKey = "button.";
+        }else{
+            i18nKey = "m"+menu.getType()+".";
+        }
+        createAlias(menu);
+        String alias =  menu.getAlias();
+        if(ObjectUtil.isNotEmpty(alias) && !"null".equalsIgnoreCase(alias)){
+            i18nKey += menu.getAlias();
+        }else{
+            i18nKey += menu.getName();
+        }
+
+        return i18nKey;
+    }
+
     /**
      * 校验父菜单是否合法
      *
@@ -281,6 +320,59 @@ public class MenuServiceImpl implements MenuService {
             menu.setIcon("");
             menu.setPath("");
         }
+
+        // init alias for i18n
+        createAlias(menu);
+    }
+
+    private String createAlias(MenuDO menu){
+        String alias =  menu.getAlias();
+        if("null".equalsIgnoreCase(alias)){
+            alias = null;
+        }
+        if(ObjectUtil.isEmpty(alias)){
+            if (MenuTypeEnum.MENU.getType().equals(menu.getType())) {
+                // menu
+                if(ObjectUtil.isNotEmpty(menu.getComponentName()) && !"null".equalsIgnoreCase(menu.getComponentName())){
+                    alias = menu.getComponentName();
+                }else if(ObjectUtil.isNotEmpty(menu.getComponent())  && !"null".equalsIgnoreCase(menu.getComponent())) {
+                    // 转驼峰格式 infra/job/index => infraJob
+                    alias = menu.getComponent();
+                    if(alias.endsWith("/index")){
+                        alias = alias.substring(0, alias.length()-6);
+                    }
+                    alias = StrUtil.toCamelCase(alias,'/');
+                    alias = menu.getComponent();
+                }
+            }
+            if(ObjectUtil.isEmpty(alias)){
+                if(ObjectUtil.isNotEmpty(menu.getPermission()) && !"null".equalsIgnoreCase(menu.getPermission())){
+                    // 转驼峰格式: system:user:query => systemUserQuery
+                    alias = menu.getPermission();
+                    alias = StrUtil.toCamelCase(alias,':');
+                }else if (ObjectUtil.isNotEmpty(menu.getPath()) && !"null".equalsIgnoreCase(menu.getPath())){
+                    // /system 去首/
+                    alias = menu.getPath();
+                    if(alias.startsWith("/")){
+                        alias = alias.substring(1, alias.length());
+                    }
+                    // 转驼峰格式
+                    if(!alias.startsWith("http")){
+                        alias = StrUtil.toCamelCase(alias,'/');
+                        alias = StrUtil.toCamelCase(alias,'-');
+                    }
+                }
+            }
+            if(ObjectUtil.isEmpty(alias)){
+                // TODO中文转拼音或英文？
+                alias = menu.getName();
+                alias = PinyinUtil.getPinyin(alias);
+            }
+            if(ObjectUtil.isNotEmpty(alias)){
+                menu.setAlias(alias);
+            }
+        }
+        return alias;
     }
 
 }

@@ -14,6 +14,7 @@ import org.openea.eap.module.system.dal.dataobject.user.AdminUserDO;
 import org.openea.eap.module.system.enums.logger.LoginLogTypeEnum;
 import org.openea.eap.module.system.enums.permission.MenuTypeEnum;
 import org.openea.eap.module.system.service.auth.AdminAuthService;
+import org.openea.eap.module.system.service.permission.MenuService;
 import org.openea.eap.module.system.service.permission.PermissionService;
 import org.openea.eap.module.system.service.permission.RoleService;
 import org.openea.eap.module.system.service.social.SocialUserService;
@@ -57,6 +58,9 @@ public class AuthController {
     private SocialUserService socialUserService;
     @Resource
     private SecurityProperties securityProperties;
+
+    @Resource
+    private MenuService menuService;
 
     @PostMapping("/login")
     @PermitAll
@@ -115,6 +119,8 @@ public class AuthController {
         List<MenuDO> menuList = permissionService.getRoleMenuListFromCache(roleIds,
                 SetUtils.asSet(MenuTypeEnum.DIR.getType(), MenuTypeEnum.MENU.getType()), // 只要目录和菜单类型
                 singleton(CommonStatusEnum.ENABLE.getStatus())); // 只要开启的
+        // i18n
+        menuList = menuService.toI18n(menuList);
         // 转换成 Tree 结构返回
         return success(AuthConvert.INSTANCE.buildMenuTree(menuList));
     }

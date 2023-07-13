@@ -1,5 +1,6 @@
 package org.openea.eap.framework.i18n.core;
 
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -39,28 +40,30 @@ public class I18nUtil {
         // current language, current modules
 
         // 1. init language
-        Map<String, Map<String, String>> mLocal = new HashMap();
+        Map<Locale, Map<String, String>> mLocal = new HashMap();
         List<String> langList = I18nUtil.i18nDataApi.getI18nSupportLangs();
         for(String lang : langList){
-            mLocal.put(lang, new HashMap<String,String>());
+            Locale locale = Locale.forLanguageTag(lang);
+            mLocal.put(locale, new HashMap<String,String>());
         }
         // 2. load data from api
         JSONObject i18nJson = I18nUtil.i18nDataApi.getI18nDataJson("", "");
-        mLocal.keySet().forEach(lang ->{
-            if (mLocal.containsKey(lang)) {
-                JSONObject langJson = i18nJson.getJSONObject(lang);
-                if (langJson != null) {
-                    langJson.keySet().forEach(key -> {
-                        mLocal.get(lang).put(key, langJson.getStr(key));
-                    });
-                }
+        i18nJson.keySet().forEach(lang->{
+            Locale locale = Locale.forLanguageTag(lang);
+            if(!mLocal.containsKey(locale)){
+                mLocal.put(locale, new HashMap<String,String>());
+            }
+            JSONObject langJson = i18nJson.getJSONObject(lang);
+            if (langJson != null) {
+                langJson.keySet().forEach(key -> {
+                    mLocal.get(locale).put(key, langJson.getStr(key));
+                });
             }
         });
 
         // 3. save message to static
-        mLocal.keySet().forEach(lang ->{
-            Locale locale = Locale.forLanguageTag(lang);
-            I18nUtil._messageSource.addMessages(mLocal.get(lang), locale);
+        mLocal.keySet().forEach(locale ->{
+            I18nUtil._messageSource.addMessages(mLocal.get(locale), locale);
         });
     }
 
@@ -82,15 +85,24 @@ public class I18nUtil {
 
     public static String getMessage(String code, @Nullable Object[] args, @Nullable String defaultMessage){
         // TODO 优先配置，配置找不到则自动翻译
+        String lable = null;
         try{
-            return getMessageResource().getMessage(code, args, defaultMessage, getLocale());
-        }catch(Exception e){
-            if(defaultMessage!=null){
-                return defaultMessage;
-            }else{
-                return code;
+            lable = getMessageResource().getMessage(code, args, getLocale());
+            if(StrUtil.isEmpty(lable) && StrUtil.isNotEmpty(defaultMessage)){
+                lable = defaultMessage;
             }
+//            return getMessageResource().getMessage(code, args, defaultMessage, getLocale());
+        }catch(Exception e){
+            log.warn(e.getMessage()+" (getMessage code="+code+")", e);
         }
+        if(StrUtil.isEmpty(lable)
+                && StrUtil.isNotEmpty(defaultMessage)){
+            lable = defaultMessage;
+        }
+        if(StrUtil.isEmpty(lable)){
+            lable = code;
+        }
+        return lable;
     }
 
     public static String getMessage(String code, String defaultMessage){
