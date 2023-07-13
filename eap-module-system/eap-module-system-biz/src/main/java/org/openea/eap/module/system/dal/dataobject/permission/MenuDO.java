@@ -30,6 +30,13 @@ public class MenuDO extends BaseDO {
      */
     @TableId
     private Long id;
+
+    /**
+     * 别名/key
+     * 用于i18n翻译时做标识
+     */
+    private String alias;
+
     /**
      * 菜单名称
      */

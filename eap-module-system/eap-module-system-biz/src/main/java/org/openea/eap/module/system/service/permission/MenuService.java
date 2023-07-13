@@ -105,4 +105,10 @@ public interface MenuService {
      */
     MenuDO getMenu(Long id);
 
+    /**
+     * 菜单国际化
+     * @param menus
+     * @return
+     */
+    List<MenuDO> toI18n(List<MenuDO> menus);
 }
