@@ -185,7 +185,7 @@ public class CodegenBuilder {
         }
         // name
         if (StrUtil.endWithIgnoreCase(column.getJavaField(), "name")) {
-            column.setExample(randomEle(new String[]{"张三", "李四", "王五", "赵六", "芋艿"}));
+            column.setExample(randomEle(new String[]{"张三", "李四", "王五", "赵六", "二麻子"}));
             return;
         }
         // status
@@ -195,7 +195,7 @@ public class CodegenBuilder {
         }
         // url
         if (StrUtil.endWithIgnoreCase(column.getColumnName(), "url")) {
-            column.setExample("https://www.iocoder.cn");
+            column.setExample("https://www.google.com");
             return;
         }
         // reason
@@ -205,7 +205,7 @@ public class CodegenBuilder {
         }
         // description、memo、remark
         if (StrUtil.endWithAnyIgnoreCase(column.getColumnName(), "description", "memo", "remark")) {
-            column.setExample(randomEle(new String[]{"你猜", "随便", "你说的对"}));
+            column.setExample(randomEle(new String[]{"内部说明", "提示"}));
             return;
         }
     }

@@ -2275,18 +2275,17 @@ CREATE TABLE `sys_lang_type` (
   `creator` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `update_time` datetime DEFAULT NULL,
   `updater` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `version` int DEFAULT NULL COMMENT '版本号',
   `deleted` tinyint DEFAULT '0' COMMENT '逻辑删除标记',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='多语言定义';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='国际化语言';
 
 -- ----------------------------
 -- Records of sys_lang_type
 -- ----------------------------
 BEGIN;
-INSERT INTO `sys_lang_type` (`id`, `alias`, `name`, `remark`, `create_time`, `creator`, `update_time`, `updater`, `version`, `deleted`) VALUES (101, 'en-US', 'English', NULL, NULL, NULL, NULL, NULL, NULL, 0);
-INSERT INTO `sys_lang_type` (`id`, `alias`, `name`, `remark`, `create_time`, `creator`, `update_time`, `updater`, `version`, `deleted`) VALUES (201, 'zh-CN', '中文', NULL, NULL, NULL, NULL, NULL, NULL, 0);
-INSERT INTO `sys_lang_type` (`id`, `alias`, `name`, `remark`, `create_time`, `creator`, `update_time`, `updater`, `version`, `deleted`) VALUES (301, 'ja-JP', '日本語', NULL, NULL, NULL, NULL, NULL, NULL, 0);
+INSERT INTO `sys_lang_type` (`id`, `alias`, `name`, `remark`, `create_time`, `creator`, `update_time`, `updater`, `deleted`) VALUES (101, 'en-US', 'English', NULL, NULL, NULL, NULL, NULL, 0);
+INSERT INTO `sys_lang_type` (`id`, `alias`, `name`, `remark`, `create_time`, `creator`, `update_time`, `updater`, `deleted`) VALUES (201, 'zh-CN', '中文', NULL, NULL, NULL, NULL, NULL, 0);
+INSERT INTO `sys_lang_type` (`id`, `alias`, `name`, `remark`, `create_time`, `creator`, `update_time`, `updater`, `deleted`) VALUES (301, 'ja-JP', '日本語', NULL, NULL, NULL, NULL, NULL, 0);
 COMMIT;
 
 
@@ -2296,7 +2295,7 @@ COMMIT;
 DROP TABLE IF EXISTS `sys_i18n_data`;
 CREATE TABLE `sys_i18n_data` (
   `id` bigint NOT NULL,
-  `module` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '模块，可选',
+  `module` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '分类/模块',
   `alias` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'key/别名',
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '名称',
   `json` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '多语言设置json',
@@ -2305,10 +2304,9 @@ CREATE TABLE `sys_i18n_data` (
   `creator` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `update_time` datetime DEFAULT NULL,
   `updater` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `version` int DEFAULT NULL COMMENT '版本号',
   `deleted` tinyint DEFAULT '0' COMMENT '逻辑删除标记',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='多语言翻译';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='国际化翻译';
 
 -- ----------------------------
 -- Table structure for system_notice
