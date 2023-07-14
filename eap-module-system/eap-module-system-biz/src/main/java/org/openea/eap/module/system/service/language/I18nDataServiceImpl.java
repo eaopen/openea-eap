@@ -5,8 +5,8 @@ import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.openea.eap.module.system.dal.dataobject.language.I18nJsonDataDO;
-import org.openea.eap.module.system.dal.mapper.language.I18nJsonDataMapper;
-import org.openea.eap.module.system.dal.mapper.language.LangTypeMapper;
+import org.openea.eap.module.system.dal.mysql.language.I18nJsonDataMapper;
+import org.openea.eap.module.system.dal.mysql.language.LangTypeMapper;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
