@@ -1,0 +1,50 @@
+version: "3.8"
+
+name: eoa-system
+
+services:
+  server:
+    container_name: eoa-server
+    build:
+      context: ./eoa-server/
+    image: eoa-server
+    restart: unless-stopped
+    ports:
+      - 48080:48080
+    environment:
+      SPRING_PROFILES_ACTIVE: dev10
+      jdbc_host: 10.0.4.13:3306
+      jdbc_user: eoa
+      jdbc_password: needchange
+      redis_host: 10.0.4.4
+      redis_port: 6378
+    networks:
+      - eoa-network
+
+  admin:
+    container_name: eap-admin
+    build:
+      context: ./eap-ui-admin
+      args:
+        NODE_ENV:
+          ENV=${NODE_ENV:-production}
+          PUBLIC_PATH=${PUBLIC_PATH:-/}
+          VUE_APP_TITLE=${VUE_APP_TITLE:-企业应用框架}
+          VUE_APP_BASE_API=${VUE_APP_BASE_API:-/prod-api}
+          VUE_APP_APP_NAME=${VUE_APP_APP_NAME:-/}
+          VUE_APP_TENANT_ENABLE=${VUE_APP_TENANT_ENABLE:-true}
+          VUE_APP_CAPTCHA_ENABLE=${VUE_APP_CAPTCHA_ENABLE:-true}
+          VUE_APP_DOC_ENABLE=${VUE_APP_DOC_ENABLE:-true}
+          VUE_APP_BAIDU_CODE=${VUE_APP_BAIDU_CODE:-fadc1bd5db1a1d6f581df60a1807f8ab}
+    image: eap-admin
+    restart: unless-stopped
+    ports:
+      - 8080:80
+    networks:
+      - eoa-network
+    depends_on:
+      - server
+
+networks:
+  eoa-network:
+    driver: bridge

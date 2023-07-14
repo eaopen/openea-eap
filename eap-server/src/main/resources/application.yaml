@@ -130,6 +130,8 @@ eap:
     base-package: ${eap.info.base-package}
     db-schemas: ${spring.datasource.dynamic.datasource.master.name}
     front-type: 10 # 前端模版的类型，参见 CodegenFrontTypeEnum 枚举类
+  i18n:
+    enable: true
   error-code: # 错误码相关配置项
     constants-class-list:
       - org.openea.eap.module.bpm.enums.ErrorCodeConstants
