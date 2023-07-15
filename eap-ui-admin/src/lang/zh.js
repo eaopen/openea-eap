@@ -172,6 +172,8 @@ export default {
   tagsView: {
     refresh: '刷新',
     close: '关闭',
+    closeLeft: '关闭左侧',
+    closeRight: '关闭右侧',
     closeOthers: '关闭其它',
     closeAll: '关闭所有'
   },

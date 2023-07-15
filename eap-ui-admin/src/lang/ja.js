@@ -172,6 +172,8 @@ export default {
   tagsView: {
     refresh: '更新',
     close: '閉じる',
+    closeLeft: '左を閉じる',
+    closeRight: '右を閉じる',
     closeOthers: 'その他閉じる',
     closeAll: 'すべて閉じる'
   },

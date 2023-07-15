@@ -1,5 +1,5 @@
 // translate router.meta.title, be used in breadcrumb sidebar tagsview
-export function generateTitle(title) {
+export function generateTitle(title, fullName) {
   const hasKey = this.$te('route.' + title)
 
   if (hasKey) {
@@ -8,5 +8,5 @@ export function generateTitle(title) {
 
     return translatedTitle
   }
-  return title
+  return fullName ? fullName : title
 }

@@ -10,6 +10,9 @@
       <el-dropdown-item :disabled="language==='zh'" command="zh">
         中文
       </el-dropdown-item>
+<!--      <el-dropdown-item :disabled="language==='zhtw'" command="zhtw">-->
+<!--        繁体中文-->
+<!--      </el-dropdown-item>-->
 <!--      <el-dropdown-item :disabled="language==='es'" command="es">-->
 <!--        Español-->
 <!--      </el-dropdown-item>-->
@@ -21,6 +24,8 @@
 </template>
 
 <script>
+import { UpdateLanguage } from '@/api/system/user'
+import getPageTitle from '@/utils/get-page-title'
 export default {
   computed: {
     language() {
@@ -29,13 +34,26 @@ export default {
   },
   methods: {
     handleSetLanguage(lang) {
+      //UpdateLanguage({ language: lang }).then(res => { })
       this.$i18n.locale = lang
       this.$store.dispatch('app/setLanguage', lang)
+      let text = 'Switch Language Success'
+      if (lang === 'zh') text = '切换成功'
+      if (lang === 'zhtw') text = '切換成功'
+      if (lang === 'ja') text = '言語切替成功'
+      document.title = getPageTitle(this.$route.meta.title, this.$route.meta.zhTitle)
       this.$message({
-        message: 'Switch Language Success',
+        message: text,
         type: 'success'
       })
     }
   }
 }
 </script>
+<style lang="scss" scoped>
+.international {
+  .icon-ym-header-language {
+    line-height: 63px;
+  }
+}
+</style>

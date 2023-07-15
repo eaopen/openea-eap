@@ -21,7 +21,9 @@
           <size-select id="size-select" class="right-menu-item hover-effect" />
         </el-tooltip>
 
-        <lang-select class="right-menu-item hover-effect" />
+        <template v-if="showLanguage">
+          <lang-select class="right-menu-item hover-effect" />
+        </template>
 
       </template>
 
@@ -86,6 +88,11 @@ export default {
           key: 'showSettings',
           value: val
         })
+      }
+    },
+    showLanguage: {
+      get() {
+        return this.$store.state.settings.showLanguage
       }
     },
     topNav: {

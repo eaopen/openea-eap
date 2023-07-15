@@ -36,6 +36,11 @@ module.exports = {
   dynamicTitle: false,
 
   /**
+   * 是否显示语言
+   */
+  showLanguage: true,
+
+  /**
    * @type {string | array} 'production' | ['production', 'development']
    * @description Need show err logs component.
    * The default is only used in the production env
