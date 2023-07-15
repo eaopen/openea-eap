@@ -1,6 +1,6 @@
 version: "3.8"
 
-name: eoa-system
+#name: eoa-system
 
 services:
   server:
@@ -39,7 +39,7 @@ services:
     image: eap-admin
     restart: unless-stopped
     ports:
-      - 8080:80
+      - 7080:80
     networks:
       - eoa-network
     depends_on:
