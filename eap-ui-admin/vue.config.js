@@ -8,9 +8,14 @@ function resolve(dir) {
 
 const CompressionPlugin = require('compression-webpack-plugin')
 
-const name = process.env.VUE_APP_TITLE || '企业应用框架' // 网页标题
+const name = process.env.VUE_APP_TITLE || 'EAP admin' // page title
 
-const port = process.env.port || process.env.npm_config_port || 80 // 端口
+// If your port is set to 80,
+// use administrator privileges to execute the command line.
+// For example, Mac: sudo npm run
+// You can change the port by the following method:
+// port = 3000 npm run dev OR npm run dev --port = 3000
+const port = process.env.port || process.env.npm_config_port || 80 // dev port
 
 // vue.config.js 配置说明
 //官方vue.config.js 参考文档 https://cli.vuejs.org/zh/config/#css-loaderoptions

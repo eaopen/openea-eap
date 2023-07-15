@@ -15,7 +15,10 @@ FROM nginx:alpine
 
 ENV TZ=Asia/Shanghai
 
-COPY ./nginx.conf /etc/nginx/conf.d/default.conf
-COPY --from=build-stage /admim/dist /usr/share/nginx/html
+#ENV WORKDIR /home/eap/eap-admin
+ENV WORKDIR /usr/share/nginx/html
+
+COPY ./conf/nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=build-stage /admim/dist ${WORKDIR}
 
 EXPOSE 80

@@ -66,12 +66,13 @@ export default {
   },
   navbar: {
     dashboard: '首页',
-    github: '项目地址',
     logOut: '退出登录',
     profile: '个人中心',
     setting: '布局设置',
     theme: '换肤',
-    size: '布局大小'
+    size: '布局大小',
+    lockScreen: '锁住屏幕',
+    github: '项目地址'
   },
   login: {
     titleUname: '账号密码登录',
@@ -186,6 +187,8 @@ export default {
     fixedHeader: '固定 Header',
     sidebarLogo: '侧边栏 Logo',
     dynamicTitle: '动态标题',
+    language: '显示多语言选择',
+    search: '显示页面搜索框',
     saveSetting: '保存配置',
     resetSetting: '重置配置'
   }

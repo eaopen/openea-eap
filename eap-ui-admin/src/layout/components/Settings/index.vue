@@ -67,6 +67,17 @@
         <el-switch v-model="dynamicTitle" class="drawer-switch" />
       </div>
 
+      <div class="drawer-item">
+        <span>{{$t('settings.language')}}</span>
+        <el-switch v-model="showLanguage" class="drawer-switch" />
+      </div>
+
+      <div class="drawer-item">
+        <span>{{$t('settings.search')}}</span>
+        <el-switch v-model="showSearch" class="drawer-switch" />
+      </div>
+
+
       <el-divider/>
 
       <el-button size="small" type="primary" plain icon="el-icon-document-add" @click="saveSetting">{{ $t('settings.saveSetting') }}</el-button>
@@ -146,6 +157,28 @@ export default {
         })
       }
     },
+    showLanguage: {
+      get() {
+        return this.$store.state.settings.showLanguage;
+      },
+      set(val) {
+        this.$store.dispatch("settings/changeSetting", {
+          key: "showLanguage",
+          value: val
+        });
+      }
+    },
+    showSearch: {
+      get() {
+        return this.$store.state.settings.showSearch;
+      },
+      set(val) {
+        this.$store.dispatch("settings/changeSetting", {
+          key: "showSearch",
+          value: val
+        });
+      }
+    },
   },
   methods: {
     themeChange(val) {
@@ -172,6 +205,7 @@ export default {
             "fixedHeader":${this.fixedHeader},
             "sidebarLogo":${this.sidebarLogo},
             "dynamicTitle":${this.dynamicTitle},
+            "supportPinyinSearch":${this.supportPinyinSearch},
             "sideTheme":"${this.sideTheme}",
             "theme":"${this.theme}"
           }`

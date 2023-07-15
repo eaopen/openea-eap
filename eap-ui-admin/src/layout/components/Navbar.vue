@@ -7,7 +7,9 @@
 
     <div class="right-menu">
       <template v-if="device!=='mobile'">
-        <search id="header-search" class="right-menu-item" />
+        <template v-if="showSearch">
+          <search id="header-search" class="right-menu-item" />
+        </template>
 
         <!-- 站内信 -->
         <notify-message class="right-menu-item hover-effect" />
@@ -93,6 +95,11 @@ export default {
     showLanguage: {
       get() {
         return this.$store.state.settings.showLanguage
+      }
+    },
+    showSearch: {
+      get() {
+        return this.$store.state.settings.showSearch
       }
     },
     topNav: {

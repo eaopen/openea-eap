@@ -186,6 +186,8 @@ export default {
     fixedHeader: 'Fixed Header',
     sidebarLogo: 'Sidebar Logo',
     dynamicTitle: 'Dynamic Title',
+    language: 'Show Language Select',
+    search: 'Show Search',
     saveSetting: 'Save',
     resetSetting: 'Reset'
   }
