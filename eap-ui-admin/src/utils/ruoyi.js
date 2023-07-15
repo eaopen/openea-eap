@@ -184,7 +184,7 @@ export function getTenantEnable() {
   if (process.env.VUE_APP_TENANT_ENABLE === "false") {
     return false;
   }
-  return process.env.VUE_APP_TENANT_ENABLE || true;
+  return process.env.VUE_APP_TENANT_ENABLE || false;
 }
 
 /**
