@@ -136,7 +136,12 @@
             <url>https://maven.aliyun.com/repository/public</url>
         </repository>
     </repositories>
-
+    <pluginRepositories>
+        <pluginRepository>
+            <id>aliyun-plugin</id>
+            <url>https://maven.aliyun.com/repository/public</url>
+        </pluginRepository>
+    </pluginRepositories>
 
     <!-- 环境 -->
     <profiles>
@@ -153,11 +158,12 @@
             </properties>
         </profile>
 
-
-
         <!-- EOA -->
         <profile>
             <id>eoaServer</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
             <modules>
                 <!-- eoa-server是基于eap-server的企业定制版本 -->
                 <module>eoa-server</module>
