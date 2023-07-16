@@ -14,12 +14,12 @@ services:
     ports:
       - 48080:48080
     environment:
-      SPRING_PROFILES_ACTIVE: local
-      jdbc_host: 10.0.4.13:3306
-      jdbc_user: eoa
-      jdbc_password: ${jdbc_password:-eap}
-      redis_host: 10.0.4.4
-      redis_port: 6378
+      - spring.profiles.active=local
+      - jdbc_host=10.0.4.13:3306
+      - jdbc_user=eoa
+      - jdbc_password=${JDBC_PASSWORD:-eap}
+      - redis_host=10.0.4.4
+      - redis_port=6378
     networks:
       - eoa-network
 
