@@ -71,7 +71,7 @@ public class I18nJsonDataController {
         I18nJsonDataDO i18nJsonData = i18nJsonDataService.getI18nJsonData(id);
         // format json
         if(StringUtils.isNotEmpty(i18nJsonData.getJson())){
-            i18nJsonData.setJson(JSONUtil.toJsonPrettyStr(JSONUtil.parseObj(i18nJsonData.getJson())));
+            i18nJsonData.setJson(JSONUtil.parseObj(i18nJsonData.getJson()).toJSONString(2));
         }
         return success(I18nJsonDataConvert.INSTANCE.convert(i18nJsonData));
     }

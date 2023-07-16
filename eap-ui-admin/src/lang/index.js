@@ -12,6 +12,8 @@ import zhLocale from './zh'
 //import esLocale from './es'
 import jaLocale from './ja'
 
+//import { UpdateLanguage } from '@/api/system/user'
+
 Vue.use(VueI18n)
 
 const messages = {
@@ -51,6 +53,13 @@ export function getLanguage() {
   }
   return 'zh'
 }
+
+export function loadLanguage(lang){
+  //UpdateLanguage({ language: lang }).then(res => { })
+  // todo 服务器会检查版本，只有本地版本比较低才会返回数据
+}
+
+
 const i18n = new VueI18n({
   // set locale
   // options: en | zh | es

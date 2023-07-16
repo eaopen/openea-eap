@@ -20,3 +20,6 @@ selenium-debug.log
 *.local
 
 package-lock.json
+
+
+src/lang/draft

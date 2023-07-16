@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { UpdateLanguage } from '@/api/system/user'
+import { loadLanguage } from '@/lang/index'
 import getPageTitle from '@/utils/get-page-title'
 export default {
   computed: {
@@ -34,7 +34,7 @@ export default {
   },
   methods: {
     handleSetLanguage(lang) {
-      //UpdateLanguage({ language: lang }).then(res => { })
+      loadLanguage(lang)
       this.$i18n.locale = lang
       this.$store.dispatch('app/setLanguage', lang)
       let text = 'Switch Language Success'

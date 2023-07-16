@@ -15,7 +15,9 @@
         <!-- 表单 -->
         <div class="form-cont">
           <!-- 切换语言 非必要选择 -->
-          <lang-select class="set-language" />
+          <template v-if="showLanguage">
+             <lang-select class="set-language" />
+          </template>
 
           <el-tabs class="form" v-model="loginForm.loginType" style=" float:none;">
             <el-tab-pane :label="$t('login.titleUname')" name="uname">
@@ -61,8 +63,8 @@
                       <svg-icon slot="prefix" icon-class="password" class="el-input__icon input-icon"/>
                     </template>
                     <template slot="append">
-                      <span v-if="mobileCodeTimer <= 0" class="getMobileCode" @click="getSmsCode" style="cursor: pointer;">{{$t('getMobileCode')}}</span>
-                      <span v-if="mobileCodeTimer > 0" class="getMobileCode">{{ mobileCodeTimer }} {{$t('mobileCodeTimerTip')}}</span>
+                      <span v-if="mobileCodeTimer <= 0" class="getMobileCode" @click="getSmsCode" style="cursor: pointer;">{{$t('login.getMobileCode')}}</span>
+                      <span v-if="mobileCodeTimer > 0" class="getMobileCode">{{ mobileCodeTimer }} {{$t('login.mobileCodeTimerTip')}}</span>
                     </template>
                   </el-input>
                 </el-form-item>
@@ -214,6 +216,14 @@ export default {
     // 重定向地址
     this.redirect = this.$route.query.redirect ? decodeURIComponent(this.$route.query.redirect) : undefined;
     this.getCookie();
+  },
+  computed: {
+    showLanguage: {
+      get() {
+        // todo load last setting
+        return this.$store.state.settings.showLanguage
+      }
+    },
   },
   methods: {
     getCode() {
