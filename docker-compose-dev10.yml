@@ -21,12 +21,12 @@ services:
       redis_host: 10.0.4.4
       redis_port: 6378
       ARGS:
-        --spring.datasource.dynamic.datasource.master.url=${MASTER_DATASOURCE_URL:-jdbc:mysql://10.0.4.13:3306/eoa-db?useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&nullCatalogMeansCurrent=true}
-        --spring.datasource.dynamic.datasource.master.username=${MASTER_DATASOURCE_USERNAME:-eoa}
-        --spring.datasource.dynamic.datasource.master.password=${MASTER_DATASOURCE_PASSWORD:-eap}
-        --spring.datasource.dynamic.datasource.slave.url=${SLAVE_DATASOURCE_URL:-jdbc:mysql://10.0.4.13:3306/eoa-db?useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&nullCatalogMeansCurrent=true}
-        --spring.datasource.dynamic.datasource.slave.username=${SLAVE_DATASOURCE_USERNAME:-eoa}
-        --spring.datasource.dynamic.datasource.slave.password=${SLAVE_DATASOURCE_PASSWORD:-eap}
+        --spring.datasource.dynamic.datasource.master.url=jdbc:mysql://10.0.4.13:3306/eoa-db?useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&nullCatalogMeansCurrent=true
+        --spring.datasource.dynamic.datasource.master.username=eoa
+        --spring.datasource.dynamic.datasource.master.password=${JDBC_PASSWORD:-eap}
+        --spring.datasource.dynamic.datasource.slave.url=jdbc:mysql://10.0.4.13:3306/eoa-db?useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&nullCatalogMeansCurrent=true
+        --spring.datasource.dynamic.datasource.slave.username=eoa
+        --spring.datasource.dynamic.datasource.slave.password=${JDBC_PASSWORD:-eap}
         --spring.redis.host=${REDIS_HOST:-10.0.4.4}
         --spring.redis.port=${REDIS_HOST:-6378}
         --spring.redis.password=${REDIS_PASSWORD:-nopass}
