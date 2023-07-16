@@ -1,5 +1,6 @@
 package org.openea.eap.module.system.dal.dataobject.language;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import java.util.*;
 import java.time.LocalDateTime;
@@ -42,6 +43,7 @@ public class I18nJsonDataDO extends BaseDO {
     /**
      * 多语言设置json
      */
+    @JsonFormat
     private String json;
     /**
      * 备注

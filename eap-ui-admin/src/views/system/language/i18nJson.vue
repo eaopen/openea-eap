@@ -72,8 +72,9 @@
         <el-form-item label="名称" prop="name">
           <el-input v-model="form.name" placeholder="请输入名称" />
         </el-form-item>
-        <el-form-item label="i18n json" prop="json">
-          <el-input v-model="form.json" type="textarea" placeholder="请输入内容" />
+        <el-form-item label="i18n" prop="json">
+<!--          <el-input v-model="form.json" type="textarea" placeholder="请输入内容" />-->
+          <JSONEditor v-model="form.json" mode="json" class="json-editor"  placeholder="请输入JSON" lineNumbers="false" />
         </el-form-item>
         <el-form-item label="备注" prop="remark">
           <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
@@ -89,10 +90,13 @@
 
 <script>
 import { createI18nJsonData, updateI18nJsonData, deleteI18nJsonData, getI18nJsonData, getI18nJsonDataPage, exportI18nJsonDataExcel } from "@/api/system/language/i18nJson";
+import ClipboardJS from 'clipboard'
+import JSONEditor from '@/components/JsonEditor';
 
 export default {
   name: "I18nJsonData",
   components: {
+    JSONEditor
   },
   data() {
     return {
