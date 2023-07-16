@@ -192,7 +192,7 @@ eap:
     url: ${eap.web.admin-ui.url}
     email: admin@openea.org
     license: MIT
-    license-url: https://raw.githubusercontent.com/eaopen/openea-eap/dev/doc/yudao/LICENSEx
+    license-url: https://raw.githubusercontent.com/eaopen/openea-eap/dev/doc/yudao/LICENSE
   captcha:
     enable: false # 验证码的开关，默认为 true
   codegen:
