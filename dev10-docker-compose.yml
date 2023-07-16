@@ -8,7 +8,7 @@ services:
     build:
       context: ./eoa-server/
     env_file:
-      - dev10.docker.env
+      - ./dev10.docker.env
     image: eoa-server
     restart: unless-stopped
     ports:
@@ -29,6 +29,8 @@ services:
         --spring.datasource.dynamic.datasource.slave.username=eoa
         --spring.datasource.dynamic.datasource.slave.password=${JDBC_PASSWORD:-eap}
         --spring.redis.host=10.0.4.4
+        --spring.redis.port=6378
+        --spring.redis.password=nopass
     networks:
       - eoa-network
 

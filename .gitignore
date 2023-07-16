@@ -47,5 +47,7 @@ refer/**
 #eoa-server/**
 
 # docker-compose dev10
-docker.env.dev10
+#dev10-docker-compose.yml
 dev10.docker.env
+#dev10_update.sh
+#dev10_clean.sh
