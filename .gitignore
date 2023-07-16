@@ -45,3 +45,6 @@ refer/**
 
 # eoa will move
 #eoa-server/**
+
+# docker-compose dev10
+docker.env.dev10
