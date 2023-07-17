@@ -67,18 +67,23 @@
         <el-switch v-model="dynamicTitle" class="drawer-switch" />
       </div>
 
-      <div class="drawer-item">
-        <span>{{$t('settings.language')}}</span>
-        <el-switch v-model="showLanguage" class="drawer-switch" />
+      <div v-if="showMoreState">
+        <div class="drawer-item" v-if="topNav">
+          <span>{{$t('settings.language')}}</span>
+          <el-switch v-model="showLanguage" class="drawer-switch" />
+        </div>
+
+        <div class="drawer-item">
+          <span>{{$t('settings.search')}}</span>
+          <el-switch v-model="showSearch" class="drawer-switch" />
+        </div>
+        <div class="drawer-item">
+          <span>{{ $t('settings.isTopNavCache') }}</span>
+          <el-switch v-model="isTopNavCache" class="drawer-switch" />
+        </div>
       </div>
-
-      <div class="drawer-item">
-        <span>{{$t('settings.search')}}</span>
-        <el-switch v-model="showSearch" class="drawer-switch" />
-      </div>
-
-
-      <el-divider/>
+      <!-- 其他配置项待确定 -->
+      <el-divider><el-button type="text" @click="showMore">更多配置</el-button></el-divider>
 
       <el-button size="small" type="primary" plain icon="el-icon-document-add" @click="saveSetting">{{ $t('settings.saveSetting') }}</el-button>
       <el-button size="small" plain icon="el-icon-refresh" @click="resetSetting">{{ $t('settings.resetSetting') }}</el-button>
@@ -94,7 +99,8 @@ export default {
   data() {
     return {
       theme: this.$store.state.settings.theme,
-      sideTheme: this.$store.state.settings.sideTheme
+      sideTheme: this.$store.state.settings.sideTheme,
+      showMoreState: false
     };
   },
   computed: {
@@ -176,11 +182,25 @@ export default {
         this.$store.dispatch("settings/changeSetting", {
           key: "showSearch",
           value: val
-        });
+        })
+      }
+    },
+    isTopNavCache: {
+      get() {
+        return this.$store.state.settings.isTopNavCache
+      },
+      set(val) {
+        this.$store.dispatch('settings/changeSetting', {
+          key: 'isTopNavCache',
+          value: val
+        })
       }
     },
   },
   methods: {
+    showMore(){
+      this.showMoreState = !this.showMoreState
+    },
     themeChange(val) {
       this.$store.dispatch('settings/changeSetting', {
         key: 'theme',
@@ -207,7 +227,8 @@ export default {
             "dynamicTitle":${this.dynamicTitle},
             "supportPinyinSearch":${this.supportPinyinSearch},
             "sideTheme":"${this.sideTheme}",
-            "theme":"${this.theme}"
+            "theme":"${this.theme}",
+            "isTopNavCache": "${this.isTopNavCache}"
           }`
       );
       setTimeout(this.$modal.closeLoading(), 1000)

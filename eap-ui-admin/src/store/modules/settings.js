@@ -1,6 +1,6 @@
 import defaultSettings from '@/settings'
 
-const { sideTheme, showSettings, topNav, tagsView, fixedHeader, sidebarLogo, showLanguage, showSearch, dynamicTitle } = defaultSettings
+const { sideTheme, showSettings, topNav, tagsView, fixedHeader, sidebarLogo,showSearch, showLanguage, dynamicTitle,isTopNavCache,topNavCacheTime,listCacheTime,editCacheTime} = defaultSettings
 
 const storageSetting = JSON.parse(localStorage.getItem('layout-setting')) || ''
 const state = {
@@ -14,7 +14,11 @@ const state = {
   sidebarLogo: storageSetting.sidebarLogo === undefined ? sidebarLogo : storageSetting.sidebarLogo,
   showLanguage: storageSetting.showLanguage === undefined ? showLanguage : storageSetting.showLanguage,
   showSearch: storageSetting.showSearch === undefined ? showSearch : storageSetting.showSearch,
-  dynamicTitle: storageSetting.dynamicTitle === undefined ? dynamicTitle : storageSetting.dynamicTitle
+  dynamicTitle: storageSetting.dynamicTitle === undefined ? dynamicTitle : storageSetting.dynamicTitle,
+  isTopNavCache: storageSetting.isTopNavCache === undefined ? isTopNavCache : storageSetting.isTopNavCache,
+  topNavCacheTime: storageSetting.topNavCacheTime === undefined ? topNavCacheTime : storageSetting.topNavCacheTime,
+  listCacheTime: storageSetting.listCacheTime === undefined ? listCacheTime : storageSetting.listCacheTime,
+  editCacheTime: storageSetting.editCacheTime === undefined ? editCacheTime : storageSetting.editCacheTime
 }
 const mutations = {
   CHANGE_SETTING: (state, { key, value }) => {

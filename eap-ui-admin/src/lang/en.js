@@ -189,6 +189,8 @@ export default {
     language: 'Show Language Select',
     search: 'Show Search',
     saveSetting: 'Save',
-    resetSetting: 'Reset'
-  }
+    resetSetting: 'Reset',
+    isTopNavCache: 'local topnav',
+    showMore: 'show more'
+  },
 }

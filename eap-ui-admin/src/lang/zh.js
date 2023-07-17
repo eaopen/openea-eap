@@ -190,6 +190,8 @@ export default {
     language: '显示多语言选择',
     search: '显示页面搜索框',
     saveSetting: '保存配置',
-    resetSetting: '重置配置'
-  }
+    resetSetting: '重置配置',
+    isTopNavCache: '是否缓存选项卡',
+    showMore: '更多配置'
+  },
 }

@@ -34,6 +34,23 @@ module.exports = {
    * 是否显示动态标题
    */
   dynamicTitle: false,
+  /**
+   * 是否缓存选项卡
+   */
+  isTopNavCache: true,
+  /**
+   * 选项卡缓存时间
+   */
+  topNavCacheTime: 3*24*3600*1000,
+  /**
+   * 列表配置缓存时间
+   */
+  listCacheTime: 3*24*3600*1000,
+  /**
+   * 列表行编辑缓存时间
+   */
+  editCacheTime: 1*24*3600*1000,
+
 
   /**
    * 是否显示语言
