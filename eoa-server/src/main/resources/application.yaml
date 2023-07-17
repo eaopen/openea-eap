@@ -195,6 +195,7 @@ eap:
     license-url: https://raw.githubusercontent.com/eaopen/openea-eap/dev/doc/yudao/LICENSE
   captcha:
     enable: false # 验证码的开关，默认为 true
+  userDataType: obpm
   codegen:
     base-package: ${eap.info.base-package}
     db-schemas: ${spring.datasource.dynamic.datasource.master.name}
