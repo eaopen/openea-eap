@@ -83,7 +83,7 @@
         </div>
       </div>
       <!-- 其他配置项待确定 -->
-      <el-divider><el-button type="text" @click="showMore">更多配置</el-button></el-divider>
+      <el-divider><el-button type="text" @click="showMore">{{ $t('settings.showMore') }}</el-button></el-divider>
 
       <el-button size="small" type="primary" plain icon="el-icon-document-add" @click="saveSetting">{{ $t('settings.saveSetting') }}</el-button>
       <el-button size="small" plain icon="el-icon-refresh" @click="resetSetting">{{ $t('settings.resetSetting') }}</el-button>
