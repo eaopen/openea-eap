@@ -111,7 +111,7 @@ eap:
   demo: false # 关闭演示模式
 
 justauth:
-  enabled: false
+  enabled: true
   type:
     DINGTALK: # 钉钉
       client-id: dingvrnreaje3yqvzhxg

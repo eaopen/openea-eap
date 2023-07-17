@@ -74,8 +74,8 @@ export default {
     size: 'Global Size'
   },
   login: {
-    titleUname: 'Username Login',
-    titleSms: 'SMS Login',
+    titleUname: 'Account Login',
+    titleSms: 'Verify Code Login',
     tenant: 'Tenant',
     rememberMe: 'Remember',
     waitLogin: 'Logging In...',

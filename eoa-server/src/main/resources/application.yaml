@@ -294,7 +294,9 @@ minidao :
 
 
 justauth:
-  enabled: ${justauth_enable:false}
+  ## bug when enabled = false
+  ## Consider defining a bean of type 'org.openea.eap.framework.social.core.EapAuthRequestFactory' in your configuration
+  enabled: ${justauth_enable:true}
   type:
     DINGTALK: # 钉钉
       client-id: dingvrnreaje3yqvzhxg
