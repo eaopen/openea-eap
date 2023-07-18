@@ -23,29 +23,19 @@ public class BannerApplicationRunner implements ApplicationRunner {
                             "项目启动成功！\n\t" +
                             "接口文档: \t{} \n\t" +
                             "开发文档: \t{} \n\t" +
-                            "视频教程: \t{} \n\t" +
-                            "源码解析: \t{} \n" +
                             "----------------------------------------------------------",
                     "https://doc.iocoder.cn/api-doc/",
-                    "https://doc.iocoder.cn",
-                    "https://t.zsxq.com/02Yf6M7Qn",
-                    "https://t.zsxq.com/02B6ujIee");
+                    "https://doc.iocoder.cn");
 
             // 数据报表
             if (isNotPresent("org.openea.eap.module.report.framework.security.config.SecurityConfiguration")) {
-                System.out.println("[报表模块 eap-module-report - 已禁用][参考 https://doc.iocoder.cn/report/ 开启]");
+                System.out.println("[报表模块 eap-module-report - 已禁用]");
             }
             // 工作流
-            if (isNotPresent("org.openea.eap.framework.flowable.config.EapFlowableConfiguration")) {
-                System.out.println("[工作流模块 eap-module-bpm - 已禁用][参考 https://doc.iocoder.cn/bpm/ 开启]");
-            }
-            // 微信公众号
-            if (isNotPresent("org.openea.eap.module.mp.framework.mp.config.MpConfiguration")) {
-                System.out.println("[微信公众号 eap-module-mp - 已禁用][参考 https://doc.iocoder.cn/mp/build/ 开启]");
-            }
-            // 商城
-            if (isNotPresent("org.openea.eap.module.trade.framework.web.config.TradeWebConfiguration")) {
-                System.out.println("[商城系统 eap-module-mall - 已禁用][参考 https://doc.iocoder.cn/mall/build/ 开启]");
+            // flowable: org.openea.eap.framework.flowable.config.EapFlowableConfiguration
+            // obpm: OpenBpm based on Activiti
+            if (isNotPresent("org.openea.eap.module.obpm.config.EapObpmConfiguration")) {
+                System.out.println("[工作流模块 eap-module-obpm - 已禁用]");
             }
         });
     }

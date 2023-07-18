@@ -2,10 +2,8 @@ package org.openea.eap.framework.i18n.core;
 
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONObject;
-import cn.hutool.json.JSONUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.openea.eap.framework.common.util.spring.AppUtil;
-import org.openea.eap.framework.i18n.core.EapMessageResource;
+import org.openea.eap.framework.common.util.spring.EapAppUtil;
 import org.openea.eap.module.system.api.i18n.I18nDataApi;
 import org.springframework.context.NoSuchMessageException;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -81,7 +79,7 @@ public class I18nUtil {
 
     public static EapMessageResource getMessageResource(){
         if(_messageSource==null){
-            _messageSource = AppUtil.getBean(EapMessageResource.class);
+            _messageSource = EapAppUtil.getBean(EapMessageResource.class);
         }
         return _messageSource;
     }

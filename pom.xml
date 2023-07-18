@@ -23,7 +23,7 @@
         <!-- 各种 module 拓展 -->
         <module>eap-module-system</module>
         <module>eap-module-infra</module>
-        <module>eap-module-bpm</module>
+        <module>eap-module-obpm</module>
         <module>eap-module-report</module>
 
         <!-- 示例项目 -->
@@ -114,7 +114,6 @@
         <repository>
             <id>github-mvn-openea</id>
             <url>https://maven.pkg.github.com/eaopen/mvn-repo</url>
-
         </repository>
     </distributionManagement>
     <!-- 使用 aliyun 的 Maven 源，提升下载速度 -->

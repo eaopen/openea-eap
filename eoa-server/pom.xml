@@ -46,11 +46,7 @@
         </dependency>
 
 
-<!--        <dependency>-->
-<!--            <groupId>org.openea.eap</groupId>-->
-<!--            <artifactId>eap-module-member-biz</artifactId>-->
-<!--            <version>${revision}</version>-->
-<!--        </dependency>-->
+
 
         <!-- 数据报表 -->
 <!--        <dependency>-->
@@ -58,42 +54,13 @@
 <!--            <artifactId>eap-module-report-biz</artifactId>-->
 <!--            <version>${revision}</version>-->
 <!--        </dependency>-->
-        <!-- 工作流 -->
-<!--        <dependency>-->
-<!--            <groupId>org.openea.eap</groupId>-->
-<!--            <artifactId>eap-module-bpm-biz</artifactId>-->
-<!--            <version>${revision}</version>-->
-<!--        </dependency>-->
-        <!-- 支付服务 -->
-<!--        <dependency>-->
-<!--            <groupId>org.openea.eap</groupId>-->
-<!--            <artifactId>eap-module-pay-biz</artifactId>-->
-<!--            <version>${revision}</version>-->
-<!--        </dependency>-->
+        <!-- 工作流集成 OpenBPM -->
+        <dependency>
+            <groupId>org.openea.eap</groupId>
+            <artifactId>eap-module-obpm-biz</artifactId>
+            <version>${revision}</version>
+        </dependency>
 
-        <!-- 微信公众号模块。默认注释，保证编译速度 -->
-<!--        <dependency>-->
-<!--            <groupId>org.openea.eap</groupId>-->
-<!--            <artifactId>eap-module-mp-biz</artifactId>-->
-<!--            <version>${revision}</version>-->
-<!--        </dependency>-->
-
-        <!-- 商城相关模块。默认注释，保证编译速度 -->
-<!--        <dependency>-->
-<!--            <groupId>org.openea.eap</groupId>-->
-<!--            <artifactId>eap-module-promotion-biz</artifactId>-->
-<!--            <version>${revision}</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.openea.eap</groupId>-->
-<!--            <artifactId>eap-module-product-biz</artifactId>-->
-<!--            <version>${revision}</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.openea.eap</groupId>-->
-<!--            <artifactId>eap-module-trade-biz</artifactId>-->
-<!--            <version>${revision}</version>-->
-<!--        </dependency>-->
 
 
         <!-- spring boot 配置所需依赖 -->
