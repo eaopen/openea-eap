@@ -364,7 +364,7 @@ public class MenuServiceImpl implements MenuService {
             if(ObjectUtil.isEmpty(alias)){
                 // TODO中文转拼音或英文？
                 alias = menu.getName();
-                alias = PinyinUtil.getPinyin(alias);
+                //alias = PinyinUtil.getPinyin(alias);
             }
             if(ObjectUtil.isNotEmpty(alias)){
                 menu.setAlias(alias);
