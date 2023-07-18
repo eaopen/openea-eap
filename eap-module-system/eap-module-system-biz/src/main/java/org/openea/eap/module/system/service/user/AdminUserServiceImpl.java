@@ -26,6 +26,7 @@ import org.openea.eap.module.system.service.tenant.TenantService;
 import com.google.common.annotations.VisibleForTesting;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -46,6 +47,7 @@ import static org.openea.eap.module.system.enums.ErrorCodeConstants.*;
  *
  */
 @Service("adminUserService")
+@ConditionalOnMissingBean(AdminUserService.class)
 @Slf4j
 public class AdminUserServiceImpl implements AdminUserService {
 

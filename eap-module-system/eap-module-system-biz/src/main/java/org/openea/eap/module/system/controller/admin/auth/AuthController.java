@@ -6,6 +6,7 @@ import org.openea.eap.framework.common.pojo.CommonResult;
 import org.openea.eap.framework.common.util.collection.SetUtils;
 import org.openea.eap.framework.operatelog.core.annotations.OperateLog;
 import org.openea.eap.framework.security.config.SecurityProperties;
+import org.openea.eap.framework.security.core.LoginUser;
 import org.openea.eap.module.system.controller.admin.auth.vo.*;
 import org.openea.eap.module.system.convert.auth.AuthConvert;
 import org.openea.eap.module.system.dal.dataobject.permission.MenuDO;
@@ -37,6 +38,7 @@ import java.util.Set;
 
 import static org.openea.eap.framework.common.pojo.CommonResult.success;
 import static org.openea.eap.framework.security.core.util.SecurityFrameworkUtils.getLoginUserId;
+import static org.openea.eap.framework.security.core.util.SecurityFrameworkUtils.getLoginUser;
 import static org.openea.eap.framework.security.core.util.SecurityFrameworkUtils.obtainAuthorization;
 import static java.util.Collections.singleton;
 
@@ -103,10 +105,12 @@ public class AuthController {
         // 获得角色列表
         Set<Long> roleIds = permissionService.getUserRoleIdsFromCache(getLoginUserId(), singleton(CommonStatusEnum.ENABLE.getStatus()));
         List<RoleDO> roleList = roleService.getRoleListFromCache(roleIds);
+
         // 获得菜单列表
-        List<MenuDO> menuList = permissionService.getRoleMenuListFromCache(roleIds,
-                SetUtils.asSet(MenuTypeEnum.DIR.getType(), MenuTypeEnum.MENU.getType(), MenuTypeEnum.BUTTON.getType()),
-                singleton(CommonStatusEnum.ENABLE.getStatus())); // 只要开启的
+        List<MenuDO> menuList = permissionService.getUserMenuListFromCache(getLoginUserId(), user.getUsername(),
+                SetUtils.asSet(MenuTypeEnum.DIR.getType(), MenuTypeEnum.MENU.getType(), MenuTypeEnum.BUTTON.getType()));
+        // i18n
+        menuList = menuService.toI18n(menuList);
         // 拼接结果返回
         return success(AuthConvert.INSTANCE.convert(user, roleList, menuList));
     }
@@ -114,12 +118,11 @@ public class AuthController {
     @GetMapping("/list-menus")
     @Operation(summary = "获得登录用户的菜单列表")
     public CommonResult<List<AuthMenuRespVO>> getMenuList() {
-        // 获得角色列表
-        Set<Long> roleIds = permissionService.getUserRoleIdsFromCache(getLoginUserId(), singleton(CommonStatusEnum.ENABLE.getStatus()));
+        LoginUser loginUser = getLoginUser();
         // 获得用户拥有的菜单列表
-        List<MenuDO> menuList = permissionService.getRoleMenuListFromCache(roleIds,
-                SetUtils.asSet(MenuTypeEnum.DIR.getType(), MenuTypeEnum.MENU.getType()), // 只要目录和菜单类型
-                singleton(CommonStatusEnum.ENABLE.getStatus())); // 只要开启的
+        List<MenuDO> menuList = permissionService.getUserMenuListFromCache(loginUser.getId(), loginUser.getUserkey(),
+                SetUtils.asSet(MenuTypeEnum.DIR.getType(), MenuTypeEnum.MENU.getType()) // 只要目录和菜单类型
+        );
         // i18n
         menuList = menuService.toI18n(menuList);
         // 转换成 Tree 结构返回

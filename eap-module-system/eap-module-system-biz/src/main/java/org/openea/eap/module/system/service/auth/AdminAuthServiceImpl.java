@@ -52,19 +52,19 @@ public class AdminAuthServiceImpl implements AdminAuthService {
     @Resource
     protected AdminUserService userService;
     @Resource
-    private LoginLogService loginLogService;
+    protected LoginLogService loginLogService;
     @Resource
-    private OAuth2TokenService oauth2TokenService;
+    protected OAuth2TokenService oauth2TokenService;
     @Resource
-    private SocialUserService socialUserService;
+    protected SocialUserService socialUserService;
     @Resource
-    private MemberService memberService;
+    protected MemberService memberService;
     @Resource
-    private Validator validator;
+    protected Validator validator;
     @Resource
-    private CaptchaService captchaService;
+    protected CaptchaService captchaService;
     @Resource
-    private SmsCodeApi smsCodeApi;
+    protected SmsCodeApi smsCodeApi;
 
     /**
      * 验证码的开关，默认为 true
@@ -174,7 +174,7 @@ public class AdminAuthServiceImpl implements AdminAuthService {
     }
 
     @VisibleForTesting
-    void validateCaptcha(AuthLoginReqVO reqVO) {
+    protected void validateCaptcha(AuthLoginReqVO reqVO) {
         // 如果验证码关闭，则不进行校验
         if (!captchaEnable) {
             return;
@@ -219,7 +219,7 @@ public class AdminAuthServiceImpl implements AdminAuthService {
         createLogoutLog(accessTokenDO.getUserId(), accessTokenDO.getUserType(), logType);
     }
 
-    private void createLogoutLog(Long userId, Integer userType, Integer logType) {
+    protected void createLogoutLog(Long userId, Integer userType, Integer logType) {
         LoginLogCreateReqDTO reqDTO = new LoginLogCreateReqDTO();
         reqDTO.setLogType(logType);
         reqDTO.setTraceId(TracerUtils.getTraceId());
@@ -236,7 +236,7 @@ public class AdminAuthServiceImpl implements AdminAuthService {
         loginLogService.createLoginLog(reqDTO);
     }
 
-    private String getUsername(Long userId) {
+    protected String getUsername(Long userId) {
         if (userId == null) {
             return null;
         }
@@ -244,7 +244,7 @@ public class AdminAuthServiceImpl implements AdminAuthService {
         return user != null ? user.getUsername() : null;
     }
 
-    private UserTypeEnum getUserType() {
+    protected UserTypeEnum getUserType() {
         return UserTypeEnum.ADMIN;
     }
 

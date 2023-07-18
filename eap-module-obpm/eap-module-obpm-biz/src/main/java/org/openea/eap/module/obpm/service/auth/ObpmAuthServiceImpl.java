@@ -1,7 +1,11 @@
 package org.openea.eap.module.obpm.service.auth;
 
 import cn.hutool.core.util.ObjectUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.openea.eap.framework.common.enums.CommonStatusEnum;
+import org.openea.eap.module.system.api.social.dto.SocialUserBindReqDTO;
+import org.openea.eap.module.system.controller.admin.auth.vo.AuthLoginReqVO;
+import org.openea.eap.module.system.controller.admin.auth.vo.AuthLoginRespVO;
 import org.openea.eap.module.system.dal.dataobject.user.AdminUserDO;
 import org.openea.eap.module.system.enums.logger.LoginLogTypeEnum;
 import org.openea.eap.module.system.enums.logger.LoginResultEnum;
@@ -16,8 +20,25 @@ import static org.openea.eap.module.system.enums.ErrorCodeConstants.AUTH_LOGIN_U
 
 @Service("obpmAuthService")
 @ConditionalOnProperty(prefix = "eap", name = "userDataType", havingValue = "obpm")
+@Slf4j
 public class ObpmAuthServiceImpl extends AdminAuthServiceImpl implements AdminAuthService {
 
+    @Override
+    public AuthLoginRespVO login(AuthLoginReqVO reqVO) {
+        // 校验验证码
+        validateCaptcha(reqVO);
+
+        // 使用账号密码，进行登录
+        AdminUserDO user = authenticate(reqVO.getUsername(), reqVO.getPassword());
+
+        // 如果 socialType 非空，说明需要绑定社交用户
+        if (reqVO.getSocialType() != null) {
+            socialUserService.bindSocialUser(new SocialUserBindReqDTO(user.getId(), getUserType().getValue(),
+                    reqVO.getSocialType(), reqVO.getSocialCode(), reqVO.getSocialState()));
+        }
+        // 创建 Token 令牌，记录登录日志
+        return createTokenAfterLoginSuccess(user.getId(), reqVO.getUsername(), LoginLogTypeEnum.LOGIN_USERNAME);
+    }
 
     @Override
     public AdminUserDO authenticate(String username, String password) {
@@ -27,18 +48,12 @@ public class ObpmAuthServiceImpl extends AdminAuthServiceImpl implements AdminAu
         // 校验账号是否存在
         AdminUserDO user = userService.getUserByUsername(username);
         if (user == null) {
-            createLoginLog(null, username, logTypeEnum, LoginResultEnum.BAD_CREDENTIALS);
-            throw exception(AUTH_LOGIN_BAD_CREDENTIALS);
+            //不存在先从obpm验证
         }
-        if (!userService.isPasswordMatch(password, user.getPassword())) {
-            createLoginLog(user.getId(), username, logTypeEnum, LoginResultEnum.BAD_CREDENTIALS);
-            throw exception(AUTH_LOGIN_BAD_CREDENTIALS);
-        }
-        // 校验是否禁用
-        if (ObjectUtil.notEqual(user.getStatus(), CommonStatusEnum.ENABLE.getStatus())) {
-            createLoginLog(user.getId(), username, logTypeEnum, LoginResultEnum.USER_DISABLED);
-            throw exception(AUTH_LOGIN_USER_DISABLED);
-        }
+        // TODO 从obpm获取信息进行验证
+
+        // 如之前不存在，则需要新增用户到本地
+
         return user;
     }
 

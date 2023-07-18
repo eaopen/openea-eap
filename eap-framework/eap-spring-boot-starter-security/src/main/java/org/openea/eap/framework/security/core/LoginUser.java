@@ -26,6 +26,11 @@ public class LoginUser {
      * 关联 {@link UserTypeEnum}
      */
     private Integer userType;
+
+    /**
+     * 用户名/手机/工号/邮箱等，唯一key
+     */
+    private String userkey;
     /**
      * 租户编号
      */

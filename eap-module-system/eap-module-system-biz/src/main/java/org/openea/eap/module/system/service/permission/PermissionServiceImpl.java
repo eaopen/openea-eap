@@ -6,6 +6,7 @@ import cn.hutool.core.util.ArrayUtil;
 import org.openea.eap.framework.common.enums.CommonStatusEnum;
 import org.openea.eap.framework.common.util.collection.CollectionUtils;
 import org.openea.eap.framework.common.util.collection.MapUtils;
+import org.openea.eap.framework.common.util.collection.SetUtils;
 import org.openea.eap.framework.common.util.json.JsonUtils;
 import org.openea.eap.framework.datapermission.core.annotation.DataPermission;
 import org.openea.eap.framework.tenant.core.aop.TenantIgnore;
@@ -19,6 +20,7 @@ import org.openea.eap.module.system.dal.dataobject.permission.UserRoleDO;
 import org.openea.eap.module.system.dal.mysql.permission.RoleMenuMapper;
 import org.openea.eap.module.system.dal.mysql.permission.UserRoleMapper;
 import org.openea.eap.module.system.enums.permission.DataScopeEnum;
+import org.openea.eap.module.system.enums.permission.MenuTypeEnum;
 import org.openea.eap.module.system.mq.producer.permission.PermissionProducer;
 import org.openea.eap.module.system.service.dept.DeptService;
 import org.openea.eap.module.system.service.user.AdminUserService;
@@ -30,6 +32,7 @@ import com.google.common.collect.Sets;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionSynchronization;
@@ -42,12 +45,14 @@ import java.util.function.Supplier;
 
 import static org.openea.eap.framework.common.util.collection.CollectionUtils.convertSet;
 import static java.util.Collections.singleton;
+import static org.openea.eap.framework.security.core.util.SecurityFrameworkUtils.getLoginUserId;
 
 /**
  * 权限 Service 实现类
  *
  */
 @Service
+@ConditionalOnMissingBean(PermissionService.class)
 @Slf4j
 public class PermissionServiceImpl implements PermissionService {
 
@@ -146,6 +151,18 @@ public class PermissionServiceImpl implements PermissionService {
             userRoles.forEach(userRoleDO -> userRoleCacheBuilder.put(userRoleDO.getUserId(), userRoleDO.getRoleId()));
             userRoleCache = CollectionUtils.convertMultiMap2(userRoles, UserRoleDO::getUserId, UserRoleDO::getRoleId);
         });
+    }
+
+    @Override
+    public List<MenuDO> getUserMenuListFromCache(Long userId, String userKey, Collection<Integer> menuTypes){
+        // 获得角色列表
+        Set<Long> roleIds = getUserRoleIdsFromCache(userId, singleton(CommonStatusEnum.ENABLE.getStatus()));
+        //List<RoleDO> roleList = roleService.getRoleListFromCache(roleIds);
+        // 获得菜单列表
+        List<MenuDO> menuList = getRoleMenuListFromCache(roleIds,
+                menuTypes,
+                singleton(CommonStatusEnum.ENABLE.getStatus())); // 只要开启的
+        return menuList;
     }
 
     @Override

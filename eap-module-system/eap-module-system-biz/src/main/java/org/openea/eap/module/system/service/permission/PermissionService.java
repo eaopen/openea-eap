@@ -22,6 +22,18 @@ public interface PermissionService {
     void initLocalCache();
 
     /**
+     * 获得用户拥有的菜单列表，从缓存中获取
+     *
+     * 任一参数为空时，则返回为空
+     *
+     * @param userId 用户编号
+     * @param userKey 用户唯一key，可能是username/mobile等，用于SSO集成
+     * @param menuTypes 菜单类型数组
+     * @return 菜单列表（有效状态）
+     */
+    List<MenuDO> getUserMenuListFromCache(Long userId, String userKey, Collection<Integer> menuTypes);
+
+    /**
      * 获得角色们拥有的菜单列表，从缓存中获取
      *
      * 任一参数为空时，则返回为空
