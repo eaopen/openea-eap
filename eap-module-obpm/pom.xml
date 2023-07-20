@@ -20,7 +20,7 @@
         集成OpenBPM
     </description>
     <properties>
-        <openbpm.version>3-SNAPSHOT</openbpm.version>
+        <openbpm.version>3.5.1</openbpm.version>
     </properties>
 
     <dependencyManagement>
@@ -44,52 +44,18 @@
 
             <dependency>
                 <groupId>org.szopen.openbpm</groupId>
+                <artifactId>bpm-auth-security</artifactId>
+                <version>${openbpm.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.szopen.openbpm</groupId>
                 <artifactId>bpm-db</artifactId>
                 <version>${openbpm.version}</version>
             </dependency>
 
         </dependencies>
     </dependencyManagement>
-
-    <repositories>
-        <repository>
-            <id>openea-reps-mvn</id>
-            <name>mvn</name>
-            <url>https://openea-maven.pkg.coding.net/repository/reps/mvn/</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-        <repository>
-            <id>aliyun-repos</id>
-            <url>https://maven.aliyun.com/repository/public</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-        </repository>
-        <repository>
-            <id>alfresco</id>
-            <name>Activiti Releases</name>
-            <url>https://artifacts.alfresco.com/nexus/content/repositories/activiti-releases/</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-        </repository>
-        <repository>
-            <id>AsposeJavaAPI</id>
-            <name>Aspose Java API</name>
-            <url>http://artifact.aspose.com/repo/</url>
-        </repository>
-    </repositories>
-    <pluginRepositories>
-        <pluginRepository>
-            <id>nexus-aliyun</id>
-            <url>https://maven.aliyun.com/repository/public</url>
-        </pluginRepository>
-    </pluginRepositories>
 
     <profiles>
         <!-- SpringCloud运行环境 -->

@@ -75,6 +75,11 @@
 
 <!--        <dependency>-->
 <!--            <groupId>org.szopen.openbpm</groupId>-->
+<!--            <artifactId>bpm-auth-security</artifactId>-->
+<!--        </dependency>-->
+
+<!--        <dependency>-->
+<!--            <groupId>org.szopen.openbpm</groupId>-->
 <!--            <artifactId>bpm-starter</artifactId>-->
 <!--        </dependency>-->
 

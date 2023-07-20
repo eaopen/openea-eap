@@ -1,8 +1,10 @@
 package org.openea.eap.module.obpm.service.auth;
 
 import cn.hutool.core.util.ObjectUtil;
+import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.openea.eap.framework.common.enums.CommonStatusEnum;
+import org.openea.eap.module.obpm.service.obpm.ObmpClientService;
 import org.openea.eap.module.system.api.social.dto.SocialUserBindReqDTO;
 import org.openea.eap.module.system.controller.admin.auth.vo.AuthLoginReqVO;
 import org.openea.eap.module.system.controller.admin.auth.vo.AuthLoginRespVO;
@@ -12,17 +14,22 @@ import org.openea.eap.module.system.enums.logger.LoginResultEnum;
 import org.openea.eap.module.system.service.auth.AdminAuthService;
 import org.openea.eap.module.system.service.auth.AdminAuthServiceImpl;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
 
 import static org.openea.eap.framework.common.exception.util.ServiceExceptionUtil.exception;
 import static org.openea.eap.module.system.enums.ErrorCodeConstants.AUTH_LOGIN_BAD_CREDENTIALS;
-import static org.openea.eap.module.system.enums.ErrorCodeConstants.AUTH_LOGIN_USER_DISABLED;
+
 
 @Service("obpmAuthService")
 @ConditionalOnProperty(prefix = "eap", name = "userDataType", havingValue = "obpm")
 @Slf4j
 public class ObpmAuthServiceImpl extends AdminAuthServiceImpl implements AdminAuthService {
 
+    @Resource
+    private ObmpClientService obmpClientService;
     @Override
     public AuthLoginRespVO login(AuthLoginReqVO reqVO) {
         // 校验验证码
@@ -44,7 +51,13 @@ public class ObpmAuthServiceImpl extends AdminAuthServiceImpl implements AdminAu
     public AdminUserDO authenticate(String username, String password) {
         // TODO 更改为通过obpm的用户名密码进行验证
 
-        final LoginLogTypeEnum logTypeEnum = LoginLogTypeEnum.LOGIN_USERNAME;
+        JSONObject jsonResult = obpmLogin(username, password);
+        if(jsonResult.containsKey("token")){
+            // login success
+        }else{
+            // fail
+            throw exception(AUTH_LOGIN_BAD_CREDENTIALS);
+        }
         // 校验账号是否存在
         AdminUserDO user = userService.getUserByUsername(username);
         if (user == null) {
@@ -55,6 +68,10 @@ public class ObpmAuthServiceImpl extends AdminAuthServiceImpl implements AdminAu
         // 如之前不存在，则需要新增用户到本地
 
         return user;
+    }
+
+    private JSONObject obpmLogin(String username, String password){
+        return obmpClientService.login(username, password);
     }
 
 }

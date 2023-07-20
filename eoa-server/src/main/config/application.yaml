@@ -297,6 +297,12 @@ eap:
 
 --- #################### OpenBPM相关配置 ####################
 
+eap:
+  obpm:
+    apiBaseUrl: ${obpm_api_baseurl:/obpm-api}
+    webBaseUrl: ${obpm_web_baseurl:/obpm-web}
+    adminBaseUrl: ${obpm_admin_baseurl:/obpm-admin}
+
 ###  预备用作直接整合OpenBPM代码用 ####
 
 spring:
@@ -320,31 +326,6 @@ spring:
         connection-init-sql: SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci;
         connection-test-query: SELECT 1
 
-bpm:
-  cust:
-    base-package: com.xxx.bpm
-  jwt:
-    enabled: ${jwt_enabled_:true}
-  security:
-    auth-ignores: ${security_auth_ignores:/login.*,/openbpm-ui*,/bpm-admin*,/bpm-mobile*,/index.html,/webjars/*,/swagger-*,/v2/api-docs*,/doc.html,/data/*,/Ashxs/*,/test/*,/common/email/*,/public/*}
-    csrf-disable: true
-    csrf-ignores: ${security_csrf_ignores:openbpm,127.0.0.1,localhost}
-  simple-mq:
-    message-queue-type: ${message_queue_type:synchronous}
-  form:
-    template:
-      dirs: pc_vue, mobile
-
-  bus-data:
-    autofill:
-      update-time: update_time_,lastdate
-      update-by: update_by_,lastuid
-
-  file:
-    base-dir: ${file_base_dir:/app/data/files/}
-    preview-base: ${preview_url_base:/fileview/}
-    preview-password: ${preview_url_password:0000}
-    uploader: ${file_uploader:ordinary}
 
 
 --- #################### eap相关配置2 ####################
