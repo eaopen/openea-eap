@@ -70,6 +70,11 @@ public class ObpmPermissionServiceImpl extends PermissionServiceImpl implements 
         List<MenuDO> listMenu = new ArrayList<>();
         List<JSONObject> listResource = obmpClientService.queryUserMenu(userKey, "", withButton);
         for(JSONObject sysRes: listResource){
+            // ignore button
+            if(!withButton){
+                String type = sysRes.getString("type");
+                if("button".equals(type)) {continue;}
+            }
             listMenu.add(convertMenu(sysRes));
         }
         return listMenu;
@@ -132,13 +137,13 @@ public class ObpmPermissionServiceImpl extends PermissionServiceImpl implements 
         String resUrl = sysRes.getString("url");
 
         // 2.1 obpm web, default setting
-        String componentName = null;
+        //String componentName = null;
         String component = null;
         String path = resUrl;
         if(ObjectUtils.isEmpty(path)){
             path = menu.getAlias();
         }else{
-            componentName = "ObpmWeb";
+            //componentName = "ObpmWeb";
             component = "obpm/web/index";
         }
 
@@ -146,7 +151,7 @@ public class ObpmPermissionServiceImpl extends PermissionServiceImpl implements 
             // 2.2 grid
             // /form/formCustSql/view/formCustSqlView.html?code=xxx
             if(resUrl.indexOf("form/formCustSql/view/formCustSqlView.html")>=0){
-                componentName = "FormCustSqlView";
+                //componentName = "FormCustSqlView";
                 component = "obpm/agList";
                 String code = getParamValueFromPath(path, "code");
                 path = "obpm/agList/"+code
@@ -156,7 +161,7 @@ public class ObpmPermissionServiceImpl extends PermissionServiceImpl implements 
             // 2.3 form
             // /form/formDef/vueFormDefPreview.html?key=xxx
             if(resUrl.indexOf("form/formDef/vueFormDefPreview.html")>=0){
-                componentName = "easyForm";
+                //componentName = "easyForm";
                 component = "obpm/easyForm";
                 String key = getParamValueFromPath(path, "key");
                 path = "obpm/easyForm/"+key
@@ -167,7 +172,7 @@ public class ObpmPermissionServiceImpl extends PermissionServiceImpl implements 
             // 2.5 task
             // /bpm/vueForm/instanceDetail.html?id=xxx
             if(resUrl.indexOf("bpm/vueForm/instanceDetail.html")>=0){
-                componentName = "Layout";
+                //componentName = "Layout";
                 component = "obpm/taskDetail";
                 String id = getParamValueFromPath(path, "id");
                 path = "obpm/instanceDetail/"+id
@@ -176,7 +181,7 @@ public class ObpmPermissionServiceImpl extends PermissionServiceImpl implements 
             // /bpm/vueForm/start.html?defId=xxx
             // /bpm/vueForm/start.html?instanceId=xxx
             if(resUrl.indexOf("bpm/vueForm/start.html")>=0){
-                componentName = "Layout";
+                //componentName = "Layout";
                 component = "obpm/taskDetail";
                 Map<String, String> mParam = getPathParams(path);
                 String id = mParam.get("defId");
@@ -188,7 +193,7 @@ public class ObpmPermissionServiceImpl extends PermissionServiceImpl implements 
             }
             // /bpm/vueForm/taskComplete.html?taskId=xxx
             if(resUrl.indexOf("bpm/vueForm/taskComplete.html")>=0){
-                componentName = "Layout";
+                //componentName = "Layout";
                 component = "obpm/taskDetail";
                 String taskId = getParamValueFromPath(path, "taskId");
                 path = "obpm/taskComplete/"+taskId
@@ -206,9 +211,9 @@ public class ObpmPermissionServiceImpl extends PermissionServiceImpl implements 
             }
         }
         menu.setPath(path);
-        if(ObjectUtils.isNotEmpty(componentName)){
-            menu.setComponentName(componentName);
-        }
+//        if(ObjectUtils.isNotEmpty(componentName)){
+//            menu.setComponentName(componentName);
+//        }
         if(ObjectUtils.isNotEmpty(component)){
             menu.setComponent(component);
         }
