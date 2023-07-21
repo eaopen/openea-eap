@@ -53,7 +53,13 @@ public class ObpmPermissionServiceImpl extends PermissionServiceImpl implements 
         }
         List<MenuDO> menuList2 = getObpmMenuList(userKey, withButton);
         if(!menuList2.isEmpty()){
-            menuList2.addAll(menuList);
+            //menuList2.addAll(menuList);
+            for(MenuDO menu: menuList){
+                if(menu.getParentId()==0L){
+                    menu.setSort(1000+menu.getSort());
+                }
+                menuList2.add(menu);
+            }
             menuList = menuList2;
         }
 
@@ -75,10 +81,14 @@ public class ObpmPermissionServiceImpl extends PermissionServiceImpl implements 
         // 1. copy
         // 1.1 same name
         // id, parentId, name, alias, icon, type
-        BeanUtils.copyProperties(sysRes, menu);
-        // check Id/parentId
-
-        // 1.2. check prop
+        //BeanUtils.copyProperties(sysRes, menu);
+        menu.setId(sysRes.getLong("id"));
+        menu.setParentId(sysRes.getLong("parentId"));
+        if(menu.getParentId()==null){
+            menu.setParentId(0L);
+        }
+        menu.setName(sysRes.getString("name"));
+        menu.setAlias(sysRes.getString("alias"));
         // check type
         String type = sysRes.getString("type");
         if("menu".equals(type)){
@@ -94,8 +104,20 @@ public class ObpmPermissionServiceImpl extends PermissionServiceImpl implements 
             sort = sysRes.getInteger("sn");
         }
         menu.setSort(sort);
-        // icon, todo
-        //menuDO.setIcon( bean.getIcon() );
+        // icon
+        String icon = sysRes.getString("icon");
+        if(ObjectUtils.isEmpty(icon)){
+            if(menu.getParentId()==0L){
+                // top default icon
+                icon = "system";
+            }
+        }else{
+            icon = convertIcon(icon);
+        }
+        if(ObjectUtils.isNotEmpty(icon)){
+            menu.setIcon(icon);
+        }
+
 
         // 1.3 default prop
         //menuDO.setPermission( bean.getPermission() );
@@ -110,18 +132,24 @@ public class ObpmPermissionServiceImpl extends PermissionServiceImpl implements 
         String resUrl = sysRes.getString("url");
 
         // 2.1 obpm web, default setting
+        String componentName = null;
+        String component = null;
         String path = resUrl;
-        String componentName = "ObpmWeb";
-        String component = "obpm/web/index";
+        if(ObjectUtils.isEmpty(path)){
+            path = menu.getAlias();
+        }else{
+            componentName = "ObpmWeb";
+            component = "obpm/web/index";
+        }
 
-        if(ObjectUtils.isNotEmpty(path)){
+        if(ObjectUtils.isNotEmpty(resUrl)){
             // 2.2 grid
             // /form/formCustSql/view/formCustSqlView.html?code=xxx
             if(resUrl.indexOf("form/formCustSql/view/formCustSqlView.html")>=0){
-                componentName = "Layout";
+                componentName = "FormCustSqlView";
                 component = "obpm/agList";
                 String code = getParamValueFromPath(path, "code");
-                path = "/obpm/agList/"+code
+                path = "obpm/agList/"+code
                         +path.substring(path.indexOf("formCustSqlView.html?")+20);
 
             }
@@ -131,7 +159,7 @@ public class ObpmPermissionServiceImpl extends PermissionServiceImpl implements 
                 componentName = "easyForm";
                 component = "obpm/easyForm";
                 String key = getParamValueFromPath(path, "key");
-                path = "/obpm/easyForm/"+key
+                path = "obpm/easyForm/"+key
                         +path.substring(path.indexOf("vueFormDefPreview.html?")+22);
             }
             // 2.4 dialog
@@ -142,7 +170,7 @@ public class ObpmPermissionServiceImpl extends PermissionServiceImpl implements 
                 componentName = "Layout";
                 component = "obpm/taskDetail";
                 String id = getParamValueFromPath(path, "id");
-                path = "/obpm/instanceDetail/"+id
+                path = "obpm/instanceDetail/"+id
                         +path.substring(path.indexOf("instanceDetail.html?")+19);
             }
             // /bpm/vueForm/start.html?defId=xxx
@@ -155,7 +183,7 @@ public class ObpmPermissionServiceImpl extends PermissionServiceImpl implements 
                 if(ObjectUtils.isEmpty(id)){
                     id = mParam.get("instanceId");
                 }
-                path = "/obpm/start/"+id
+                path = "obpm/start/"+id
                         +path.substring(path.indexOf("start.html?")+10);
             }
             // /bpm/vueForm/taskComplete.html?taskId=xxx
@@ -163,7 +191,7 @@ public class ObpmPermissionServiceImpl extends PermissionServiceImpl implements 
                 componentName = "Layout";
                 component = "obpm/taskDetail";
                 String taskId = getParamValueFromPath(path, "taskId");
-                path = "/obpm/taskComplete/"+taskId
+                path = "obpm/taskComplete/"+taskId
                         + path.substring(path.indexOf("taskComplete.html?")+17);
             }
 
@@ -172,6 +200,11 @@ public class ObpmPermissionServiceImpl extends PermissionServiceImpl implements 
         }
 
         //2.9
+        if(menu.getParentId()==0L){
+            if(!path.startsWith("http") && !path.startsWith("/")){
+                path = "/" + path;
+            }
+        }
         menu.setPath(path);
         if(ObjectUtils.isNotEmpty(componentName)){
             menu.setComponentName(componentName);
@@ -183,13 +216,18 @@ public class ObpmPermissionServiceImpl extends PermissionServiceImpl implements 
         return menu;
     }
 
+    private String convertIcon(String origin){
+        // todo
+        return "row";
+    }
+
     private String getParamValueFromPath(String path, String key){
         Map<String, String> mParam = getPathParams(path);
         return  mParam.get(key);
     }
     private Map<String, String> getPathParams(String path) {
         Map<String, String> mParam = new HashMap<>();
-        List<NameValuePair> listParam = URLEncodedUtils.parse(path, Charset.forName("UTF-8"));
+        List<NameValuePair> listParam = URLEncodedUtils.parse(path.substring(path.indexOf("?")+1), Charset.forName("UTF-8"));
         for(NameValuePair pair: listParam){
             mParam.put(pair.getName(), pair.getValue());
         }
