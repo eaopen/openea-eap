@@ -299,7 +299,7 @@ eap:
 
 eap:
   obpm:
-    apiBaseUrl: ${obpm_api_baseurl:/obpm-api}
+    apiBaseUrl: ${obpm_api_baseurl:/obpm-server}
     webBaseUrl: ${obpm_web_baseurl:/obpm-web}
     adminBaseUrl: ${obpm_admin_baseurl:/obpm-admin}
 

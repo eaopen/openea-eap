@@ -149,7 +149,6 @@ public class ObpmPermissionServiceImpl extends PermissionServiceImpl implements 
             // 子元素只有1个时可省略中间层级
             menu.setAlwaysShow(false);
         }else{
-            //componentName = "ObpmWeb";
             component = "obpm/web/index";
 //            if(!path.startsWith("http") && !path.startsWith("/")){
 //                path = "/" + path;
@@ -160,17 +159,19 @@ public class ObpmPermissionServiceImpl extends PermissionServiceImpl implements 
             // 2.2 grid
             // /form/formCustSql/view/formCustSqlView.html?code=xxx
             if(resUrl.indexOf("form/formCustSql/view/formCustSqlView.html")>=0){
-                //componentName = "FormCustSqlView";
-                component = "obpm/agList";
+                component = "obpm/agGrid";
+//                String[] queryParams = getQueryParam4route(path, "code");
+//                path = "obpm/listGrid/"+queryParams[0]+queryParams[1];
                 String code = getParamValueFromPath(path, "code");
-                path = "obpm/agList/"+code
+                path = "obpm/listGrid/"+code
                         +path.substring(path.indexOf("formCustSqlView.html?")+20);
             }
             // 2.3 form
             // /form/formDef/vueFormDefPreview.html?key=xxx
             if(resUrl.indexOf("form/formDef/vueFormDefPreview.html")>=0){
-                //componentName = "easyForm";
                 component = "obpm/easyForm";
+//                String[] queryParams = getQueryParam4route(path, "key");
+//                path = "obpm/easyForm/"+queryParams[0]+queryParams[1];
                 String key = getParamValueFromPath(path, "key");
                 path = "obpm/easyForm/"+key
                         +path.substring(path.indexOf("vueFormDefPreview.html?")+22);
@@ -180,7 +181,6 @@ public class ObpmPermissionServiceImpl extends PermissionServiceImpl implements 
             // 2.5 task
             // /bpm/vueForm/instanceDetail.html?id=xxx
             if(resUrl.indexOf("bpm/vueForm/instanceDetail.html")>=0){
-                //componentName = "Layout";
                 component = "obpm/taskDetail";
                 String id = getParamValueFromPath(path, "id");
                 path = "obpm/instanceDetail/"+id
@@ -189,7 +189,6 @@ public class ObpmPermissionServiceImpl extends PermissionServiceImpl implements 
             // /bpm/vueForm/start.html?defId=xxx
             // /bpm/vueForm/start.html?instanceId=xxx
             if(resUrl.indexOf("bpm/vueForm/start.html")>=0){
-                //componentName = "Layout";
                 component = "obpm/taskDetail";
                 Map<String, String> mParam = getPathParams(path);
                 String id = mParam.get("defId");
@@ -201,7 +200,6 @@ public class ObpmPermissionServiceImpl extends PermissionServiceImpl implements 
             }
             // /bpm/vueForm/taskComplete.html?taskId=xxx
             if(resUrl.indexOf("bpm/vueForm/taskComplete.html")>=0){
-                //componentName = "Layout";
                 component = "obpm/taskDetail";
                 String taskId = getParamValueFromPath(path, "taskId");
                 path = "obpm/taskComplete/"+taskId
@@ -219,9 +217,6 @@ public class ObpmPermissionServiceImpl extends PermissionServiceImpl implements 
             }
         }
         menu.setPath(path);
-//        if(ObjectUtils.isNotEmpty(componentName)){
-//            menu.setComponentName(componentName);
-//        }
         if(ObjectUtils.isNotEmpty(component)){
             menu.setComponent(component);
         }
@@ -232,6 +227,20 @@ public class ObpmPermissionServiceImpl extends PermissionServiceImpl implements 
     private String convertIcon(String origin){
         // todo
         return "row";
+    }
+
+    private String[] getQueryParam4route(String path, String key){
+        String keyValue = "nul";
+        String queryPath = "";
+        List<NameValuePair> listParam = URLEncodedUtils.parse(path.substring(path.indexOf("?")+1), Charset.forName("UTF-8"));
+        for(NameValuePair pair: listParam){
+            if(pair.getName().equals(key)){
+                keyValue = pair.getValue();
+            }else{
+                queryPath += "/"+pair.getName()+"/"+pair.getValue();
+            }
+        }
+        return new String[]{keyValue, queryPath};
     }
 
     private String getParamValueFromPath(String path, String key){

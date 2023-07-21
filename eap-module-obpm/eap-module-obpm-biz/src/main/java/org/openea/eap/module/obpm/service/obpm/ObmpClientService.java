@@ -5,6 +5,7 @@ import cn.hutool.crypto.digest.DigestUtil;
 import cn.hutool.http.HttpUtil;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,7 +17,8 @@ import java.util.Map;
 public class ObmpClientService {
 
 
-    private String obpmClientBaseUrl = "http://localhost:8102"; //"http://obpm-server";
+    @Value("${eap.obpm.apiBaseUrl:/obpm-server}")
+    private String obpmClientBaseUrl;
     public JSONObject login(String username, String password) {
         // post /eap/login  account=username&password=password
         // sign=md5(userKey+day+"eap")

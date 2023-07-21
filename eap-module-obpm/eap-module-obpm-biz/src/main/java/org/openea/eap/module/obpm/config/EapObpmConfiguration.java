@@ -1,15 +1,19 @@
 package org.openea.eap.module.obpm.config;
 
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.ComponentScan;
 
 @Configurable
-//@ComponentScan(basePackages={"org.openea.eap.module.obpm","org.openbpm"})
 public class EapObpmConfiguration {
 
-    private String obpmApiBaseUrl;
-
-    private String obpmWebBaseUrl;
-
-    private String obpmAdminBaseUrl;
+//    @Value("${eap.obpm.apiBaseUrl:/obpm-api}")
+//    private String obpmApiBaseUrl;
+//
+//    @Value("${eap.obpm.webBaseUrl:/obpm}")
+//    private String obpmWebBaseUrl;
+//
+//    @Value("${eap.obpm.adminBaseUrl:/obpm}")
+//    private String obpmAdminBaseUrl;
 }

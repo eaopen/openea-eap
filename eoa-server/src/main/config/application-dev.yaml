@@ -109,6 +109,10 @@ eap:
   error-code: # 错误码相关配置项
     enable: false
   demo: false # 关闭演示模式
+  obpm:
+    apiBaseUrl: ${obpm_api_baseurl:http://localhost:8102}
+    webBaseUrl: ${obpm_web_baseurl:http://localhost:3002}
+    adminBaseUrl: ${obpm_admin_baseurl:http://localhost:3002}
 
 justauth:
   enabled: true
