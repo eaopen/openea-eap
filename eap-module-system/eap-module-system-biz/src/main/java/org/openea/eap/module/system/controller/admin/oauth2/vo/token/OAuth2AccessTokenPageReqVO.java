@@ -13,6 +13,9 @@ public class OAuth2AccessTokenPageReqVO extends PageParam {
     @Schema(description = "用户编号", requiredMode = Schema.RequiredMode.REQUIRED, example = "666")
     private Long userId;
 
+    @Schema(description = "用户名或账号", requiredMode = Schema.RequiredMode.NOT_REQUIRED, example = "666")
+    private String userKey;
+
     @Schema(description = "用户类型,参见 UserTypeEnum 枚举", requiredMode = Schema.RequiredMode.REQUIRED, example = "2")
     private Integer userType;
 

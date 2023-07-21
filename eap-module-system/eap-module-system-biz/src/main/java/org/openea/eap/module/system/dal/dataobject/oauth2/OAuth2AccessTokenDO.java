@@ -43,6 +43,9 @@ public class OAuth2AccessTokenDO extends TenantBaseDO {
      * 用户编号
      */
     private Long userId;
+
+    private String userKey;
+
     /**
      * 用户类型
      *

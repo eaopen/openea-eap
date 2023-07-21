@@ -3,6 +3,7 @@ package org.openea.eap.module.system.service.auth;
 import org.openea.eap.module.system.controller.admin.auth.vo.*;
 import org.openea.eap.module.system.dal.dataobject.user.AdminUserDO;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 /**
@@ -29,6 +30,7 @@ public interface AdminAuthService {
      * @return 登录结果
      */
     AuthLoginRespVO login(@Valid AuthLoginReqVO reqVO);
+    AuthLoginRespVO login(@Valid AuthLoginReqVO reqVO, HttpServletRequest request);
 
     /**
      * 基于 token 退出登录

@@ -8,6 +8,7 @@ import org.apache.http.client.utils.URLEncodedUtils;
 import org.openea.eap.framework.common.enums.CommonStatusEnum;
 import org.openea.eap.module.obpm.service.obpm.ObmpClientService;
 import org.openea.eap.module.system.dal.dataobject.permission.MenuDO;
+import org.openea.eap.module.system.dal.dataobject.user.AdminUserDO;
 import org.openea.eap.module.system.enums.permission.MenuTypeEnum;
 import org.openea.eap.module.system.service.permission.PermissionService;
 import org.openea.eap.module.system.service.permission.PermissionServiceImpl;
@@ -44,6 +45,12 @@ public class ObpmPermissionServiceImpl extends PermissionServiceImpl implements 
         if(menuTypes.contains(MenuTypeEnum.BUTTON.getType())){
             withButton = true;
         }
+        if(ObjectUtils.isEmpty(userKey)){
+            AdminUserDO adminUserDO = userService.getUser(userId);
+            if(adminUserDO!=null){
+                userKey = adminUserDO.getUsername();
+            }
+        }
         List<MenuDO> menuList2 = getObpmMenuList(userKey, withButton);
         if(!menuList2.isEmpty()){
             menuList2.addAll(menuList);
@@ -66,11 +73,12 @@ public class ObpmPermissionServiceImpl extends PermissionServiceImpl implements 
         MenuDO menu = new MenuDO();
 
         // 1. copy
+        // 1.1 same name
         // id, parentId, name, alias, icon, type
         BeanUtils.copyProperties(sysRes, menu);
         // check Id/parentId
 
-        //2. check prop
+        // 1.2. check prop
         // check type
         String type = sysRes.getString("type");
         if("menu".equals(type)){
@@ -89,72 +97,81 @@ public class ObpmPermissionServiceImpl extends PermissionServiceImpl implements 
         // icon, todo
         //menuDO.setIcon( bean.getIcon() );
 
-        // 3. path
+        // 1.3 default prop
+        //menuDO.setPermission( bean.getPermission() );
+        // status/visible/keepAlive/alwaysShow
+        menu.setStatus(CommonStatusEnum.ENABLE.getStatus());
+        menu.setVisible(true);
+        menu.setKeepAlive(true);
+        menu.setAlwaysShow(true);
+
+        // 2. 菜单转换 path
         // path (url -> path)
         String resUrl = sysRes.getString("url");
 
-        // obpm web, default setting
+        // 2.1 obpm web, default setting
         String path = resUrl;
-        if(path.startsWith("http")){
-
-        }
         String componentName = "ObpmWeb";
         String component = "obpm/web/index";
 
-        // grid
-        // /form/formCustSql/view/formCustSqlView.html?code=xxx
-        if(resUrl.indexOf("form/formCustSql/view/formCustSqlView.html")>=0){
-            componentName = "Layout";
-            component = "obpm/agList";
-            String code = getParamValueFromPath(path, "code");
-            path = "/obpm/agList/"+code
-                    +path.substring(path.indexOf("formCustSqlView.html?")+20);
+        if(ObjectUtils.isNotEmpty(path)){
+            // 2.2 grid
+            // /form/formCustSql/view/formCustSqlView.html?code=xxx
+            if(resUrl.indexOf("form/formCustSql/view/formCustSqlView.html")>=0){
+                componentName = "Layout";
+                component = "obpm/agList";
+                String code = getParamValueFromPath(path, "code");
+                path = "/obpm/agList/"+code
+                        +path.substring(path.indexOf("formCustSqlView.html?")+20);
 
-        }
-        // form
-        // /form/formDef/vueFormDefPreview.html?key=xxx
-        if(resUrl.indexOf("form/formDef/vueFormDefPreview.html")>=0){
-            componentName = "easyForm";
-            component = "obpm/easyForm";
-            String key = getParamValueFromPath(path, "key");
-            path = "/obpm/easyForm/"+key
-                    +path.substring(path.indexOf("vueFormDefPreview.html?")+22);
-        }
-        // dialog
-
-        // task
-        // /bpm/vueForm/instanceDetail.html?id=xxx
-        if(resUrl.indexOf("bpm/vueForm/instanceDetail.html")>=0){
-            componentName = "Layout";
-            component = "obpm/taskDetail";
-            String id = getParamValueFromPath(path, "id");
-            path = "/obpm/instanceDetail/"+id
-                    +path.substring(path.indexOf("instanceDetail.html?")+19);
-        }
-        // /bpm/vueForm/start.html?defId=xxx
-        // /bpm/vueForm/start.html?instanceId=xxx
-        if(resUrl.indexOf("bpm/vueForm/start.html")>=0){
-            componentName = "Layout";
-            component = "obpm/taskDetail";
-            Map<String, String> mParam = getPathParams(path);
-            String id = mParam.get("defId");
-            if(ObjectUtils.isEmpty(id)){
-                id = mParam.get("instanceId");
             }
-            path = "/obpm/start/"+id
-                    +path.substring(path.indexOf("start.html?")+10);
-        }
-        // /bpm/vueForm/taskComplete.html?taskId=xxx
-        if(resUrl.indexOf("bpm/vueForm/taskComplete.html")>=0){
-            componentName = "Layout";
-            component = "obpm/taskDetail";
-            String taskId = getParamValueFromPath(path, "taskId");
-            path = "/obpm/taskComplete/"+taskId
-                    + path.substring(path.indexOf("taskComplete.html?")+17);
+            // 2.3 form
+            // /form/formDef/vueFormDefPreview.html?key=xxx
+            if(resUrl.indexOf("form/formDef/vueFormDefPreview.html")>=0){
+                componentName = "easyForm";
+                component = "obpm/easyForm";
+                String key = getParamValueFromPath(path, "key");
+                path = "/obpm/easyForm/"+key
+                        +path.substring(path.indexOf("vueFormDefPreview.html?")+22);
+            }
+            // 2.4 dialog
+
+            // 2.5 task
+            // /bpm/vueForm/instanceDetail.html?id=xxx
+            if(resUrl.indexOf("bpm/vueForm/instanceDetail.html")>=0){
+                componentName = "Layout";
+                component = "obpm/taskDetail";
+                String id = getParamValueFromPath(path, "id");
+                path = "/obpm/instanceDetail/"+id
+                        +path.substring(path.indexOf("instanceDetail.html?")+19);
+            }
+            // /bpm/vueForm/start.html?defId=xxx
+            // /bpm/vueForm/start.html?instanceId=xxx
+            if(resUrl.indexOf("bpm/vueForm/start.html")>=0){
+                componentName = "Layout";
+                component = "obpm/taskDetail";
+                Map<String, String> mParam = getPathParams(path);
+                String id = mParam.get("defId");
+                if(ObjectUtils.isEmpty(id)){
+                    id = mParam.get("instanceId");
+                }
+                path = "/obpm/start/"+id
+                        +path.substring(path.indexOf("start.html?")+10);
+            }
+            // /bpm/vueForm/taskComplete.html?taskId=xxx
+            if(resUrl.indexOf("bpm/vueForm/taskComplete.html")>=0){
+                componentName = "Layout";
+                component = "obpm/taskDetail";
+                String taskId = getParamValueFromPath(path, "taskId");
+                path = "/obpm/taskComplete/"+taskId
+                        + path.substring(path.indexOf("taskComplete.html?")+17);
+            }
+
+            //2.6
+            // admin(todo)
         }
 
-        // admin(todo)
-
+        //2.9
         menu.setPath(path);
         if(ObjectUtils.isNotEmpty(componentName)){
             menu.setComponentName(componentName);
@@ -162,14 +179,6 @@ public class ObpmPermissionServiceImpl extends PermissionServiceImpl implements 
         if(ObjectUtils.isNotEmpty(component)){
             menu.setComponent(component);
         }
-
-        // 4. default prop
-        //menuDO.setPermission( bean.getPermission() );
-        // status/visible/keepAlive/alwaysShow
-        menu.setStatus(CommonStatusEnum.ENABLE.getStatus());
-        menu.setVisible(true);
-        menu.setKeepAlive(true);
-        menu.setAlwaysShow(true);
 
         return menu;
     }

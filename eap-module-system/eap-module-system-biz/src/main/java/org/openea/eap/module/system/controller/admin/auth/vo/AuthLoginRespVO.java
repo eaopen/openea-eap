@@ -18,6 +18,9 @@ public class AuthLoginRespVO {
     @Schema(description = "用户编号", requiredMode = Schema.RequiredMode.REQUIRED, example = "1024")
     private Long userId;
 
+    @Schema(description = "用户Key", requiredMode = Schema.RequiredMode.NOT_REQUIRED, example = "username")
+    private Long userKey;
+
     @Schema(description = "访问令牌", requiredMode = Schema.RequiredMode.REQUIRED, example = "happy")
     private String accessToken;
 

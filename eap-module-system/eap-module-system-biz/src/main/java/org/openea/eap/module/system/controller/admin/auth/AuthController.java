@@ -69,8 +69,8 @@ public class AuthController {
     @PermitAll
     @Operation(summary = "使用账号密码登录")
     @OperateLog(enable = false) // 避免 Post 请求被记录操作日志
-    public CommonResult<AuthLoginRespVO> login(@RequestBody @Valid AuthLoginReqVO reqVO) {
-        return success(authService.login(reqVO));
+    public CommonResult<AuthLoginRespVO> login(@RequestBody @Valid AuthLoginReqVO reqVO, HttpServletRequest request) {
+        return success(authService.login(reqVO, request));
     }
 
     @PostMapping("/logout")
@@ -120,7 +120,7 @@ public class AuthController {
     public CommonResult<List<AuthMenuRespVO>> getMenuList() {
         LoginUser loginUser = getLoginUser();
         // 获得用户拥有的菜单列表
-        List<MenuDO> menuList = permissionService.getUserMenuListFromCache(loginUser.getId(), loginUser.getUserkey(),
+        List<MenuDO> menuList = permissionService.getUserMenuListFromCache(loginUser.getId(), loginUser.getUserKey(),
                 SetUtils.asSet(MenuTypeEnum.DIR.getType(), MenuTypeEnum.MENU.getType()) // 只要目录和菜单类型
         );
         // i18n

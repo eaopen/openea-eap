@@ -30,7 +30,7 @@ public class LoginUser {
     /**
      * 用户名/手机/工号/邮箱等，唯一key
      */
-    private String userkey;
+    private String userKey;
     /**
      * 租户编号
      */

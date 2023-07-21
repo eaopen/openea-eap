@@ -33,6 +33,8 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import javax.validation.Validator;
 import java.util.Objects;
 
@@ -93,6 +95,10 @@ public class AdminAuthServiceImpl implements AdminAuthService {
         return user;
     }
 
+    @Override
+    public AuthLoginRespVO login(AuthLoginReqVO reqVO, HttpServletRequest request){
+        return login(reqVO);
+    }
     @Override
     public AuthLoginRespVO login(AuthLoginReqVO reqVO) {
         // 校验验证码

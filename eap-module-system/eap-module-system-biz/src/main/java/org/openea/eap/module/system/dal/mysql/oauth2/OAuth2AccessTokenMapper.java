@@ -24,6 +24,7 @@ public interface OAuth2AccessTokenMapper extends BaseMapperX<OAuth2AccessTokenDO
     default PageResult<OAuth2AccessTokenDO> selectPage(OAuth2AccessTokenPageReqVO reqVO) {
         return selectPage(reqVO, new LambdaQueryWrapperX<OAuth2AccessTokenDO>()
                 .eqIfPresent(OAuth2AccessTokenDO::getUserId, reqVO.getUserId())
+                .eqIfPresent(OAuth2AccessTokenDO::getUserKey, reqVO.getUserKey())
                 .eqIfPresent(OAuth2AccessTokenDO::getUserType, reqVO.getUserType())
                 .likeIfPresent(OAuth2AccessTokenDO::getClientId, reqVO.getClientId())
                 .gt(OAuth2AccessTokenDO::getExpiresTime, LocalDateTime.now())
