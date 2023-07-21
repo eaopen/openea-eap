@@ -94,12 +94,21 @@ public class ObpmPermissionServiceImpl extends PermissionServiceImpl implements 
         }
         menu.setName(sysRes.getString("name"));
         menu.setAlias(sysRes.getString("alias"));
+
+        //menuDO.setPermission( bean.getPermission() );
+        // status/visible/keepAlive/alwaysShow
+        menu.setStatus(CommonStatusEnum.ENABLE.getStatus());
+        menu.setVisible(true);
+        menu.setKeepAlive(true);
+        menu.setAlwaysShow(true);
+
         // check type
         String type = sysRes.getString("type");
         if("menu".equals(type)){
             menu.setType(2);
         }else if("button".equals(type)){
             menu.setType(3);
+            menu.setVisible(false);
         }else{
             //menu.setType(0);
         }
@@ -125,12 +134,7 @@ public class ObpmPermissionServiceImpl extends PermissionServiceImpl implements 
 
 
         // 1.3 default prop
-        //menuDO.setPermission( bean.getPermission() );
-        // status/visible/keepAlive/alwaysShow
-        menu.setStatus(CommonStatusEnum.ENABLE.getStatus());
-        menu.setVisible(true);
-        menu.setKeepAlive(true);
-        menu.setAlwaysShow(true);
+
 
         // 2. 菜单转换 path
         // path (url -> path)
@@ -142,9 +146,14 @@ public class ObpmPermissionServiceImpl extends PermissionServiceImpl implements 
         String path = resUrl;
         if(ObjectUtils.isEmpty(path)){
             path = menu.getAlias();
+            // 子元素只有1个时可省略中间层级
+            menu.setAlwaysShow(false);
         }else{
             //componentName = "ObpmWeb";
             component = "obpm/web/index";
+//            if(!path.startsWith("http") && !path.startsWith("/")){
+//                path = "/" + path;
+//            }
         }
 
         if(ObjectUtils.isNotEmpty(resUrl)){
@@ -156,7 +165,6 @@ public class ObpmPermissionServiceImpl extends PermissionServiceImpl implements 
                 String code = getParamValueFromPath(path, "code");
                 path = "obpm/agList/"+code
                         +path.substring(path.indexOf("formCustSqlView.html?")+20);
-
             }
             // 2.3 form
             // /form/formDef/vueFormDefPreview.html?key=xxx
