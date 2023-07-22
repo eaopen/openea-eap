@@ -74,7 +74,7 @@ services:
           VUE_APP_TENANT_ENABLE=${VUE_APP_TENANT_ENABLE:-true}
           VUE_APP_CAPTCHA_ENABLE=${VUE_APP_CAPTCHA_ENABLE:-true}
           VUE_APP_DOC_ENABLE=${VUE_APP_DOC_ENABLE:-true}
-          VUE_APP_BAIDU_CODE=${VUE_APP_BAIDU_CODE:-fadc1bd5db1a1d6f581df60a1807f8ab}
+          VUE_APP_BAIDU_CODE=${VUE_APP_BAIDU_CODE:-0000}
     image: eap-admin
     restart: unless-stopped
     ports:
