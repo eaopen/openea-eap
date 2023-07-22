@@ -14,6 +14,7 @@ import org.openea.eap.module.system.dal.dataobject.oauth2.OAuth2RefreshTokenDO;
 import org.openea.eap.module.system.dal.mysql.oauth2.OAuth2AccessTokenMapper;
 import org.openea.eap.module.system.dal.mysql.oauth2.OAuth2RefreshTokenMapper;
 import org.openea.eap.module.system.dal.redis.oauth2.OAuth2AccessTokenRedisDAO;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,18 +31,19 @@ import static org.openea.eap.framework.common.util.collection.CollectionUtils.co
  *
  */
 @Service
+@ConditionalOnMissingBean(OAuth2TokenService.class)
 public class OAuth2TokenServiceImpl implements OAuth2TokenService {
 
     @Resource
-    private OAuth2AccessTokenMapper oauth2AccessTokenMapper;
+    protected OAuth2AccessTokenMapper oauth2AccessTokenMapper;
     @Resource
-    private OAuth2RefreshTokenMapper oauth2RefreshTokenMapper;
+    protected OAuth2RefreshTokenMapper oauth2RefreshTokenMapper;
 
     @Resource
-    private OAuth2AccessTokenRedisDAO oauth2AccessTokenRedisDAO;
+    protected OAuth2AccessTokenRedisDAO oauth2AccessTokenRedisDAO;
 
     @Resource
-    private OAuth2ClientService oauth2ClientService;
+    protected OAuth2ClientService oauth2ClientService;
 
     @Override
     @Transactional
@@ -132,7 +134,7 @@ public class OAuth2TokenServiceImpl implements OAuth2TokenService {
         return oauth2AccessTokenMapper.selectPage(reqVO);
     }
 
-    private OAuth2AccessTokenDO createOAuth2AccessToken(OAuth2RefreshTokenDO refreshTokenDO, OAuth2ClientDO clientDO) {
+    protected OAuth2AccessTokenDO createOAuth2AccessToken(OAuth2RefreshTokenDO refreshTokenDO, OAuth2ClientDO clientDO) {
         OAuth2AccessTokenDO accessTokenDO = new OAuth2AccessTokenDO().setAccessToken(generateAccessToken())
                 .setUserId(refreshTokenDO.getUserId()).setUserType(refreshTokenDO.getUserType())
                 .setClientId(clientDO.getClientId()).setScopes(refreshTokenDO.getScopes())
@@ -145,7 +147,7 @@ public class OAuth2TokenServiceImpl implements OAuth2TokenService {
         return accessTokenDO;
     }
 
-    private OAuth2RefreshTokenDO createOAuth2RefreshToken(Long userId, Integer userType, OAuth2ClientDO clientDO, List<String> scopes) {
+    protected OAuth2RefreshTokenDO createOAuth2RefreshToken(Long userId, Integer userType, OAuth2ClientDO clientDO, List<String> scopes) {
         OAuth2RefreshTokenDO refreshToken = new OAuth2RefreshTokenDO().setRefreshToken(generateRefreshToken())
                 .setUserId(userId).setUserType(userType)
                 .setClientId(clientDO.getClientId()).setScopes(scopes)
@@ -154,11 +156,11 @@ public class OAuth2TokenServiceImpl implements OAuth2TokenService {
         return refreshToken;
     }
 
-    private static String generateAccessToken() {
+    protected static String generateAccessToken() {
         return IdUtil.fastSimpleUUID();
     }
 
-    private static String generateRefreshToken() {
+    protected static String generateRefreshToken() {
         return IdUtil.fastSimpleUUID();
     }
 

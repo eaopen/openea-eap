@@ -149,7 +149,7 @@ public class ObpmPermissionServiceImpl extends PermissionServiceImpl implements 
             // 子元素只有1个时可省略中间层级
             menu.setAlwaysShow(false);
         }else{
-            component = "obpm/web/index";
+            component = "obpm/web";
 //            if(!path.startsWith("http") && !path.startsWith("/")){
 //                path = "/" + path;
 //            }
@@ -160,8 +160,6 @@ public class ObpmPermissionServiceImpl extends PermissionServiceImpl implements 
             // /form/formCustSql/view/formCustSqlView.html?code=xxx
             if(resUrl.indexOf("form/formCustSql/view/formCustSqlView.html")>=0){
                 component = "obpm/agGrid";
-//                String[] queryParams = getQueryParam4route(path, "code");
-//                path = "obpm/listGrid/"+queryParams[0]+queryParams[1];
                 String code = getParamValueFromPath(path, "code");
                 path = "obpm/listGrid/"+code
                         +path.substring(path.indexOf("formCustSqlView.html?")+20);
@@ -170,8 +168,6 @@ public class ObpmPermissionServiceImpl extends PermissionServiceImpl implements 
             // /form/formDef/vueFormDefPreview.html?key=xxx
             if(resUrl.indexOf("form/formDef/vueFormDefPreview.html")>=0){
                 component = "obpm/easyForm";
-//                String[] queryParams = getQueryParam4route(path, "key");
-//                path = "obpm/easyForm/"+queryParams[0]+queryParams[1];
                 String key = getParamValueFromPath(path, "key");
                 path = "obpm/easyForm/"+key
                         +path.substring(path.indexOf("vueFormDefPreview.html?")+22);
@@ -181,22 +177,10 @@ public class ObpmPermissionServiceImpl extends PermissionServiceImpl implements 
             // 2.5 task
             // /bpm/vueForm/instanceDetail.html?id=xxx
             if(resUrl.indexOf("bpm/vueForm/instanceDetail.html")>=0){
-                component = "obpm/taskDetail";
+                component = "obpm/instanceDetail";
                 String id = getParamValueFromPath(path, "id");
                 path = "obpm/instanceDetail/"+id
                         +path.substring(path.indexOf("instanceDetail.html?")+19);
-            }
-            // /bpm/vueForm/start.html?defId=xxx
-            // /bpm/vueForm/start.html?instanceId=xxx
-            if(resUrl.indexOf("bpm/vueForm/start.html")>=0){
-                component = "obpm/taskDetail";
-                Map<String, String> mParam = getPathParams(path);
-                String id = mParam.get("defId");
-                if(ObjectUtils.isEmpty(id)){
-                    id = mParam.get("instanceId");
-                }
-                path = "obpm/start/"+id
-                        +path.substring(path.indexOf("start.html?")+10);
             }
             // /bpm/vueForm/taskComplete.html?taskId=xxx
             if(resUrl.indexOf("bpm/vueForm/taskComplete.html")>=0){
@@ -205,6 +189,19 @@ public class ObpmPermissionServiceImpl extends PermissionServiceImpl implements 
                 path = "obpm/taskComplete/"+taskId
                         + path.substring(path.indexOf("taskComplete.html?")+17);
             }
+            // /bpm/vueForm/start.html?defId=xxx
+            // /bpm/vueForm/start.html?instanceId=xxx
+            if(resUrl.indexOf("bpm/vueForm/start.html")>=0){
+                component = "obpm/taskStart";
+                Map<String, String> mParam = getPathParams(path);
+                String id = mParam.get("defId");
+                if(ObjectUtils.isEmpty(id)){
+                    id = mParam.get("instanceId");
+                }
+                path = "obpm/taskStart/"+id
+                        +path.substring(path.indexOf("start.html?")+10);
+            }
+
 
             //2.6
             // admin(todo)

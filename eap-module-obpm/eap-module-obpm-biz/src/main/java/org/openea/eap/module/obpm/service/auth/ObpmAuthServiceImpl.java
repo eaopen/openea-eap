@@ -11,9 +11,12 @@ import org.openea.eap.module.obpm.service.obpm.ObmpClientService;
 import org.openea.eap.module.system.api.social.dto.SocialUserBindReqDTO;
 import org.openea.eap.module.system.controller.admin.auth.vo.AuthLoginReqVO;
 import org.openea.eap.module.system.controller.admin.auth.vo.AuthLoginRespVO;
+import org.openea.eap.module.system.convert.auth.AuthConvert;
+import org.openea.eap.module.system.dal.dataobject.oauth2.OAuth2AccessTokenDO;
 import org.openea.eap.module.system.dal.dataobject.user.AdminUserDO;
 import org.openea.eap.module.system.enums.logger.LoginLogTypeEnum;
 import org.openea.eap.module.system.enums.logger.LoginResultEnum;
+import org.openea.eap.module.system.enums.oauth2.OAuth2ClientConstants;
 import org.openea.eap.module.system.service.auth.AdminAuthService;
 import org.openea.eap.module.system.service.auth.AdminAuthServiceImpl;
 import org.openea.eap.module.system.service.user.AdminUserService;
@@ -36,6 +39,7 @@ public class ObpmAuthServiceImpl extends AdminAuthServiceImpl implements AdminAu
 
     @Resource
     private ObmpClientService obmpClientService;
+
 
     @Override
     public AuthLoginRespVO login(AuthLoginReqVO reqVO, HttpServletRequest request){
@@ -62,6 +66,7 @@ public class ObpmAuthServiceImpl extends AdminAuthServiceImpl implements AdminAu
         JSONObject jsonResult = obpmLogin(username, password);
         if(jsonResult.containsKey("user")){
             // login success
+            // obpm/eap 同用一个token？
             String obpmToken = jsonResult.getString("token");
             JSONObject obpmUser = jsonResult.getJSONObject("user");
             if (user == null) {
@@ -82,6 +87,18 @@ public class ObpmAuthServiceImpl extends AdminAuthServiceImpl implements AdminAu
             throw exception(AUTH_LOGIN_BAD_CREDENTIALS);
         }
         return user;
+    }
+
+    @Override
+    protected AuthLoginRespVO createTokenAfterLoginSuccess(Long userId, String username, LoginLogTypeEnum logType) {
+        // 插入登陆日志
+        createLoginLog(userId, username, logType, LoginResultEnum.SUCCESS);
+
+        // 创建访问令牌
+        OAuth2AccessTokenDO accessTokenDO = oauth2TokenService.createAccessToken(userId, getUserType().getValue(),
+                OAuth2ClientConstants.CLIENT_ID_DEFAULT, null);
+        // 构建返回结果
+        return AuthConvert.INSTANCE.convert(accessTokenDO);
     }
 
     private JSONObject obpmLogin(String username, String password){

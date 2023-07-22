@@ -48,21 +48,35 @@ public interface AuthConvert {
         // 使用 LinkedHashMap 的原因，是为了排序 。实际也可以用 Stream API ，就是太丑了。
         Map<Long, AuthMenuRespVO> treeNodeMap = new LinkedHashMap<>();
         menuList.forEach(menu -> treeNodeMap.put(menu.getId(), AuthConvert.INSTANCE.convertTreeNode(menu)));
+
         // 处理父子关系
-        treeNodeMap.values().stream().filter(node -> !node.getParentId().equals(ID_ROOT)).forEach(childNode -> {
-            // 获得父节点
-            AuthMenuRespVO parentNode = treeNodeMap.get(childNode.getParentId());
-            if (parentNode == null) {
-                LoggerFactory.getLogger(getClass()).error("[buildRouterTree][resource({}) 找不到父资源({})]",
-                    childNode.getId(), childNode.getParentId());
+        treeNodeMap.values().forEach(menuVo -> {
+            Long parentId = menuVo.getParentId();
+            if(ID_ROOT.equals(parentId)){
                 return;
             }
-            // 将自己添加到父节点中
-            if (parentNode.getChildren() == null) {
-                parentNode.setChildren(new ArrayList<>());
+            if(treeNodeMap.containsKey(parentId) && !menuVo.getId().equals(parentId)){
+                if(treeNodeMap.get(parentId).getChildren() == null){
+                    treeNodeMap.get(parentId).setChildren(new ArrayList<>());
+                }
+                treeNodeMap.get(parentId).getChildren().add(menuVo);
             }
-            parentNode.getChildren().add(childNode);
         });
+        // 处理父子关系
+//        treeNodeMap.values().stream().filter(node -> !node.getParentId().equals(ID_ROOT)).forEach(childNode -> {
+//            // 获得父节点
+//            AuthMenuRespVO parentNode = treeNodeMap.get(childNode.getParentId());
+//            if (parentNode == null) {
+//                LoggerFactory.getLogger(getClass()).error("[buildRouterTree][resource({}) 找不到父资源({})]",
+//                    childNode.getId(), childNode.getParentId());
+//                return;
+//            }
+//            // 将自己添加到父节点中
+//            if (parentNode.getChildren() == null) {
+//                parentNode.setChildren(new ArrayList<>());
+//            }
+//            parentNode.getChildren().add(childNode);
+//        });
         // 获得到所有的根节点
         return filterList(treeNodeMap.values(), node -> ID_ROOT.equals(node.getParentId()));
     }

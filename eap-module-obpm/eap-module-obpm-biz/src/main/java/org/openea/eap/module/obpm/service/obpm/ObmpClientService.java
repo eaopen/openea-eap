@@ -5,10 +5,10 @@ import cn.hutool.crypto.digest.DigestUtil;
 import cn.hutool.http.HttpUtil;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,9 +16,9 @@ import java.util.Map;
 @Service
 public class ObmpClientService {
 
-
     @Value("${eap.obpm.apiBaseUrl:/obpm-server}")
     private String obpmClientBaseUrl;
+
     public JSONObject login(String username, String password) {
         // post /eap/login  account=username&password=password
         // sign=md5(userKey+day+"eap")
@@ -32,7 +32,9 @@ public class ObmpClientService {
         JSONObject jsonResult = new JSONObject();
         if(resultObj.getBoolean("isOk")){
             JSONObject resultData = resultObj.getJSONObject("data");
-            jsonResult.put("token", resultData.getString("token"));
+            String obpmToken =  resultData.getString("token");
+            ObpmUtil.setObpmToken(obpmToken);
+            jsonResult.put("token",obpmToken);
             jsonResult.put("user", resultData.getJSONObject("user"));
         }else{
             jsonResult.put("msg", resultObj.getString("msg"));
@@ -51,7 +53,6 @@ public class ObmpClientService {
         JSONObject resultObj = JSONObject.parseObject(result);
 
         List<JSONObject> menuList = null;
-        JSONObject jsonResult = new JSONObject();
         if(resultObj.getBoolean("isOk")){
             JSONObject resultData = resultObj.getJSONObject("data");
             JSONArray menuArray = resultData.getJSONArray("menuList");
@@ -67,5 +68,19 @@ public class ObmpClientService {
         //sign=md5(userKey+day+sysPassword)
         String sign = DigestUtil.md5Hex(user + DateUtil.today() +"eap");
         return sign;
+    }
+
+    public String getProxyUrl(String url) {
+        String obpmUrl = obpmClientBaseUrl;
+        if(ObjectUtils.isNotEmpty(url)){
+            if(url.startsWith("/admin-api")){
+                obpmUrl += url.substring(url.indexOf("/admin-api")+10);
+            }else if(url.startsWith("/")){
+                obpmUrl += url;
+            }else{
+                obpmUrl += "/" + url;
+            }
+        }
+        return obpmUrl;
     }
 }
