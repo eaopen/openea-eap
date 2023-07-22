@@ -2,7 +2,7 @@ FROM eclipse-temurin:8-jre as builder
 
 WORKDIR application
 
-ARG JAR_FILE=server/target/*.jar
+ARG JAR_FILE=eoa-server/target/*.jar
 COPY ${JAR_FILE} application.jar
 RUN java -Djarmode=layertools -jar application.jar extract
 
