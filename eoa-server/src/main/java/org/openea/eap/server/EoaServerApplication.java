@@ -10,9 +10,10 @@ import org.springframework.context.annotation.FilterType;
  *
  */
 @SuppressWarnings("SpringComponentScan") // 忽略 IDEA 无法识别 ${eap.info.base-package}
-@ComponentScan(basePackages={"org.openea.eap",
-        //"org.openbpm",
-        "${eap.info.base-package}.server", "${eap.info.base-package}.module"},
+@ComponentScan(basePackages={"org.openea.eap"
+        //,"org.openbpm",
+        //,"${eap.info.base-package}.server", "${eap.info.base-package}.module"
+        },
         excludeFilters={
         @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = {
                 //org.openbpm.base.autoconfiguration.DataSourceAutoConfiguration.class,
