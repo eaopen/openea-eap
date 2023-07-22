@@ -16,7 +16,7 @@ ENV JAVA_OPTS="-Xms1024m -Xmx4096m -Djava.security.egd=file:/dev/./urandom"
 WORKDIR application
 COPY --from=builder application/dependencies/ ./
 COPY --from=builder application/spring-boot-loader/ ./
-COPY --from=builder application/internal-dependencies/ ./
+#COPY --from=builder application/internal-dependencies/ ./
 COPY --from=builder application/snapshot-dependencies/ ./
 COPY --from=builder application/application/ ./
 
