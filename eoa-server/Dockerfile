@@ -28,4 +28,5 @@ EXPOSE 48080
 
 ## 启动后端项目
 #CMD java ${JAVA_OPTS} -jar app.jar $ARGS
-ENTRYPOINT ["java", "org.springframework.boot.loader.JarLauncher","$ARGS"]
+#ENTRYPOINT ["java", "org.springframework.boot.loader.JarLauncher","$ARGS"]
+CMD java ${JAVA_OPTS} org.springframework.boot.loader.JarLauncher $ARGS
