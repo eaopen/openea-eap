@@ -43,6 +43,10 @@ refer/**
 
 **/pom.xml.versionsBackup
 
+.flattened-pom.xml
+**/.flattened-pom.xml
+
+
 # eoa will move
 #eoa-server/**
 
