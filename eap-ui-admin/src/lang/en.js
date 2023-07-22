@@ -1,5 +1,6 @@
 export default {
   route: {
+    home: 'Home',
     dashboard: 'Dashboard',
     documentation: 'Documentation',
     guide: 'Guide',
@@ -65,6 +66,7 @@ export default {
     profile: 'Profile'
   },
   navbar: {
+    home: 'Home',
     dashboard: 'Dashboard',
     github: 'Github',
     logOut: 'Log Out',

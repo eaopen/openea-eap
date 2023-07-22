@@ -57,16 +57,15 @@ export default {
   width: 100%;
   height: 50px;
   line-height: 50px;
-  background: #2b2f3a;
   text-align: center;
   overflow: hidden;
 
   & .sidebar-logo-link {
+    background-color: rgba(0,0,0,0.2);
     height: 100%;
     width: 100%;
 
     & .sidebar-logo {
-      width: 32px;
       height: 32px;
       vertical-align: middle;
       margin-right: 12px;

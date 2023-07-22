@@ -26,7 +26,7 @@
 </template>
 
 <script>
-
+// todo i18n
 export default {
   name: 'Page404',
   computed: {

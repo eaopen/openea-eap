@@ -17,7 +17,7 @@ export default {
   components: { iframeToggle },
   computed: {
     cachedViews() {
-      return this.$store.state.tagsView.cachedViews
+      return this.$store.state.tagsView.cachedViews.join(',')
     },
     key() {
       return this.$route.path

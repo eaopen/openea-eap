@@ -7,6 +7,8 @@ import {getPath, getTenantEnable} from "@/utils/ruoyi";
 import {refreshToken} from "@/api/login";
 import { getLanguage } from '@/lang/index';
 
+// todo i18n
+
 // 需要忽略的提示。忽略后，自动 Promise.reject('error')
 const ignoreMsgs = [
   "无效的刷新令牌", // 刷新令牌被删除时，不用提示

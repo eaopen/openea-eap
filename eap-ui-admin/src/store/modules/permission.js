@@ -57,6 +57,7 @@ function filterAsyncRouter(asyncRouterMap, lastRouter = false, type = false) {
       title: route.name,
       icon: route.icon,
       noCache: !route.keepAlive,
+      urlAddr: route.path,
     }
     route.hidden = !route.visible
     // 处理 name 属性
@@ -79,7 +80,13 @@ function filterAsyncRouter(asyncRouterMap, lastRouter = false, type = false) {
         route.component = ParentView
       }
     } else { // 根节点
-      route.component = loadView(route.component)
+      if(route.path.indexOf('/listGrid/')>-1 || route.path.indexOf('/obpm/agList/')>-1){
+        route.component = import("@/views/obpm/agList.vue")
+      }else if(route.path.indexOf('/easyForm')>-1){
+        route.component = import("@/components/obpm/easyForm/index.vue")
+      }else {
+        route.component = loadView(route.component)
+      }
     }
 
     // filterChildren

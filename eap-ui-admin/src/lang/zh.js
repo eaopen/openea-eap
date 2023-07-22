@@ -1,5 +1,6 @@
 export default {
   route: {
+    home: '首页',
     dashboard: '首页',
     documentation: '文档',
     guide: '引导页',
@@ -65,6 +66,7 @@ export default {
     profile: '个人中心'
   },
   navbar: {
+    home: '首页',
     dashboard: '首页',
     logOut: '退出登录',
     profile: '个人中心',

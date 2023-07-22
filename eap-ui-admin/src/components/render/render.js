@@ -66,6 +66,8 @@ function buildDataObject(confClone, dataObject) {
     }
   })
 
+  // extend
+
   // 清理属性
   clearAttrs(dataObject)
 }

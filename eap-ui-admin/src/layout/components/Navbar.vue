@@ -31,7 +31,7 @@
 
       <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
         <div class="avatar-wrapper">
-          <img :src="avatar" class="user-avatar">
+          <img :src="avatar" class="user-avatar" @error="changeAvatar">
           <span v-if="nickname" class="user-nickname">{{ nickname }}</span>
           <i class="el-icon-caret-bottom" />
         </div>
@@ -109,6 +109,9 @@ export default {
     }
   },
   methods: {
+    changeAvatar(event){
+      event.target.src = require("@/assets/images/avatar.png");
+    },
     toggleSideBar() {
       this.$store.dispatch('app/toggleSideBar')
     },

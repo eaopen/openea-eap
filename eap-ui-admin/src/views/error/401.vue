@@ -27,7 +27,7 @@
 
 <script>
 import errGif from '@/assets/401_images/401.gif'
-
+// todo i18n
 export default {
   name: 'Page401',
   data() {

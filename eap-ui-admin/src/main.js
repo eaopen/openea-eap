@@ -25,6 +25,8 @@ import RightToolbar from "@/components/RightToolbar"
 // import hljs from 'highlight.js'
 // import 'highlight.js/styles/github-gist.css'
 import {DICT_TYPE, getDictDataLabel, getDictDatas, getDictDatas2} from "@/utils/dict";
+import { AgGridVue } from 'ag-grid-vue'
+import ListAgGrid from '@/components/obpm/grid/index.vue'
 
 // 全局方法挂载
 Vue.prototype.getDicts = getDicts
@@ -44,6 +46,8 @@ Vue.component('DictTag', DictTag)
 Vue.component('DocAlert', DocAlert)
 Vue.component('Pagination', Pagination)
 Vue.component('RightToolbar', RightToolbar)
+Vue.component('AgGridVue', AgGridVue)
+Vue.component('ListAgGrid', ListAgGrid)
 // 字典标签组件
 import DictTag from '@/components/DictTag'
 import DocAlert from '@/components/DocAlert'

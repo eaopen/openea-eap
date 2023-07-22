@@ -26,6 +26,7 @@
 
 <script>
 import path from 'path'
+import { generateTitle } from '@/utils/i18n'
 import { isExternal } from '@/utils/validate'
 import Item from './Item'
 import AppLink from './Link'
@@ -90,7 +91,9 @@ export default {
         return this.basePath
       }
       return path.resolve(this.basePath, routePath)
-    }
+    },
+
+    generateTitle
   }
 }
 </script>

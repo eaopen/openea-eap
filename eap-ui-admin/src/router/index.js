@@ -71,8 +71,8 @@ export const constantRoutes = [
     children: [{
         path: 'index',
         component: (resolve) => require(['@/views/index'], resolve),
-        name: '首页',
-        meta: {title: '首页', icon: 'dashboard', affix: true}
+        name: 'Home',
+        meta: {title: 'home', icon: 'dashboard', affix: true, zhTitle: '首页'}
       }
     ]
   },
@@ -85,12 +85,12 @@ export const constantRoutes = [
         path: 'profile',
         component: (resolve) => require(['@/views/system/user/profile/index'], resolve),
         name: 'Profile',
-        meta: {title: '个人中心', icon: 'user'}
+        meta: {title: 'profile', icon: 'user'}
       }, {
         path: 'notify-message',
         component: (resolve) => require(['@/views/system/notify/my/index'], resolve),
         name: 'MyNotifyMessage',
-        meta: { title: '我的站内信', icon: 'message' },
+        meta: { title: 'myNotifyMessage', icon: 'message' },
     }]
   },
   {
@@ -101,7 +101,7 @@ export const constantRoutes = [
         path: 'type/data/:dictId(\\d+)',
         component: (resolve) => require(['@/views/system/dict/data'], resolve),
         name: 'SystemDictData',
-        meta: {title: '字典数据', icon: '', activeMenu: '/system/dict'}
+        meta: {title: 'dictData', icon: '', activeMenu: '/system/dict'}
       }
     ]
   },
@@ -113,7 +113,7 @@ export const constantRoutes = [
         path: 'log',
         component: (resolve) => require(['@/views/infra/job/log'], resolve),
         name: 'InfraJobLog',
-        meta: {title: '调度日志', activeMenu: '/infra/job'}
+        meta: {title: 'jobLog', activeMenu: '/infra/job'}
       }
     ]
   }, {
@@ -124,7 +124,7 @@ export const constantRoutes = [
         path: 'edit/:tableId(\\d+)',
         component: (resolve) => require(['@/views/infra/codegen/editTable'], resolve),
         name: 'InfraCodegenEditTable',
-        meta: {title: '修改生成配置', activeMenu: '/infra/codegen'}
+        meta: {title: 'codegen', activeMenu: '/infra/codegen'}
       }
     ]
   },
