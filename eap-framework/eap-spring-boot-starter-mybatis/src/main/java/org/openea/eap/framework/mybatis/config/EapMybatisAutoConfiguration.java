@@ -20,7 +20,8 @@ import org.springframework.core.env.ConfigurableEnvironment;
  *
  */
 @AutoConfiguration
-@MapperScan(value = "${eap.info.base-package:org.openea.eap}", annotationClass = Mapper.class,
+//value = ${eap.info.base-package}
+@MapperScan(value = "org.openea.eap", annotationClass = Mapper.class,
         lazyInitialization = "${mybatis.lazy-initialization:false}") // Mapper 懒加载，目前仅用于单元测试
 public class EapMybatisAutoConfiguration {
 
