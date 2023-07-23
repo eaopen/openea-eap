@@ -75,6 +75,8 @@ public class ObmpClientService {
         if(ObjectUtils.isNotEmpty(url)){
             if(url.startsWith("/admin-api")){
                 obpmUrl += url.substring(url.indexOf("/admin-api")+10);
+            }else if(url.indexOf("/obpm/")>=0){
+                obpmUrl += url.substring(url.indexOf("/obpm")+5);
             }else if(url.startsWith("/")){
                 obpmUrl += url;
             }else{
@@ -83,4 +85,5 @@ public class ObmpClientService {
         }
         return obpmUrl;
     }
+
 }

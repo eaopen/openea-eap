@@ -53,7 +53,14 @@ public class ObpmPermissionServiceImpl extends PermissionServiceImpl implements 
         }
         List<MenuDO> menuList2 = getObpmMenuList(userKey, withButton);
         if(!menuList2.isEmpty()){
-            //menuList2.addAll(menuList);
+            // obpm 菜单所有id/parentId + 200000（避免同eap菜单冲突）
+            for(MenuDO menu: menuList2){
+                menu.setId(menu.getId()+20000);
+                if(menu.getParentId()!=0L){
+                    menu.setParentId(menu.getParentId()+20000);
+                }
+            }
+            // eap 顶层菜单排序sort + 1000
             for(MenuDO menu: menuList){
                 if(menu.getParentId()==0L){
                     menu.setSort(1000+menu.getSort());
@@ -110,7 +117,7 @@ public class ObpmPermissionServiceImpl extends PermissionServiceImpl implements 
             menu.setType(3);
             menu.setVisible(false);
         }else{
-            //menu.setType(0);
+            menu.setType(0);
         }
         // check sort (sn -> sort)
         int sort = 0;

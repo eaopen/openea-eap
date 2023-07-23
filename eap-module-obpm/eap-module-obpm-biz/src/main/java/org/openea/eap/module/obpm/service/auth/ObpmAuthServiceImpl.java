@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ObjectUtils;
 import org.openea.eap.framework.common.enums.CommonStatusEnum;
 import org.openea.eap.framework.common.enums.UserTypeEnum;
+import org.openea.eap.framework.common.util.date.DateUtils;
 import org.openea.eap.framework.security.core.LoginUser;
 import org.openea.eap.framework.security.core.util.SecurityFrameworkUtils;
 import org.openea.eap.module.obpm.service.obpm.ObmpClientService;
@@ -101,7 +102,10 @@ public class ObpmAuthServiceImpl extends AdminAuthServiceImpl implements AdminAu
         String accessToken = ObpmUtil.getObpmToken();
         if(ObjectUtils.isNotEmpty(accessToken)){
             accessTokenDO = oauth2TokenService.getAccessToken(accessToken);
-            // TODO 是否需要延期
+            if(accessTokenDO!=null && DateUtils.isExpired(accessTokenDO.getExpiresTime())){
+                // 已过期放弃重新生成
+                accessTokenDO = null;
+            }
         }
         // 创建访问令牌
         if(accessTokenDO==null) {
