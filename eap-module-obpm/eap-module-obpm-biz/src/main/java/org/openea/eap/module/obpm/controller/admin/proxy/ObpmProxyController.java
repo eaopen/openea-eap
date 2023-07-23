@@ -1,8 +1,11 @@
 package org.openea.eap.module.obpm.controller.admin.proxy;
 
+import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
 import cn.hutool.http.HttpUtil;
+import com.alibaba.fastjson.JSONObject;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ObjectUtils;
 import org.openea.eap.module.obpm.service.obpm.ObmpClientService;
@@ -11,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.net.URI;
+import java.net.URL;
 import java.util.Map;
 
 /**
@@ -27,12 +32,14 @@ public class ObpmProxyController {
     @Resource
     private ObmpClientService obmpClientService;
 
+    @SneakyThrows
     @RequestMapping( method = RequestMethod.GET,
             value={"/bpm/instance/**", "/bpm/task/**", "/bpm/form/**",
                     "/form/formDefData/**", "/form/formCustDialog/**",
                     "/form/formCustSql/**",
                     "/sys/tools/**","/sys/dataDict/**"})
-    public String proxyGet(HttpServletRequest request, @RequestParam(required = false) String url, @RequestHeader Map<String, String> headers) {
+    public JSONObject proxyGet(HttpServletRequest request, @RequestParam(required = false) String url, @RequestHeader Map<String, String> headers) {
+        JSONObject jsonResult = null;
         if(ObjectUtils.isEmpty(url)){
             url = request.getRequestURI();
             if(ObjectUtils.isNotEmpty(request.getQueryString())){
@@ -40,19 +47,23 @@ public class ObpmProxyController {
             }
         }
         String obpmUrl = obmpClientService.getProxyUrl(url);
+        headers.put("host", getHeaderHost(obpmUrl));
         // 使用 HttpUtil 发送 GET 请求
         HttpResponse response = HttpUtil.createGet(obpmUrl)
                 .addHeaders(headers) // 添加请求头
                 .execute();
-        return response.body();
+        jsonResult = JSONObject.parseObject(response.body());
+        return jsonResult;
     }
 
+    @SneakyThrows
     @RequestMapping( method = RequestMethod.POST,
             value={"/bpm/instance/**", "/bpm/task/**", "/bpm/form/**",
                     "/form/formDefData/**", "/form/formCustDialog/**",
                     "/form/formCustSql/**",
                     "/sys/tools/**","/sys/dataDict/**"})
-    public String proxyPost(HttpServletRequest request, @RequestParam(required = false) String url, @RequestBody String body, @RequestHeader Map<String, String> headers) {
+    public JSONObject proxyPost(HttpServletRequest request, @RequestParam(required = false) String url, @RequestBody(required = false) String body, @RequestHeader Map<String, String> headers) {
+        JSONObject jsonResult = null;
         if(ObjectUtils.isEmpty(url)){
             url = request.getRequestURI();
             if(ObjectUtils.isNotEmpty(request.getQueryString())){
@@ -60,11 +71,27 @@ public class ObpmProxyController {
             }
         }
         String obpmUrl = obmpClientService.getProxyUrl(url);
+        headers.put("host", getHeaderHost(obpmUrl));
         // 使用 HttpUtil 发送 POST 请求
-        HttpResponse response = HttpUtil.createPost(obpmUrl)
-                .addHeaders(headers) // 添加请求头
-                .body(body)
-                .execute();
-        return response.body();
+        HttpRequest request2 = HttpUtil.createPost(obpmUrl)
+                .addHeaders(headers); // 添加请求头
+        if(ObjectUtils.isNotEmpty(body) && !"{}".equals(body)){
+            request2 = request2.body(body);
+        }
+        HttpResponse response = request2.execute();
+        jsonResult = JSONObject.parseObject(response.body());
+        return jsonResult;
+    }
+
+    @SneakyThrows
+    private String getHeaderHost(String url){
+        String strHost = null;
+        URL url2 = new URL(url);
+        strHost = url2.getHost();
+        int port = url2.getPort();
+        if(port!=-1 && port!=80 && port!=443){
+            strHost += ":"+port;
+        }
+        return strHost;
     }
 }
