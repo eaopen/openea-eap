@@ -3,11 +3,13 @@ package org.openea.eap.module.obpm.service.auth;
 import cn.hutool.core.util.ObjectUtil;
 import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.ObjectUtils;
 import org.openea.eap.framework.common.enums.CommonStatusEnum;
 import org.openea.eap.framework.common.enums.UserTypeEnum;
 import org.openea.eap.framework.security.core.LoginUser;
 import org.openea.eap.framework.security.core.util.SecurityFrameworkUtils;
 import org.openea.eap.module.obpm.service.obpm.ObmpClientService;
+import org.openea.eap.module.obpm.service.obpm.ObpmUtil;
 import org.openea.eap.module.system.api.social.dto.SocialUserBindReqDTO;
 import org.openea.eap.module.system.controller.admin.auth.vo.AuthLoginReqVO;
 import org.openea.eap.module.system.controller.admin.auth.vo.AuthLoginRespVO;
@@ -94,9 +96,18 @@ public class ObpmAuthServiceImpl extends AdminAuthServiceImpl implements AdminAu
         // 插入登陆日志
         createLoginLog(userId, username, logType, LoginResultEnum.SUCCESS);
 
+        OAuth2AccessTokenDO accessTokenDO = null;
+        // 检查accessToken是否已存在
+        String accessToken = ObpmUtil.getObpmToken();
+        if(ObjectUtils.isNotEmpty(accessToken)){
+            accessTokenDO = oauth2TokenService.getAccessToken(accessToken);
+            // TODO 是否需要延期
+        }
         // 创建访问令牌
-        OAuth2AccessTokenDO accessTokenDO = oauth2TokenService.createAccessToken(userId, getUserType().getValue(),
-                OAuth2ClientConstants.CLIENT_ID_DEFAULT, null);
+        if(accessTokenDO==null) {
+            accessTokenDO = oauth2TokenService.createAccessToken(userId, getUserType().getValue(),
+                    OAuth2ClientConstants.CLIENT_ID_DEFAULT, null);
+        }
         // 构建返回结果
         return AuthConvert.INSTANCE.convert(accessTokenDO);
     }
