@@ -39,7 +39,6 @@ public class ObpmProxyController {
                     "/form/formCustSql/**",
                     "/sys/tools/**","/sys/dataDict/**"})
     public JSONObject proxyGet(HttpServletRequest request, @RequestParam(required = false) String url, @RequestHeader Map<String, String> headers) {
-        JSONObject jsonResult = null;
         if(ObjectUtils.isEmpty(url)){
             url = request.getRequestURI();
             if(ObjectUtils.isNotEmpty(request.getQueryString())){
@@ -52,8 +51,7 @@ public class ObpmProxyController {
         HttpResponse response = HttpUtil.createGet(obpmUrl)
                 .addHeaders(headers) // 添加请求头
                 .execute();
-        jsonResult = JSONObject.parseObject(response.body());
-        return jsonResult;
+        return convertJsonResult(response.body());
     }
 
     @SneakyThrows
@@ -63,7 +61,6 @@ public class ObpmProxyController {
                     "/form/formCustSql/**",
                     "/sys/tools/**","/sys/dataDict/**"})
     public JSONObject proxyPost(HttpServletRequest request, @RequestParam(required = false) String url, @RequestBody(required = false) String body, @RequestHeader Map<String, String> headers) {
-        JSONObject jsonResult = null;
         if(ObjectUtils.isEmpty(url)){
             url = request.getRequestURI();
             if(ObjectUtils.isNotEmpty(request.getQueryString())){
@@ -79,14 +76,24 @@ public class ObpmProxyController {
             request2 = request2.body(body);
         }
         HttpResponse response = request2.execute();
-        jsonResult = JSONObject.parseObject(response.body());
+        return convertJsonResult(response.body());
+    }
+
+    private JSONObject convertJsonResult(String responseBody){
+        JSONObject jsonResult =  JSONObject.parseObject(responseBody);
+        // code 转为数字
+        if(jsonResult.containsKey("code")){
+            int code = jsonResult.getInteger("code");
+            jsonResult.put("code", code);
+        }
         return jsonResult;
     }
 
     @SneakyThrows
     private String getHeaderHost(String url){
-        String strHost = null;
-        URL url2 = new URL(url);
+            String strHost = null;
+            URL url2 = new URL(url);
+
         strHost = url2.getHost();
         int port = url2.getPort();
         if(port!=-1 && port!=80 && port!=443){
