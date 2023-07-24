@@ -87,7 +87,7 @@ public class ObpmAuthServiceImpl extends AdminAuthServiceImpl implements AdminAu
 
         }else{
             // fail
-            throw exception(AUTH_LOGIN_BAD_CREDENTIALS);
+            throw exception(AUTH_LOGIN_BAD_CREDENTIALS, jsonResult.getString("msg"));
         }
         return user;
     }
