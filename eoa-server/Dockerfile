@@ -1,4 +1,5 @@
-FROM eclipse-temurin:8 as builder
+#FROM eclipse-temurin:8 as builder
+FROM szopen/openjdk:8-jdk-cn as builder
 
 WORKDIR application
 
@@ -6,7 +7,8 @@ ARG JAR_FILE=target/*.jar
 COPY ${JAR_FILE} application.jar
 RUN java -Djarmode=layertools -jar application.jar extract
 
-FROM eclipse-temurin:8
+#FROM eclipse-temurin:8
+FROM szopen/openjdk:8-jdk-cn
 
 ## 设置 TZ 时区
 ENV TZ=Asia/Shanghai

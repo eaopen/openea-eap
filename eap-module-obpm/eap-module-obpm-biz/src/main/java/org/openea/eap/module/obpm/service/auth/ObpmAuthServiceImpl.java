@@ -69,6 +69,9 @@ public class ObpmAuthServiceImpl extends AdminAuthServiceImpl implements AdminAu
         JSONObject jsonResult = obpmLogin(username, password);
         if(jsonResult.containsKey("user")){
             // login success
+            if(jsonResult.containsKey("msg") && ObjectUtils.isNotEmpty(jsonResult.getString("msg"))){
+                log.warn("obpm login:"+jsonResult.getString("msg"));
+            }
             // obpm/eap 同用一个token？
             String obpmToken = jsonResult.getString("token");
             JSONObject obpmUser = jsonResult.getJSONObject("user");
@@ -87,7 +90,8 @@ public class ObpmAuthServiceImpl extends AdminAuthServiceImpl implements AdminAu
 
         }else{
             // fail
-            throw exception(AUTH_LOGIN_BAD_CREDENTIALS, jsonResult.getString("msg"));
+            //throw exception(AUTH_LOGIN_BAD_CREDENTIALS);
+            throw new RuntimeException("obpm login:"+jsonResult.getString("msg"));
         }
         return user;
     }

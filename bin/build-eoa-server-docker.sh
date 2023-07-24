@@ -4,13 +4,14 @@
 cd ../
 
 # maven
-#mvn clean & install
+mvn install -DskipTests=true
 
 # eoa
 cd eoa-server
 
 # maven
-mvn install
+mvn clean
+mvn install -DskipTests=true
 
 # docker
 docker build . --tag eoa-server
