@@ -1,4 +1,4 @@
-FROM eclipse-temurin:8-jre as builder
+FROM eclipse-temurin:8 as builder
 
 WORKDIR application
 
@@ -6,7 +6,7 @@ ARG JAR_FILE=target/*.jar
 COPY ${JAR_FILE} application.jar
 RUN java -Djarmode=layertools -jar application.jar extract
 
-FROM eclipse-temurin:8-jre
+FROM eclipse-temurin:8
 
 ## 设置 TZ 时区
 ENV TZ=Asia/Shanghai
