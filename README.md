@@ -1,6 +1,6 @@
 # Open EAP
-
-## 概述
+This project is licensed under the terms of the MIT license.
+## 概述 
 开放企业应用平台，整合各种开源项目作为企业应用快速开发的基础框架，支持i8n国际化。
 
 本次改版以芋道开源 YunaiV/ruoyi-vue-pro (MIT许可)为基础改版，整合OBPM、MSP、Jeecg等开源项目的部分模块。
