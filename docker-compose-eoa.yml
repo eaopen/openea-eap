@@ -29,7 +29,8 @@ services:
         --spring.redis.host=10.0.4.4
         --spring.redis.port=6378
         --spring.redis.password=nopass
-        --spring.main.allow-bean-definition-overriding=true
+        --eap.enableOpenBpm=true
+        --eap.userDataType=obpm
         --eap.obpm.apiBaseUrl=http://10.0.4.4:6330
     networks:
       - eoa-network

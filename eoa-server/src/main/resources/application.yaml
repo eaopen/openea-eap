@@ -184,6 +184,8 @@ eap:
   info:
     version: 1.0.0
     base-package: org.openea.eap
+  enableOpenBpm: ${obpm_enable:false}
+  userDataType: ${eap_userDataType:}
   web:
     admin-ui:
       url: http://dashboard.eap.openea.org # Admin 管理后台 UI 的地址
@@ -205,8 +207,6 @@ eap:
     license-url: https://raw.githubusercontent.com/eaopen/openea-eap/dev/doc/yudao/LICENSE
   captcha:
     enable: false # 验证码的开关，默认为 true
-  enableOpenBpm: true
-  userDataType: obpm
   codegen:
     base-package: ${eap.info.base-package:org.openea.eap}
     db-schemas: ${spring.datasource.dynamic.datasource.master.name}

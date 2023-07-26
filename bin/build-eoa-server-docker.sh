@@ -1,25 +1,33 @@
 #!/bin/bash
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-# pom
-cd ../
+# change to top dir
+cd ${DIR}/..
 
-# maven
+# 1 maven(project dir)
 mvn install -DskipTests=true
 
-# eoa
-cd eoa-server
+# change to eoa dir
+APPDIR=${DIR}/../eoa-server
+cd ${APPDIR}
 
-# maven
+# 2 maven in eoa dir
 mvn clean
 mvn install -DskipTests=true
 
-# docker
-docker build . --tag eoa-server
+# 3 docker build
+# docker image vars
+artifactId=eoa-server
+version=2.0-snapshot
+docker build . --tag ${artifactId}:${version}
+docker tag  ${artifactId}:${version}  ${artifactId}:latest
 
-## dicker login
-sh ./openea-docker-login.sh
+# 4 docker push
+## !!!请更改的docker registry以及执行docker login
+# docker login -u [user] -p [password] [docker registry]
+sh ${DIR}/openea-docker-login.sh
 
-docker tag eoa-server openea-docker.pkg.coding.net/reps/docker/eoa-server:latest
-
-docker push openea-docker.pkg.coding.net/reps/docker/eoa-server:latest
+repsBase=openea-docker.pkg.coding.net/reps/docker
+docker tag ${artifactId}:${version}  ${repsBase}/${artifactId}:latest
+docker push ${repsBase}/${artifactId}:latest
 
