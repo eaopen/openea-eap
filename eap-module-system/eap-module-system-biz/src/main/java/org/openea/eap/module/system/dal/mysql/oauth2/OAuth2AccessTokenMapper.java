@@ -14,7 +14,19 @@ import java.util.List;
 public interface OAuth2AccessTokenMapper extends BaseMapperX<OAuth2AccessTokenDO> {
 
     default OAuth2AccessTokenDO selectByAccessToken(String accessToken) {
-        return selectOne(OAuth2AccessTokenDO::getAccessToken, accessToken);
+        // fix 重复token, workaround
+        List<OAuth2AccessTokenDO> list = selectList(OAuth2AccessTokenDO::getAccessToken, accessToken);
+        if(list==null) {return null;}
+        if(list.size() == 1){ return list.get(0);}
+        if(list.size() >1){
+            for(OAuth2AccessTokenDO accessTokenDO: list){
+                if(!accessTokenDO.getDeleted()){
+                    return accessTokenDO;
+                }
+            }
+        }
+        return null;
+        //return selectOne(OAuth2AccessTokenDO::getAccessToken, accessToken);
     }
 
     default List<OAuth2AccessTokenDO> selectListByRefreshToken(String refreshToken) {
