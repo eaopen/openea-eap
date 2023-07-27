@@ -442,6 +442,7 @@ public class AdminUserServiceImpl implements AdminUserService {
 
     @Override
     public boolean isPasswordMatch(String rawPassword, String encodedPassword) {
+        // 增加多种passwordEncoder支持，以满足旧系统迁移密码的需要
         return passwordEncoder.matches(rawPassword, encodedPassword);
     }
 

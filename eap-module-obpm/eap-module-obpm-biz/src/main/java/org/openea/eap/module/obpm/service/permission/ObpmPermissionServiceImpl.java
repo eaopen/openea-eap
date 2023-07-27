@@ -12,10 +12,8 @@ import org.openea.eap.module.system.dal.dataobject.user.AdminUserDO;
 import org.openea.eap.module.system.enums.permission.MenuTypeEnum;
 import org.openea.eap.module.system.service.permission.PermissionService;
 import org.openea.eap.module.system.service.permission.PermissionServiceImpl;
-import org.springframework.beans.BeanUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.nio.charset.Charset;
@@ -51,7 +49,7 @@ public class ObpmPermissionServiceImpl extends PermissionServiceImpl implements 
                 userKey = adminUserDO.getUsername();
             }
         }
-        List<MenuDO> menuList2 = getObpmMenuList(userKey, withButton);
+        List<MenuDO> menuList2 = getObpmUserMenuList(userKey, withButton);
         if(!menuList2.isEmpty()){
             // obpm 菜单所有id/parentId + 200000（避免同eap菜单冲突）
             for(MenuDO menu: menuList2){
@@ -73,7 +71,7 @@ public class ObpmPermissionServiceImpl extends PermissionServiceImpl implements 
         return menuList;
     }
 
-    private List<MenuDO> getObpmMenuList(String userKey, boolean withButton) {
+    private List<MenuDO> getObpmUserMenuList(String userKey, boolean withButton) {
         List<MenuDO> listMenu = new ArrayList<>();
         List<JSONObject> listResource = obmpClientService.queryUserMenu(userKey, "", withButton);
         for(JSONObject sysRes: listResource){

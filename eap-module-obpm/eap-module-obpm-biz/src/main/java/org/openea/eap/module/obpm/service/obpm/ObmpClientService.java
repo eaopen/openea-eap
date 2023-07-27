@@ -42,6 +42,23 @@ public class ObmpClientService {
         return jsonResult;
     }
 
+    public JSONObject queryUserInfo(String userKey, boolean withPassword){
+        JSONObject userInfo = null;
+        Map<String, Object> params = new HashMap<>();
+        params.put("user", userKey);
+        params.put("withPassword", withPassword);
+        params.put("sign", eapSign(userKey));
+        String result = HttpUtil.get(obpmClientBaseUrl+"/eap/userInfo", params);
+        JSONObject resultObj = JSONObject.parseObject(result);
+        if(resultObj.getBoolean("isOk")){
+            userInfo = resultObj.getJSONObject("data");
+        }else{
+            //jsonResult.put("msg", resultObj.getString("msg"));
+            throw new RuntimeException(resultObj.getString("msg"));
+        }
+        return userInfo;
+    }
+
     public List<JSONObject> queryUserMenu(String userKey, String systemKey, boolean withButton){
         // get/post /eap/userMenu
         // user=[userKey]  system=[systemKey] withButton=[withButton]
@@ -49,7 +66,7 @@ public class ObmpClientService {
         params.put("user", userKey);
         params.put("system", systemKey);
         params.put("sign", eapSign(userKey));
-        String result = HttpUtil.post(obpmClientBaseUrl+"/eap/userMenu", params);
+        String result = HttpUtil.get(obpmClientBaseUrl+"/eap/userMenu", params);
         JSONObject resultObj = JSONObject.parseObject(result);
 
         List<JSONObject> menuList = null;
@@ -69,6 +86,8 @@ public class ObmpClientService {
         String sign = DigestUtil.md5Hex(user + DateUtil.today() +"eap");
         return sign;
     }
+
+
 
     public String getProxyUrl(String url) {
         String obpmUrl = obpmClientBaseUrl;

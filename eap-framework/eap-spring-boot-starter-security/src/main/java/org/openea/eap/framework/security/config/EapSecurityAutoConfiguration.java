@@ -7,6 +7,7 @@ import org.openea.eap.framework.security.core.handler.AccessDeniedHandlerImpl;
 import org.openea.eap.framework.security.core.handler.AuthenticationEntryPointImpl;
 import org.openea.eap.framework.security.core.service.SecurityFrameworkService;
 import org.openea.eap.framework.security.core.service.SecurityFrameworkServiceImpl;
+import org.openea.eap.framework.security.core.util.PwdEncoderUtil;
 import org.openea.eap.framework.web.core.handler.GlobalExceptionHandler;
 import org.openea.eap.module.system.api.oauth2.OAuth2TokenApi;
 import org.openea.eap.module.system.api.permission.PermissionApi;
@@ -68,7 +69,9 @@ public class EapSecurityAutoConfiguration {
      */
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(securityProperties.getPasswordEncoderLength());
+        String encodingId = "bcrypt";
+        PwdEncoderUtil.addPasswordEncoder(encodingId, new BCryptPasswordEncoder(securityProperties.getPasswordEncoderLength()));
+        return PwdEncoderUtil.getDelegatingPasswordEncoder(encodingId);
     }
 
     /**

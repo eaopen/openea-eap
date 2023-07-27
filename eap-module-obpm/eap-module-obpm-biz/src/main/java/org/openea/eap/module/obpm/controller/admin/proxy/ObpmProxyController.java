@@ -9,6 +9,7 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ObjectUtils;
 import org.openea.eap.module.obpm.service.obpm.ObmpClientService;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,6 +26,7 @@ import java.util.Map;
  */
 @Tag(name = "OpenBPM Proxy")
 @RestController
+@ConditionalOnProperty(prefix = "eap.obpm", name = "proxy", havingValue = "true")
 @Validated
 @Slf4j
 public class ObpmProxyController {
