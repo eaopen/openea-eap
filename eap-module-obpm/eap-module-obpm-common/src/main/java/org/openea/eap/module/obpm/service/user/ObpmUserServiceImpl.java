@@ -9,7 +9,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
 
 @Service("obpmUserService")
-@ConditionalOnProperty(prefix = "eap", name = "userDataType", havingValue = "obpm")
+@ConditionalOnProperty(prefix = "eap", name = "enableOpenBpm", havingValue = "true")
 @Slf4j
 public class ObpmUserServiceImpl extends AdminUserServiceImpl implements AdminUserService {
 

@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 
 @Service
-@ConditionalOnProperty(prefix = "eap", name = "userDataType", havingValue = "obpm")
+@ConditionalOnProperty(prefix = "eap", name = "enableOpenBpm", havingValue = "true")
 public class ObpmOAuth2TokenServiceImpl extends OAuth2TokenServiceImpl implements OAuth2TokenService {
     @Override
     protected OAuth2AccessTokenDO createOAuth2AccessToken(OAuth2RefreshTokenDO refreshTokenDO, OAuth2ClientDO clientDO) {

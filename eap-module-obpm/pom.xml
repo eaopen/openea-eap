@@ -57,6 +57,12 @@
                 <version>${openbpm.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>org.szopen.openbpm</groupId>
+                <artifactId>form-core</artifactId>
+                <version>${openbpm.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 

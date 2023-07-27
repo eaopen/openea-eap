@@ -22,7 +22,7 @@ import java.util.*;
 import static java.util.Collections.singleton;
 
 @Service
-@ConditionalOnProperty(prefix = "eap", name = "userDataType", havingValue = "obpm")
+@ConditionalOnProperty(prefix = "eap", name = "enableOpenBpm", havingValue = "true")
 @Slf4j
 public class ObpmPermissionServiceImpl extends PermissionServiceImpl implements PermissionService {
 

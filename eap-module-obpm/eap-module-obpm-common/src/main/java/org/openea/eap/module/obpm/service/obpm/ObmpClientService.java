@@ -49,6 +49,9 @@ public class ObmpClientService {
         params.put("withPassword", withPassword);
         params.put("sign", eapSign(userKey));
         String result = HttpUtil.get(obpmClientBaseUrl+"/eap/userInfo", params);
+        if(result.startsWith("<html>")){
+            throw new RuntimeException(result);
+        }
         JSONObject resultObj = JSONObject.parseObject(result);
         if(resultObj.getBoolean("isOk")){
             userInfo = resultObj.getJSONObject("data");

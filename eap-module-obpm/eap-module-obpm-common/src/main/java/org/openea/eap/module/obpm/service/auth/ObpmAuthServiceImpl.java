@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ObjectUtils;
 import org.openea.eap.framework.common.enums.CommonStatusEnum;
 import org.openea.eap.framework.common.enums.UserTypeEnum;
+import org.openea.eap.framework.common.exception.ServiceException;
 import org.openea.eap.framework.common.util.date.DateUtils;
 import org.openea.eap.framework.security.core.LoginUser;
 import org.openea.eap.framework.security.core.util.SecurityFrameworkUtils;
@@ -14,43 +15,59 @@ import org.openea.eap.module.obpm.service.obpm.ObpmUtil;
 import org.openea.eap.module.system.api.social.dto.SocialUserBindReqDTO;
 import org.openea.eap.module.system.controller.admin.auth.vo.AuthLoginReqVO;
 import org.openea.eap.module.system.controller.admin.auth.vo.AuthLoginRespVO;
+import org.openea.eap.module.system.controller.admin.user.vo.user.UserCreateReqVO;
 import org.openea.eap.module.system.convert.auth.AuthConvert;
 import org.openea.eap.module.system.dal.dataobject.oauth2.OAuth2AccessTokenDO;
 import org.openea.eap.module.system.dal.dataobject.user.AdminUserDO;
+import org.openea.eap.module.system.dal.mysql.user.AdminUserMapper;
 import org.openea.eap.module.system.enums.logger.LoginLogTypeEnum;
 import org.openea.eap.module.system.enums.logger.LoginResultEnum;
 import org.openea.eap.module.system.enums.oauth2.OAuth2ClientConstants;
 import org.openea.eap.module.system.service.auth.AdminAuthService;
 import org.openea.eap.module.system.service.auth.AdminAuthServiceImpl;
-import org.openea.eap.module.system.service.user.AdminUserService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 
 import static org.openea.eap.framework.common.exception.util.ServiceExceptionUtil.exception;
 import static org.openea.eap.module.system.enums.ErrorCodeConstants.AUTH_LOGIN_BAD_CREDENTIALS;
+import static org.openea.eap.module.system.enums.ErrorCodeConstants.AUTH_LOGIN_USER_DISABLED;
 
 
 @Service("obpmAuthService")
-@ConditionalOnProperty(prefix = "eap", name = "userDataType", havingValue = "obpm")
+@ConditionalOnProperty(prefix = "eap", name = "enableOpenBpm", havingValue = "true")
 @Slf4j
 public class ObpmAuthServiceImpl extends AdminAuthServiceImpl implements AdminAuthService {
 
+    @Value("${eap.userDataType}")
+    private String userDataType;
     @Resource
     private ObmpClientService obmpClientService;
 
+    @Resource
+    private AdminUserMapper userMapper;
 
     @Override
     public AuthLoginRespVO login(AuthLoginReqVO reqVO, HttpServletRequest request){
         // 校验验证码
         validateCaptcha(reqVO);
 
-        // 使用账号密码，进行登录
-        AdminUserDO user = authenticate(reqVO.getUsername(), reqVO.getPassword(), request);
+        AdminUserDO user = null;
+        // 两种方案： 推荐方案一
+        if(!"obpm".equals(userDataType)){
+            //方案一
+            // 使用本地账号密码，进行登录
+            // 同步obpm用户到eap，包含加密密码，需要eap兼容多种加密方式，适用于统一用户到eap
+            user = authenticate(reqVO.getUsername(), reqVO.getPassword(), request);
+        }else {
+            // 方案二
+            // 使用Obpm账号密码进行登录
+            // 调用obpm的登录方法进行验证，成功后返回obpm用户信息，适用于继续维持两套用户
+            user = authenticateWithObpm(reqVO.getUsername(), reqVO.getPassword(), request);
+        }
 
         // 如果 socialType 非空，说明需要绑定社交用户
         if (reqVO.getSocialType() != null) {
@@ -62,9 +79,50 @@ public class ObpmAuthServiceImpl extends AdminAuthServiceImpl implements AdminAu
     }
 
     public AdminUserDO authenticate(String username, String password, HttpServletRequest request) {
+        final LoginLogTypeEnum logTypeEnum = LoginLogTypeEnum.LOGIN_USERNAME;
+        // 校验账号是否存在
+        AdminUserDO user = userService.getUserByUsername(username);
+        if (user == null) {
+            //可增加实时查询未同步用户
+            JSONObject jsonUser = queryObpmUser(username, true);
+            // 创建用户并保存密码
+            user = createAdminUser(jsonUser);
+        }
+        if (user == null) {
+            createLoginLog(null, username, logTypeEnum, LoginResultEnum.BAD_CREDENTIALS);
+            throw exception(AUTH_LOGIN_BAD_CREDENTIALS);
+        }
+        if (!userService.isPasswordMatch(password, user.getPassword())) {
+            createLoginLog(user.getId(), username, logTypeEnum, LoginResultEnum.BAD_CREDENTIALS);
+            throw exception(AUTH_LOGIN_BAD_CREDENTIALS);
+        }
+        // 校验是否禁用
+        if (ObjectUtil.notEqual(user.getStatus(), CommonStatusEnum.ENABLE.getStatus())) {
+            createLoginLog(user.getId(), username, logTypeEnum, LoginResultEnum.USER_DISABLED);
+            throw exception(AUTH_LOGIN_USER_DISABLED);
+        }
+        return user;
+    }
+
+    private AdminUserDO createAdminUser(JSONObject jsonUser) {
+        AdminUserDO user = new AdminUserDO();
+        // 保存原密码 “{sha2}+obpm加密后密码”
+        user.setUsername(jsonUser.getString("account"));
+        user.setPassword("{sha2}"+jsonUser.getString("password"));
+        user.setMobile(jsonUser.getString("mobile"));
+        user.setEmail(jsonUser.getString("email"));
+        user.setNickname(jsonUser.getString("fullname"));
+        user.setStatus(CommonStatusEnum.ENABLE.getStatus());
+        userMapper.insert(user);
+        user = userService.getUserByUsername(user.getUsername());
+        return user;
+    }
+
+    public AdminUserDO authenticateWithObpm(String username, String password, HttpServletRequest request) {
 
         // 校验账号是否存在
         AdminUserDO user = userService.getUserByUsername(username);
+
         // 从obpm验证
         JSONObject jsonResult = obpmLogin(username, password);
         if(jsonResult.containsKey("user")){
@@ -91,7 +149,7 @@ public class ObpmAuthServiceImpl extends AdminAuthServiceImpl implements AdminAu
         }else{
             // fail
             //throw exception(AUTH_LOGIN_BAD_CREDENTIALS);
-            throw new RuntimeException("obpm login:"+jsonResult.getString("msg"));
+            throw new ServiceException(1002000000,"obpm login:"+jsonResult.getString("msg"));
         }
         return user;
     }
@@ -123,5 +181,11 @@ public class ObpmAuthServiceImpl extends AdminAuthServiceImpl implements AdminAu
     private JSONObject obpmLogin(String username, String password){
         return obmpClientService.login(username, password);
     }
+
+    private JSONObject queryObpmUser(String username, boolean withPassword){
+        JSONObject jsonUser = obmpClientService.queryUserInfo(username, withPassword);
+        return jsonUser;
+    }
+
 
 }
