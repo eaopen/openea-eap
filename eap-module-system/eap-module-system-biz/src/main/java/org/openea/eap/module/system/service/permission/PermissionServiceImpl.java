@@ -51,8 +51,8 @@ import static org.openea.eap.framework.security.core.util.SecurityFrameworkUtils
  * 权限 Service 实现类
  *
  */
-@Service
-@ConditionalOnMissingBean(PermissionService.class)
+//@Service
+//@ConditionalOnMissingBean(PermissionService.class)
 @Slf4j
 public class PermissionServiceImpl implements PermissionService {
 

@@ -24,6 +24,9 @@ public class PwdEncoderUtil {
     public static void addPasswordEncoder(String encodingId, PasswordEncoder passwordEncoder){
         encoders.put(encodingId, passwordEncoder);
     }
+    public static PasswordEncoder getPasswordEncoder(String encodingId){
+        return encoders.get(encodingId);
+    }
 
     /**
      * createDelegatingPasswordEncoder
@@ -33,7 +36,7 @@ public class PwdEncoderUtil {
      */
     public static PasswordEncoder getDelegatingPasswordEncoder(String encodingId) {
         Assert.isTrue(encoders.containsKey(encodingId), encodingId + " is not found in idToPasswordEncoder");
-        DelegatingPasswordEncoder delegatingPasswordEncoder = new DelegatingPasswordEncoder(encodingId, encoders);
+        DelegatingPasswordEncoder delegatingPasswordEncoder = new CustDelegatingPasswordEncoder(encodingId, encoders);
         delegatingPasswordEncoder.setDefaultPasswordEncoderForMatches(encoders.get(encodingId));
         return delegatingPasswordEncoder;
 

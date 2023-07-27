@@ -15,6 +15,7 @@ import org.openea.eap.module.system.dal.mysql.oauth2.OAuth2AccessTokenMapper;
 import org.openea.eap.module.system.dal.mysql.oauth2.OAuth2RefreshTokenMapper;
 import org.openea.eap.module.system.dal.redis.oauth2.OAuth2AccessTokenRedisDAO;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,8 +31,8 @@ import static org.openea.eap.framework.common.util.collection.CollectionUtils.co
  * OAuth2.0 Token Service 实现类
  *
  */
-@Service
-@ConditionalOnMissingBean(OAuth2TokenService.class)
+//@Service
+//@ConditionalOnMissingBean(OAuth2TokenService.class)
 public class OAuth2TokenServiceImpl implements OAuth2TokenService {
 
     @Resource

@@ -6,6 +6,7 @@ import org.openea.eap.module.system.api.oauth2.dto.OAuth2AccessTokenRespDTO;
 import org.openea.eap.module.system.convert.auth.OAuth2TokenConvert;
 import org.openea.eap.module.system.dal.dataobject.oauth2.OAuth2AccessTokenDO;
 import org.openea.eap.module.system.service.oauth2.OAuth2TokenService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -14,7 +15,7 @@ import javax.annotation.Resource;
  * OAuth2.0 Token API 实现类
  *
  */
-@Service
+@Service("oauth2TokenApi")
 public class OAuth2TokenApiImpl implements OAuth2TokenApi {
 
     @Resource

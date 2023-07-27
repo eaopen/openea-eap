@@ -74,9 +74,9 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
             }
             // TODO 忽略用户类型检查
             // 用户类型不匹配，无权限
-//            if (ObjectUtil.notEqual(accessToken.getUserType(), userType)) {
-//                throw new AccessDeniedException("错误的用户类型");
-//            }
+            if (ObjectUtil.notEqual(accessToken.getUserType(), userType)) {
+                throw new AccessDeniedException("错误的用户类型");
+            }
             // 构建登录用户
             return new LoginUser().setId(accessToken.getUserId()).setUserKey(accessToken.getUserKey()).setUserType(accessToken.getUserType())
                     .setTenantId(accessToken.getTenantId()).setScopes(accessToken.getScopes());

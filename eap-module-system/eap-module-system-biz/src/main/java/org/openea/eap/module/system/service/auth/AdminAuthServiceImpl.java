@@ -46,8 +46,8 @@ import static org.openea.eap.module.system.enums.ErrorCodeConstants.*;
  * Auth Service 实现类
  *
  */
-@Service
-@ConditionalOnMissingBean(AdminAuthService.class)
+//@Service
+//@ConditionalOnMissingBean(AdminAuthService.class)
 @Slf4j
 public class AdminAuthServiceImpl implements AdminAuthService {
 

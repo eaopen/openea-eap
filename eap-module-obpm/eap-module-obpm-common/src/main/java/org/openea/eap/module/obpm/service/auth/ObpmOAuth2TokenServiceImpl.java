@@ -10,6 +10,7 @@ import org.openea.eap.module.system.dal.dataobject.oauth2.OAuth2ClientDO;
 import org.openea.eap.module.system.dal.dataobject.oauth2.OAuth2RefreshTokenDO;
 import org.openea.eap.module.system.service.oauth2.OAuth2TokenService;
 import org.openea.eap.module.system.service.oauth2.OAuth2TokenServiceImpl;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
 
