@@ -10,6 +10,9 @@
     <modelVersion>4.0.0</modelVersion>
     <modules>
         <module>eap-module-obpm-api</module>
+        <module>eap-module-obpm-common</module>
+        <module>eap-module-obpm-form</module>
+        <module>eap-module-obpm-wf</module>
         <module>eap-module-obpm-biz</module>
     </modules>
     <artifactId>eap-module-obpm</artifactId>
