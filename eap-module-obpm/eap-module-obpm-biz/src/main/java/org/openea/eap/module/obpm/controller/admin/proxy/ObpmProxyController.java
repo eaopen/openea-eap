@@ -43,7 +43,7 @@ public class ObpmProxyController {
                     "/form/formCustSql/**",
                     "/sys/tools/**","/sys/dataDict/**"})
     public JSONObject proxyGet(HttpServletRequest request, @RequestParam(required = false) String url, @RequestHeader Map<String, String> headers) {
-        checkRequestUrl(url, request);
+        url = checkRequestUrl(url, request);
         String obpmUrl = obmpClientService.getProxyUrl(url);
         checkHeaderHost(headers, obpmUrl);
         checkHeaderAuth(headers);
@@ -61,7 +61,7 @@ public class ObpmProxyController {
                     "/form/formCustSql/**",
                     "/sys/tools/**","/sys/dataDict/**"})
     public JSONObject proxyPost(HttpServletRequest request, @RequestParam(required = false) String url, @RequestBody(required = false) String body, @RequestHeader Map<String, String> headers) {
-        checkRequestUrl(url, request);
+        url = checkRequestUrl(url, request);
         String obpmUrl = obmpClientService.getProxyUrl(url);
         checkHeaderHost(headers, obpmUrl);
         checkHeaderAuth(headers);
