@@ -31,8 +31,7 @@ import static org.openea.eap.framework.common.util.collection.CollectionUtils.co
  * OAuth2.0 Token Service 实现类
  *
  */
-//@Service
-//@ConditionalOnMissingBean(OAuth2TokenService.class)
+@Service
 public class OAuth2TokenServiceImpl implements OAuth2TokenService {
 
     @Resource

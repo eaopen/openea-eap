@@ -160,15 +160,15 @@ public class ObpmAuthServiceImpl extends AdminAuthServiceImpl implements AdminAu
         createLoginLog(userId, username, logType, LoginResultEnum.SUCCESS);
 
         OAuth2AccessTokenDO accessTokenDO = null;
-        // 检查accessToken是否已存在
-        String accessToken = ObpmUtil.getObpmToken();
-        if(ObjectUtils.isNotEmpty(accessToken)){
-            accessTokenDO = oauth2TokenService.getAccessToken(accessToken);
-            if(accessTokenDO!=null && DateUtils.isExpired(accessTokenDO.getExpiresTime())){
-                // 已过期放弃重新生成
-                accessTokenDO = null;
-            }
-        }
+//        // 检查accessToken是否已存在
+//        String accessToken = ObpmUtil.getObpmToken();
+//        if(ObjectUtils.isNotEmpty(accessToken)){
+//            accessTokenDO = oauth2TokenService.getAccessToken(accessToken);
+//            if(accessTokenDO!=null && DateUtils.isExpired(accessTokenDO.getExpiresTime())){
+//                // 已过期放弃重新生成
+//                accessTokenDO = null;
+//            }
+//        }
         // 创建访问令牌
         if(accessTokenDO==null) {
             accessTokenDO = oauth2TokenService.createAccessToken(userId, getUserType().getValue(),

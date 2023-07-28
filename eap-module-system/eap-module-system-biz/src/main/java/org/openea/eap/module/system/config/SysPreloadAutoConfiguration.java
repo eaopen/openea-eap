@@ -18,13 +18,6 @@ import org.springframework.context.annotation.Configuration;
 @AutoConfigureBefore(EapSecurityAutoConfiguration.class)
 public class SysPreloadAutoConfiguration {
 
-
-    @ConditionalOnMissingBean
-    @Bean
-    public OAuth2TokenService oauth2TokenService(){
-        return new OAuth2TokenServiceImpl();
-    }
-
     @ConditionalOnMissingBean
     @Bean
     public AdminUserService adminUserService(){
