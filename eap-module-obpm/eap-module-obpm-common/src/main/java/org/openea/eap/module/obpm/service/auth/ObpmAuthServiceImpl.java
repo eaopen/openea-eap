@@ -145,6 +145,7 @@ public class ObpmAuthServiceImpl extends AdminAuthServiceImpl implements AdminAu
             loginUser.setId(user.getId());
             loginUser.setUserKey(username);
             SecurityFrameworkUtils.setLoginUser(loginUser, request);
+
         }else{
             // fail
             //throw exception(AUTH_LOGIN_BAD_CREDENTIALS);

@@ -74,13 +74,15 @@ public class ObpmPermissionServiceImpl extends PermissionServiceImpl implements 
     private List<MenuDO> getObpmUserMenuList(String userKey, boolean withButton) {
         List<MenuDO> listMenu = new ArrayList<>();
         List<JSONObject> listResource = obmpClientService.queryUserMenu(userKey, "", withButton);
-        for(JSONObject sysRes: listResource){
-            // ignore button
-            if(!withButton){
-                String type = sysRes.getString("type");
-                if("button".equals(type)) {continue;}
+        if(listResource!=null){
+            for(JSONObject sysRes: listResource){
+                // ignore button
+                if(!withButton){
+                    String type = sysRes.getString("type");
+                    if("button".equals(type)) {continue;}
+                }
+                listMenu.add(convertMenu(sysRes));
             }
-            listMenu.add(convertMenu(sysRes));
         }
         return listMenu;
     }

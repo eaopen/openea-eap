@@ -5,7 +5,9 @@ import cn.hutool.crypto.digest.DigestUtil;
 import cn.hutool.http.HttpUtil;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ObjectUtils;
+import org.openea.eap.framework.common.exception.ServiceException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
+@Slf4j
 public class ObmpClientService {
 
     @Value("${eap.obpm.apiBaseUrl:/obpm-server}")
@@ -81,10 +84,12 @@ public class ObmpClientService {
                 return menuList;
             }
         }catch (Exception e){
-            throw new RuntimeException(e.getMessage());
+            //throw new ServiceException(1, e.getMessage());
+            log.warn("queryUserMenu(user="+userKey+") fail: "+e.getMessage());
         }
         if(resultObj!=null && resultObj.containsKey("msg")){
-            throw new RuntimeException(resultObj.getString("msg"));
+            //throw new ServiceException(1, resultObj.getString("msg"));
+            log.warn("queryUserMenu(user="+userKey+") return: "+resultObj.getString("msg"));
         }
         return menuList;
     }
