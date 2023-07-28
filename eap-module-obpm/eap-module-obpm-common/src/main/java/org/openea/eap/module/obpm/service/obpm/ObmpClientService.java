@@ -106,8 +106,8 @@ public class ObmpClientService {
         // test only
         // etech url=http://10.9.8.162:6110
         if(obpmClientBaseUrl.indexOf("10.9.8.162")>0 || obpmClientBaseUrl.indexOf("10.8.1.81")>0){
-            obpmUrl = obpmUrl.replace("/form/formCustSql/vo_","/etech/formCustSql/vo3_");
-            obpmUrl = obpmUrl.replace("/form/formCustSql/list_","/etech/formCustSql/list_");
+            obpmUrl = obpmUrl.replace("/form/formCustSql/view/vo_","/etech/formCustSql/view/vo3_");
+            obpmUrl = obpmUrl.replace("/form/formCustSql/view/list_","/etech/formCustSql/view/list_");
         }
         return obpmUrl;
     }
