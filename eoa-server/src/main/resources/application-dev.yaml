@@ -112,7 +112,8 @@ eap:
   enableOpenBpm: true
   userDataType: default
   obpm:
-    apiBaseUrl: ${obpm_api_baseurl:http://localhost:8102}
+    proxy: true
+    apiBaseUrl: ${obpm_api_baseurl:http://124.223.81.114:6330}
     webBaseUrl: ${obpm_web_baseurl:http://localhost:3002}
     adminBaseUrl: ${obpm_admin_baseurl:http://localhost:3002}
 

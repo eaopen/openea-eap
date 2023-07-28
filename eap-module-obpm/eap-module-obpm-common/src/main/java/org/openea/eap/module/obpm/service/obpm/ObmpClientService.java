@@ -63,22 +63,27 @@ public class ObmpClientService {
     }
 
     public List<JSONObject> queryUserMenu(String userKey, String systemKey, boolean withButton){
+        List<JSONObject> menuList = null;
         // get/post /eap/userMenu
         // user=[userKey]  system=[systemKey] withButton=[withButton]
-        Map<String, Object> params = new HashMap<>();
-        params.put("user", userKey);
-        params.put("system", systemKey);
-        params.put("sign", eapSign(userKey));
-        String result = HttpUtil.get(obpmClientBaseUrl+"/eap/userMenu", params);
-        JSONObject resultObj = JSONObject.parseObject(result);
-
-        List<JSONObject> menuList = null;
-        if(resultObj.getBoolean("isOk")){
-            JSONObject resultData = resultObj.getJSONObject("data");
-            JSONArray menuArray = resultData.getJSONArray("menuList");
-            menuList = menuArray.toJavaList(JSONObject.class);
-        }else{
-            //jsonResult.put("msg", resultObj.getString("msg"));
+        JSONObject resultObj = null;
+        try{
+            Map<String, Object> params = new HashMap<>();
+            params.put("user", userKey);
+            params.put("system", systemKey);
+            params.put("sign", eapSign(userKey));
+            String result = HttpUtil.get(obpmClientBaseUrl+"/eap/userMenu", params, 6000);
+            resultObj = JSONObject.parseObject(result);
+            if(resultObj!=null && resultObj.getBoolean("isOk")){
+                JSONObject resultData = resultObj.getJSONObject("data");
+                JSONArray menuArray = resultData.getJSONArray("menuList");
+                menuList = menuArray.toJavaList(JSONObject.class);
+                return menuList;
+            }
+        }catch (Exception e){
+            throw new RuntimeException(e.getMessage());
+        }
+        if(resultObj!=null && resultObj.containsKey("msg")){
             throw new RuntimeException(resultObj.getString("msg"));
         }
         return menuList;
@@ -87,8 +92,6 @@ public class ObmpClientService {
     private String eapSign(String user){
         return ObpmUtil.eapSign(user);
     }
-
-
 
     public String getProxyUrl(String url) {
         String obpmUrl = obpmClientBaseUrl;

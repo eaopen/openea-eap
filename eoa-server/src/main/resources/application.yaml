@@ -299,6 +299,7 @@ eap:
 
 eap:
   obpm:
+    proxy: ${obpm_proxy:true}
     apiBaseUrl: ${obpm_api_baseurl:/obpm-server}
     webBaseUrl: ${obpm_web_baseurl:/obpm-web}
     adminBaseUrl: ${obpm_admin_baseurl:/obpm-admin}
@@ -443,5 +444,6 @@ logging:
     org.mybatis.spring.mapper.ClassPathMapperScanner: ERROR
     springfox.documentation.builders.FormParameterSpecificationProvider: ERROR
     springfox.documentation.swagger.readers.operation.OperationImplicitParameterReader: ERROR
+    org.openea.eap.framework.i18n.core.I18nUtil: ERROR
   file:
     name: ${user.home}/logs/${spring.application.name}.log # 日志文件名，全路径

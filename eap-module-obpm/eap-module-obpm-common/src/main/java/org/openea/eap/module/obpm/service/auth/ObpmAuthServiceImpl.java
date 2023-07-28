@@ -145,7 +145,6 @@ public class ObpmAuthServiceImpl extends AdminAuthServiceImpl implements AdminAu
             loginUser.setId(user.getId());
             loginUser.setUserKey(username);
             SecurityFrameworkUtils.setLoginUser(loginUser, request);
-
         }else{
             // fail
             //throw exception(AUTH_LOGIN_BAD_CREDENTIALS);
@@ -158,22 +157,9 @@ public class ObpmAuthServiceImpl extends AdminAuthServiceImpl implements AdminAu
     protected AuthLoginRespVO createTokenAfterLoginSuccess(Long userId, String username, LoginLogTypeEnum logType) {
         // 插入登陆日志
         createLoginLog(userId, username, logType, LoginResultEnum.SUCCESS);
-
-        OAuth2AccessTokenDO accessTokenDO = null;
-//        // 检查accessToken是否已存在
-//        String accessToken = ObpmUtil.getObpmToken();
-//        if(ObjectUtils.isNotEmpty(accessToken)){
-//            accessTokenDO = oauth2TokenService.getAccessToken(accessToken);
-//            if(accessTokenDO!=null && DateUtils.isExpired(accessTokenDO.getExpiresTime())){
-//                // 已过期放弃重新生成
-//                accessTokenDO = null;
-//            }
-//        }
         // 创建访问令牌
-        if(accessTokenDO==null) {
-            accessTokenDO = oauth2TokenService.createAccessToken(userId, getUserType().getValue(),
+        OAuth2AccessTokenDO  accessTokenDO = oauth2TokenService.createAccessToken(userId, getUserType().getValue(),
                     OAuth2ClientConstants.CLIENT_ID_DEFAULT, null);
-        }
         // 构建返回结果
         return AuthConvert.INSTANCE.convert(accessTokenDO);
     }
@@ -186,6 +172,5 @@ public class ObpmAuthServiceImpl extends AdminAuthServiceImpl implements AdminAu
         JSONObject jsonUser = obmpClientService.queryUserInfo(username, withPassword);
         return jsonUser;
     }
-
 
 }

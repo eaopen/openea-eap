@@ -42,8 +42,8 @@ public class ObpmProxyController {
                     "/form/formDefData/**", "/form/formCustDialog/**",
                     "/form/formCustSql/**",
                     "/sys/tools/**","/sys/dataDict/**"})
-    public JSONObject proxyGet(HttpServletRequest request, @RequestParam(required = false) String url, @RequestHeader Map<String, String> headers) {
-        url = checkRequestUrl(url, request);
+    public JSONObject proxyGet(HttpServletRequest request, @RequestHeader Map<String, String> headers) {
+        String url = checkRequestUrl(request);
         String obpmUrl = obmpClientService.getProxyUrl(url);
         checkHeaderHost(headers, obpmUrl);
         checkHeaderAuth(headers);
@@ -60,8 +60,8 @@ public class ObpmProxyController {
                     "/form/formDefData/**", "/form/formCustDialog/**",
                     "/form/formCustSql/**",
                     "/sys/tools/**","/sys/dataDict/**"})
-    public JSONObject proxyPost(HttpServletRequest request, @RequestParam(required = false) String url, @RequestBody(required = false) String body, @RequestHeader Map<String, String> headers) {
-        url = checkRequestUrl(url, request);
+    public JSONObject proxyPost(HttpServletRequest request, @RequestBody(required = false) String body, @RequestHeader Map<String, String> headers) {
+        String url = checkRequestUrl(request);
         String obpmUrl = obmpClientService.getProxyUrl(url);
         checkHeaderHost(headers, obpmUrl);
         checkHeaderAuth(headers);
@@ -75,14 +75,12 @@ public class ObpmProxyController {
         return convertJsonResult(response.body());
     }
 
-    private String checkRequestUrl(String url, HttpServletRequest request){
-        if(ObjectUtils.isEmpty(url)){
-            url = request.getRequestURI();
-            if(ObjectUtils.isNotEmpty(request.getQueryString())){
-                url += "?" + request.getQueryString();
-            }
-        }
-        return url;
+    private String checkRequestUrl(HttpServletRequest request){
+       String url = request.getRequestURI();
+       if(ObjectUtils.isNotEmpty(request.getQueryString())){
+           url += "?" + request.getQueryString();
+       }
+       return url;
     }
 
     @SneakyThrows
