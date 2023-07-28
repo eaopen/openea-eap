@@ -1,5 +1,8 @@
 package org.openea.eap.module.obpm.service.obpm;
 
+import cn.hutool.core.date.DateUtil;
+import cn.hutool.crypto.digest.DigestUtil;
+
 public class ObpmUtil {
 
     private static ThreadLocal<String> obpmTokenThread = new ThreadLocal<>();
