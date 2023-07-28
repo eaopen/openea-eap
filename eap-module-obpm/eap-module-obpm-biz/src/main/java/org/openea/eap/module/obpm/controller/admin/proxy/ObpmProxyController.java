@@ -40,14 +40,10 @@ public class ObpmProxyController {
                     "/form/formCustSql/**",
                     "/sys/tools/**","/sys/dataDict/**"})
     public JSONObject proxyGet(HttpServletRequest request, @RequestParam(required = false) String url, @RequestHeader Map<String, String> headers) {
-        if(ObjectUtils.isEmpty(url)){
-            url = request.getRequestURI();
-            if(ObjectUtils.isNotEmpty(request.getQueryString())){
-                url += "?" + request.getQueryString();
-            }
-        }
+        checkRequestUrl(url, request);
         String obpmUrl = obmpClientService.getProxyUrl(url);
-        headers.put("host", getHeaderHost(obpmUrl));
+        checkHeaderHost(headers, obpmUrl);
+        checkHeaderAuth(headers);
         // 使用 HttpUtil 发送 GET 请求
         HttpResponse response = HttpUtil.createGet(obpmUrl)
                 .addHeaders(headers) // 添加请求头
@@ -62,14 +58,10 @@ public class ObpmProxyController {
                     "/form/formCustSql/**",
                     "/sys/tools/**","/sys/dataDict/**"})
     public JSONObject proxyPost(HttpServletRequest request, @RequestParam(required = false) String url, @RequestBody(required = false) String body, @RequestHeader Map<String, String> headers) {
-        if(ObjectUtils.isEmpty(url)){
-            url = request.getRequestURI();
-            if(ObjectUtils.isNotEmpty(request.getQueryString())){
-                url += "?" + request.getQueryString();
-            }
-        }
+        checkRequestUrl(url, request);
         String obpmUrl = obmpClientService.getProxyUrl(url);
-        headers.put("host", getHeaderHost(obpmUrl));
+        checkHeaderHost(headers, obpmUrl);
+        checkHeaderAuth(headers);
         // 使用 HttpUtil 发送 POST 请求
         HttpRequest request2 = HttpUtil.createPost(obpmUrl)
                 .addHeaders(headers); // 添加请求头
@@ -80,6 +72,42 @@ public class ObpmProxyController {
         return convertJsonResult(response.body());
     }
 
+    private String checkRequestUrl(String url, HttpServletRequest request){
+        if(ObjectUtils.isEmpty(url)){
+            url = request.getRequestURI();
+            if(ObjectUtils.isNotEmpty(request.getQueryString())){
+                url += "?" + request.getQueryString();
+            }
+        }
+        return url;
+    }
+
+    @SneakyThrows
+    private void checkHeaderHost(Map<String, String> headers, String url){
+        String strHost = null;
+        URL url2 = new URL(url);
+
+        strHost = url2.getHost();
+        int port = url2.getPort();
+        if(port!=-1 && port!=80 && port!=443){
+            strHost += ":"+port;
+        }
+        headers.put("host", strHost);
+    }
+
+    private void checkHeaderAuth(Map<String, String> headers){
+        LoginUser user = SecurityFrameworkUtils.getLoginUser();
+        if(user!=null && ObjectUtils.isNotEmpty(user.getUserKey())){
+            //header: eap-user, eap-sign
+            String userKey = user.getUserKey();
+            headers.put("eap-user", userKey);
+            headers.put("eap-sign", ObpmUtil.eapSign(userKey));
+        }else{
+            // mark only
+            headers.put("eap-proxy", "true");
+        }
+    }
+
     private JSONObject convertJsonResult(String responseBody){
         JSONObject jsonResult =  JSONObject.parseObject(responseBody);
         // code 转为数字
@@ -88,18 +116,5 @@ public class ObpmProxyController {
             jsonResult.put("code", code);
         }
         return jsonResult;
-    }
-
-    @SneakyThrows
-    private String getHeaderHost(String url){
-            String strHost = null;
-            URL url2 = new URL(url);
-
-        strHost = url2.getHost();
-        int port = url2.getPort();
-        if(port!=-1 && port!=80 && port!=443){
-            strHost += ":"+port;
-        }
-        return strHost;
     }
 }

@@ -85,9 +85,7 @@ public class ObmpClientService {
     }
 
     private String eapSign(String user){
-        //sign=md5(userKey+day+sysPassword)
-        String sign = DigestUtil.md5Hex(user + DateUtil.today() +"eap");
-        return sign;
+        return ObpmUtil.eapSign(user);
     }
 
 

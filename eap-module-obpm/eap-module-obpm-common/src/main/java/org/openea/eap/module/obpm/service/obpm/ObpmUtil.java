@@ -11,4 +11,10 @@ public class ObpmUtil {
     public static void setObpmToken(String token) {
         obpmTokenThread.set(token);
     }
+
+    public static String eapSign(String user){
+        //sign=md5(userKey+day+sysPassword)
+        String sign = DigestUtil.md5Hex(user + DateUtil.today() +"eap");
+        return sign;
+    }
 }
