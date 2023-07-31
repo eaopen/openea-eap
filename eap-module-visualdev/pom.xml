@@ -10,5 +10,23 @@
     </parent>
 
     <artifactId>eap-module-visualdev</artifactId>
+    <packaging>pom</packaging>
+    <modules>
+        <module>eap-visualdev-common</module>
+        <module>eap-visualdev-base</module>
+        <module>eap-visualdev-onlinedev</module>
+        <module>eap-visualdev-generater</module>
+        <module>eap-visualdev-portal</module>
+    </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.mybatis.dynamic-sql</groupId>
+                <artifactId>mybatis-dynamic-sql</artifactId>
+                <version>1.5.0</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
 </project>
