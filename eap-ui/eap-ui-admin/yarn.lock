@@ -1653,6 +1653,21 @@ aes-decrypter@1.0.3:
   dependencies:
     pkcs7 "^0.2.3"
 
+ag-grid-community@^28.0.2:
+  version "28.2.1"
+  resolved "https://registry.npmmirror.com/ag-grid-community/-/ag-grid-community-28.2.1.tgz#50778cb2254ee79497222781909d8364007dd91e"
+  integrity sha512-DMZh/xD/FqYP17qJ1M92PolTYe+hrKuEaf+A4h13O6qn2x/xZQrTRGW5DgnQLR/uLMe1XXZQPKR3UKgAlKo69A==
+
+ag-grid-enterprise@^28.0.2:
+  version "28.2.1"
+  resolved "https://registry.npmmirror.com/ag-grid-enterprise/-/ag-grid-enterprise-28.2.1.tgz#e5685c879b2a80ee9a4e111d5b8f0774fcc682b0"
+  integrity sha512-FIqIiaMMO9m8eqfu64rZ7dOK8vQFqD+Dp9CTpSfjMtyUp4IoRE36c+mUpUGLX/bIix9LltpaUmr185nFM1Alrw==
+
+ag-grid-vue@^28.0.0:
+  version "28.2.1"
+  resolved "https://registry.npmmirror.com/ag-grid-vue/-/ag-grid-vue-28.2.1.tgz#99f0800886d520144af335e15f6a5032b15dc5e2"
+  integrity sha512-Ex+sCiX0Jl1+ltWmsdx9V/yBp+/aG2WuqNCsj1/i3BK1Si8n7UiXDMA81/vchqhXqGIE3H7dsX/qUu20uZJ3AA==
+
 aggregate-error@^3.0.0:
   version "3.1.0"
   resolved "https://registry.npmmirror.com/aggregate-error/-/aggregate-error-3.1.0.tgz"
@@ -3184,8 +3199,9 @@ decamelize@^1.2.0:
   resolved "https://registry.npmmirror.com/decamelize/-/decamelize-1.2.0.tgz"
 
 decode-uri-component@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.npmmirror.com/decode-uri-component/-/decode-uri-component-0.2.0.tgz"
+  version "0.2.2"
+  resolved "https://registry.npmmirror.com/decode-uri-component/-/decode-uri-component-0.2.2.tgz#e69dbe25d37941171dd540e024c444cd5188e1e9"
+  integrity sha512-FqUYQ+8o158GyGTrMFJms9qh3CqTKvAqgqsTnkLI8sKu0028orqBhxNMFkFen0zGyg6epACD32pjVk58ngIErQ==
 
 deep-equal@^1.0.1:
   version "1.1.1"
@@ -8813,6 +8829,11 @@ vm-browserify@^1.0.1:
   version "1.1.2"
   resolved "https://registry.npmmirror.com/vm-browserify/-/vm-browserify-1.1.2.tgz"
 
+vue-class-component@^7.2.6:
+  version "7.2.6"
+  resolved "https://registry.npmmirror.com/vue-class-component/-/vue-class-component-7.2.6.tgz#8471e037b8e4762f5a464686e19e5afc708502e4"
+  integrity sha512-+eaQXVrAm/LldalI272PpDe3+i4mPis0ORiMYxF6Ae4hyuCh15W8Idet7wPUEs4N4YptgFHGys4UrgNQOMyO6w==
+
 vue-count-to@1.0.13:
   version "1.0.13"
   resolved "https://registry.npmmirror.com/vue-count-to/-/vue-count-to-1.0.13.tgz"
@@ -8864,6 +8885,11 @@ vue-meta@^2.4.0:
   resolved "https://registry.npmmirror.com/vue-meta/-/vue-meta-2.4.0.tgz"
   dependencies:
     deepmerge "^4.2.2"
+
+vue-property-decorator@^9.1.2:
+  version "9.1.2"
+  resolved "https://registry.npmmirror.com/vue-property-decorator/-/vue-property-decorator-9.1.2.tgz#266a2eac61ba6527e2e68a6933cfb98fddab5457"
+  integrity sha512-xYA8MkZynPBGd/w5QFJ2d/NM0z/YeegMqYTphy7NJQXbZcuU6FC6AOdUAcy4SXP+YnkerC6AfH+ldg7PDk9ESQ==
 
 vue-quill-editor@^3.0.6:
   version "3.0.6"
