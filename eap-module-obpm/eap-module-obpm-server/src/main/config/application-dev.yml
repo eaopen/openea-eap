@@ -1,0 +1,30 @@
+server:
+  port: ${port:8102}
+  servlet:
+    context-path: ${context-path:/}
+    session:
+      timeout: 1d
+  shutdown: graceful #开启优雅停机
+
+spring:
+  lifecycle:
+    timeout-per-shutdown-phase: 30s #设置缓冲时间 默认30s
+  datasource:
+    driver-class-name: ${jdbc_driver:com.mysql.cj.jdbc.Driver}
+    url: ${jdbc_url:jdbc:mysql://localhost:3306/bpm-db?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false&nullCatalogMeansCurrent=true}
+    username: ${jdbc_user:root}
+    password: ${jdbc_password:root2020}
+  redis:
+    host: ${redis_host:localhost}
+    port: ${redis_port:6379}
+    password: ${redis_password:}
+    database: ${redis_database:0}
+
+  file:
+    base-dir: ${PWD:.}/data/files/
+
+## 上传配置 db 存数据库 ，具体请看 IUploader 实现类
+uploader:
+  default: ordinary
+  ordinary:
+    path: ${PWD:.}/data/files/

@@ -2,11 +2,13 @@ package org.openea.eap.module.obpm.service.org;
 
 import org.openbpm.org.api.model.IGroup;
 import org.openbpm.org.api.service.GroupRelationService;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@ConditionalOnProperty(prefix = "eap.obpm", name = "eap-adapter", havingValue = "true")
 public class EapGroupRelationServiceImpl implements GroupRelationService {
     @Override
     public List<? extends IGroup> getPostByGroupAndRoles(String orgIds, String roleKey) {

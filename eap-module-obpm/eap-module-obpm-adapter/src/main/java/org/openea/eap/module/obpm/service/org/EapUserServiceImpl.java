@@ -4,12 +4,14 @@ import org.openbpm.org.api.model.IUser;
 import org.openbpm.org.api.model.IUserRole;
 import org.openbpm.org.api.service.UserService;
 import org.openea.eap.module.system.service.user.AdminUserService;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
 
 @Service
+@ConditionalOnProperty(prefix = "eap.obpm", name = "eap-adapter", havingValue = "true")
 public class EapUserServiceImpl implements UserService{
 
     @Resource

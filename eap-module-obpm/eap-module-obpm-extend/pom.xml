@@ -9,13 +9,14 @@
         <version>${revision}</version>
     </parent>
 
-    <artifactId>eap-module-obpm-form</artifactId>
+    <artifactId>eap-module-obpm-extend</artifactId>
 
     <dependencies>
         <dependency>
             <groupId>org.openea.eap</groupId>
-            <artifactId>eap-module-obpm-common</artifactId>
+            <artifactId>eap-module-obpm-adapter</artifactId>
             <version>${project.version}</version>
+            <scope>provided</scope>
         </dependency>
 <!--        <dependency>-->
 <!--            <groupId>org.szopen.openbpm</groupId>-->

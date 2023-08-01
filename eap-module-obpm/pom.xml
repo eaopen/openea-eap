@@ -14,10 +14,9 @@
         <module>eap-module-obpm-biz</module>
 
         <!-- 内嵌OpenBPM服务 -->
-<!--        <module>eap-module-obpm-common</module>-->
-<!--        <module>eap-module-obpm-form</module>-->
-<!--        <module>eap-module-obpm-wf</module>-->
-<!--        <module>eap-module-obpm-server</module>-->
+        <module>eap-module-obpm-adapter</module>
+        <module>eap-module-obpm-extend</module>
+        <module>eap-module-obpm-server</module>
     </modules>
     <artifactId>eap-module-obpm</artifactId>
     <packaging>pom</packaging>
@@ -27,7 +26,7 @@
         集成OpenBPM
     </description>
     <properties>
-        <openbpm.version>3.5.1</openbpm.version>
+        <openbpm.version>3.5.1b</openbpm.version>
     </properties>
 
     <repositories>
