@@ -9,11 +9,15 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <modules>
+        <!-- 远程调用OpenBPM服务 -->
         <module>eap-module-obpm-api</module>
-        <module>eap-module-obpm-common</module>
-        <module>eap-module-obpm-form</module>
-        <module>eap-module-obpm-wf</module>
         <module>eap-module-obpm-biz</module>
+
+        <!-- 内嵌OpenBPM服务 -->
+<!--        <module>eap-module-obpm-common</module>-->
+<!--        <module>eap-module-obpm-form</module>-->
+<!--        <module>eap-module-obpm-wf</module>-->
+<!--        <module>eap-module-obpm-server</module>-->
     </modules>
     <artifactId>eap-module-obpm</artifactId>
     <packaging>pom</packaging>
@@ -25,6 +29,24 @@
     <properties>
         <openbpm.version>3.5.1</openbpm.version>
     </properties>
+
+    <repositories>
+        <repository>
+            <id>aliyunmaven</id>
+            <name>aliyun</name>
+            <url>https://maven.aliyun.com/repository/public</url>
+        </repository>
+        <repository>
+            <id>openea-reps-mvn</id>
+            <name>coding-openea</name>
+            <url>https://openea-maven.pkg.coding.net/repository/reps/mvn/</url>
+        </repository>
+        <repository>
+            <id>github-mvn-openea</id>
+            <name>github-openea</name>
+            <url>https://maven.pkg.github.com/eaopen/mvn-repo</url>
+        </repository>
+    </repositories>
 
     <dependencyManagement>
         <dependencies>
@@ -59,7 +81,41 @@
 
             <dependency>
                 <groupId>org.szopen.openbpm</groupId>
+                <artifactId>bpm-base-api</artifactId>
+                <version>${openbpm.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.szopen.openbpm</groupId>
+                <artifactId>bpm-base-rest</artifactId>
+                <version>${openbpm.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.szopen.openbpm</groupId>
+                <artifactId>bpm-org-api</artifactId>
+                <version>${openbpm.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.szopen.openbpm</groupId>
+                <artifactId>bpm-sys-api</artifactId>
+                <version>${openbpm.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.szopen.openbpm</groupId>
                 <artifactId>form-core</artifactId>
+                <version>${openbpm.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.szopen.openbpm</groupId>
+                <artifactId>bus-rest</artifactId>
+                <version>${openbpm.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.szopen.openbpm</groupId>
+                <artifactId>form-rest</artifactId>
                 <version>${openbpm.version}</version>
             </dependency>
 

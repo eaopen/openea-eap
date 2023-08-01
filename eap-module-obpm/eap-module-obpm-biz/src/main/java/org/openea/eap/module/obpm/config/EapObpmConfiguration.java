@@ -11,9 +11,4 @@ public class EapObpmConfiguration {
     @Value("${eap.obpm.apiBaseUrl:/obpm-api}")
     private String obpmApiBaseUrl;
 
-//    @Value("${eap.obpm.webBaseUrl:/obpm}")
-//    private String obpmWebBaseUrl;
-//
-//    @Value("${eap.obpm.adminBaseUrl:/obpm}")
-//    private String obpmAdminBaseUrl;
 }

@@ -1,13 +1,11 @@
 package org.openea.eap.module.obpm.service.obpm;
 
-import cn.hutool.core.date.DateUtil;
-import cn.hutool.crypto.digest.DigestUtil;
 import cn.hutool.http.HttpUtil;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
+import cn.hutool.json.JSONArray;
+import cn.hutool.json.JSONObject;
+import cn.hutool.json.JSONUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ObjectUtils;
-import org.openea.eap.framework.common.exception.ServiceException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -30,17 +28,17 @@ public class ObmpClientService {
         params.put("password", password);
         params.put("sign", eapSign(username));
         String result = HttpUtil.post(obpmClientBaseUrl+"/eap/login", params);
-        JSONObject resultObj = JSONObject.parseObject(result);
+        JSONObject resultObj = JSONUtil.parseObj(result);
 
         JSONObject jsonResult = new JSONObject();
-        if(resultObj.getBoolean("isOk")){
+        if(resultObj.getBool("isOk")){
             JSONObject resultData = resultObj.getJSONObject("data");
-            String obpmToken =  resultData.getString("token");
+            String obpmToken =  resultData.getStr("token");
             ObpmUtil.setObpmToken(obpmToken);
             jsonResult.put("token",obpmToken);
             jsonResult.put("user", resultData.getJSONObject("user"));
         }else{
-            jsonResult.put("msg", resultObj.getString("msg"));
+            jsonResult.put("msg", resultObj.getStr("msg"));
         }
         return jsonResult;
     }
@@ -55,12 +53,12 @@ public class ObmpClientService {
         if(result.startsWith("<html>")){
             throw new RuntimeException(result);
         }
-        JSONObject resultObj = JSONObject.parseObject(result);
-        if(resultObj.getBoolean("isOk")){
+        JSONObject resultObj = JSONUtil.parseObj(result);
+        if(resultObj.getBool("isOk")){
             userInfo = resultObj.getJSONObject("data");
         }else{
             //jsonResult.put("msg", resultObj.getString("msg"));
-            throw new RuntimeException(resultObj.getString("msg"));
+            throw new RuntimeException(resultObj.getStr("msg"));
         }
         return userInfo;
     }
@@ -76,11 +74,11 @@ public class ObmpClientService {
             params.put("system", systemKey);
             params.put("sign", eapSign(userKey));
             String result = HttpUtil.get(obpmClientBaseUrl+"/eap/userMenu", params, 6000);
-            resultObj = JSONObject.parseObject(result);
-            if(resultObj!=null && resultObj.getBoolean("isOk")){
+            resultObj = JSONUtil.parseObj(result);
+            if(resultObj!=null && resultObj.getBool("isOk")){
                 JSONObject resultData = resultObj.getJSONObject("data");
                 JSONArray menuArray = resultData.getJSONArray("menuList");
-                menuList = menuArray.toJavaList(JSONObject.class);
+                menuList = menuArray.toList(JSONObject.class);
                 return menuList;
             }
         }catch (Exception e){
@@ -89,7 +87,7 @@ public class ObmpClientService {
         }
         if(resultObj!=null && resultObj.containsKey("msg")){
             //throw new ServiceException(1, resultObj.getString("msg"));
-            log.warn("queryUserMenu(user="+userKey+") return: "+resultObj.getString("msg"));
+            log.warn("queryUserMenu(user="+userKey+") return: "+resultObj.getStr("msg"));
         }
         return menuList;
     }

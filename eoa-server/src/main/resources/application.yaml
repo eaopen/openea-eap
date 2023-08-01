@@ -102,6 +102,13 @@ spring:
           username: ${jdbc_user:eoa}
           password: ${jdbc_password:eoa}
 
+        obpm: # 集成OpenBPM使用
+          name: ${obpm_jdbc_db:bpm-db}
+          driver-class-name: ${jdbc_driver:com.mysql.cj.jdbc.Driver}
+          url: jdbc:mysql://${obpm_jdbc_host:10.0.4.13:3306}/${spring.datasource.dynamic.datasource.obpm.name}?useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+          #url: ${obpm_jdbc_url:jdbc:mysql://mysql:3306/bpm-db?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false&nullCatalogMeansCurrent=true}
+          username: ${obpm_jdbc_user:bpm}
+          password: ${obpm_jdbc_password:bpm}
   # liquibase (openBpm)
   liquibase:
     enabled: ${liquibase_enabled:false}
@@ -186,6 +193,11 @@ eap:
     base-package: org.openea.eap
   enableOpenBpm: ${obpm_enable:false}
   userDataType: ${eap_userDataType:}
+  obpm:
+    proxy: ${obpm_proxy:true}
+    apiBaseUrl: ${obpm_api_baseurl:/obpm-server}
+    webBaseUrl: ${obpm_web_baseurl:/obpm-web}
+    adminBaseUrl: ${obpm_admin_baseurl:/obpm-admin}
   web:
     admin-ui:
       url: http://dashboard.eap.openea.org # Admin 管理后台 UI 的地址
@@ -294,40 +306,6 @@ eap:
     callback-url: http://yunai.natapp1.cc/admin-api/pay/notify/callback
     return-url: http://yunai.natapp1.cc/admin-api/pay/notify/return
   demo: false # 开启演示模式
-
---- #################### OpenBPM相关配置 ####################
-
-eap:
-  obpm:
-    proxy: ${obpm_proxy:true}
-    apiBaseUrl: ${obpm_api_baseurl:/obpm-server}
-    webBaseUrl: ${obpm_web_baseurl:/obpm-web}
-    adminBaseUrl: ${obpm_admin_baseurl:/obpm-admin}
-
-###  预备用作直接整合OpenBPM代码用 ####
-
-spring:
-  datasource:
-    obpm:
-      enable: true
-      type: ${obpm_ds_type:com.zaxxer.hikari.HikariDataSource}
-      driver-class-name: ${jdbc_driver:com.mysql.cj.jdbc.Driver}
-      url: ${obpm_jdbc_url:jdbc:mysql://mysql:3306/bpm-db?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false&nullCatalogMeansCurrent=true}
-      username: ${obpm_jdbc_user:bpm}
-      password: ${obpm_jdbc_password:bpm}
-      db-type: ${db_type:mysql}
-      hikari:
-        pool-name: obpm-hikari-pool
-        maximum-pool-size: ${mysql_pool_size:100}
-        minimum-idle: 5
-        idle-timeout: 180000
-        connection-timeout: 30000
-        max-lifetime: 3600000
-        auto-commit: true
-        connection-init-sql: SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci;
-        connection-test-query: SELECT 1
-
-
 
 --- #################### eap相关配置2 ####################
 

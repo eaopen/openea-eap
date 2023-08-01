@@ -3,7 +3,8 @@ package org.openea.eap.module.obpm.controller.admin.proxy;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
 import cn.hutool.http.HttpUtil;
-import com.alibaba.fastjson.JSONObject;
+import cn.hutool.json.JSONObject;
+import cn.hutool.json.JSONUtil;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -110,10 +111,10 @@ public class ObpmProxyController {
     }
 
     private JSONObject convertJsonResult(String responseBody){
-        JSONObject jsonResult =  JSONObject.parseObject(responseBody);
+        JSONObject jsonResult = JSONUtil.parseObj(responseBody);
         // code 转为数字
         if(jsonResult.containsKey("code")){
-            int code = jsonResult.getInteger("code");
+            int code = jsonResult.getInt("code");
             jsonResult.put("code", code);
         }
         return jsonResult;

@@ -12,7 +12,8 @@
 
     <name>${project.artifactId}</name>
     <description>
-        bpm 包下，业务流程管理（Business Process Management），我们放工作流的功能，基于 Flowable 6 版本实现。
+        bpm 包下，业务流程管理（Business Process Management）
+        工作流的功能，基于 Flowable6/Activity5 版本实现。
         例如说：流程定义、表单配置、审核中心（我的申请、我的待办、我的已办）等等
     </description>
     <dependencies>
@@ -24,9 +25,39 @@
 
         <dependency>
             <groupId>org.openea.eap</groupId>
-            <artifactId>eap-module-obpm-common</artifactId>
+            <artifactId>eap-module-system-biz</artifactId>
             <version>${project.version}</version>
         </dependency>
+
+
+        <!-- 业务组件 -->
+        <dependency>
+            <groupId>org.openea.eap</groupId>
+            <artifactId>eap-spring-boot-starter-biz-operatelog</artifactId>
+        </dependency>
+
+        <!-- Web 相关 -->
+        <dependency>
+            <groupId>org.openea.eap</groupId>
+            <artifactId>eap-spring-boot-starter-security</artifactId>
+        </dependency>
+
+        <!-- DB 相关 -->
+        <dependency>
+            <groupId>org.openea.eap</groupId>
+            <artifactId>eap-spring-boot-starter-mybatis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-generator</artifactId> <!-- 代码生成器，使用它解析表结构 -->
+        </dependency>
+
+        <dependency>
+            <groupId>org.openea.eap</groupId>
+            <artifactId>eap-spring-boot-starter-redis</artifactId>
+        </dependency>
+
+
 
     </dependencies>
 </project>

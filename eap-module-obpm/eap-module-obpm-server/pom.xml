@@ -9,7 +9,7 @@
         <version>${revision}</version>
     </parent>
 
-    <artifactId>eap-module-obpm-form</artifactId>
+    <artifactId>eap-module-obpm-server</artifactId>
 
     <dependencies>
         <dependency>
@@ -17,14 +17,17 @@
             <artifactId>eap-module-obpm-common</artifactId>
             <version>${project.version}</version>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>org.szopen.openbpm</groupId>-->
-<!--            <artifactId>bus-rest</artifactId>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.szopen.openbpm</groupId>-->
-<!--            <artifactId>form-rest</artifactId>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>org.openea.eap</groupId>
+            <artifactId>eap-module-obpm-form</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openea.eap</groupId>
+            <artifactId>eap-module-obpm-wf</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
     </dependencies>
 
 </project>

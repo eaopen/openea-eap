@@ -144,6 +144,7 @@
     <distributionManagement>
         <repository>
             <id>github-mvn-openea</id>
+            <name>github-openea</name>
             <url>https://maven.pkg.github.com/eaopen/mvn-repo</url>
         </repository>
     </distributionManagement>
@@ -151,6 +152,7 @@
     <repositories>
         <repository>
             <id>github-mvn-openea</id>
+            <name>github-openea</name>
             <url>https://maven.pkg.github.com/eaopen/mvn-repo</url>
             <releases>
                 <enabled>true</enabled>

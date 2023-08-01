@@ -1,12 +1,11 @@
-package org.openea.eap.module.obpm.service.permission;
+package org.openea.eap.module.obpm.service.obpm;
 
-import com.alibaba.fastjson.JSONObject;
+import cn.hutool.json.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.openea.eap.framework.common.enums.CommonStatusEnum;
-import org.openea.eap.module.obpm.service.obpm.ObmpClientService;
 import org.openea.eap.module.system.dal.dataobject.permission.MenuDO;
 import org.openea.eap.module.system.dal.dataobject.user.AdminUserDO;
 import org.openea.eap.module.system.enums.permission.MenuTypeEnum;
@@ -78,7 +77,7 @@ public class ObpmPermissionServiceImpl extends PermissionServiceImpl implements 
             for(JSONObject sysRes: listResource){
                 // ignore button
                 if(!withButton){
-                    String type = sysRes.getString("type");
+                    String type = sysRes.getStr("type");
                     if("button".equals(type)) {continue;}
                 }
                 listMenu.add(convertMenu(sysRes));
@@ -99,8 +98,8 @@ public class ObpmPermissionServiceImpl extends PermissionServiceImpl implements 
         if(menu.getParentId()==null){
             menu.setParentId(0L);
         }
-        menu.setName(sysRes.getString("name"));
-        menu.setAlias(sysRes.getString("alias"));
+        menu.setName(sysRes.getStr("name"));
+        menu.setAlias(sysRes.getStr("alias"));
 
         //menuDO.setPermission( bean.getPermission() );
         // status/visible/keepAlive/alwaysShow
@@ -110,7 +109,7 @@ public class ObpmPermissionServiceImpl extends PermissionServiceImpl implements 
         menu.setAlwaysShow(true);
 
         // check type
-        String type = sysRes.getString("type");
+        String type = sysRes.getStr("type");
         if("menu".equals(type)){
             menu.setType(2);
         }else if("button".equals(type)){
@@ -122,11 +121,11 @@ public class ObpmPermissionServiceImpl extends PermissionServiceImpl implements 
         // check sort (sn -> sort)
         int sort = 0;
         if(sysRes.containsKey("sn")){
-            sort = sysRes.getInteger("sn");
+            sort = sysRes.getInt("sn");
         }
         menu.setSort(sort);
         // icon
-        String icon = sysRes.getString("icon");
+        String icon = sysRes.getStr("icon");
         if(ObjectUtils.isEmpty(icon)){
             if(menu.getParentId()==0L){
                 // top default icon
@@ -145,7 +144,7 @@ public class ObpmPermissionServiceImpl extends PermissionServiceImpl implements 
 
         // 2. 菜单转换 path
         // path (url -> path)
-        String resUrl = sysRes.getString("url");
+        String resUrl = sysRes.getStr("url");
 
         // 2.1 obpm web, default setting
         //String componentName = null;

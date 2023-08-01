@@ -26,6 +26,28 @@
         </dependency>
 
 
+        <dependency>
+            <groupId>org.szopen.openbpm</groupId>
+            <artifactId>bpm-base-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.szopen.openbpm</groupId>
+            <artifactId>bpm-base-rest</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.szopen.openbpm</groupId>
+            <artifactId>bpm-org-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.szopen.openbpm</groupId>
+            <artifactId>bpm-sys-api</artifactId>
+        </dependency>
+
+
+
+
         <!-- DB 相关 -->
         <dependency>
             <groupId>org.openea.eap</groupId>

@@ -1,21 +1,17 @@
-package org.openea.eap.module.obpm.service.auth;
+package org.openea.eap.module.obpm.service.obpm;
 
 import cn.hutool.core.util.ObjectUtil;
-import com.alibaba.fastjson.JSONObject;
+import cn.hutool.json.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ObjectUtils;
 import org.openea.eap.framework.common.enums.CommonStatusEnum;
 import org.openea.eap.framework.common.enums.UserTypeEnum;
 import org.openea.eap.framework.common.exception.ServiceException;
-import org.openea.eap.framework.common.util.date.DateUtils;
 import org.openea.eap.framework.security.core.LoginUser;
 import org.openea.eap.framework.security.core.util.SecurityFrameworkUtils;
-import org.openea.eap.module.obpm.service.obpm.ObmpClientService;
-import org.openea.eap.module.obpm.service.obpm.ObpmUtil;
 import org.openea.eap.module.system.api.social.dto.SocialUserBindReqDTO;
 import org.openea.eap.module.system.controller.admin.auth.vo.AuthLoginReqVO;
 import org.openea.eap.module.system.controller.admin.auth.vo.AuthLoginRespVO;
-import org.openea.eap.module.system.controller.admin.user.vo.user.UserCreateReqVO;
 import org.openea.eap.module.system.convert.auth.AuthConvert;
 import org.openea.eap.module.system.dal.dataobject.oauth2.OAuth2AccessTokenDO;
 import org.openea.eap.module.system.dal.dataobject.user.AdminUserDO;
@@ -107,11 +103,11 @@ public class ObpmAuthServiceImpl extends AdminAuthServiceImpl implements AdminAu
     private AdminUserDO createAdminUser(JSONObject jsonUser) {
         AdminUserDO user = new AdminUserDO();
         // 保存原密码 “{sha2}+obpm加密后密码”
-        user.setUsername(jsonUser.getString("account"));
-        user.setPassword("{sha2}"+jsonUser.getString("password"));
-        user.setMobile(jsonUser.getString("mobile"));
-        user.setEmail(jsonUser.getString("email"));
-        user.setNickname(jsonUser.getString("fullname"));
+        user.setUsername(jsonUser.getStr("account"));
+        user.setPassword("{sha2}"+jsonUser.getStr("password"));
+        user.setMobile(jsonUser.getStr("mobile"));
+        user.setEmail(jsonUser.getStr("email"));
+        user.setNickname(jsonUser.getStr("fullname"));
         user.setStatus(CommonStatusEnum.ENABLE.getStatus());
         userMapper.insert(user);
         user = userService.getUserByUsername(user.getUsername());
@@ -127,11 +123,11 @@ public class ObpmAuthServiceImpl extends AdminAuthServiceImpl implements AdminAu
         JSONObject jsonResult = obpmLogin(username, password);
         if(jsonResult.containsKey("user")){
             // login success
-            if(jsonResult.containsKey("msg") && ObjectUtils.isNotEmpty(jsonResult.getString("msg"))){
-                log.warn("obpm login:"+jsonResult.getString("msg"));
+            if(jsonResult.containsKey("msg") && ObjectUtils.isNotEmpty(jsonResult.getStr("msg"))){
+                log.warn("obpm login:"+jsonResult.getStr("msg"));
             }
             // obpm/eap 同用一个token？
-            String obpmToken = jsonResult.getString("token");
+            String obpmToken = jsonResult.getStr("token");
             JSONObject obpmUser = jsonResult.getJSONObject("user");
             if (user == null) {
                 // 新增用户
@@ -149,7 +145,7 @@ public class ObpmAuthServiceImpl extends AdminAuthServiceImpl implements AdminAu
         }else{
             // fail
             //throw exception(AUTH_LOGIN_BAD_CREDENTIALS);
-            throw new ServiceException(1002000000,"obpm login:"+jsonResult.getString("msg"));
+            throw new ServiceException(1002000000,"obpm login:"+jsonResult.getStr("msg"));
         }
         return user;
     }

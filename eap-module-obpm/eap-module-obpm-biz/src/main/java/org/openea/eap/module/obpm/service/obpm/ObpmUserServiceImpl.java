@@ -1,4 +1,4 @@
-package org.openea.eap.module.obpm.service.user;
+package org.openea.eap.module.obpm.service.obpm;
 
 
 import lombok.extern.slf4j.Slf4j;
