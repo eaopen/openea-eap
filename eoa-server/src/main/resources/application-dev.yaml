@@ -50,13 +50,13 @@ spring:
           driver-class-name: com.mysql.cj.jdbc.Driver
           username: ${jdbc_user:eoa}
           password: ${jdbc_password:eoa}
-        obpm:
-          name: ${obpm_jdbc_db:bpm-db}
-          driver-class-name: ${jdbc_driver:com.mysql.cj.jdbc.Driver}
-          #url: ${obpm_jdbc_url:jdbc:mysql://mysql:3306/bpm-db?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false&nullCatalogMeansCurrent=true}
-          url: jdbc:mysql://${obpm_jdbc_host:sh-cynosdbmysql-grp-1cn2v14s.sql.tencentcdb.com:21188}/${spring.datasource.dynamic.datasource.obpm.name}?useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
-          username: ${obpm_jdbc_user:bpm}
-          password: ${obpm_jdbc_password:bpm}
+#        obpm:
+#          name: ${obpm_jdbc_db:bpm-db}
+#          driver-class-name: ${jdbc_driver:com.mysql.cj.jdbc.Driver}
+#          #url: ${obpm_jdbc_url:jdbc:mysql://mysql:3306/bpm-db?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false&nullCatalogMeansCurrent=true}
+#          url: jdbc:mysql://${obpm_jdbc_host:sh-cynosdbmysql-grp-1cn2v14s.sql.tencentcdb.com:21188}/${spring.datasource.dynamic.datasource.obpm.name}?useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+#          username: ${obpm_jdbc_user:bpm}
+#          password: ${obpm_jdbc_password:bpm}
 
   # Redis 配置。Redisson 默认的配置足够使用，一般不需要进行调优
   redis:

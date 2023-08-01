@@ -102,13 +102,13 @@ spring:
           username: ${jdbc_user:eoa}
           password: ${jdbc_password:eoa}
 
-        obpm: # 集成OpenBPM使用
-          name: ${obpm_jdbc_db:bpm-db}
-          driver-class-name: ${jdbc_driver:com.mysql.cj.jdbc.Driver}
-          url: jdbc:mysql://${obpm_jdbc_host:10.0.4.13:3306}/${spring.datasource.dynamic.datasource.obpm.name}?useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
-          #url: ${obpm_jdbc_url:jdbc:mysql://mysql:3306/bpm-db?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false&nullCatalogMeansCurrent=true}
-          username: ${obpm_jdbc_user:bpm}
-          password: ${obpm_jdbc_password:bpm}
+#        obpm: # 集成OpenBPM使用
+#          name: ${obpm_jdbc_db:bpm-db}
+#          driver-class-name: ${jdbc_driver:com.mysql.cj.jdbc.Driver}
+#          url: jdbc:mysql://${obpm_jdbc_host:10.0.4.13:3306}/${spring.datasource.dynamic.datasource.obpm.name}?useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+#          #url: ${obpm_jdbc_url:jdbc:mysql://mysql:3306/bpm-db?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false&nullCatalogMeansCurrent=true}
+#          username: ${obpm_jdbc_user:bpm}
+#          password: ${obpm_jdbc_password:bpm}
   # liquibase (openBpm)
   liquibase:
     enabled: ${liquibase_enabled:false}
