@@ -9,7 +9,7 @@
         <version>${revision}</version>
     </parent>
 
-    <artifactId>eap-module-obpm-common</artifactId>
+    <artifactId>eap-module-obpm-adapter</artifactId>
     <name>${project.artifactId}</name>
 
     <dependencies>
@@ -45,24 +45,10 @@
             <artifactId>bpm-sys-api</artifactId>
         </dependency>
 
-
-
-
         <!-- DB 相关 -->
         <dependency>
             <groupId>org.openea.eap</groupId>
             <artifactId>eap-spring-boot-starter-mybatis</artifactId>
-        </dependency>
-
-
-        <!-- 业务组件 -->
-        <dependency>
-            <groupId>org.openea.eap</groupId>
-            <artifactId>eap-spring-boot-starter-biz-operatelog</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.openea.eap</groupId>
-            <artifactId>eap-spring-boot-starter-biz-data-permission</artifactId>
         </dependency>
 
         <!-- Web 相关 -->
@@ -76,20 +62,13 @@
             <artifactId>eap-spring-boot-starter-security</artifactId>
         </dependency>
 
-
-
-        <!-- Test 测试相关 -->
-        <dependency>
-            <groupId>org.openea.eap</groupId>
-            <artifactId>eap-spring-boot-starter-test</artifactId>
-        </dependency>
-
         <!-- eap system framework -->
         <dependency>
             <groupId>org.openea.eap</groupId>
             <artifactId>eap-module-system-biz</artifactId>
             <version>${revision}</version>
         </dependency>
+
     </dependencies>
 
 </project>
