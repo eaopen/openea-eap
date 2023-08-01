@@ -63,7 +63,7 @@ services:
   admin:
     container_name: eap-admin
     build:
-      context: ./eap-ui-admin
+      context: ../eap-ui/eap-ui-admin
       args:
         NODE_ENV:
           ENV=${NODE_ENV:-production}

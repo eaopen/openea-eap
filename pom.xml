@@ -26,9 +26,10 @@
         <module>eap-module-visualdev</module>
         <module>eap-module-obpm</module>
         <module>eap-module-report</module>
+        <module>eap-biz-extend</module>
 
         <!-- 示例项目 -->
-<!--        <module>eap-example</module>-->
+<!--        <module>eap-biz-extend/eap-example</module>-->
 
     </modules>
 
@@ -223,7 +224,7 @@
         <profile>
             <id>biz-cms</id>
             <modules>
-                <module>eap-biz-cms</module>
+                <module>eap-biz-extend/eap-biz-cms</module>
             </modules>
         </profile>
 
@@ -231,7 +232,7 @@
         <profile>
             <id>biz-crm</id>
             <modules>
-                <module>eap-biz-crm</module>
+                <module>eap-biz-extend/eap-biz-crm</module>
             </modules>
         </profile>
 
@@ -239,7 +240,7 @@
         <profile>
             <id>biz-mall</id>
             <modules>
-                <module>eap-biz-mall</module>
+                <module>eap-biz-extend/eap-biz-mall</module>
             </modules>
         </profile>
 

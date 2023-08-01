@@ -2,31 +2,22 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.openea.eap</groupId>
         <artifactId>eap</artifactId>
         <version>${revision}</version>
     </parent>
-    <modelVersion>4.0.0</modelVersion>
-    <modules>
 
-    </modules>
-    <artifactId>eap-biz-cms</artifactId>
+    <artifactId>eap-biz-extend</artifactId>
     <packaging>pom</packaging>
 
-    <name>${project.artifactId}</name>
-    <description>
-        内容相关
-    </description>
 
-    <profiles>
-        <!-- SpringCloud运行环境 -->
-        <profile>
-            <id>SpringCloud</id>
-            <modules>
-
-            </modules>
-        </profile>
-    </profiles>
+    <modules>
+        <module>eap-biz-cms</module>
+        <module>eap-biz-crm</module>
+        <module>eap-biz-mall</module>
+        <module>eap-example</module>
+    </modules>
 
 </project>
