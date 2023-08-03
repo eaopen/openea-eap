@@ -1,5 +1,6 @@
 package org.openea.eap.module.system.dal.mysql.sensitiveword;
 
+import org.apache.ibatis.annotations.Select;
 import org.openea.eap.framework.common.pojo.PageResult;
 import org.openea.eap.framework.mybatis.core.mapper.BaseMapperX;
 import org.openea.eap.framework.mybatis.core.query.LambdaQueryWrapperX;
@@ -8,6 +9,7 @@ import org.openea.eap.module.system.controller.admin.sensitiveword.vo.SensitiveW
 import org.openea.eap.module.system.dal.dataobject.sensitiveword.SensitiveWordDO;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -40,4 +42,6 @@ public interface SensitiveWordMapper extends BaseMapperX<SensitiveWordDO> {
         return selectOne(SensitiveWordDO::getName, name);
     }
 
+    @Select("SELECT COUNT(*) FROM system_sensitive_word WHERE update_time > #{maxUpdateTime}")
+    Long selectCountByUpdateTimeGt(LocalDateTime maxTime);
 }

@@ -21,36 +21,6 @@ import java.util.Map;
 public interface SmsTemplateService {
 
     /**
-     * 初始化短信模板的本地缓存
-     */
-    void initLocalCache();
-
-    /**
-     * 获得短信模板，从缓存中
-     *
-     * @param code 模板编码
-     * @return 短信模板
-     */
-    SmsTemplateDO getSmsTemplateByCodeFromCache(String code);
-
-    /**
-     * 格式化短信内容
-     *
-     * @param content 短信模板的内容
-     * @param params 内容的参数
-     * @return 格式化后的内容
-     */
-    String formatSmsTemplateContent(String content, Map<String, Object> params);
-
-    /**
-     * 获得短信模板
-     *
-     * @param code 模板编码
-     * @return 短信模板
-     */
-    SmsTemplateDO getSmsTemplateByCode(String code);
-
-    /**
      * 创建短信模板
      *
      * @param createReqVO 创建信息
@@ -81,12 +51,12 @@ public interface SmsTemplateService {
     SmsTemplateDO getSmsTemplate(Long id);
 
     /**
-     * 获得短信模板列表
+     * 获得短信模板，从缓存中
      *
-     * @param ids 编号
-     * @return 短信模板列表
+     * @param code 模板编码
+     * @return 短信模板
      */
-    List<SmsTemplateDO> getSmsTemplateList(Collection<Long> ids);
+    SmsTemplateDO getSmsTemplateByCodeFromCache(String code);
 
     /**
      * 获得短信模板分页
@@ -111,5 +81,15 @@ public interface SmsTemplateService {
      * @return 数量
      */
     Long countByChannelId(Long channelId);
+
+
+    /**
+     * 格式化短信内容
+     *
+     * @param content 短信模板的内容
+     * @param params 内容的参数
+     * @return 格式化后的内容
+     */
+    String formatSmsTemplateContent(String content, Map<String, Object> params);
 
 }

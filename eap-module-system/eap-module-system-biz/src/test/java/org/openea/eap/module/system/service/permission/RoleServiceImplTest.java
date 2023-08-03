@@ -11,7 +11,6 @@ import org.openea.eap.module.system.dal.dataobject.permission.RoleDO;
 import org.openea.eap.module.system.dal.mysql.permission.RoleMapper;
 import org.openea.eap.module.system.enums.permission.DataScopeEnum;
 import org.openea.eap.module.system.enums.permission.RoleTypeEnum;
-import org.openea.eap.module.system.mq.producer.permission.RoleProducer;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
@@ -46,23 +45,7 @@ public class RoleServiceImplTest extends BaseDbUnitTest {
 
     @MockBean
     private PermissionService permissionService;
-    @MockBean
-    private RoleProducer roleProducer;
 
-    @Test
-    public void testInitLocalCache() {
-        RoleDO roleDO1 = randomPojo(RoleDO.class);
-        roleMapper.insert(roleDO1);
-        RoleDO roleDO2 = randomPojo(RoleDO.class);
-        roleMapper.insert(roleDO2);
-
-        // 调用
-        roleService.initLocalCache();
-        // 断言 roleCache 缓存
-        Map<Long, RoleDO> roleCache = roleService.getRoleCache();
-        assertPojoEquals(roleDO1, roleCache.get(roleDO1.getId()));
-        assertPojoEquals(roleDO2, roleCache.get(roleDO2.getId()));
-    }
 
     @Test
     public void testCreateRole_success() {
@@ -77,8 +60,6 @@ public class RoleServiceImplTest extends BaseDbUnitTest {
         assertEquals(RoleTypeEnum.CUSTOM.getType(), roleDO.getType());
         assertEquals(CommonStatusEnum.ENABLE.getStatus(), roleDO.getStatus());
         assertEquals(DataScopeEnum.ALL.getScope(), roleDO.getDataScope());
-        // verify 发送刷新消息
-        verify(roleProducer).sendRoleRefreshMessage();
     }
 
     @Test
@@ -95,8 +76,6 @@ public class RoleServiceImplTest extends BaseDbUnitTest {
         // 断言
         RoleDO newRoleDO = roleMapper.selectById(id);
         assertPojoEquals(reqVO, newRoleDO);
-        // verify 发送刷新消息
-        verify(roleProducer).sendRoleRefreshMessage();
     }
 
     @Test
@@ -114,8 +93,6 @@ public class RoleServiceImplTest extends BaseDbUnitTest {
         // 断言
         RoleDO dbRoleDO = roleMapper.selectById(roleId);
         assertEquals(CommonStatusEnum.DISABLE.getStatus(), dbRoleDO.getStatus());
-        // verify 发送刷新消息
-        verify(roleProducer).sendRoleRefreshMessage();
     }
 
     @Test
@@ -134,8 +111,6 @@ public class RoleServiceImplTest extends BaseDbUnitTest {
         RoleDO dbRoleDO = roleMapper.selectById(id);
         assertEquals(dataScope, dbRoleDO.getDataScope());
         assertEquals(dataScopeRoleIds, dbRoleDO.getDataScopeDeptIds());
-        // verify 发送刷新消息
-        verify(roleProducer).sendRoleRefreshMessage();
     }
 
     @Test
@@ -152,8 +127,7 @@ public class RoleServiceImplTest extends BaseDbUnitTest {
         assertNull(roleMapper.selectById(id));
         // verify 删除相关数据
         verify(permissionService).processRoleDeleted(id);
-        // verify 发送刷新消息
-        verify(roleProducer).sendRoleRefreshMessage();
+
     }
 
     @Test
@@ -161,7 +135,6 @@ public class RoleServiceImplTest extends BaseDbUnitTest {
         // mock 数据（缓存）
         RoleDO roleDO = randomPojo(RoleDO.class);
         roleMapper.insert(roleDO);
-        roleService.initLocalCache();
         // 参数准备
         Long id = roleDO.getId();
 
@@ -223,7 +196,6 @@ public class RoleServiceImplTest extends BaseDbUnitTest {
         roleMapper.insert(dbRole);
         // 测试 id 不匹配
         roleMapper.insert(cloneIgnoreId(dbRole, o -> {}));
-        roleService.initLocalCache();
         // 准备参数
         Collection<Long> ids = singleton(dbRole.getId());
 
@@ -295,15 +267,15 @@ public class RoleServiceImplTest extends BaseDbUnitTest {
         assertPojoEquals(dbRole, pageResult.getList().get(0));
     }
 
-    @Test
-    public void testHasAnySuperAdmin() {
-        // 是超级
-        assertTrue(roleService.hasAnySuperAdmin(singletonList(randomPojo(RoleDO.class,
-                o -> o.setCode("super_admin")))));
-        // 非超级
-        assertFalse(roleService.hasAnySuperAdmin(singletonList(randomPojo(RoleDO.class,
-                o -> o.setCode("tenant_admin")))));
-    }
+//    @Test
+//    public void testHasAnySuperAdmin() {
+//        // 是超级
+//        assertTrue(roleService.hasAnySuperAdmin(singletonList(randomPojo(RoleDO.class,
+//                o -> o.setCode("super_admin")))));
+//        // 非超级
+//        assertFalse(roleService.hasAnySuperAdmin(singletonList(randomPojo(RoleDO.class,
+//                o -> o.setCode("tenant_admin")))));
+//    }
 
     @Test
     public void testValidateRoleDuplicate_success() {

@@ -93,9 +93,9 @@ public class CommonResult<T> implements Serializable {
             return;
         }
         // 服务端异常
-        if (GlobalErrorCodeConstants.isServerErrorCode(code)) {
-            throw new ServerException(code, msg);
-        }
+//        if (GlobalErrorCodeConstants.isServerErrorCode(code)) {
+//            throw new ServerException(code, msg);
+//        }
         // 业务异常
         throw new ServiceException(code, msg);
     }

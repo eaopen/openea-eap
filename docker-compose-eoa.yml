@@ -1,4 +1,4 @@
-version: "3.8"
+version: "3.4"
 
 #name: eoa-system
 
@@ -32,8 +32,6 @@ services:
         --eap.enableOpenBpm=true
         --eap.userDataType=obpm
         --eap.obpm.apiBaseUrl=http://10.0.4.4:6330
-    networks:
-      - eoa-network
 
   web:
     image: openea-docker.pkg.coding.net/reps/docker/eoa-web:latest
@@ -41,11 +39,5 @@ services:
     restart: unless-stopped
     ports:
       - 7080:80
-    networks:
-      - eoa-network
     depends_on:
       - server
-
-networks:
-  eoa-network:
-    driver: bridge

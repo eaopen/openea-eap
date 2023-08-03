@@ -18,11 +18,6 @@ import java.util.Collection;
 public interface OAuth2ClientService {
 
     /**
-     * 初始化 OAuth2Client 的本地缓存
-     */
-    void initLocalCache();
-
-    /**
      * 创建 OAuth2 客户端
      *
      * @param createReqVO 创建信息
@@ -53,6 +48,14 @@ public interface OAuth2ClientService {
     OAuth2ClientDO getOAuth2Client(Long id);
 
     /**
+     * 获得 OAuth2 客户端，从缓存中
+     *
+     * @param clientId 客户端编号
+     * @return OAuth2 客户端
+     */
+    OAuth2ClientDO getOAuth2ClientFromCache(String clientId);
+
+    /**
      * 获得 OAuth2 客户端分页
      *
      * @param pageReqVO 分页查询
@@ -81,7 +84,6 @@ public interface OAuth2ClientService {
      * @param redirectUri 重定向地址
      * @return 客户端
      */
-    OAuth2ClientDO validOAuthClientFromCache(String clientId, String clientSecret,
-                                             String authorizedGrantType, Collection<String> scopes, String redirectUri);
-
+    OAuth2ClientDO validOAuthClientFromCache(String clientId, String clientSecret, String authorizedGrantType,
+                                             Collection<String> scopes, String redirectUri);
 }

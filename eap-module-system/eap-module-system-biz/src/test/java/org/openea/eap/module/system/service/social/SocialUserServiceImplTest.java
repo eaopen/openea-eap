@@ -1,5 +1,11 @@
 package org.openea.eap.module.system.service.social;
 
+import com.xingyuv.jushauth.enums.AuthResponseStatus;
+import com.xingyuv.jushauth.model.AuthCallback;
+import com.xingyuv.jushauth.model.AuthResponse;
+import com.xingyuv.jushauth.model.AuthUser;
+import com.xingyuv.jushauth.request.AuthRequest;
+import com.xingyuv.jushauth.utils.AuthStateUtils;
 import org.openea.eap.framework.common.enums.UserTypeEnum;
 import org.openea.eap.framework.social.core.EapAuthRequestFactory;
 import org.openea.eap.framework.test.core.ut.BaseDbAndRedisUnitTest;
@@ -9,12 +15,6 @@ import org.openea.eap.module.system.dal.dataobject.social.SocialUserDO;
 import org.openea.eap.module.system.dal.mysql.social.SocialUserBindMapper;
 import org.openea.eap.module.system.dal.mysql.social.SocialUserMapper;
 import org.openea.eap.module.system.enums.social.SocialTypeEnum;
-import me.zhyd.oauth.enums.AuthResponseStatus;
-import me.zhyd.oauth.model.AuthCallback;
-import me.zhyd.oauth.model.AuthResponse;
-import me.zhyd.oauth.model.AuthUser;
-import me.zhyd.oauth.request.AuthRequest;
-import me.zhyd.oauth.utils.AuthStateUtils;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
 import org.springframework.boot.test.mock.mockito.MockBean;

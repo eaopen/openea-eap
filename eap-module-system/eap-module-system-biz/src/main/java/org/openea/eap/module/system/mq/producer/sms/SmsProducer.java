@@ -1,9 +1,7 @@
 package org.openea.eap.module.system.mq.producer.sms;
 
 import org.openea.eap.framework.common.core.KeyValue;
-import org.openea.eap.module.system.mq.message.sms.SmsChannelRefreshMessage;
 import org.openea.eap.module.system.mq.message.sms.SmsSendMessage;
-import org.openea.eap.module.system.mq.message.sms.SmsTemplateRefreshMessage;
 import org.openea.eap.framework.mq.core.RedisMQTemplate;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -23,22 +21,6 @@ public class SmsProducer {
 
     @Resource
     private RedisMQTemplate redisMQTemplate;
-
-    /**
-     * 发送 {@link SmsChannelRefreshMessage} 消息
-     */
-    public void sendSmsChannelRefreshMessage() {
-        SmsChannelRefreshMessage message = new SmsChannelRefreshMessage();
-        redisMQTemplate.send(message);
-    }
-
-    /**
-     * 发送 {@link SmsTemplateRefreshMessage} 消息
-     */
-    public void sendSmsTemplateRefreshMessage() {
-        SmsTemplateRefreshMessage message = new SmsTemplateRefreshMessage();
-        redisMQTemplate.send(message);
-    }
 
     /**
      * 发送 {@link SmsSendMessage} 消息

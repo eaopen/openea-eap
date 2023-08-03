@@ -2,6 +2,7 @@ package org.openea.eap.module.system.service.social;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.lang.Assert;
+import lombok.extern.slf4j.Slf4j;
 import org.openea.eap.framework.common.util.http.HttpUtils;
 import org.openea.eap.framework.social.core.EapAuthRequestFactory;
 import org.openea.eap.module.system.api.social.dto.SocialUserBindReqDTO;
@@ -10,15 +11,15 @@ import org.openea.eap.module.system.dal.dataobject.social.SocialUserDO;
 import org.openea.eap.module.system.dal.mysql.social.SocialUserBindMapper;
 import org.openea.eap.module.system.dal.mysql.social.SocialUserMapper;
 import org.openea.eap.module.system.enums.social.SocialTypeEnum;
-import lombok.extern.slf4j.Slf4j;
-import me.zhyd.oauth.model.AuthCallback;
-import me.zhyd.oauth.model.AuthResponse;
-import me.zhyd.oauth.model.AuthUser;
-import me.zhyd.oauth.request.AuthRequest;
-import me.zhyd.oauth.utils.AuthStateUtils;
+import com.xingyuv.jushauth.model.AuthCallback;
+import com.xingyuv.jushauth.model.AuthResponse;
+import com.xingyuv.jushauth.model.AuthUser;
+import com.xingyuv.jushauth.request.AuthRequest;
+import com.xingyuv.jushauth.utils.AuthStateUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
+
 
 import javax.annotation.Resource;
 import java.util.Collections;

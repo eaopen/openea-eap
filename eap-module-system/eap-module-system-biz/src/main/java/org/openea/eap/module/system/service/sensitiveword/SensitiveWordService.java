@@ -1,5 +1,6 @@
 package org.openea.eap.module.system.service.sensitiveword;
 
+
 import org.openea.eap.framework.common.pojo.PageResult;
 import org.openea.eap.module.system.controller.admin.sensitiveword.vo.SensitiveWordCreateReqVO;
 import org.openea.eap.module.system.controller.admin.sensitiveword.vo.SensitiveWordExportReqVO;
@@ -14,14 +15,8 @@ import java.util.Set;
 /**
  * 敏感词 Service 接口
  *
- * @author 永不言败
  */
 public interface SensitiveWordService {
-
-    /**
-     * 初始化本地缓存
-     */
-    void initLocalCache();
 
     /**
      * 创建敏感词

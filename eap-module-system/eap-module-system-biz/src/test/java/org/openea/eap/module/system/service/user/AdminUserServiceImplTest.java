@@ -105,14 +105,14 @@ public class AdminUserServiceImplTest extends BaseDbUnitTest {
                 }));
         when(postService.getPostList(eq(reqVO.getPostIds()), isNull())).thenReturn(posts);
         // mock passwordEncoder 的方法
-        when(passwordEncoder.encode(eq(reqVO.getPassword()))).thenReturn("eapyuanma");
+        when(passwordEncoder.encode(eq(reqVO.getPassword()))).thenReturn("yudaoyuanma");
 
         // 调用
         Long userId = userService.createUser(reqVO);
         // 断言
         AdminUserDO user = userMapper.selectById(userId);
         assertPojoEquals(reqVO, user, "password");
-        assertEquals("eapyuanma", user.getPassword());
+        assertEquals("yudaoyuanma", user.getPassword());
         assertEquals(CommonStatusEnum.ENABLE.getStatus(), user.getStatus());
         // 断言关联岗位
         List<UserPostDO> userPosts = userPostMapper.selectListByUserId(user.getId());
@@ -260,7 +260,7 @@ public class AdminUserServiceImplTest extends BaseDbUnitTest {
         userMapper.insert(dbUser);
         // 准备参数
         Long userId = dbUser.getId();
-        String password = "eap";
+        String password = "yudao";
         // mock 方法
         when(passwordEncoder.encode(anyString())).then(
                 (Answer<String>) invocationOnMock -> "encode:" + invocationOnMock.getArgument(0));
@@ -345,7 +345,7 @@ public class AdminUserServiceImplTest extends BaseDbUnitTest {
         reqVO.setDeptId(1L); // 其中，1L 是 2L 的父部门
         // mock 方法
         List<DeptDO> deptList = newArrayList(randomPojo(DeptDO.class, o -> o.setId(2L)));
-        when(deptService.getDeptListByParentIdFromCache(eq(reqVO.getDeptId()), eq(true))).thenReturn(deptList);
+        when(deptService.getChildDeptList(eq(reqVO.getDeptId()))).thenReturn(deptList);
 
         // 调用
         PageResult<AdminUserDO> pageResult = userService.getUserPage(reqVO);
@@ -368,7 +368,7 @@ public class AdminUserServiceImplTest extends BaseDbUnitTest {
         reqVO.setDeptId(1L); // 其中，1L 是 2L 的父部门
         // mock 方法
         List<DeptDO> deptList = newArrayList(randomPojo(DeptDO.class, o -> o.setId(2L)));
-        when(deptService.getDeptListByParentIdFromCache(eq(reqVO.getDeptId()), eq(true))).thenReturn(deptList);
+        when(deptService.getChildDeptList(eq(reqVO.getDeptId()))).thenReturn(deptList);
 
         // 调用
         List<AdminUserDO> list = userService.getUserList(reqVO);
@@ -471,7 +471,7 @@ public class AdminUserServiceImplTest extends BaseDbUnitTest {
         });
         when(deptService.getDept(eq(dept.getId()))).thenReturn(dept);
         // mock passwordEncoder 的方法
-        when(passwordEncoder.encode(eq("eapyuanma"))).thenReturn("java");
+        when(passwordEncoder.encode(eq("yudaoyuanma"))).thenReturn("java");
 
         // 调用
         UserImportRespVO respVO = userService.importUserList(newArrayList(importUser), true);

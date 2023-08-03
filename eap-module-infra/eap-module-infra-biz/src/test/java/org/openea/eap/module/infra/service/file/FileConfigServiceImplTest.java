@@ -16,7 +16,6 @@ import org.openea.eap.module.infra.controller.admin.file.vo.config.FileConfigPag
 import org.openea.eap.module.infra.controller.admin.file.vo.config.FileConfigUpdateReqVO;
 import org.openea.eap.module.infra.dal.dataobject.file.FileConfigDO;
 import org.openea.eap.module.infra.dal.mysql.file.FileConfigMapper;
-import org.openea.eap.module.infra.mq.producer.file.FileConfigProducer;
 import lombok.Data;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -54,8 +53,6 @@ public class FileConfigServiceImplTest extends BaseDbUnitTest {
     @Resource
     private FileConfigMapper fileConfigMapper;
 
-    @MockBean
-    private FileConfigProducer fileConfigProducer;
     @MockBean
     private Validator validator;
     @MockBean
@@ -100,8 +97,6 @@ public class FileConfigServiceImplTest extends BaseDbUnitTest {
         assertFalse(fileConfig.getMaster());
         assertEquals("/yunai", ((LocalFileClientConfig) fileConfig.getConfig()).getBasePath());
         assertEquals("https://www.iocoder.cn", ((LocalFileClientConfig) fileConfig.getConfig()).getDomain());
-        // verify 调用
-        verify(fileConfigProducer).sendFileConfigRefreshMessage();
     }
 
     @Test
@@ -125,8 +120,6 @@ public class FileConfigServiceImplTest extends BaseDbUnitTest {
         assertPojoEquals(reqVO, fileConfig, "config");
         assertEquals("/yunai2", ((LocalFileClientConfig) fileConfig.getConfig()).getBasePath());
         assertEquals("https://doc.iocoder.cn", ((LocalFileClientConfig) fileConfig.getConfig()).getDomain());
-        // verify 调用
-        verify(fileConfigProducer).sendFileConfigRefreshMessage();
     }
 
     @Test
@@ -151,8 +144,6 @@ public class FileConfigServiceImplTest extends BaseDbUnitTest {
         // 断言数据
         assertTrue(fileConfigMapper.selectById(dbFileConfig.getId()).getMaster());
         assertFalse(fileConfigMapper.selectById(masterFileConfig.getId()).getMaster());
-        // verify 调用
-        verify(fileConfigProducer).sendFileConfigRefreshMessage();
     }
 
     @Test
@@ -173,8 +164,6 @@ public class FileConfigServiceImplTest extends BaseDbUnitTest {
         fileConfigService.deleteFileConfig(id);
        // 校验数据不存在了
        assertNull(fileConfigMapper.selectById(id));
-        // verify 调用
-        verify(fileConfigProducer).sendFileConfigRefreshMessage();
     }
 
     @Test

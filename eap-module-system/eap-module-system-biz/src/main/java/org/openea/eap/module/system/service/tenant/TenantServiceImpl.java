@@ -3,6 +3,7 @@ package org.openea.eap.module.system.service.tenant;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.ObjectUtil;
+import com.baomidou.dynamic.datasource.annotation.DSTransactional;
 import org.openea.eap.framework.common.enums.CommonStatusEnum;
 import org.openea.eap.framework.common.pojo.PageResult;
 import org.openea.eap.framework.common.util.collection.CollectionUtils;
@@ -29,6 +30,7 @@ import org.openea.eap.module.system.service.permission.RoleService;
 import org.openea.eap.module.system.service.tenant.handler.TenantInfoHandler;
 import org.openea.eap.module.system.service.tenant.handler.TenantMenuHandler;
 import org.openea.eap.module.system.service.user.AdminUserService;
+import com.baomidou.dynamic.datasource.annotation.DSTransactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -53,9 +55,8 @@ import static java.util.Collections.singleton;
 @Validated
 @Slf4j
 public class TenantServiceImpl implements TenantService {
-
     @SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
-    @Autowired(required = false) // 由于 eap.tenant.enable 配置项，可以关闭多租户的功能，所以这里只能不强制注入
+    @Autowired(required = false) // 由于 yudao.tenant.enable 配置项，可以关闭多租户的功能，所以这里只能不强制注入
     private TenantProperties tenantProperties;
 
     @Resource
@@ -94,7 +95,7 @@ public class TenantServiceImpl implements TenantService {
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
+    @DSTransactional // 多数据源，使用 @DSTransactional 保证本地事务，以及数据源的切换
     public Long createTenant(TenantCreateReqVO createReqVO) {
         // 校验租户名称是否重复
         validTenantNameDuplicate(createReqVO.getName(), null);
@@ -136,7 +137,7 @@ public class TenantServiceImpl implements TenantService {
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
+    @DSTransactional
     public void updateTenant(TenantUpdateReqVO updateReqVO) {
         // 校验存在
         TenantDO tenant = validateUpdateTenant(updateReqVO.getId());
@@ -169,7 +170,7 @@ public class TenantServiceImpl implements TenantService {
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
+    @DSTransactional
     public void updateTenantRoleMenu(Long tenantId, Set<Long> menuIds) {
         TenantUtils.execute(tenantId, () -> {
             // 获得所有角色
@@ -185,7 +186,7 @@ public class TenantServiceImpl implements TenantService {
                     return;
                 }
                 // 如果是其他角色，则去掉超过套餐的权限
-                Set<Long> roleMenuIds = permissionService.getRoleMenuIds(role.getId());
+                Set<Long> roleMenuIds = permissionService.getRoleMenuListByRoleId(role.getId());
                 roleMenuIds = CollUtil.intersectionDistinct(roleMenuIds, menuIds);
                 permissionService.assignRoleMenu(role.getId(), roleMenuIds);
                 log.info("[updateTenantRoleMenu][角色({}/{}) 的权限修改为({})]", role.getId(), role.getTenantId(), roleMenuIds);

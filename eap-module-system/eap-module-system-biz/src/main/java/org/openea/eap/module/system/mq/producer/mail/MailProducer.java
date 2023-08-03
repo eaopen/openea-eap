@@ -1,9 +1,7 @@
 package org.openea.eap.module.system.mq.producer.mail;
 
 import org.openea.eap.framework.mq.core.RedisMQTemplate;
-import org.openea.eap.module.system.mq.message.mail.MailAccountRefreshMessage;
 import org.openea.eap.module.system.mq.message.mail.MailSendMessage;
-import org.openea.eap.module.system.mq.message.mail.MailTemplateRefreshMessage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -21,22 +19,6 @@ public class MailProducer {
 
     @Resource
     private RedisMQTemplate redisMQTemplate;
-
-    /**
-     * 发送 {@link MailTemplateRefreshMessage} 消息
-     */
-    public void sendMailTemplateRefreshMessage() {
-        MailTemplateRefreshMessage message = new MailTemplateRefreshMessage();
-        redisMQTemplate.send(message);
-    }
-
-    /**
-     * 发送 {@link MailAccountRefreshMessage} 消息
-     */
-    public void sendMailAccountRefreshMessage() {
-        MailAccountRefreshMessage message = new MailAccountRefreshMessage();
-        redisMQTemplate.send(message);
-    }
 
     /**
      * 发送 {@link MailSendMessage} 消息

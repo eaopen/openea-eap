@@ -4,6 +4,7 @@ import org.openea.eap.framework.common.exception.ErrorCode;
 import org.openea.eap.framework.common.exception.ServiceException;
 import com.google.common.annotations.VisibleForTesting;
 import lombok.extern.slf4j.Slf4j;
+import org.openea.eap.framework.common.exception.enums.GlobalErrorCodeConstants;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -79,6 +80,11 @@ public class ServiceExceptionUtil {
         String message = doFormat(code, messagePattern, params);
         return new ServiceException(code, message);
     }
+
+    public static ServiceException invalidParamException(String messagePattern, Object... params) {
+        return exception0(GlobalErrorCodeConstants.BAD_REQUEST.getCode(), messagePattern, params);
+    }
+
 
     // ========== 格式化方法 ==========
 

@@ -1,5 +1,6 @@
 package org.openea.eap.module.system.controller.admin.auth;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
 import org.openea.eap.framework.common.enums.CommonStatusEnum;
 import org.openea.eap.framework.common.pojo.CommonResult;
@@ -33,10 +34,12 @@ import javax.annotation.Resource;
 import javax.annotation.security.PermitAll;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
 import static org.openea.eap.framework.common.pojo.CommonResult.success;
+import static org.openea.eap.framework.common.util.collection.CollectionUtils.convertSet;
 import static org.openea.eap.framework.security.core.util.SecurityFrameworkUtils.getLoginUserId;
 import static org.openea.eap.framework.security.core.util.SecurityFrameworkUtils.getLoginUser;
 import static org.openea.eap.framework.security.core.util.SecurityFrameworkUtils.obtainAuthorization;
@@ -55,15 +58,15 @@ public class AuthController {
     private AdminUserService userService;
     @Resource
     private RoleService roleService;
+
+    @Resource
+    private MenuService menuService;
     @Resource
     private PermissionService permissionService;
     @Resource
     private SocialUserService socialUserService;
     @Resource
     private SecurityProperties securityProperties;
-
-    @Resource
-    private MenuService menuService;
 
     @PostMapping("/login")
     @PermitAll
@@ -103,30 +106,46 @@ public class AuthController {
             return null;
         }
         // 获得角色列表
-        Set<Long> roleIds = permissionService.getUserRoleIdsFromCache(getLoginUserId(), singleton(CommonStatusEnum.ENABLE.getStatus()));
+        Set<Long> roleIds = permissionService.getUserRoleIdListByUserId(getLoginUserId());
         List<RoleDO> roleList = roleService.getRoleListFromCache(roleIds);
+        roleList.removeIf(role -> !CommonStatusEnum.ENABLE.getStatus().equals(role.getStatus())); // 移除禁用的角色
 
         // 获得菜单列表
-        List<MenuDO> menuList = permissionService.getUserMenuListFromCache(getLoginUserId(), user.getUsername(),
-                SetUtils.asSet(MenuTypeEnum.DIR.getType(), MenuTypeEnum.MENU.getType(), MenuTypeEnum.BUTTON.getType()));
+        Set<Long> menuIds = permissionService.getRoleMenuListByRoleId(convertSet(roleList, RoleDO::getId));
+        List<MenuDO> menuList = menuService.getMenuList(menuIds);
+        menuList.removeIf(menu -> !CommonStatusEnum.ENABLE.getStatus().equals(menu.getStatus()));
         // i18n
         menuList = menuService.toI18n(menuList);
         // 拼接结果返回
         return success(AuthConvert.INSTANCE.convert(user, roleList, menuList));
     }
 
+    /**
+     * 获得登录用户的菜单列表
+     * @return list(menu)
+     * @deprecated  将合并到权限资源数据中
+     */
     @GetMapping("/list-menus")
     @Operation(summary = "获得登录用户的菜单列表")
     public CommonResult<List<AuthMenuRespVO>> getMenuList() {
-        LoginUser loginUser = getLoginUser();
+        // 获得角色列表
+        Set<Long> roleIds = permissionService.getUserRoleIdListByUserId(getLoginUserId());
+        List<RoleDO> roleList = roleService.getRoleListFromCache(roleIds);
+        roleList.removeIf(role -> !CommonStatusEnum.ENABLE.getStatus().equals(role.getStatus())); // 移除禁用的角色
         // 获得用户拥有的菜单列表
-        List<MenuDO> menuList = permissionService.getUserMenuListFromCache(loginUser.getId(), loginUser.getUserKey(),
-                SetUtils.asSet(MenuTypeEnum.DIR.getType(), MenuTypeEnum.MENU.getType()) // 只要目录和菜单类型
-        );
+        Set<Long> menuIds = permissionService.getRoleMenuListByRoleId(convertSet(roleList, RoleDO::getId));
+        List<MenuDO> menuList = menuService.getMenuList(menuIds);
+        menuList.removeIf(menu -> !CommonStatusEnum.ENABLE.getStatus().equals(menu.getStatus()));
         // i18n
         menuList = menuService.toI18n(menuList);
         // 转换成 Tree 结构返回
-        return success(AuthConvert.INSTANCE.buildMenuTree(menuList));
+        List<AuthPermissionInfoRespVO.MenuVO> listMenuTree = AuthConvert.INSTANCE.buildMenuTree(menuList);
+        List<AuthMenuRespVO> listMenuTree2 = new ArrayList<>();
+        for(AuthPermissionInfoRespVO.MenuVO menuVO: listMenuTree){
+            AuthMenuRespVO menuRespVO = new AuthMenuRespVO();
+            BeanUtil.copyProperties(menuVO, menuRespVO);
+        }
+        return success(listMenuTree2);
     }
 
     // ========== 短信登录相关 ==========

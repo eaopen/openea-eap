@@ -1,4 +1,4 @@
-version: "3.8"
+version: "3.4"
 
 name: eap-system
 
@@ -9,25 +9,22 @@ services:
     restart: unless-stopped
     tty: true
     ports:
-      - 13306:3306
+      - 3306:3306
     environment:
       MYSQL_DATABASE: ${MYSQL_DATABASE:-eap-db}
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-123456}
     volumes:
       - mysql:/var/lib/mysql/
-    networks:
-      - eap-network
+      - ./sql/mysql/eap-db.sql:/docker-entrypoint-initdb.d/eap-db.sql:ro
 
   redis:
     container_name: eap-redis
     image: redis:6-alpine
     restart: unless-stopped
     ports:
-      - 16379:6379
+      - 6379:6379
     volumes:
       - redis:/data
-    networks:
-      - eap-network
 
   server:
     container_name: eap-server
@@ -54,8 +51,6 @@ services:
         --spring.datasource.dynamic.datasource.slave.username=${SLAVE_DATASOURCE_USERNAME:-root}
         --spring.datasource.dynamic.datasource.slave.password=${SLAVE_DATASOURCE_PASSWORD:-123456}
         --spring.redis.host=${REDIS_HOST:-eap-redis}
-    networks:
-      - eap-network
     depends_on:
       - mysql
       - redis
@@ -79,14 +74,8 @@ services:
     restart: unless-stopped
     ports:
       - 8080:80
-    networks:
-      - eap-network
     depends_on:
       - server
-
-networks:
-  eap-network:
-    driver: bridge
 
 volumes:
   mysql:

@@ -1,6 +1,7 @@
 package org.openea.eap.module.system.service.tenant;
 
 import cn.hutool.core.collection.CollUtil;
+import com.baomidou.dynamic.datasource.annotation.DSTransactional;
 import org.openea.eap.framework.common.enums.CommonStatusEnum;
 import org.openea.eap.framework.common.pojo.PageResult;
 import org.openea.eap.module.system.controller.admin.tenant.vo.packages.TenantPackageCreateReqVO;
@@ -46,7 +47,7 @@ public class TenantPackageServiceImpl implements TenantPackageService {
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
+    @DSTransactional // 多数据源，使用 @DSTransactional 保证本地事务，以及数据源的切换
     public void updateTenantPackage(TenantPackageUpdateReqVO updateReqVO) {
         // 校验存在
         TenantPackageDO tenantPackage = validateTenantPackageExists(updateReqVO.getId());

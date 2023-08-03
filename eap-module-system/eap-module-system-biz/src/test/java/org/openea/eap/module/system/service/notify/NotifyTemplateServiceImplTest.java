@@ -8,7 +8,6 @@ import org.openea.eap.module.system.controller.admin.notify.vo.template.NotifyTe
 import org.openea.eap.module.system.controller.admin.notify.vo.template.NotifyTemplateUpdateReqVO;
 import org.openea.eap.module.system.dal.dataobject.notify.NotifyTemplateDO;
 import org.openea.eap.module.system.dal.mysql.notify.NotifyTemplateMapper;
-import org.openea.eap.module.system.mq.producer.notify.NotifyProducer;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
@@ -40,9 +39,6 @@ public class NotifyTemplateServiceImplTest extends BaseDbUnitTest {
     @Resource
     private NotifyTemplateMapper notifyTemplateMapper;
 
-    @MockBean
-    private NotifyProducer notifyProducer;
-
     @Test
     public void testCreateNotifyTemplate_success() {
         // 准备参数
@@ -56,7 +52,6 @@ public class NotifyTemplateServiceImplTest extends BaseDbUnitTest {
         // 校验记录的属性是否正确
         NotifyTemplateDO notifyTemplate = notifyTemplateMapper.selectById(notifyTemplateId);
         assertPojoEquals(reqVO, notifyTemplate);
-        verify(notifyProducer).sendNotifyTemplateRefreshMessage();
     }
 
     @Test
@@ -75,7 +70,6 @@ public class NotifyTemplateServiceImplTest extends BaseDbUnitTest {
         // 校验是否更新正确
         NotifyTemplateDO notifyTemplate = notifyTemplateMapper.selectById(reqVO.getId()); // 获取最新的
         assertPojoEquals(reqVO, notifyTemplate);
-        verify(notifyProducer).sendNotifyTemplateRefreshMessage();
     }
 
     @Test
@@ -99,7 +93,6 @@ public class NotifyTemplateServiceImplTest extends BaseDbUnitTest {
         notifyTemplateService.deleteNotifyTemplate(id);
        // 校验数据不存在了
        assertNull(notifyTemplateMapper.selectById(id));
-       verify(notifyProducer).sendNotifyTemplateRefreshMessage();
     }
 
     @Test
@@ -163,7 +156,6 @@ public class NotifyTemplateServiceImplTest extends BaseDbUnitTest {
         // mock 数据
         NotifyTemplateDO dbNotifyTemplate = randomPojo(NotifyTemplateDO.class);
         notifyTemplateMapper.insert(dbNotifyTemplate);
-        notifyTemplateService.initLocalCache();
         // 准备参数
         String code = dbNotifyTemplate.getCode();
 

@@ -10,7 +10,6 @@ import org.openea.eap.module.system.controller.admin.sensitiveword.vo.SensitiveW
 import org.openea.eap.module.system.controller.admin.sensitiveword.vo.SensitiveWordUpdateReqVO;
 import org.openea.eap.module.system.dal.dataobject.sensitiveword.SensitiveWordDO;
 import org.openea.eap.module.system.dal.mysql.sensitiveword.SensitiveWordMapper;
-import org.openea.eap.module.system.mq.producer.sensitiveword.SensitiveWordProducer;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
@@ -45,8 +44,6 @@ public class SensitiveWordServiceImplTest extends BaseDbUnitTest {
     @Resource
     private SensitiveWordMapper sensitiveWordMapper;
 
-    @MockBean
-    private SensitiveWordProducer sensitiveWordProducer;
 
     @Test
     public void testInitLocalCache() {
@@ -80,7 +77,6 @@ public class SensitiveWordServiceImplTest extends BaseDbUnitTest {
         // 校验记录的属性是否正确
         SensitiveWordDO sensitiveWord = sensitiveWordMapper.selectById(sensitiveWordId);
         assertPojoEquals(reqVO, sensitiveWord);
-        verify(sensitiveWordProducer).sendSensitiveWordRefreshMessage();
     }
 
     @Test
@@ -98,7 +94,6 @@ public class SensitiveWordServiceImplTest extends BaseDbUnitTest {
         // 校验是否更新正确
         SensitiveWordDO sensitiveWord = sensitiveWordMapper.selectById(reqVO.getId()); // 获取最新的
         assertPojoEquals(reqVO, sensitiveWord);
-        verify(sensitiveWordProducer).sendSensitiveWordRefreshMessage();
     }
 
     @Test
@@ -122,7 +117,6 @@ public class SensitiveWordServiceImplTest extends BaseDbUnitTest {
         sensitiveWordService.deleteSensitiveWord(id);
         // 校验数据不存在了
         assertNull(sensitiveWordMapper.selectById(id));
-        verify(sensitiveWordProducer).sendSensitiveWordRefreshMessage();
     }
 
     @Test

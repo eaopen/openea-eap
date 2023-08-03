@@ -54,6 +54,9 @@ public class RandomUtils {
             }
             return RandomUtil.randomInt();
         });
+        // LocalDateTime
+        PODAM_FACTORY.getStrategy().addOrReplaceTypeManufacturer(LocalDateTime.class,
+                (dataProviderStrategy, attributeMetadata, map) -> randomLocalDateTime());
         // Boolean
         PODAM_FACTORY.getStrategy().addOrReplaceTypeManufacturer(Boolean.class, (dataProviderStrategy, attributeMetadata, map) -> {
             // 如果是 deleted 的字段，返回非删除
@@ -81,7 +84,8 @@ public class RandomUtils {
     }
 
     public static LocalDateTime randomLocalDateTime() {
-        return LocalDateTimeUtil.of(randomDate());
+        // 设置 Nano 为零的原因，避免 MySQL、H2 存储不到时间戳
+        return LocalDateTimeUtil.of(randomDate()).withNano(0);
     }
 
     public static Short randomShort() {
@@ -101,6 +105,9 @@ public class RandomUtils {
         return randomString() + "@qq.com";
     }
 
+    public static String randomURL() {
+        return "https://eap.openea.org/" + randomString();
+    }
     @SafeVarargs
     public static <T> T randomPojo(Class<T> clazz, Consumer<T>... consumers) {
         T pojo = PODAM_FACTORY.manufacturePojo(clazz);

@@ -34,12 +34,23 @@ public class PermissionController {
     @Resource
     private TenantService tenantService;
 
+    /**
+     * @deprecated replace by getRoleMenuList
+     */
     @Operation(summary = "获得角色拥有的菜单编号")
     @Parameter(name = "roleId", description = "角色编号", required = true)
     @GetMapping("/list-role-resources")
     @PreAuthorize("@ss.hasPermission('system:permission:assign-role-menu')")
     public CommonResult<Set<Long>> listRoleMenus(Long roleId) {
-        return success(permissionService.getRoleMenuIds(roleId));
+        return success(permissionService.getRoleMenuListByRoleId(roleId));
+    }
+
+    @Operation(summary = "获得角色拥有的菜单编号")
+    @Parameter(name = "roleId", description = "角色编号", required = true)
+    @GetMapping("/list-role-menus")
+    @PreAuthorize("@ss.hasPermission('system:permission:assign-role-menu')")
+    public CommonResult<Set<Long>> getRoleMenuList(Long roleId) {
+        return success(permissionService.getRoleMenuListByRoleId(roleId));
     }
 
     @PostMapping("/assign-role-menu")

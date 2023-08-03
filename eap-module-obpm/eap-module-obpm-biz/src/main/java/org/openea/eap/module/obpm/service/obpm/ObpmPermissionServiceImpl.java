@@ -27,8 +27,8 @@ public class ObpmPermissionServiceImpl extends PermissionServiceImpl implements 
 
     @Resource
     private ObmpClientService obmpClientService;
-    @Override
-    public List<MenuDO> getUserMenuListFromCache(Long userId, String userKey, Collection<Integer> menuTypes){
+
+    /*public List<MenuDO> getUserMenuListFromCache(Long userId, String userKey, Collection<Integer> menuTypes){
         // 1. eap 菜单
         // 获得角色列表
         Set<Long> roleIds = getUserRoleIdsFromCache(userId, singleton(CommonStatusEnum.ENABLE.getStatus()));
@@ -68,7 +68,7 @@ public class ObpmPermissionServiceImpl extends PermissionServiceImpl implements 
         }
 
         return menuList;
-    }
+    }*/
 
     private List<MenuDO> getObpmUserMenuList(String userKey, boolean withButton) {
         List<MenuDO> listMenu = new ArrayList<>();

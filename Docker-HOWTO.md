@@ -61,5 +61,5 @@ docker exec -i eap-mysql \
 
 - admin: http://localhost:8080
 - API: http://localhost:48080
-- mysql: root/123456, port: 3308
+- mysql: root/123456, port: 3306
 - redis: port: 6379

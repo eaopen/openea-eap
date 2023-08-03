@@ -1,5 +1,6 @@
 package org.openea.eap.framework.mybatis.core.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.openea.eap.framework.common.pojo.PageParam;
 import org.openea.eap.framework.common.pojo.PageResult;
 import org.openea.eap.framework.mybatis.core.util.MyBatisUtils;
@@ -9,7 +10,6 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 import com.baomidou.mybatisplus.extension.toolkit.Db;
-import com.github.yulichang.base.MPJBaseMapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.Collection;
@@ -17,10 +17,8 @@ import java.util.List;
 
 /**
  * 在 MyBatis Plus 的 BaseMapper 的基础上拓展，提供更多的能力
- * <p>
- * 为什么继承 MPJBaseMapper 接口？支持 MyBatis Plus 多表 Join 的能力。
  */
-public interface BaseMapperX<T> extends MPJBaseMapper<T> {
+public interface BaseMapperX<T> extends BaseMapper<T> {
 
     default PageResult<T> selectPage(PageParam pageParam, @Param("ew") Wrapper<T> queryWrapper) {
         // MyBatis Plus 查询
@@ -105,8 +103,16 @@ public interface BaseMapperX<T> extends MPJBaseMapper<T> {
         update(update, new QueryWrapper<>());
     }
 
+    default void updateBatch(Collection<T> entities) {
+        Db.updateBatchById(entities);
+    }
+
     default void updateBatch(Collection<T> entities, int size) {
         Db.updateBatchById(entities, size);
+    }
+
+    default void saveOrUpdateBatch(Collection<T> collection) {
+        Db.saveOrUpdateBatch(collection);
     }
 
 }

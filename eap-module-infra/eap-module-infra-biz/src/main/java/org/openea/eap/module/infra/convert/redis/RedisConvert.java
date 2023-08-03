@@ -1,14 +1,11 @@
 package org.openea.eap.module.infra.convert.redis;
 
 import cn.hutool.core.util.StrUtil;
-import org.openea.eap.framework.redis.core.RedisKeyDefine;
-import org.openea.eap.module.infra.controller.admin.redis.vo.RedisKeyDefineRespVO;
 import org.openea.eap.module.infra.controller.admin.redis.vo.RedisMonitorRespVO;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Properties;
 
 @Mapper
@@ -28,7 +25,5 @@ public interface RedisConvert {
         });
         return respVO;
     }
-
-    List<RedisKeyDefineRespVO> convertList(List<RedisKeyDefine> list);
 
 }

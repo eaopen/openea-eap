@@ -6,6 +6,7 @@ import org.openea.eap.module.system.controller.admin.dept.vo.dept.DeptListReqVO;
 import org.openea.eap.module.system.dal.dataobject.dept.DeptDO;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.Collection;
 import java.util.List;
 
 @Mapper
@@ -25,4 +26,7 @@ public interface DeptMapper extends BaseMapperX<DeptDO> {
         return selectCount(DeptDO::getParentId, parentId);
     }
 
+    default List<DeptDO> selectListByParentId(Collection<Long> parentIds) {
+        return selectList(DeptDO::getParentId, parentIds);
+    }
 }

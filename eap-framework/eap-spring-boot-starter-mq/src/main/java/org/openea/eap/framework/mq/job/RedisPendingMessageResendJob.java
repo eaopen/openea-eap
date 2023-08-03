@@ -64,7 +64,6 @@ public class RedisPendingMessageResendJob {
     private void execute() {
         StreamOperations<String, Object, Object> ops = redisTemplate.getRedisTemplate().opsForStream();
         listeners.forEach(listener -> {
-//            PendingMessagesSummary pendingMessagesSummary = ops.pending(listener.getStreamKey(), groupName);
             PendingMessagesSummary pendingMessagesSummary = Objects.requireNonNull(ops.pending(listener.getStreamKey(), groupName));
 
             // 每个消费者的 pending 队列消息数量
@@ -72,27 +71,11 @@ public class RedisPendingMessageResendJob {
             pendingMessagesPerConsumer.forEach((consumerName, pendingMessageCount) -> {
                 log.info("[processPendingMessage][消费者({}) 消息数量({})]", consumerName, pendingMessageCount);
 
-                // 从消费者的 pending 队列中读取消息
-//                List<MapRecord<String, Object, Object>> records = ops.read(Consumer.from(groupName, consumerName), StreamOffset.create(listener.getStreamKey(), ReadOffset.from("0")));
-//                if (CollUtil.isEmpty(records)) {
-//                    return;
-//                }
-//                for (MapRecord<String, Object, Object> record : records) {
-//                    // 重新投递消息
-//                    redisTemplate.getRedisTemplate().opsForStream().add(StreamRecords.newRecord()
-//                            .ofObject(record.getValue()) // 设置内容
-//                            .withStreamKey(listener.getStreamKey()));
-//
-//                    // ack 消息消费完成
-//                    redisTemplate.getRedisTemplate().opsForStream().acknowledge(groupName, record);
-//                }
                 // 每个消费者的 pending消息的详情信息
                 PendingMessages pendingMessages = ops.pending(listener.getStreamKey(), Consumer.from(groupName, consumerName), Range.unbounded(), pendingMessageCount);
                 if (pendingMessages.isEmpty()) {
                     return;
                 }
-
-
 
                 pendingMessages.forEach(pendingMessage -> {
                     // 获取消息上一次传递到 consumer 的时间,
