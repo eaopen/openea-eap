@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import javax.sql.DataSource;
 import java.util.HashMap;
 import java.util.List;
@@ -26,16 +27,27 @@ public class ObmpClientService {
 
     private int timeoutMillSecs = 6000; //milliseconds
 
-    @Bean
-    public JdbcTemplate obpmJdbcTemplate(DataSource ds){
+    @Resource
+    private DataSource dataSource;
+
+    public  JdbcTemplate getObpmJdbcTemplate(){
+        JdbcTemplate obpmJdbcTemplate = null;
+        String obpmDsName = "obpm";
         try{
-            DataSource obpmDs = ((DynamicRoutingDataSource)ds).getDataSource("obpm");
-            return new JdbcTemplate(obpmDs);
+            // strict mode
+            if(((DynamicRoutingDataSource)dataSource).getDataSources().containsKey(obpmDsName)){
+                DataSource obpmDs = ((DynamicRoutingDataSource)dataSource).getDataSource(obpmDsName);
+                obpmJdbcTemplate = new JdbcTemplate(obpmDs);
+                return obpmJdbcTemplate;
+            }else{
+                log.error("obpmJdbcTemplate fail: DataSource "+obpmDsName+" not exist.");
+            }
         }catch (Throwable t){
             log.error("obpmJdbcTemplate fail:"+t.getMessage(), t);
         }
-        return null;
+        return obpmJdbcTemplate;
     }
+
 
     public JSONObject login(String username, String password) {
         // post /eap/login  account=username&password=password

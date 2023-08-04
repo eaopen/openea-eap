@@ -8,13 +8,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ObjectUtils;
 import org.openea.eap.framework.common.enums.CommonStatusEnum;
 import org.openea.eap.framework.common.util.collection.CollectionUtils;
+import org.openea.eap.framework.common.util.spring.EapAppUtil;
+import org.openea.eap.module.obpm.service.obpm.ObmpClientService;
 import org.openea.eap.module.obpm.service.obpm.ObpmUserServiceImpl;
 import org.openea.eap.module.system.dal.dataobject.user.AdminUserDO;
 import org.openea.eap.module.system.dal.mysql.user.AdminUserMapper;
 import org.openea.eap.module.system.service.user.AdminUserService;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.scheduling.annotation.Async;
@@ -46,9 +47,6 @@ public class ObpmOrgSyncService implements InitializingBean {
 
     @Resource
     private ObpmUserServiceImpl obpmUserService;
-
-    @Autowired
-    private JdbcTemplate obpmJdbcTemplate;
 
     @Override
     public void afterPropertiesSet() throws Exception {
@@ -169,6 +167,7 @@ public class ObpmOrgSyncService implements InitializingBean {
         if(ObjectUtils.isEmpty(querySql)){
             return null;
         }
+        JdbcTemplate obpmJdbcTemplate = EapAppUtil.getBean(ObmpClientService.class).getObpmJdbcTemplate();
         if(obpmJdbcTemplate==null){
             log.warn("queryObpmListData fail: obpmJdbcTemplate is null");
             return null;
