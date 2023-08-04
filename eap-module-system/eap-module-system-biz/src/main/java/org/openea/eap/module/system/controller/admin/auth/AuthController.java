@@ -111,9 +111,11 @@ public class AuthController {
         roleList.removeIf(role -> !CommonStatusEnum.ENABLE.getStatus().equals(role.getStatus())); // 移除禁用的角色
 
         // 获得菜单列表
-        Set<Long> menuIds = permissionService.getRoleMenuListByRoleId(convertSet(roleList, RoleDO::getId));
-        List<MenuDO> menuList = menuService.getMenuList(menuIds);
-        menuList.removeIf(menu -> !CommonStatusEnum.ENABLE.getStatus().equals(menu.getStatus()));
+//        Set<Long> menuIds = permissionService.getRoleMenuListByRoleId(convertSet(roleList, RoleDO::getId));
+//        List<MenuDO> menuList = menuService.getMenuList(menuIds);
+//        menuList.removeIf(menu -> !CommonStatusEnum.ENABLE.getStatus().equals(menu.getStatus()));
+        List<MenuDO> menuList = permissionService.getUserMenuListByUser(user.getId(), user.getUsername());
+
         // i18n
         menuList = menuService.toI18n(menuList);
         // 拼接结果返回
@@ -123,7 +125,7 @@ public class AuthController {
     /**
      * 获得登录用户的菜单列表
      * @return list(menu)
-     * @deprecated  将合并到权限资源数据中
+     * @deprecated  将合并到权限资源数据中get-permission-info，不再单独调用
      */
     @GetMapping("/list-menus")
     @Operation(summary = "获得登录用户的菜单列表")
@@ -140,6 +142,7 @@ public class AuthController {
         menuList = menuService.toI18n(menuList);
         // 转换成 Tree 结构返回
         List<AuthPermissionInfoRespVO.MenuVO> listMenuTree = AuthConvert.INSTANCE.buildMenuTree(menuList);
+        // 数据格式转换
         List<AuthMenuRespVO> listMenuTree2 = new ArrayList<>();
         for(AuthPermissionInfoRespVO.MenuVO menuVO: listMenuTree){
             AuthMenuRespVO menuRespVO = new AuthMenuRespVO();

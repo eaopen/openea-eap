@@ -79,10 +79,18 @@ public class ObpmAuthServiceImpl extends AdminAuthServiceImpl implements AdminAu
         // 校验账号是否存在
         AdminUserDO user = userService.getUserByUsername(username);
         if (user == null) {
-            //可增加实时查询未同步用户
-            JSONObject jsonUser = queryObpmUser(username, true);
-            // 创建用户并保存密码
-            user = createAdminUser(jsonUser);
+            try{
+                //可增加实时查询未同步用户
+                JSONObject jsonUser = queryObpmUser(username, true);
+                // 创建用户并保存密码
+                if(jsonUser!=null){
+                    user = createAdminUser(jsonUser);
+                }
+            }catch (Exception e){
+                log.error(String.format("queryObpmUser fail, user=%s, exception=%s",username, e.getMessage()),e);
+
+            }
+
         }
         if (user == null) {
             createLoginLog(null, username, logTypeEnum, LoginResultEnum.BAD_CREDENTIALS);

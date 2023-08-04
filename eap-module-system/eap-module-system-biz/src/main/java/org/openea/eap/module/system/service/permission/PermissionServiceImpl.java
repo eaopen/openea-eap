@@ -35,6 +35,7 @@ import java.util.function.Supplier;
 
 import static org.openea.eap.framework.common.util.collection.CollectionUtils.convertSet;
 import static org.openea.eap.framework.common.util.json.JsonUtils.toJsonString;
+import static org.openea.eap.framework.security.core.util.SecurityFrameworkUtils.getLoginUserId;
 
 /**
  * 权限 Service 实现类
@@ -49,13 +50,13 @@ public class PermissionServiceImpl implements PermissionService {
     private UserRoleMapper userRoleMapper;
 
     @Resource
-    private RoleService roleService;
+    protected RoleService roleService;
     @Resource
-    private MenuService menuService;
+    protected MenuService menuService;
     @Resource
-    private DeptService deptService;
+    protected DeptService deptService;
     @Resource
-    private AdminUserService userService;
+    protected AdminUserService userService;
 
     @Override
     public boolean hasAnyPermissions(Long userId, String... permissions) {
@@ -191,6 +192,21 @@ public class PermissionServiceImpl implements PermissionService {
     @Cacheable(value = RedisKeyConstants.MENU_ROLE_ID_LIST, key = "#menuId")
     public Set<Long> getMenuRoleIdListByMenuIdFromCache(Long menuId) {
         return convertSet(roleMenuMapper.selectListByMenuId(menuId), RoleMenuDO::getRoleId);
+    }
+
+    @Override
+    public List<MenuDO> getUserMenuListByUser(Long userId, String userKey){
+        // 获得角色列表
+        Set<Long> roleIds = getUserRoleIdListByUserId(userId);
+        List<RoleDO> roleList = roleService.getRoleListFromCache(roleIds);
+        roleList.removeIf(role -> !CommonStatusEnum.ENABLE.getStatus().equals(role.getStatus())); // 移除禁用的角色
+
+        // 获得菜单列表
+        Set<Long> menuIds = getRoleMenuListByRoleId(convertSet(roleList, RoleDO::getId));
+        List<MenuDO> menuList = menuService.getMenuList(menuIds);
+        menuList.removeIf(menu -> !CommonStatusEnum.ENABLE.getStatus().equals(menu.getStatus()));
+
+        return menuList;
     }
 
     // ========== 用户-角色的相关方法  ==========

@@ -1,8 +1,10 @@
 package org.openea.eap.module.system.service.permission;
 
 import org.openea.eap.module.system.api.permission.dto.DeptDataPermissionRespDTO;
+import org.openea.eap.module.system.dal.dataobject.permission.MenuDO;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 import static java.util.Collections.singleton;
@@ -74,6 +76,14 @@ public interface PermissionService {
      * @return 菜单编号集合
      */
     Set<Long> getRoleMenuListByRoleId(Collection<Long> roleIds);
+
+    /**
+     * 获得用户所有的有效菜单
+     * @param userId/userKey 至少选一，都选优先userId
+     * @return
+     */
+    List<MenuDO> getUserMenuListByUser(Long userId, String userKey);
+
 
     /**
      * 获得拥有指定菜单的角色编号数组，从缓存中获取

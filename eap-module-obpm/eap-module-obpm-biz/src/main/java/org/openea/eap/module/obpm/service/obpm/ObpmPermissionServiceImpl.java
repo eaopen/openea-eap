@@ -7,6 +7,7 @@ import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.openea.eap.framework.common.enums.CommonStatusEnum;
 import org.openea.eap.module.system.dal.dataobject.permission.MenuDO;
+import org.openea.eap.module.system.dal.dataobject.permission.RoleDO;
 import org.openea.eap.module.system.dal.dataobject.user.AdminUserDO;
 import org.openea.eap.module.system.enums.permission.MenuTypeEnum;
 import org.openea.eap.module.system.service.permission.PermissionService;
@@ -19,6 +20,7 @@ import java.nio.charset.Charset;
 import java.util.*;
 
 import static java.util.Collections.singleton;
+import static org.openea.eap.framework.common.util.collection.CollectionUtils.convertSet;
 
 @Service
 @ConditionalOnProperty(prefix = "eap", name = "enableOpenBpm", havingValue = "true")
@@ -28,27 +30,21 @@ public class ObpmPermissionServiceImpl extends PermissionServiceImpl implements 
     @Resource
     private ObmpClientService obmpClientService;
 
-    /*public List<MenuDO> getUserMenuListFromCache(Long userId, String userKey, Collection<Integer> menuTypes){
-        // 1. eap 菜单
-        // 获得角色列表
-        Set<Long> roleIds = getUserRoleIdsFromCache(userId, singleton(CommonStatusEnum.ENABLE.getStatus()));
-        // 获得菜单列表
-        List<MenuDO> menuList = getRoleMenuListFromCache(roleIds,
-                menuTypes,
-                singleton(CommonStatusEnum.ENABLE.getStatus())); // 只要开启的
+    @Override
+    public List<MenuDO> getUserMenuListByUser(Long userId, String userKey){
+        // 1. eap menu
+        List<MenuDO> menuList = super.getUserMenuListByUser(userId, userKey);
 
-        // 2. obpm菜单
-        boolean withButton = false;
-        if(menuTypes.contains(MenuTypeEnum.BUTTON.getType())){
-            withButton = true;
-        }
+        // 2. obpm menu
         if(ObjectUtils.isEmpty(userKey)){
             AdminUserDO adminUserDO = userService.getUser(userId);
             if(adminUserDO!=null){
                 userKey = adminUserDO.getUsername();
             }
         }
-        List<MenuDO> menuList2 = getObpmUserMenuList(userKey, withButton);
+        List<MenuDO> menuList2 = getObpmUserMenuList(userKey, true);
+
+        // 3. 合并
         if(!menuList2.isEmpty()){
             // obpm 菜单所有id/parentId + 200000（避免同eap菜单冲突）
             for(MenuDO menu: menuList2){
@@ -67,8 +63,9 @@ public class ObpmPermissionServiceImpl extends PermissionServiceImpl implements 
             menuList = menuList2;
         }
 
+
         return menuList;
-    }*/
+    }
 
     private List<MenuDO> getObpmUserMenuList(String userKey, boolean withButton) {
         List<MenuDO> listMenu = new ArrayList<>();
