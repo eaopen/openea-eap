@@ -51,20 +51,20 @@ import static org.openea.eap.module.system.enums.ErrorCodeConstants.*;
 @Slf4j
 public class AdminUserServiceImpl implements AdminUserService {
 
-    @Value("${sys.user.init-password:eapyuanma}")
-    private String userInitPassword;
+    @Value("${sys.user.init-password:eap123}")
+    protected String userInitPassword;
 
     @Resource
-    private AdminUserMapper userMapper;
+    protected AdminUserMapper userMapper;
 
     @Resource
-    private DeptService deptService;
+    protected DeptService deptService;
     @Resource
-    private PostService postService;
+    protected PostService postService;
     @Resource
-    private PermissionService permissionService;
+    protected PermissionService permissionService;
     @Resource
-    private PasswordEncoder passwordEncoder;
+    protected PasswordEncoder passwordEncoder;
     @Resource
     @Lazy // 延迟，避免循环依赖报错
     private TenantService tenantService;

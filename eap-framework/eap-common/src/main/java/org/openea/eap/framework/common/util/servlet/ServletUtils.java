@@ -13,7 +13,9 @@ import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.URLEncoder;
+import java.net.UnknownHostException;
 import java.util.Map;
 
 /**
@@ -84,7 +86,16 @@ public class ServletUtils {
         if (request == null) {
             return null;
         }
-        return ServletUtil.getClientIP(request);
+        String clientIp = ServletUtil.getClientIP(request);
+        if ("0:0:0:0:0:0:0:1".equals(clientIp) || "127.0.0.1".equals(clientIp)) {
+            // 如果是本地地址，尝试获取外部网络地址
+            try {
+                clientIp = InetAddress.getLocalHost().getHostAddress();
+            } catch (UnknownHostException e) {
+                // 处理异常
+            }
+        }
+        return clientIp;
     }
 
     public static boolean isJsonRequest(ServletRequest request) {

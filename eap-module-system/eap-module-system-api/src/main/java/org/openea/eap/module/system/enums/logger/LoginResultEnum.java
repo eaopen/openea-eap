@@ -15,7 +15,7 @@ public enum LoginResultEnum {
     USER_DISABLED(20), // 用户被禁用
     CAPTCHA_NOT_FOUND(30), // 图片验证码不存在
     CAPTCHA_CODE_ERROR(31), // 图片验证码不正确
-
+    THIRD_FAIL(40),  //第三方或外部失败
     ;
 
     /**

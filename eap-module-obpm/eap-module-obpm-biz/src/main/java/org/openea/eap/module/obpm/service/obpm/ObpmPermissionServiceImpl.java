@@ -7,9 +7,7 @@ import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.openea.eap.framework.common.enums.CommonStatusEnum;
 import org.openea.eap.module.system.dal.dataobject.permission.MenuDO;
-import org.openea.eap.module.system.dal.dataobject.permission.RoleDO;
 import org.openea.eap.module.system.dal.dataobject.user.AdminUserDO;
-import org.openea.eap.module.system.enums.permission.MenuTypeEnum;
 import org.openea.eap.module.system.service.permission.PermissionService;
 import org.openea.eap.module.system.service.permission.PermissionServiceImpl;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -19,7 +17,6 @@ import javax.annotation.Resource;
 import java.nio.charset.Charset;
 import java.util.*;
 
-import static java.util.Collections.singleton;
 import static org.openea.eap.framework.common.util.collection.CollectionUtils.convertSet;
 
 @Service
@@ -46,19 +43,21 @@ public class ObpmPermissionServiceImpl extends PermissionServiceImpl implements 
 
         // 3. 合并
         if(!menuList2.isEmpty()){
-            // obpm 菜单所有id/parentId + 200000（避免同eap菜单冲突）
+            // obpm 菜单所有id/parentId + 2000000（避免同eap菜单冲突）
             for(MenuDO menu: menuList2){
-                menu.setId(menu.getId()+20000);
+                menu.setId(menu.getId()+2000000);
                 if(menu.getParentId()!=0L){
-                    menu.setParentId(menu.getParentId()+20000);
+                    menu.setParentId(menu.getParentId()+2000000);
                 }
             }
             // eap 顶层菜单排序sort + 1000
-            for(MenuDO menu: menuList){
-                if(menu.getParentId()==0L){
-                    menu.setSort(1000+menu.getSort());
+            if(menuList!=null){
+                for(MenuDO menu: menuList){
+                    if(menu.getParentId()==0L){
+                        menu.setSort(1000+menu.getSort());
+                    }
+                    menuList2.add(menu);
                 }
-                menuList2.add(menu);
             }
             menuList = menuList2;
         }

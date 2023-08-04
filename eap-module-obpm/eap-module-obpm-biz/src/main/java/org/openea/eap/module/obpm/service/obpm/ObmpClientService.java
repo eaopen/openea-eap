@@ -4,11 +4,15 @@ import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
+import com.baomidou.dynamic.datasource.DynamicRoutingDataSource;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
+import javax.sql.DataSource;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +23,19 @@ public class ObmpClientService {
 
     @Value("${eap.obpm.apiBaseUrl:/obpm-server}")
     private String obpmClientBaseUrl;
+
+    private int timeoutMillSecs = 6000; //milliseconds
+
+    @Bean
+    public JdbcTemplate obpmJdbcTemplate(DataSource ds){
+        try{
+            DataSource obpmDs = ((DynamicRoutingDataSource)ds).getDataSource("obpm");
+            return new JdbcTemplate(obpmDs);
+        }catch (Throwable t){
+            log.error("obpmJdbcTemplate fail:"+t.getMessage(), t);
+        }
+        return null;
+    }
 
     public JSONObject login(String username, String password) {
         // post /eap/login  account=username&password=password
@@ -49,9 +66,14 @@ public class ObmpClientService {
         params.put("user", userKey);
         params.put("withPassword", withPassword);
         params.put("sign", eapSign(userKey));
-        String result = HttpUtil.get(obpmClientBaseUrl+"/eap/userInfo", params);
+        String result = HttpUtil.get(obpmClientBaseUrl+"/eap/userInfo", params, timeoutMillSecs);
         if(result.startsWith("<html>")){
-            throw new RuntimeException(result);
+            JSONObject logJson = new JSONObject();
+            logJson.set("url", obpmClientBaseUrl+"/eap/userInfo");
+            logJson.set("params", params);
+            logJson.set("result", result);
+            log.warn(logJson.toStringPretty());
+            throw new RuntimeException("queryUserInfo fail, userKey="+userKey+", url="+obpmClientBaseUrl+"/eap/userInfo");
         }
         JSONObject resultObj = JSONUtil.parseObj(result);
         if(resultObj.getBool("isOk")){
@@ -73,7 +95,7 @@ public class ObmpClientService {
             params.put("user", userKey);
             params.put("system", systemKey);
             params.put("sign", eapSign(userKey));
-            String result = HttpUtil.get(obpmClientBaseUrl+"/eap/userMenu", params, 6000);
+            String result = HttpUtil.get(obpmClientBaseUrl+"/eap/userMenu", params, timeoutMillSecs);
             resultObj = JSONUtil.parseObj(result);
             if(resultObj!=null && resultObj.getBool("isOk")){
                 JSONObject resultData = resultObj.getJSONObject("data");
