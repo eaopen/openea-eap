@@ -179,7 +179,7 @@ public class ObpmAuthServiceImpl extends AdminAuthServiceImpl implements AdminAu
         // 插入登陆日志
         createLoginLog(userId, username, logType, LoginResultEnum.SUCCESS);
         // 创建访问令牌
-        OAuth2AccessTokenDO  accessTokenDO = oauth2TokenService.createAccessToken(userId, getUserType().getValue(),
+        OAuth2AccessTokenDO  accessTokenDO = oauth2TokenService.createAccessToken(userId, username, getUserType().getValue(),
                     OAuth2ClientConstants.CLIENT_ID_DEFAULT, null);
         // 构建返回结果
         return AuthConvert.INSTANCE.convert(accessTokenDO);

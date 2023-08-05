@@ -49,7 +49,7 @@ public class OAuth2TokenServiceImpl implements OAuth2TokenService {
     @Override
     @Transactional
     public OAuth2AccessTokenDO createAccessToken(Long userId, Integer userType, String clientId, List<String> scopes) {
-        return createAccessToken(userId, "u"+userId, userType, clientId, scopes);
+        return createAccessToken(userId, null, userType, clientId, scopes);
     }
     @Override
     @Transactional
