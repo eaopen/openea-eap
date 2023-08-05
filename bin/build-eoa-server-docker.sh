@@ -25,7 +25,11 @@ docker tag  ${artifactId}:${version}  ${artifactId}:latest
 # 4 docker push
 ## !!!请更改的docker registry以及执行docker login
 # docker login -u [user] -p [password] [docker registry]
-sh ${DIR}/openea-docker-login.sh
+LOGIN_FILE_PATH="${DIR}/openea-docker-login.sh"
+
+if [ -f "$LOGIN_FILE_PATH" ]; then
+  sh $LOGIN_FILE_PATH
+fi
 
 repsBase=openea-docker.pkg.coding.net/reps/docker
 docker tag ${artifactId}:${version}  ${repsBase}/${artifactId}:latest
