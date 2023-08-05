@@ -189,4 +189,31 @@ public class UserController {
         return success(userService.importUserList(list, updateSupport));
     }
 
+    //// im
+    @GetMapping("/ImUser")
+    @Operation(summary = "IM通讯获取用户")
+    @PreAuthorize("@ss.hasPermission('system:user:list')")
+    public CommonResult<PageResult<ImUserListVo>> getImUserPage(@Valid UserPageReqVO reqVO) {
+        // 获得用户分页列表
+        PageResult<AdminUserDO> pageResult = userService.getUserPage(reqVO);
+        if (CollUtil.isEmpty(pageResult.getList())) {
+            return success(new PageResult<>(pageResult.getTotal())); // 返回空
+        }
+
+        // 获得拼接需要的数据
+        Collection<Long> deptIds = convertList(pageResult.getList(), AdminUserDO::getDeptId);
+        Map<Long, DeptDO> deptMap = deptService.getDeptMap(deptIds);
+        // 拼接结果返回
+        List<ImUserListVo> userList = new ArrayList<>(pageResult.getList().size());
+        pageResult.getList().forEach(user -> {
+            ImUserListVo respVO = UserConvert.INSTANCE.convertIm(user);
+            UserPageItemRespVO.Dept dept = UserConvert.INSTANCE.convert(deptMap.get(user.getDeptId()));
+            if(dept!=null){
+                respVO.setDepartment(dept.getName());
+            }
+            userList.add(respVO);
+        });
+        return success(new PageResult<>(userList, pageResult.getPagination()));
+    }
+
 }

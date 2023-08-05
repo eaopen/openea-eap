@@ -1,5 +1,6 @@
 package org.openea.eap.module.system.convert.user;
 
+import org.mapstruct.Mapping;
 import org.openea.eap.module.system.api.user.dto.AdminUserRespDTO;
 import org.openea.eap.module.system.controller.admin.user.vo.profile.UserProfileRespVO;
 import org.openea.eap.module.system.controller.admin.user.vo.profile.UserProfileUpdatePasswordReqVO;
@@ -21,6 +22,11 @@ public interface UserConvert {
     UserConvert INSTANCE = Mappers.getMapper(UserConvert.class);
 
     UserPageItemRespVO convert(AdminUserDO bean);
+
+    @Mapping(source = "bean.username", target = "account")
+    @Mapping(source = "bean.nickname", target = "realName")
+    @Mapping(source = "bean.avatar", target = "headIcon")
+    ImUserListVo convertIm(AdminUserDO bean);
 
     UserPageItemRespVO.Dept convert(DeptDO bean);
 

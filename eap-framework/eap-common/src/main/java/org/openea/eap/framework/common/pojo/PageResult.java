@@ -14,8 +14,11 @@ public final class PageResult<T> implements Serializable {
     @Schema(description = "数据", requiredMode = Schema.RequiredMode.REQUIRED)
     private List<T> list;
 
-    @Schema(description = "总量", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(description = "总量", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
     private Long total;
+
+    @Schema(description = "分页", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+    private PaginationVO pagination;
 
     public PageResult() {
     }
@@ -23,6 +26,14 @@ public final class PageResult<T> implements Serializable {
     public PageResult(List<T> list, Long total) {
         this.list = list;
         this.total = total;
+    }
+
+    public PageResult(List<T> list, PaginationVO pagination){
+        this.list = list;
+        this.pagination = pagination;
+        if(this.pagination!=null && this.total==null){
+            this.total = this.pagination.total;
+        }
     }
 
     public PageResult(Long total) {

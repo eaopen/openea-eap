@@ -1,8 +1,10 @@
 package org.openea.eap.framework.mybatis.core.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.openea.eap.framework.common.pojo.PageParam;
 import org.openea.eap.framework.common.pojo.PageResult;
+import org.openea.eap.framework.common.pojo.PaginationVO;
 import org.openea.eap.framework.mybatis.core.util.MyBatisUtils;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -25,7 +27,12 @@ public interface BaseMapperX<T> extends BaseMapper<T> {
         IPage<T> mpPage = MyBatisUtils.buildPage(pageParam);
         selectPage(mpPage, queryWrapper);
         // 转换返回
-        return new PageResult<>(mpPage.getRecords(), mpPage.getTotal());
+        //return new PageResult<>(mpPage.getRecords(), mpPage.getTotal());
+        PaginationVO pagination = new PaginationVO();
+        pagination.setTotal(mpPage.getTotal());
+        pagination.setCurrentPage(NumberUtils.toInt(""+mpPage.getCurrent()));
+        pagination.setPageSize(NumberUtils.toInt(""+mpPage.getSize()));
+        return new PageResult<>(mpPage.getRecords(), pagination);
     }
 
     default T selectOne(String field, Object value) {
