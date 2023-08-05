@@ -71,6 +71,9 @@ public class ObpmProxyController {
                 .addHeaders(headers); // 添加请求头
         if(ObjectUtils.isNotEmpty(body) && !"{}".equals(body)){
             request2 = request2.body(body);
+        }else{
+            // 兼容，总是加上json数据
+            request2 = request2.body("{}");
         }
         HttpResponse response = request2.execute();
         return convertJsonResult(response.body());
