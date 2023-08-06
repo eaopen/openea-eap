@@ -7,6 +7,7 @@
         <artifactId>eap</artifactId>
         <version>${revision}</version>
     </parent>
+
     <modelVersion>4.0.0</modelVersion>
     <artifactId>eap-module-infra</artifactId>
     <packaging>pom</packaging>
@@ -34,9 +35,52 @@
 <!--        <module>eap-visualdev-base</module>-->
 <!--        <module>eap-visualdev-onlinedev</module>-->
 <!--        <module>eap-visualdev-generater</module>-->
-<!--        <module>eap-visualdev-portal</module>-->
+        <module>eap-visualdev-portal</module>
 
     </modules>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-annotation</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.swagger.core.v3</groupId>
+            <artifactId>swagger-annotations</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-extension</artifactId>
+            <version>3.5.3.1</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>13.0</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-beans</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
+    </dependencies>
 
 
     <profiles>

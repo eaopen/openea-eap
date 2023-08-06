@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.openea.eap</groupId>
+        <artifactId>eap-visualdev-portal</artifactId>
+        <version>${revision}</version>
+    </parent>
+
+    <artifactId>eap-visualdev-portal-biz</artifactId>
+
+    <dependencies>
+<!--        <dependency>-->
+<!--            <groupId>org.openea.eap</groupId>-->
+<!--            <artifactId>eap-visualdev-portal-entity</artifactId>-->
+<!--            <version>${project.version}</version>-->
+<!--        </dependency>-->
+
+        <dependency>
+            <groupId>org.openea.eap</groupId>
+            <artifactId>eap-extj-common</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+
+
+        <!-- Web 相关 -->
+        <dependency>
+            <groupId>org.openea.eap</groupId>
+            <artifactId>eap-spring-boot-starter-security</artifactId>
+        </dependency>
+
+        <!-- DB 相关 -->
+        <dependency>
+            <groupId>org.openea.eap</groupId>
+            <artifactId>eap-spring-boot-starter-mybatis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-generator</artifactId> <!-- 代码生成器，使用它解析表结构 -->
+        </dependency>
+
+        <dependency>
+            <groupId>org.openea.eap</groupId>
+            <artifactId>eap-spring-boot-starter-redis</artifactId>
+        </dependency>
+
+
+    </dependencies>
+
+</project>

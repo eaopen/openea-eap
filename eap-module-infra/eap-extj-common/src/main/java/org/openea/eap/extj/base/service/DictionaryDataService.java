@@ -1,6 +1,7 @@
 package org.openea.eap.extj.base.service;
 
 
+import jdk.internal.jimage.ImageLocation;
 import org.openea.eap.extj.base.entity.DictionaryDataEntity;
 
 import java.util.List;
@@ -15,4 +16,8 @@ public interface DictionaryDataService  {
 
 
     List<DictionaryDataEntity> getDicList(String id);
+
+    DictionaryDataEntity getInfo(String portalCategoryId);
+
+    List<DictionaryDataEntity> getList(String id);
 }

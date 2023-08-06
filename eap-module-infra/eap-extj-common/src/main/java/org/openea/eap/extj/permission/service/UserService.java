@@ -23,6 +23,8 @@ public interface UserService
 
     List<String> getListId();
 
+    void updateById(UserEntity update);
+
 //    /*======================get接口========================*/
 //
 //    List<UserEntity> getAdminList();

@@ -27,16 +27,31 @@
             <version>2.0.4-snapshot</version>
             <scope>compile</scope>
         </dependency>
-        <!--        <dependency>-->
-<!--            <groupId>com.jnpf</groupId>-->
-<!--            <artifactId>jnpf-permission-biz</artifactId>-->
-<!--            <version>${project.version}</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>com.jnpf</groupId>-->
-<!--            <artifactId>jnpf-system-biz</artifactId>-->
-<!--            <version>${project.version}</version>-->
-<!--        </dependency>-->
+
+
+
+        <!-- Web 相关 -->
+        <dependency>
+            <groupId>org.openea.eap</groupId>
+            <artifactId>eap-spring-boot-starter-security</artifactId>
+        </dependency>
+
+        <!-- DB 相关 -->
+        <dependency>
+            <groupId>org.openea.eap</groupId>
+            <artifactId>eap-spring-boot-starter-mybatis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-generator</artifactId> <!-- 代码生成器，使用它解析表结构 -->
+        </dependency>
+
+        <dependency>
+            <groupId>org.openea.eap</groupId>
+            <artifactId>eap-spring-boot-starter-redis</artifactId>
+        </dependency>
+
+
     </dependencies>
 
 </project>

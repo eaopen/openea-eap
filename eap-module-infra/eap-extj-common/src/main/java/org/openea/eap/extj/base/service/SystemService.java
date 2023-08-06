@@ -1,6 +1,10 @@
 package org.openea.eap.extj.base.service;
 
 
+import jdk.internal.jimage.ImageLocation;
+import org.openea.eap.extj.base.entity.SystemEntity;
+import org.openea.eap.extj.model.BaseSystemInfo;
+
 import java.util.List;
 
 /**
@@ -11,4 +15,5 @@ import java.util.List;
 public interface SystemService
 {
 
+    SystemEntity getInfo(String id);
 }
