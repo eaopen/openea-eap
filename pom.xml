@@ -23,7 +23,6 @@
         <!-- 各种 module 拓展 -->
         <module>eap-module-system</module>
         <module>eap-module-infra</module>
-        <module>eap-module-visualdev</module>
         <module>eap-module-obpm</module>
         <module>eap-module-report</module>
         <module>eap-biz-extend</module>
@@ -70,33 +69,38 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>flatten-maven-plugin</artifactId>
-                <version>1.2.7</version>
-                <executions>
-                    <execution>
-                        <id>flatten</id>
-                        <phase>process-resources</phase>
-                        <goals>
-                            <goal>flatten</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>flatten.clean</id>
-                        <phase>clean</phase>
-                        <goals>
-                            <goal>clean</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <inherited>true</inherited>
-                <configuration>
-                    <!-- 避免IDE将 .flattened-pom.xml 自动识别为功能模块 -->
-                    <updatePomFile>true</updatePomFile>
-                    <flattenMode>resolveCiFriendliesOnly</flattenMode>
-                </configuration>
             </plugin>
         </plugins>
         <pluginManagement>
             <plugins>
+                <!-- 添加flatten-maven-plugin插件 -->
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>flatten-maven-plugin</artifactId>
+                    <version>1.2.7</version>
+                    <executions>
+                        <execution>
+                            <id>flatten</id>
+                            <phase>process-resources</phase>
+                            <goals>
+                                <goal>flatten</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>flatten.clean</id>
+                            <phase>clean</phase>
+                            <goals>
+                                <goal>clean</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <inherited>true</inherited>
+                    <configuration>
+                        <!-- 避免IDE将 .flattened-pom.xml 自动识别为功能模块 -->
+                        <updatePomFile>true</updatePomFile>
+                        <flattenMode>resolveCiFriendliesOnly</flattenMode>
+                    </configuration>
+                </plugin>
                 <!-- maven-surefire-plugin 插件，用于运行单元测试。 -->
                 <!-- 注意，需要使用 3.0.X+，因为要支持 Junit 5 版本 -->
                 <plugin>
@@ -167,6 +171,11 @@
             <id>aliyunmaven</id>
             <name>aliyun</name>
             <url>https://maven.aliyun.com/repository/public</url>
+        </repository>
+        <repository>
+            <id>openea-reps-mvn</id>
+            <name>mvn</name>
+            <url>https://openea-maven.pkg.coding.net/repository/reps/mvn/</url>
         </repository>
     </repositories>
     <pluginRepositories>

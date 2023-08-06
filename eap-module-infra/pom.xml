@@ -8,19 +8,36 @@
         <version>${revision}</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <modules>
-        <module>eap-module-infra-api</module>
-        <module>eap-module-infra-biz</module>
-    </modules>
     <artifactId>eap-module-infra</artifactId>
     <packaging>pom</packaging>
-
     <name>${project.artifactId}</name>
     <description>
         infra 模块，主要提供两块能力：
-        1. 我们放基础设施的运维与管理，支撑上层的通用与核心业务。 例如说：定时任务的管理、服务器的信息等等
-        2. 研发工具，提升研发效率与质量。 例如说：代码生成器、接口文档等等
+        1. 我们放基础设施的运维与管理，支撑上层的通用与核心业务。
+        例如说：定时任务的管理、服务器的信息等等
+        增加消息对话机制
+        2. 研发工具，提升研发效率与质量。
+        例如说：代码生成器、接口文档等等
+        计划增加可视化开发功能
     </description>
+
+    <modules>
+        <module>eap-module-infra-api</module>
+        <module>eap-module-infra-biz</module>
+
+        <!-- 通用扩展，适配eap-common和eap-system -->
+        <module>eap-extj-common</module>
+        <!-- 消息/IM模块, 基于eap-extj-common -->
+        <module>eap-extj-message</module>
+
+        <!-- 在线设计模块, 基于eap-extj-common -->
+<!--        <module>eap-visualdev-base</module>-->
+<!--        <module>eap-visualdev-onlinedev</module>-->
+<!--        <module>eap-visualdev-generater</module>-->
+<!--        <module>eap-visualdev-portal</module>-->
+
+    </modules>
+
 
     <profiles>
         <!-- SpringCloud运行环境 -->
@@ -32,5 +49,149 @@
             </modules>
         </profile>
     </profiles>
+
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>cn.afterturn</groupId>
+                <artifactId>easypoi-annotation</artifactId>
+                <version>4.4.0</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-annotation</artifactId>
+                <version>3.5.3.1</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.nimbusds</groupId>
+                <artifactId>nimbus-jose-jwt</artifactId>
+                <version>9.30.2</version>
+            </dependency>
+
+
+            <!--二维码-->
+            <dependency>
+                <groupId>com.google.zxing</groupId>
+                <artifactId>core</artifactId>
+                <version>3.5.1</version>
+            </dependency>
+
+            <!-- 拼音 -->
+            <dependency>
+                <groupId>com.belerweb</groupId>
+                <artifactId>pinyin4j</artifactId>
+                <version>2.5.1</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>commons-fileupload</groupId>
+                <artifactId>commons-fileupload</artifactId>
+                <version>1.5</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>org.owasp.antisamy</groupId>
+                <artifactId>antisamy</artifactId>
+                <exclusions>
+                    <exclusion>
+                        <artifactId>commons-io</artifactId>
+                        <groupId>commons-io</groupId>
+                    </exclusion>
+                </exclusions>
+                <version>1.7.3</version>
+            </dependency>
+            <!-- commons-text -->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-text</artifactId>
+                <version>1.10.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.mybatis.dynamic-sql</groupId>
+                <artifactId>mybatis-dynamic-sql</artifactId>
+                <version>1.5.0</version>
+            </dependency>
+
+
+
+            <dependency>
+                <groupId>dingtalk-sdk-java</groupId>
+                <artifactId>taobao-sdk-java</artifactId>
+                <version>1.0</version>
+            </dependency>
+            <dependency>
+                <groupId>dingtalk-sdk-java</groupId>
+                <artifactId>taobao-sdk-java-source</artifactId>
+                <version>1.0</version>
+            </dependency>
+            <dependency>
+                <groupId>com.tencentcloudapi</groupId>
+                <artifactId>tencentcloud-sdk-java</artifactId>
+                <version>3.1.561</version>
+            </dependency>
+            <dependency>
+                <groupId>com.aliyun</groupId>
+                <artifactId>dysmsapi20170525</artifactId>
+                <version>2.0.8</version>
+            </dependency>
+            <dependency>
+                <groupId>com.sun.mail</groupId>
+                <artifactId>javax.mail</artifactId>
+                <version>1.6.2</version>
+            </dependency>
+            <dependency>
+                <groupId>org.dom4j</groupId>
+                <artifactId>dom4j</artifactId>
+                <version>2.1.3</version>
+            </dependency>
+
+            <dependency>
+                <groupId>cn.dev33</groupId>
+                <artifactId>sa-token</artifactId>
+                <version>1.6.0</version>
+            </dependency>
+
+
+        </dependencies>
+    </dependencyManagement>
+
+
+    <build>
+        <plugins>
+            <!-- 添加flatten-maven-plugin插件 -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>flatten-maven-plugin</artifactId>
+                <version>1.2.7</version>
+                <executions>
+                    <execution>
+                        <id>flatten</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>flatten</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>flatten.clean</id>
+                        <phase>clean</phase>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <inherited>true</inherited>
+                <configuration>
+                    <!-- 避免IDE将 .flattened-pom.xml 自动识别为功能模块 -->
+                    <updatePomFile>true</updatePomFile>
+                    <flattenMode>resolveCiFriendliesOnly</flattenMode>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

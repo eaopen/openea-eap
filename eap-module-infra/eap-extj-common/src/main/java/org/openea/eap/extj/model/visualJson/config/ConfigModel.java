@@ -1,0 +1,80 @@
+package org.openea.eap.extj.model.visualJson.config;
+
+import lombok.Data;
+import org.openea.eap.extj.model.visualJson.FieLdsModel;
+import org.openea.eap.extj.model.visualJson.TemplateJsonModel;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Data
+public class ConfigModel {
+    private String label;
+    private String labelWidth;
+    private Boolean showLabel;
+    private Boolean changeTag;
+    private Boolean border;
+    private String tag;
+    private String tagIcon;
+    private boolean required = false;
+    private Boolean unique = false;
+    private String layout;
+    private String dataType;
+    private Integer span = 24;
+    private String jnpfKey;
+    private String dictionaryType;
+    private Integer formId;
+    private String relationTable;
+    private Long renderKey;
+    private Integer columnWidth;
+    private List<RegListModel> regList;
+    private String reg;
+    private Object defaultValue;
+    private Boolean defaultCurrent;
+    private String active;
+    private String title;
+    private String type;
+    private Boolean showIcon;
+    private Boolean closable;
+    private String options;
+    private String valueType;
+    private String propsUrl;
+    private String optionType;
+    private ConfigPropsModel props;
+    private Boolean showTitle;
+    private String tableName;
+    private String aliasClassName;
+    private List<FieLdsModel> children;
+    private String visibility = "[\"app\",\"pc\"]";
+    private List<TemplateJsonModel> templateJson = new ArrayList();
+    private String rule;
+    private String trigger = "blur";
+    private Boolean noShow = false;
+    private int childNum;
+    private String model;
+    private boolean app = true;
+    private boolean pc = true;
+    private String parentVModel;
+    private Integer isStorage;
+    private Boolean merged = false;
+    private String colspan;
+    private String rowspan;
+    private String rowType;
+    private String borderType;
+    private String borderColor;
+    private String borderWidth;
+    private String tipLabel;
+    private String startRelationField;
+    private String endRelationField;
+    private Boolean startChild = false;
+    private Boolean endRChild = false;
+    private Boolean startTimeRule = false;
+    private String startTimeType;
+    private String startTimeTarget;
+    private String startTimeValue;
+    private Boolean endTimeRule = false;
+    private String endTimeType;
+    private String endTimeTarget;
+    private String endTimeValue;
+
+}
