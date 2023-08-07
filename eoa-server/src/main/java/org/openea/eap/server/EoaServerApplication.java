@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.web.socket.config.annotation.EnableWebSocket;
 
 /**
  * 项目的启动类
@@ -23,6 +24,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 })
 @SpringBootApplication()
 @EnableAsync
+@EnableWebSocket
 public class EoaServerApplication {
 
     public static void main(String[] args) {

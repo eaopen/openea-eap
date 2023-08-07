@@ -118,7 +118,7 @@ public class ObpmProxyController {
         // code 转为数字
         if(jsonResult.containsKey("code")){
             int code = jsonResult.getInt("code");
-            jsonResult.put("code", code);
+            jsonResult.set("code", code);
         }
         return jsonResult;
     }

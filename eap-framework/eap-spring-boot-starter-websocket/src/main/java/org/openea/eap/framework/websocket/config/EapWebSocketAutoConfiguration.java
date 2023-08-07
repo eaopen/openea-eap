@@ -13,8 +13,6 @@ import java.util.List;
 
 /**
  * WebSocket 自动配置
- *
- * @author xingyu4j
  */
 @AutoConfiguration
 // 允许使用 eap.websocket.enable=false 禁用websocket

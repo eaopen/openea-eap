@@ -30,7 +30,9 @@ import java.util.*;
  * 账号配置功能
  * */
 @Service
-public class AccountConfigServiceImpl extends SuperServiceImpl<AccountConfigMapper, AccountConfigEntity> implements AccountConfigService {
+public class AccountConfigServiceImpl
+        extends SuperServiceImpl<AccountConfigMapper, AccountConfigEntity>
+        implements AccountConfigService {
 
 
     @Autowired

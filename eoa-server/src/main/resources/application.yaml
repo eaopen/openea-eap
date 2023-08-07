@@ -431,3 +431,64 @@ logging:
     org.openea.eap.framework.i18n.core.I18nUtil: ERROR
   file:
     name: ${user.home}/logs/${spring.application.name}.log # 日志文件名，全路径
+
+
+--- #################### extj相关配置 ####################
+
+config:
+  # ===============静态资源目录映射==================
+  WebAnnexFilePath: WebAnnexFile
+  DataBackupFilePath: DataBackupFile
+  TemporaryFilePath: TemporaryFile
+  SystemFilePath: SystemFile
+  TemplateFilePath: TemplateFile
+  EmailFilePath: EmailFile
+  DocumentFilePath: DocumentFile
+  DocumentPreviewPath: DocumentPreview
+  UserAvatarFilePath: UserAvatar
+  IMContentFilePath: IMContentFile
+  MPMaterialFilePath: MPMaterial
+  TemplateCodePath: TemplateCode
+  BiVisualPath: BiVisualPath
+  # ===============功能格式限制==================
+  MPUploadFileType: bmp,png,jpeg,jpg,gif,mp3,wma,wav,amr,mp4
+  WeChatUploadFileType: jpg,png,doc,docx,ppt,pptx,xls,xlsx,pdf,txt,rar,zip,csv,amr,mp4
+
+  AllowUploadImageType: jpg,gif,png,bmp,jpeg,tiff,psd,swf,svg,pcx,dxf,wmf,emf,lic,eps,tga #允许上传图片类型
+  AllowUploadFileType: jpg,gif,png,bmp,jpeg,doc,docx,ppt,pptx,xls,xlsx,pdf,txt,rar,zip,csv,mp3 #允许上传文件类型
+  AllowPreviewFileType: doc,docx,xls,xlsx,ppt,pptx,pdf,jpg,gif,png,bmp,jpeg #允许预览文件类型
+  PreviewType: kkfile #文件预览方式 （1.yozo 2.kkfile）默认使用kkfile
+  kkFileUrl: http://127.0.0.1:30090/FileServer/ #kkfile文件预览服务地址
+  ApiDomain: http://127.0.0.1:30000 #后端域名(文档预览中使用)
+  FrontDomain: http://127.0.0.1:3000 #前端域名(文档预览中使用)
+  AppDomain: http://127.0.0.1:8080 #app/h5端域名配置(文档预览中使用)
+
+  CodeAreasName: example #代码生成器模块命名
+
+
+  #===================== unipush =====================
+  AppPushUrl: https://11111.bspapp.com/unipush
+
+  #===================== 多租户 =====================
+  MultiTenancy: false #是否开启
+
+  #===================== 系统及错误报告反馈相关 =====================
+  SoftName: java-boot #项目名
+  SoftFullName: 快速开发平台 #项目全名
+  SoftVersion: v3.4.7 #版本号
+
+  RecordLog: false #系统日志启用
+  ErrorReport: false #软件错误报告
+  ErrorReportTo: surrpot@xxx.com #软件错误报告接收者
+  IgexinEnabled: false #推送启动
+
+  #===================== APP =====================
+  AppVersion: V3.4.7 #APP版本号
+  IgexinAppid: 11HLFY9T2d1z7MySY8hwGwh4 #APPID：应用的唯一标识
+  IgexinAppkey: 116Uiduugq648YDChhCjAt59 #APPKEY：公匙（相当于账号）
+  IgexinMastersecret: 11pEyQm156SJ9iS7PbyjLCZ6 #Mastersecret：私匙（相当于密码）
+  AppUpdateContent: ; #APP更新内容
+
+  #===================== 系统功能配置 =====================
+  EnablePreAuth: false #是否开启接口鉴权
+  EnableLogicDelete: false #是否开启逻辑删除

@@ -64,10 +64,10 @@ public class ObmpClientService {
             JSONObject resultData = resultObj.getJSONObject("data");
             String obpmToken =  resultData.getStr("token");
             ObpmUtil.setObpmToken(obpmToken);
-            jsonResult.put("token",obpmToken);
-            jsonResult.put("user", resultData.getJSONObject("user"));
+            jsonResult.set("token",obpmToken);
+            jsonResult.set("user", resultData.getJSONObject("user"));
         }else{
-            jsonResult.put("msg", resultObj.getStr("msg"));
+            jsonResult.set("msg", resultObj.getStr("msg"));
         }
         return jsonResult;
     }

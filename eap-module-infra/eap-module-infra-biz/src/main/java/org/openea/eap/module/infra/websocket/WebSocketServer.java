@@ -1,8 +1,10 @@
 package org.openea.eap.module.infra.websocket;
 
 import lombok.extern.slf4j.Slf4j;
+import org.openea.eap.extj.message.websocket.MessageWebSocket;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
 import java.util.concurrent.Semaphore;
@@ -10,8 +12,8 @@ import java.util.concurrent.Semaphore;
 /**
  * websocket 消息处理
  */
-@Component
-@ServerEndpoint("/websocket/message")
+//@Component
+//@ServerEndpoint("/websocket/message")
 @Slf4j
 public class WebSocketServer {
 
@@ -55,6 +57,7 @@ public class WebSocketServer {
         log.info("用户【sessionId={}】关闭连接！", session.getId());
         // 移除用户
         WebSocketUsers.removeSession(session);
+
         // 获取到信号量则需释放
         SemaphoreUtils.release(SOCKET_SEMAPHORE);
     }
@@ -70,8 +73,10 @@ public class WebSocketServer {
         }
         String sessionId = session.getId();
         log.info("用户【sessionId={}】连接异常！异常信息：{}", sessionId, exception);
+
         // 移出用户
         WebSocketUsers.removeSession(session);
+
         // 获取到信号量则需释放
         SemaphoreUtils.release(SOCKET_SEMAPHORE);
     }

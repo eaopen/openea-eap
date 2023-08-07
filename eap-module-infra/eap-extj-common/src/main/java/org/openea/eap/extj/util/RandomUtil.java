@@ -1,6 +1,5 @@
 package org.openea.eap.extj.util;
 
-
 import cn.hutool.core.util.IdUtil;
 
 public class RandomUtil extends IdUtil {

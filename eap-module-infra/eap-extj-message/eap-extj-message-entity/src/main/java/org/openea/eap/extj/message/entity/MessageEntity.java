@@ -2,7 +2,6 @@ package org.openea.eap.extj.message.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
 import org.openea.eap.extj.base.entity.SuperBaseEntity;
-import org.openea.eap.extj.util.StringUtil;
 import lombok.Data;
 
 import java.util.Date;

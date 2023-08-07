@@ -1,7 +1,10 @@
 package org.openea.eap.extj.message.websocket;
 
+import cn.hutool.core.map.MapUtil;
+import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.ImmutableMap;
+import org.bouncycastle.util.Strings;
 import org.openea.eap.extj.base.PageModel;
 import org.openea.eap.extj.base.UserInfo;
 import org.openea.eap.extj.base.service.SysconfigService;
@@ -32,7 +35,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.openea.eap.extj.util.data.DataSourceContextHolder;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import org.springframework.util.ObjectUtils;
 
+import javax.validation.constraints.NotNull;
 import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
@@ -45,9 +50,10 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 @Component
-@ServerEndpoint(value = "/api/message/websocket/{token}")
+//@ServerEndpoint(value = "/api/message/websocket/{token}")
+@ServerEndpoint("/websocket/message")
 @Scope("prototype")
-public class WebSocket {
+public class MessageWebSocket {
 
     private UserProvider userProvider;
     private ImContentService imContentService;
@@ -66,6 +72,9 @@ public class WebSocket {
     @OnOpen
     public void onOpen(Session session, @PathParam("token") String token) {
         this.init();
+        if(ObjectUtils.isEmpty(token)){
+            token = getParam("token",session);
+        }
         this.userInfo = userProvider.get(token);
         if (this.userInfo.getUserId() == null) {
             try{
@@ -107,7 +116,7 @@ public class WebSocket {
         }
     }
 
-    private void processMessage(String message, Session session){
+    public void processMessage(String message, Session session){
         log.debug("WS消息内容: {}, {}", session.getId(), message);
         JSONObject receivedMessage = JSONObject.parseObject(message);
         String receivedMethod = receivedMessage.getString(MessageParameterEnum.PARAMETER_METHOD.getValue());
@@ -453,6 +462,26 @@ public class WebSocket {
                 log.error("WS发生错误", error);
             }
         }
+    }
+    public static String getParam(@NotNull String key, Session session) {
+        //TODO 目前只针对获取一个key的值，后期根据情况拓展多个 或者直接在onClose onOpen上获取参数？
+        String value = null;
+        Map<String, List<String>> parameters = session.getRequestParameterMap();
+        if (MapUtil.isNotEmpty(parameters)) {
+            value = parameters.get(key).get(0);
+        } else {
+            String queryString = session.getQueryString();
+            if (!StrUtil.isEmpty(queryString)) {
+                String[] params = Strings.split(queryString, '&');
+                for (String paramPair : params) {
+                    String[] nameValues = Strings.split(paramPair, '=');
+                    if (key.equals(nameValues[0])) {
+                        value = nameValues[1];
+                    }
+                }
+            }
+        }
+        return value;
     }
 
     /**

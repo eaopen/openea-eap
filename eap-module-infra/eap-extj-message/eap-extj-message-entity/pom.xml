@@ -15,7 +15,7 @@
         <dependency>
             <groupId>org.openea.eap</groupId>
             <artifactId>eap-extj-common</artifactId>
-            <version>${project.version}</version>
+            <version>${revision}</version>
         </dependency>
         <!-- 钉钉API的Jar -->
         <dependency>

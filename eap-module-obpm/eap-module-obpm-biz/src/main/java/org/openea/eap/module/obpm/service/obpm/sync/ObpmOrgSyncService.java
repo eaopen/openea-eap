@@ -186,7 +186,7 @@ public class ObpmOrgSyncService implements InitializingBean {
                             columnName = metaData.getColumnName(i);
                         }
                         Object value = rs.getObject(i);
-                        jsonObj.put(columnName, value);
+                        jsonObj.set(columnName, value);
                     }
                     return jsonObj;
                 }

@@ -6,8 +6,6 @@ import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.text.StringSubstitutor;
 import org.openea.eap.extj.base.UserInfo;
-import org.openea.eap.extj.base.entity.SysConfigEntity;
-import org.openea.eap.extj.base.service.SysconfigService;
 import org.openea.eap.extj.config.JnpfOauthConfig;
 import org.openea.eap.extj.message.entity.*;
 import org.openea.eap.extj.message.enums.MessageTypeEnum;
@@ -31,8 +29,6 @@ public class SentMessageUtil {
     private UserService userService;
     @Autowired
     private UserProvider userProvider;
-    @Autowired
-    private SysconfigService sysconfigService;
     @Autowired
     private MessageService messageService;
     @Autowired
@@ -344,11 +340,8 @@ public class SentMessageUtil {
      */
     private Map<String, String> getSystemConfig() {
         // 获取系统配置
-        List<SysConfigEntity> configList = sysconfigService.getList("SysConfig");
+        // TODO eap
         Map<String, String> objModel = new HashMap<>(16);
-        for (SysConfigEntity entity : configList) {
-            objModel.put(entity.getFkey(), entity.getValue());
-        }
         return objModel;
     }
 

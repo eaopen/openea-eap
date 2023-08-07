@@ -22,12 +22,18 @@
         <dependency>
             <groupId>org.openea.eap</groupId>
             <artifactId>eap-module-system-api</artifactId>
-            <version>${revision}</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>org.openea.eap</groupId>
             <artifactId>eap-module-infra-api</artifactId>
-            <version>${revision}</version>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.openea.eap</groupId>
+            <artifactId>eap-extj-message-rest</artifactId>
+            <version>${project.version}</version>
         </dependency>
 
         <!-- 业务组件 -->

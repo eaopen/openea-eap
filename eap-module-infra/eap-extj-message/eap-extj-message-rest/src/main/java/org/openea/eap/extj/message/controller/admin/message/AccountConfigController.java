@@ -1,4 +1,4 @@
-package org.openea.eap.extj.message.controller;
+package org.openea.eap.extj.message.controller.admin.message;
 
 import com.alibaba.fastjson.JSONObject;
 import io.swagger.v3.oas.annotations.Operation;

@@ -1,6 +1,7 @@
 package org.openea.eap.extj.message.mapper;
 
 
+import org.apache.ibatis.annotations.Mapper;
 import org.openea.eap.extj.base.mapper.SuperMapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
@@ -16,6 +17,7 @@ import java.util.Map;
  *
 
  */
+@Mapper
 public interface ImContentMapper extends SuperMapper<ImContentEntity> {
 
     List<ImUnreadNumModel> getUnreadList(@Param("receiveUserId") String receiveUserId);

@@ -1,5 +1,6 @@
 package org.openea.eap.module.visualdev.portal.model;
 
+import org.openea.eap.extj.base.MyBatisPrimaryBase;
 import org.openea.eap.module.visualdev.portal.entity.PortalEntity;
 
 import lombok.Data;

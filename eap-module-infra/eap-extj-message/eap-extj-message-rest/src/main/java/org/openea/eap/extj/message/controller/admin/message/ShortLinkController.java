@@ -1,4 +1,4 @@
-package org.openea.eap.extj.message.controller;
+package org.openea.eap.extj.message.controller.admin.message;
 
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;

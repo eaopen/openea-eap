@@ -11,8 +11,9 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import org.apache.ibatis.annotations.Param;
+import org.openea.eap.framework.mybatis.core.mapper.BaseMapperX;
 
-public interface SuperMapper<T> extends BaseMapper<T> {
+public interface SuperMapper<T> extends BaseMapperX<T> {
     int insertIgnoreLogic(T var1);
 
     int deleteByIdIgnoreLogic(Serializable var1);
