@@ -11,16 +11,16 @@ import org.springframework.stereotype.Component;
 @Data
 public class JnpfOauthConfig {
 
-    @Value("${config.ApiDomain}")
-    private String jnpfDomain;
+//    @Value("${config.ApiDomain}")
+//    private String jnpfDomain;
     @Value("${config.EnablePreAuth:false}")
     private Boolean enablePreAuth;
     private Boolean ssoEnabled = false;
     private String loginPath;
     private String defaultSSO = "cas";
     private long ticketTimeout = 60L;
-    @Value("${config.FrontDomain}")
-    private String jnpfFrontDomain;
-    @Value("${config.AppDomain}")
-    private String jnpfAppDomain;
+//    @Value("${config.FrontDomain}")
+//    private String jnpfFrontDomain;
+//    @Value("${config.AppDomain}")
+//    private String jnpfAppDomain;
 }

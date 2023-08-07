@@ -15,7 +15,6 @@ import java.util.Map;
 /**
  * 聊天内容
  *
-
  */
 @Mapper
 public interface ImContentMapper extends SuperMapper<ImContentEntity> {
