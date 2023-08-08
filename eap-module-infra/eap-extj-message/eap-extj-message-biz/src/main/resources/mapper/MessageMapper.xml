@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.openea.eap.extj.message.mapper.MessageMapper">
 
-    <resultMap id="Message" type="jorg.openea.eap.extj.message.entity.MessageEntity">
+    <resultMap id="Message" type="org.openea.eap.extj.message.entity.MessageEntity">
         <id column="F_Id" property="id"/>
         <result column="F_DefaultTitle" property="defaultTitle"/>
         <result column="F_Title" property="title"/>

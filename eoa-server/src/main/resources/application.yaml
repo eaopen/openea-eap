@@ -165,7 +165,7 @@ mybatis-plus:
   type-aliases-package: ${eap.info.base-package}.module.*.dal.dataobject, classpath*:**/dao #eap,obpm
   encryptor:
     password: XDV71a+xqStEA3WH # 加解密的秘钥，可使用 https://www.imaegoo.com/2020/aes-key-generator/ 网站生成
-
+  mapper-locations: classpath*:mapper/**/*.xml
 --- #################### 验证码相关配置 ####################
 
 aj:
