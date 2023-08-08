@@ -18,7 +18,7 @@
         	ir.F_UserId,
 			ir.F_ReceiveUserId,
 			ir.F_ImreplySendDeleteMark,
-			bu.F_HeadIcon,
+			bu.avatar as F_HeadIcon,
 			ir.F_ReceiveTime,
 			ic.F_ContentType,
 			ic.F_Content,
@@ -26,8 +26,8 @@
             ic.F_DeleteMark
 		FROM
 			base_imreply ir
-			LEFT JOIN base_user bu ON ir.F_userId = bu.F_Id
-			LEFT JOIN base_imcontent ic ON ic.F_SendUserId = bu.F_Id
+			LEFT JOIN system_users bu ON ir.F_userId = bu.id
+			LEFT JOIN base_imcontent ic ON ic.F_SendUserId = bu.id
 			AND ir.F_UserId = ic.F_SendUserId
 			AND ir.F_ReceiveUserId = ic.F_ReceiveUserId
 			AND ir.F_ReceiveTime = ic.F_SendTime
