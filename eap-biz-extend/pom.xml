@@ -14,10 +14,14 @@
 
 
     <modules>
+        <!-- example -->
+        <module>eap-example</module>
+
+        <!-- business extend -->
+
         <module>eap-biz-cms</module>
         <module>eap-biz-crm</module>
         <module>eap-biz-mall</module>
-        <module>eap-example</module>
     </modules>
 
 </project>

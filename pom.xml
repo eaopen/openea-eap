@@ -25,7 +25,6 @@
         <module>eap-module-infra</module>
         <module>eap-module-obpm</module>
         <module>eap-module-report</module>
-        <module>eap-biz-extend</module>
 
         <!-- 示例项目 -->
 <!--        <module>eap-biz-extend/eap-example</module>-->
@@ -225,31 +224,17 @@
             <modules>
                 <!-- 微服务模块-->
                 <!-- eap-cloud 微服务平台框架，包含config/gateway/monitor等 -->
+<!--                <module>eap-cloud/eap-cloud-dependencies</module>-->
                 <module>eap-cloud</module>
             </modules>
         </profile>
-
-        <!-- cms -->
         <profile>
-            <id>biz-cms</id>
+            <id>bizExtend</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
             <modules>
-                <module>eap-biz-extend/eap-biz-cms</module>
-            </modules>
-        </profile>
-
-        <!-- crm -->
-        <profile>
-            <id>biz-crm</id>
-            <modules>
-                <module>eap-biz-extend/eap-biz-crm</module>
-            </modules>
-        </profile>
-
-        <!-- mall -->
-        <profile>
-            <id>biz-mall</id>
-            <modules>
-                <module>eap-biz-extend/eap-biz-mall</module>
+                <module>eap-biz-extend</module>
             </modules>
         </profile>
 
