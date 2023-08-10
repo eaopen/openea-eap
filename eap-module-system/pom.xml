@@ -29,6 +29,13 @@
                 <module>eap-cloud-system-api</module>
                 <module>eap-cloud-system-start</module>
             </modules>
+            <dependencies>
+                <dependency>
+                    <groupId>org.openea.eap</groupId>
+                    <artifactId>eap-cloud-dependencies</artifactId>
+                    <version>${revision}</version>
+                </dependency>
+            </dependencies>
         </profile>
     </profiles>
 

@@ -78,16 +78,6 @@
         <wx-java-mp.version>4.5.0</wx-java-mp.version>
 
 
-        <!-- cloud -->
-        <spring.cloud.version>2021.0.5</spring.cloud.version>
-        <spring.cloud.alibaba.version>2021.0.4.0</spring.cloud.alibaba.version>
-
-        <!-- RPC 相关 -->
-        <dubbo.version>2.7.18</dubbo.version>
-        <!-- Config 配置中心相关 cloud -->
-        <apollo.version>1.9.2</apollo.version>
-        <!-- Job 定时任务相关 -->
-        <xxl-job.version>2.3.1</xxl-job.version>
     </properties>
 
     <dependencyManagement>
@@ -97,22 +87,6 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
                 <version>${spring.boot.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-
-            <!-- cloud依赖管理 -->
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-dependencies</artifactId>
-                <version>${spring.cloud.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>com.alibaba.cloud</groupId>
-                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
-                <version>${spring.cloud.alibaba.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -318,38 +292,12 @@
             </dependency>
 
 
-            <!-- RPC 远程调用相关 -->
-            <dependency>
-                <groupId>org.apache.dubbo</groupId>
-                <artifactId>dubbo-common</artifactId> <!-- 兜底，保证在不引入 spring-cloud-starter-dubbo 时，注解等不报错 -->
-                <version>${dubbo.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.dubbo</groupId>
-                <artifactId>dubbo-cluster</artifactId> <!-- 兜底，保证在不引入 spring-cloud-starter-dubbo 时，注解等不报错 -->
-                <version>${dubbo.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.dubbo</groupId>
-                <artifactId>dubbo-rpc-api</artifactId> <!-- 兜底，保证在不引入 spring-cloud-starter-dubbo 时，注解等不报错 -->
-                <version>${dubbo.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.openea.eap</groupId>
-                <artifactId>eap-spring-boot-starter-rpc</artifactId>
-                <version>${revision}</version>
-            </dependency>
+
 
             <!-- Registry 注册中心相关 -->
 
             <!-- Config 配置中心相关 -->
 
-            <!-- Job 定时任务相关 -->
-            <dependency>
-                <groupId>com.xuxueli</groupId>
-                <artifactId>xxl-job-core</artifactId>
-                <version>${xxl-job.version}</version>
-            </dependency>
 
             <!-- Job 定时任务相关 -->
             <dependency>
@@ -753,22 +701,5 @@
             <url>https://maven.pkg.github.com/eaopen/mvn-repo</url>
         </repository>
     </distributionManagement>
-
-
-    <profiles>
-        <!-- SpringCloud运行环境 -->
-        <profile>
-            <id>SpringCloud</id>
-            <properties>
-
-            </properties>
-            <dependencyManagement>
-                <dependencies>
-
-
-                </dependencies>
-            </dependencyManagement>
-        </profile>
-    </profiles>
 
 </project>

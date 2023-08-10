@@ -10,7 +10,7 @@
     <modules>
 
         <!-- dependencies/framework, support boot & cloud -->
-        <module>eap-dependencies</module>
+        <module>eap-dependencies/eap-dependencies</module>
         <module>eap-framework</module>
 
         <!-- boot only -->
@@ -224,9 +224,20 @@
             <modules>
                 <!-- 微服务模块-->
                 <!-- eap-cloud 微服务平台框架，包含config/gateway/monitor等 -->
-<!--                <module>eap-cloud/eap-cloud-dependencies</module>-->
+                <module>eap-dependencies/eap-cloud-dependencies</module>
                 <module>eap-cloud</module>
             </modules>
+            <dependencyManagement>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.openea.eap</groupId>
+                        <artifactId>eap-cloud-dependencies</artifactId>
+                        <version>${revision}</version>
+                        <type>pom</type>
+                        <scope>import</scope>
+                    </dependency>
+                </dependencies>
+            </dependencyManagement>
         </profile>
         <profile>
             <id>bizExtend</id>

@@ -46,8 +46,8 @@
         <module>eap-spring-boot-starter-desensitize</module>
 
         <!-- cloud -->
-        <module>eap-spring-boot-starter-env</module>
-        <module>eap-spring-boot-starter-rpc</module>
+<!--        <module>eap-spring-boot-starter-env</module>-->
+<!--        <module>eap-spring-boot-starter-rpc</module>-->
     </modules>
 
     <artifactId>eap-framework</artifactId>
@@ -68,8 +68,8 @@
         <profile>
             <id>SpringCloud</id>
             <modules>
-<!--                <module>eap-spring-boot-starter-env</module>-->
-<!--                <module>eap-spring-boot-starter-rpc</module>-->
+                <module>eap-spring-boot-starter-env</module>
+                <module>eap-spring-boot-starter-rpc</module>
             </modules>
         </profile>
     </profiles>

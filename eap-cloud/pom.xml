@@ -23,7 +23,7 @@
         <dependencies>
             <dependency>
                 <groupId>org.openea.eap</groupId>
-                <artifactId>eap-dependencies</artifactId>
+                <artifactId>eap-cloud-dependencies</artifactId>
                 <version>${revision}</version>
                 <type>pom</type>
                 <scope>import</scope>
