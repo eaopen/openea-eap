@@ -55,6 +55,5 @@ public class EapEnvRpcAutoConfiguration {
         return new EnvRequestInterceptor();
     }
 
-    // ========== Dubbo 相关 ==========
 
 }

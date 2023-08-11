@@ -11,15 +11,13 @@ import java.util.Set;
 
 /**
  * 多环境的 {@link EnvEnvironmentPostProcessor} 实现类
- * 将 eap.env.tag 设置到 dubbo、nacos 等组件对应的 tag 配置项，当且仅当它们不存在时
+ * 将 eap.env.tag 设置到 nacos 等组件对应的 tag 配置项，当且仅当它们不存在时
  *
  */
 public class EnvEnvironmentPostProcessor implements EnvironmentPostProcessor {
 
     private static final Set<String> TARGET_TAG_KEYS = SetUtils.asSet(
-            "spring.cloud.nacos.discovery.metadata.tag", // Nacos 注册中心
-            "dubbo.provider.tag", // Dubbo 服务提供者的 tag
-            "dubbo.consumer.tag" // Dubbo 服务消费者的 tag
+            "spring.cloud.nacos.discovery.metadata.tag" // Nacos 注册中心
             // MQ TODO
     );
 

@@ -72,9 +72,6 @@ public class GlobalExceptionHandler {
         if (ex instanceof ConstraintViolationException) {
             return constraintViolationExceptionHandler((ConstraintViolationException) ex);
         }
-        if (ex instanceof ValidationException) {
-            return validationException((ValidationException) ex);
-        }
         if (ex instanceof NoHandlerFoundException) {
             return noHandlerFoundExceptionHandler(request, (NoHandlerFoundException) ex);
         }
@@ -145,16 +142,6 @@ public class GlobalExceptionHandler {
         log.warn("[constraintViolationExceptionHandler]", ex);
         ConstraintViolation<?> constraintViolation = ex.getConstraintViolations().iterator().next();
         return CommonResult.error(BAD_REQUEST.getCode(), String.format("请求参数不正确:%s", constraintViolation.getMessage()));
-    }
-
-    /**
-     * 处理 Dubbo Consumer 本地参数校验时，抛出的 ValidationException 异常
-     */
-    @ExceptionHandler(value = ValidationException.class)
-    public CommonResult<?> validationException(ValidationException ex) {
-        log.warn("[constraintViolationExceptionHandler]", ex);
-        // 无法拼接明细的错误信息，因为 Dubbo Consumer 抛出 ValidationException 异常时，是直接的字符串信息，且人类不可读
-        return CommonResult.error(BAD_REQUEST);
     }
 
     /**

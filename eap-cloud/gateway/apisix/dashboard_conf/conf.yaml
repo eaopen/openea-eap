@@ -71,7 +71,6 @@ plugins:                          # plugin list (sorted in alphabetical order)
   - batch-requests
   - consumer-restriction
   - cors
-  # - dubbo-proxy
   - echo
   # - error-log-logger
   # - example-plugin
