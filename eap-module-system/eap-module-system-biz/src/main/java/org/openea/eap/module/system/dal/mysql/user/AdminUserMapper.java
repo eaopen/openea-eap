@@ -1,5 +1,6 @@
 package org.openea.eap.module.system.dal.mysql.user;
 
+import com.xingyuv.http.util.StringUtil;
 import org.openea.eap.framework.common.pojo.PageResult;
 import org.openea.eap.framework.mybatis.core.mapper.BaseMapperX;
 import org.openea.eap.framework.mybatis.core.query.LambdaQueryWrapperX;
@@ -27,13 +28,24 @@ public interface AdminUserMapper extends BaseMapperX<AdminUserDO> {
     }
 
     default PageResult<AdminUserDO> selectPage(UserPageReqVO reqVO, Collection<Long> deptIds) {
-        return selectPage(reqVO, new LambdaQueryWrapperX<AdminUserDO>()
-                .likeIfPresent(AdminUserDO::getUsername, reqVO.getUsername())
-                .likeIfPresent(AdminUserDO::getMobile, reqVO.getMobile())
-                .eqIfPresent(AdminUserDO::getStatus, reqVO.getStatus())
+        if (StringUtil.isEmpty(reqVO.getKeyword())){
+            return selectPage(reqVO, new LambdaQueryWrapperX<AdminUserDO>()
+                    .likeIfPresent(AdminUserDO::getUsername, reqVO.getUsername())
+                    .likeIfPresent(AdminUserDO::getMobile, reqVO.getMobile())
+                    .eqIfPresent(AdminUserDO::getStatus, reqVO.getStatus())
+                    .betweenIfPresent(AdminUserDO::getCreateTime, reqVO.getCreateTime())
+                    .inIfPresent(AdminUserDO::getDeptId, deptIds)
+                    .orderByDesc(AdminUserDO::getId));
+        }else return selectPage(reqVO, new LambdaQueryWrapperX<AdminUserDO>()
                 .betweenIfPresent(AdminUserDO::getCreateTime, reqVO.getCreateTime())
                 .inIfPresent(AdminUserDO::getDeptId, deptIds)
-                .orderByDesc(AdminUserDO::getId));
+                .orderByDesc(AdminUserDO::getId)
+                .and(
+                t->t.like(AdminUserDO::getUsername, reqVO.getKeyword())
+                        .or().like(AdminUserDO::getMobile, reqVO.getKeyword())
+                        .or().like(AdminUserDO::getStatus, reqVO.getKeyword())
+                        .or().like(AdminUserDO::getNickname,reqVO.getKeyword())
+        ));
     }
 
     default List<AdminUserDO> selectList(UserExportReqVO reqVO, Collection<Long> deptIds) {
