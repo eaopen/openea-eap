@@ -1,1 +1,0 @@
-dubboExceptionFilter=org.openea.eap.framework.rpc.core.dubbo.DubboProviderExceptionFilter
