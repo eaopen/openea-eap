@@ -14,6 +14,7 @@ import org.openea.eap.module.system.dal.dataobject.permission.MenuDO;
 import org.openea.eap.module.system.dal.mysql.permission.MenuMapper;
 import org.openea.eap.module.system.dal.redis.RedisKeyConstants;
 import org.openea.eap.module.system.enums.permission.MenuTypeEnum;
+import org.openea.eap.module.system.service.language.I18nDataService;
 import org.openea.eap.module.system.service.tenant.TenantService;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.ImmutableMap;
@@ -25,6 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionSynchronization;
@@ -55,6 +57,10 @@ public class MenuServiceImpl implements MenuService {
     @Resource
     @Lazy // 延迟，避免循环依赖报错
     private TenantService tenantService;
+
+    @Resource
+    @Lazy // 延迟，避免循环依赖报错
+    private I18nDataService i18nDataService;
 
     @Override
     @CacheEvict(value = RedisKeyConstants.PERMISSION_MENU_ID_LIST, key = "#reqVO.permission")
@@ -153,11 +159,39 @@ public class MenuServiceImpl implements MenuService {
         for(MenuDO menu: menus){
             String i18nKey = getI18nKey(menu);
             String i18nLabel = I18nUtil.t(i18nKey, menu.getName());
+            checkMissI18nKey(menu, i18nLabel);
             if(StrUtil.isNotEmpty(i18nLabel) && !i18nLabel.equals(menu.getName())){
                 menu.setName(i18nLabel);
             }
         }
+        checkMissI18nKey();
         return menus;
+    }
+
+    private static Map<String, MenuDO> mapMissI18nMenu = new HashMap<>();
+    private void checkMissI18nKey(MenuDO menu, String i18nLabel){
+        // 排除默认语言，默认为中文
+        if("zh".equalsIgnoreCase(LocaleContextHolder.getLocale().getLanguage())){
+            return;
+        }
+        // 已有不同的翻译，无需处理
+        if(i18nLabel !=null && !i18nLabel.equals(menu.getName())){
+            return;
+        }
+        String alias =  menu.getAlias();
+        if(ObjectUtil.isEmpty(alias)) {
+            alias += menu.getName();
+        }
+        if(!mapMissI18nMenu.containsKey(alias)){
+            mapMissI18nMenu.put(alias, menu);
+        }
+    }
+    private void checkMissI18nKey(){
+        if(mapMissI18nMenu.isEmpty()){
+            return;
+        }
+        // 异步调用增加到菜单翻译资源中
+        i18nDataService.autoTransMenu(mapMissI18nMenu.values());
     }
 
     public String getI18nKey(MenuDO menu){

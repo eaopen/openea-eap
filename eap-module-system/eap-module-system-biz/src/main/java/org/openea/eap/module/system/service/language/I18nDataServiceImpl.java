@@ -14,10 +14,7 @@ import org.openea.eap.module.system.service.permission.MenuServiceImpl;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class I18nDataServiceImpl implements I18nDataService {
@@ -83,9 +80,11 @@ public class I18nDataServiceImpl implements I18nDataService {
     }
 
     @Override
-    public Integer autoTransMenu() {
+    public Integer autoTransMenu(Collection<MenuDO> menuList) {
         int count = 0;
-        List<MenuDO> menuList = menuService.getMenuList();
+        if(CollectionUtil.isEmpty(menuList)){
+            menuList = menuService.getMenuList();
+        }
         for(MenuDO menu: menuList){
             String i18nKey = ((MenuServiceImpl)menuService).getI18nKey(menu);
             I18nJsonDataDO menuJsonData = null;
