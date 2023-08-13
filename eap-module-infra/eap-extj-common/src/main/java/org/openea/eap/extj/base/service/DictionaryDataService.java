@@ -1,7 +1,5 @@
 package org.openea.eap.extj.base.service;
 
-
-import jdk.internal.jimage.ImageLocation;
 import org.openea.eap.extj.base.entity.DictionaryDataEntity;
 
 import java.util.List;

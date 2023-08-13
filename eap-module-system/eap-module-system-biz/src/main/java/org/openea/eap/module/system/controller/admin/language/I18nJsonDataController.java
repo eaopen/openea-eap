@@ -50,6 +50,10 @@ public class I18nJsonDataController {
     @Operation(summary = "更新翻译")
     @PreAuthorize("@ss.hasPermission('system:I18n-json-data:update')")
     public CommonResult<Boolean> updateI18nJsonData(@Valid @RequestBody I18nJsonDataUpdateReqVO updateReqVO) {
+        // format json, 恢复单行字符串
+        if(StringUtils.isNotEmpty(updateReqVO.getJson())){
+            updateReqVO.setJson(JSONUtil.parseObj(updateReqVO.getJson()).toString());
+        }
         i18nJsonDataService.updateI18nJsonData(updateReqVO);
         return success(true);
     }

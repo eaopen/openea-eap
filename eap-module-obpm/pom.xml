@@ -119,13 +119,13 @@
     <profiles>
         <!-- SpringCloud运行环境 -->
         <profile>
-            <id>SpringCloud</id>
+            <id>springCloud</id>
             <modules>
 
             </modules>
         </profile>
         <profile>
-            <id>ObpmServer</id>
+            <id>obpmServer</id>
             <modules>
                 <!-- 内嵌OpenBPM服务 -->
                 <module>eap-module-obpm-adapter</module>

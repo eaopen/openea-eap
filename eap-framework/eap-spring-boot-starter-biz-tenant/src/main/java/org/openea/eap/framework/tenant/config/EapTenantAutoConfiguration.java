@@ -4,6 +4,7 @@ import cn.hutool.core.annotation.AnnotationUtil;
 import org.openea.eap.framework.common.enums.WebFilterOrderEnum;
 import org.openea.eap.framework.mybatis.core.util.MyBatisUtils;
 import org.openea.eap.framework.quartz.core.handler.JobHandler;
+import org.openea.eap.framework.redis.config.EapCacheProperties;
 import org.openea.eap.framework.tenant.core.aop.TenantIgnoreAspect;
 import org.openea.eap.framework.tenant.core.db.TenantDatabaseInterceptor;
 import org.openea.eap.framework.tenant.core.job.TenantJob;
@@ -27,6 +28,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.redis.cache.BatchStrategies;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.cache.RedisCacheWriter;
@@ -36,7 +38,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import java.util.Objects;
 
 @AutoConfiguration
-@ConditionalOnProperty(prefix = "eap.tenant", value = "enable", matchIfMissing = true) // 允许使用 eap.tenant.enable=false 禁用多租户
+@ConditionalOnProperty(prefix = "eap.tenant", value = "enable", matchIfMissing = false) // 允许使用 eap.tenant.enable=false 禁用多租户
 @EnableConfigurationProperties(TenantProperties.class)
 public class EapTenantAutoConfiguration {
 
@@ -124,10 +126,12 @@ public class EapTenantAutoConfiguration {
     @Bean
     @Primary // 引入租户时，tenantRedisCacheManager 为主 Bean
     public RedisCacheManager tenantRedisCacheManager(RedisTemplate<String, Object> redisTemplate,
-                                                     RedisCacheConfiguration redisCacheConfiguration) {
+                                                     RedisCacheConfiguration redisCacheConfiguration,
+                                                     EapCacheProperties eapCacheProperties) {
         // 创建 RedisCacheWriter 对象
         RedisConnectionFactory connectionFactory = Objects.requireNonNull(redisTemplate.getConnectionFactory());
-        RedisCacheWriter cacheWriter = RedisCacheWriter.nonLockingRedisCacheWriter(connectionFactory);
+        RedisCacheWriter cacheWriter = RedisCacheWriter.nonLockingRedisCacheWriter(connectionFactory,
+                BatchStrategies.scan(eapCacheProperties.getRedisScanBatchSize()));
         // 创建 TenantRedisCacheManager 对象
         return new TenantRedisCacheManager(cacheWriter, redisCacheConfiguration);
     }

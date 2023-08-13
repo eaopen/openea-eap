@@ -2,7 +2,7 @@
 
 适用于单体服务和微服务的基础框架
 
-需要添加maven的profile "SpringCloud"
+需要添加maven的profile "springCloud"
 
 # eap-config 配置
 

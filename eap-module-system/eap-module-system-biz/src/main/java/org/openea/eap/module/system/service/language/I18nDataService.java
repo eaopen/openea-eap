@@ -14,4 +14,6 @@ public interface I18nDataService {
     Map<String, Map<String, String>> getI18nDataMap(String langs, String modules);
 
     JSONObject getJsJson();
+
+    Integer autoTransMenu();
 }

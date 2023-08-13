@@ -1,11 +1,7 @@
 package org.openea.eap.extj.base.service;
 
 
-import jdk.internal.jimage.ImageLocation;
 import org.openea.eap.extj.base.entity.SystemEntity;
-import org.openea.eap.extj.model.BaseSystemInfo;
-
-import java.util.List;
 
 /**
  * 系统

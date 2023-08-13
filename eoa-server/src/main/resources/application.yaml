@@ -237,60 +237,6 @@ eap:
         enable: false # 是否开启 Redis pubsub 广播消费，默认为 true。这里设置成 false，可以按需开启
       stream:
         enable: false  # 是否开启 Redis stream 集群消费，默认为 true。这里设置成 false，可以按需开启
-  tenant: # 多租户相关配置项
-    enable: false
-    ignore-urls:
-      - /admin-api/system/tenant/get-id-by-name # 基于名字获取租户，不许带租户编号
-      - /admin-api/system/captcha/get # 获取图片验证码，和租户无关
-      - /admin-api/system/captcha/check # 校验图片验证码，和租户无关
-      - /admin-api/infra/file/*/get/** # 获取图片，和租户无关
-      - /admin-api/system/sms/callback/* # 短信回调接口，无法带上租户编号
-      - /admin-api/pay/notify/callback/* # 支付回调通知，不携带租户编号
-      - /jmreport/* # 积木报表，无法携带租户编号
-      - /admin-api/mp/open/** # 微信公众号开放平台，微信回调接口，无法携带租户编号
-    ignore-tables:
-      - system_tenant
-      - system_tenant_package
-      - system_dict_data
-      - system_dict_type
-      - system_error_code
-      - system_menu
-      - system_sms_channel
-      - system_sms_template
-      - system_sms_log
-      - system_sensitive_word
-      - system_oauth2_client
-      - system_mail_account
-      - system_mail_template
-      - system_mail_log
-      - system_notify_template
-      - infra_codegen_column
-      - infra_codegen_table
-      - infra_test_demo
-      - infra_config
-      - infra_file_config
-      - infra_file
-      - infra_file_content
-      - infra_job
-      - infra_job_log
-      - infra_job_log
-      - infra_data_source_config
-      - jimu_dict
-      - jimu_dict_item
-      - jimu_report
-      - jimu_report_data_source
-      - jimu_report_db
-      - jimu_report_db_field
-      - jimu_report_db_param
-      - jimu_report_link
-      - jimu_report_map
-      - jimu_report_share
-      - rep_demo_dxtj
-      - rep_demo_employee
-      - rep_demo_gongsi
-      - rep_demo_jianpiao
-      - tmp_report_data_1
-      - tmp_report_data_income
 
   xss:
     enable: false
@@ -304,13 +250,8 @@ eap:
     send-maximum-quantity-per-day: 10
     begin-code: 9999 # 这里配置 9999 的原因是，测试方便。
     end-code: 9999 # 这里配置 9999 的原因是，测试方便。
-  trade:
-    order:
-      app-id: 1 # 商户编号
-      expire-time: 2h # 支付的过期时间
-  pay:
-    callback-url: http://yunai.natapp1.cc/admin-api/pay/notify/callback
-    return-url: http://yunai.natapp1.cc/admin-api/pay/notify/return
+  cache: # spring cache 相关配置
+    redis-scan-batch-size: 30 # redis scan 一次返回数量
   demo: false # 开启演示模式
 
 --- #################### eap相关配置2 ####################

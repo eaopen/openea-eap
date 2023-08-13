@@ -1,12 +1,16 @@
 package org.openea.eap.module.system.service.language;
 
+import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.openea.eap.module.system.dal.dataobject.language.I18nJsonDataDO;
+import org.openea.eap.module.system.dal.dataobject.permission.MenuDO;
 import org.openea.eap.module.system.dal.mysql.language.I18nJsonDataMapper;
 import org.openea.eap.module.system.dal.mysql.language.LangTypeMapper;
+import org.openea.eap.module.system.service.permission.MenuService;
+import org.openea.eap.module.system.service.permission.MenuServiceImpl;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -32,6 +36,9 @@ public class I18nDataServiceImpl implements I18nDataService {
 
     @Resource
     private I18nJsonDataMapper i18nJsonDataMapper;
+
+    @Resource
+    private MenuService menuService;
 
 
     @Override
@@ -73,6 +80,29 @@ public class I18nDataServiceImpl implements I18nDataService {
             jsJson.set(lang, i18n2JsJson(mapI18nData.get(lang)));
         });
         return jsJson;
+    }
+
+    @Override
+    public Integer autoTransMenu() {
+        int count = 0;
+        List<MenuDO> menuList = menuService.getMenuList();
+        for(MenuDO menu: menuList){
+            String i18nKey = ((MenuServiceImpl)menuService).getI18nKey(menu);
+            I18nJsonDataDO menuJsonData = null;
+            List<I18nJsonDataDO> jsonDataList = i18nJsonDataMapper.selectList(I18nJsonDataDO::getAlias, i18nKey);
+            if(CollectionUtil.isEmpty(jsonDataList)){
+                // 添加菜单翻译记录
+                menuJsonData = new I18nJsonDataDO();
+                menuJsonData.setModule("menu");
+                menuJsonData.setAlias(i18nKey);
+                // todo 翻译菜单名称
+
+            }else{
+                menuJsonData = jsonDataList.get(0);
+                // todo 检查翻译是否空缺
+            }
+        }
+        return count;
     }
 
     private JSONObject i18n2JsJson(Map<String, String> mI18nData){

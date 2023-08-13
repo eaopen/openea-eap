@@ -160,7 +160,7 @@ public class MenuServiceImpl implements MenuService {
         return menus;
     }
 
-    private String getI18nKey(MenuDO menu){
+    public String getI18nKey(MenuDO menu){
         String i18nKey = null;
         if(MenuTypeEnum.BUTTON.getType().equals(menu.getType())){
             i18nKey = "button.";

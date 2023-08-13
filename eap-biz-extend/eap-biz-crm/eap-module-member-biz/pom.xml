@@ -43,10 +43,6 @@
             <groupId>org.openea.eap</groupId>
             <artifactId>eap-spring-boot-starter-biz-weixin</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.openea.eap</groupId>
-            <artifactId>eap-spring-boot-starter-biz-tenant</artifactId>
-        </dependency>
 
         <!-- Web 相关 -->
         <dependency>
@@ -84,6 +80,13 @@
         </dependency>
 
         <!-- 工具类相关 -->
+
+
+        <dependency>
+            <groupId>org.openea.eap</groupId>
+            <artifactId>eap-spring-boot-starter-biz-tenant</artifactId>
+        </dependency>
     </dependencies>
+
 
 </project>

@@ -18,7 +18,7 @@
         <module>eap-server</module>
 
         <!-- cloud only -->
-        <!-- 增加maven profile=SpringCloud -->
+        <!-- 增加maven profile=springCloud -->
 
         <!-- 各种 module 拓展 -->
         <module>eap-module-system</module>
@@ -212,7 +212,7 @@
         </profile>
         <!-- SpringCloud运行环境 -->
         <profile>
-            <id>SpringCloud</id>
+            <id>springCloud</id>
             <properties>
                 <!--Nacos服务地址-->
                 <config.server-addr>eap-cloud-nacos:8848</config.server-addr>

@@ -26,7 +26,7 @@
     <profiles>
         <!-- SpringCloud运行环境 -->
         <profile>
-            <id>SpringCloud</id>
+            <id>springCloud</id>
             <modules>
             </modules>
         </profile>
