@@ -11,6 +11,7 @@
 
         <!-- dependencies/framework, support boot & cloud -->
         <module>eap-dependencies/eap-dependencies</module>
+        <module>eap-dependencies/eap-cloud-dependencies</module>
         <module>eap-framework</module>
 
         <!-- boot only -->
