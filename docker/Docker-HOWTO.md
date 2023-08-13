@@ -6,18 +6,19 @@
 
 ```text
 .
-├── Docker-HOWTO.md
-├── docker-compose.yml             #eap单体版本
-├── docker-compose-eoa.yml         #eoa单体版本
-├── docker-compose-cloud.yml       #eoa cloud版本
-├── docker.env
+├── docker
+│   ├── Docker-HOWTO.md
+│   ├── docker-compose.yml             #eap单体版本
+│   ├── docker-compose-eoa.yml         #eoa单体版本
+│   ├── docker-compose-cloud.yml       #eoa cloud版本
+│   └── docker.env
 ├── eap-server
 │   ├── Dockerfile
 │   └── nginx.conf
 ├── eoa-server
 │   ├── Dockerfile
 │   └── nginx.conf
-└── eap-ui-admin
+└── eap-aui/eap-ui-admin(将用eoa-web代替)
     ├── .dockerignore
     └── Dockerfile
 ```

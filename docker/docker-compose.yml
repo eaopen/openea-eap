@@ -29,7 +29,7 @@ services:
   server:
     container_name: eap-server
     build:
-      context: ./eap-server/
+      context: ../eap-server
     image: eap-server
     restart: unless-stopped
     ports:
