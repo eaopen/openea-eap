@@ -24,4 +24,8 @@ public class MenuRespVO extends MenuBaseVO {
     @Schema(description = "创建时间", requiredMode = Schema.RequiredMode.REQUIRED, example = "时间戳格式")
     private LocalDateTime createTime;
 
+
+    @Schema(description = "国际化翻译", example = "{}")
+    private String i18n;
+
 }

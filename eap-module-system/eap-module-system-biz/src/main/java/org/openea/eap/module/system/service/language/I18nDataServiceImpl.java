@@ -11,6 +11,7 @@ import org.openea.eap.module.system.dal.mysql.language.I18nJsonDataMapper;
 import org.openea.eap.module.system.dal.mysql.language.LangTypeMapper;
 import org.openea.eap.module.system.service.permission.MenuService;
 import org.openea.eap.module.system.service.permission.MenuServiceImpl;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -80,6 +81,7 @@ public class I18nDataServiceImpl implements I18nDataService {
     }
 
     @Override
+    @Async
     public Integer autoTransMenu(Collection<MenuDO> menuList) {
         int count = 0;
         if(CollectionUtil.isEmpty(menuList)){
@@ -95,7 +97,7 @@ public class I18nDataServiceImpl implements I18nDataService {
                 menuJsonData.setModule("menu");
                 menuJsonData.setAlias(i18nKey);
                 // todo 翻译菜单名称
-
+                String name = menu.getName();
             }else{
                 menuJsonData = jsonDataList.get(0);
                 // todo 检查翻译是否空缺
