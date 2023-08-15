@@ -3,8 +3,7 @@ package org.openea.eap.module.system.service.permission;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.extra.pinyin.PinyinUtil;
-import org.openea.eap.framework.common.util.collection.CollectionUtils;
+import cn.hutool.json.JSONObject;
 import org.openea.eap.framework.i18n.core.I18nUtil;
 import org.openea.eap.module.system.controller.admin.permission.vo.menu.MenuCreateReqVO;
 import org.openea.eap.module.system.controller.admin.permission.vo.menu.MenuListReqVO;
@@ -15,13 +14,9 @@ import org.openea.eap.module.system.dal.mysql.permission.MenuMapper;
 import org.openea.eap.module.system.dal.redis.RedisKeyConstants;
 import org.openea.eap.module.system.enums.permission.MenuTypeEnum;
 import org.openea.eap.module.system.service.language.I18nDataService;
+import org.openea.eap.module.system.service.language.I18nJsonDataService;
 import org.openea.eap.module.system.service.tenant.TenantService;
 import com.google.common.annotations.VisibleForTesting;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableMultimap;
-import com.google.common.collect.Multimap;
-import lombok.Getter;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -29,14 +24,9 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.support.TransactionSynchronization;
-import org.springframework.transaction.support.TransactionSynchronizationManager;
-import org.springframework.util.StringUtils;
 
-import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.util.*;
-import java.util.stream.Collectors;
 
 import static org.openea.eap.framework.common.exception.util.ServiceExceptionUtil.exception;
 import static org.openea.eap.framework.common.util.collection.CollectionUtils.convertList;
@@ -61,6 +51,10 @@ public class MenuServiceImpl implements MenuService {
     @Resource
     @Lazy // 延迟，避免循环依赖报错
     private I18nDataService i18nDataService;
+
+    @Resource
+    @Lazy // 延迟，避免循环依赖报错
+    private I18nJsonDataService i18nJsonDataService;
 
     @Override
     @CacheEvict(value = RedisKeyConstants.PERMISSION_MENU_ID_LIST, key = "#reqVO.permission")
@@ -151,7 +145,15 @@ public class MenuServiceImpl implements MenuService {
     @Override
     public MenuDO getMenu(Long id) {
         MenuDO menu = menuMapper.selectById(id);
+        // check alias and query i18n
         createAlias(menu);
+        String i18nKey = getI18nKey(menu);
+        if(ObjectUtil.isNotEmpty(i18nKey)){
+            JSONObject json = i18nDataService.getI18nJsonByKey(i18nKey);
+            if(json!=null){
+                menu.setI18nJson(json.toString());
+            }
+        }
         return menu;
     }
 
@@ -210,7 +212,7 @@ public class MenuServiceImpl implements MenuService {
             return;
         }
         // 异步调用增加到菜单翻译资源中
-        i18nDataService.autoTransMenu(mapMissI18nMenu.values());
+        i18nDataService.translateMenu(mapMissI18nMenu.values());
     }
 
     public String getI18nKey(MenuDO menu){
@@ -372,12 +374,12 @@ public class MenuServiceImpl implements MenuService {
         if(ObjectUtil.isNotEmpty(alias)){
             menu.setAlias(alias);
             if(withUpdate) {
+                log.debug(String.format("update menu:%s(%s)",menu.getName(),menu.getAlias()));
                 menuMapper.updateById(menu);
             }
         }else{
             // TODO中文转拼音或英文？
-            alias = menu.getName();
-            //alias = PinyinUtil.getPinyin(alias);
+            alias = i18nDataService.convertEnKey(menu.getName(), "menu");
             menu.setAlias(alias);
         }
         return alias;

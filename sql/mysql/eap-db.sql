@@ -2294,7 +2294,7 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_i18n_data`;
 CREATE TABLE `sys_i18n_data` (
-  `id` bigint NOT NULL,
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '自增编号',
   `module` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '分类/模块',
   `alias` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'key/别名',
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '名称',

@@ -25,7 +25,7 @@ public class MenuRespVO extends MenuBaseVO {
     private LocalDateTime createTime;
 
 
-    @Schema(description = "国际化翻译", example = "{}")
-    private String i18n;
+    @Schema(description = "国际化翻译Json", example = "{}")
+    private String i18nJson;
 
 }
