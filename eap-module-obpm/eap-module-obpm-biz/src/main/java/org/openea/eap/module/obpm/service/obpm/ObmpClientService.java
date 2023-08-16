@@ -25,7 +25,7 @@ public class ObmpClientService {
     @Value("${eap.obpm.apiBaseUrl:/obpm-server}")
     private String obpmClientBaseUrl;
 
-    private int timeoutMillSecs = 6000; //milliseconds
+    private int timeoutMillSecs = 5000; //milliseconds
 
     @Resource
     private DataSource dataSource;
