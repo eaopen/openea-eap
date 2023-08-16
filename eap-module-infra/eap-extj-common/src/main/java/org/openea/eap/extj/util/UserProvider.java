@@ -145,8 +145,12 @@ public class UserProvider {
         OAuth2TokenApi oauth2TokenApi = (OAuth2TokenApi)EapAppUtil.getBean("oauth2TokenApi");
         OAuth2AccessTokenCheckRespDTO accessToken = oauth2TokenApi.checkAccessToken(token);
         if(accessToken!=null){
+            userInfo.setId(""+accessToken.getUserId());
             userInfo.setUserId(""+accessToken.getUserId());
             userInfo.setUserAccount(accessToken.getUserKey());
+        }
+        if (userInfo.getUserId() != null) {
+            USER_CACHE.set(userInfo);
         }
         return userInfo;
     }

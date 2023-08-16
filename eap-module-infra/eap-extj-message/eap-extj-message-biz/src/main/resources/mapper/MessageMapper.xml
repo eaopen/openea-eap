@@ -18,13 +18,13 @@
 
     <select id="getMessageList" parameterType="map" resultMap="Message">
         SELECT  m.F_Id, m.F_Title, m.F_Type, r.F_IsRead, m.F_CreatorTime, m.F_CreatorUserId, m.F_LastModifyTime, m.F_LastModifyUserId,
-        u.F_RealName,u.F_Account,m.F_FlowType,m.F_DefaultTitle FROM base_message m LEFT JOIN base_messagereceive r ON r.F_MessageId = m.F_Id
-        LEFT JOIN base_user u ON u.F_Id = m.F_CreatorUserId where 1 = 1
+        u.nickname F_RealName,u.username F_Account,m.F_FlowType,m.F_DefaultTitle FROM base_message m LEFT JOIN base_messagereceive r ON r.F_MessageId = m.F_Id
+        LEFT JOIN system_users u ON u.id = m.F_CreatorUserId where 1 = 1
         <if test="map.userId != null">
             AND r.F_UserId= #{map.userId}
         </if>
         <if test="map.keyword != null">
-            AND (m.F_Title like #{map.keyword} OR m.F_DefaultTitle like #{map.keyword} OR u.F_RealName LIKE #{map.keyword} OR u.F_Account LIKE #{map.keyword})
+            AND (m.F_Title like #{map.keyword} OR m.F_DefaultTitle like #{map.keyword} OR u.nickname LIKE #{map.keyword} OR u.username LIKE #{map.keyword})
         </if>
         <if test="map.type != null">
             AND m.F_Type = #{map.type}
