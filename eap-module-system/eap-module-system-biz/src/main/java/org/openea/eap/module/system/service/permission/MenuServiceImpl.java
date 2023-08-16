@@ -199,7 +199,7 @@ public class MenuServiceImpl implements MenuService {
         }
         String alias =  menu.getAlias();
         if(ObjectUtil.isEmpty(alias)) {
-            alias += menu.getName();
+            alias = menu.getName();
         }
         alias = menu.getType() + "__" + alias;
         if(!mapMissI18nMenu.containsKey(alias)){
@@ -213,6 +213,7 @@ public class MenuServiceImpl implements MenuService {
         if(CollUtil.isEmpty(mapMissI18nMenu)){
             return;
         }
+        log.info("checkMissI18nKey, will exec asyncTranslateMenu");
         try{
             i18nDataService.asyncTranslateMenu(mapMissI18nMenu.values());
             mapMissI18nMenu.clear();

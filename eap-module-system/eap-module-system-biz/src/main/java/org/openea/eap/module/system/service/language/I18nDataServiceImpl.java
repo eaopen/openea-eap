@@ -104,21 +104,24 @@ public class I18nDataServiceImpl implements I18nDataService {
     @Override
     @Async
     public Integer asyncTranslateMenu(Collection<MenuDO> menuList) {
+        int count = 0;
         // 异步调用增加到菜单翻译资源中
         int availablePermits=semaphore.availablePermits();
         if(availablePermits==0){
             log.debug("无资源，取消translateMenu");
-            return 0;
+            return count;
         }
         try{
             semaphore.acquire(1);
-            return translateMenu(menuList);
+            // TODO 添加到JOB中
+            //count =  translateMenu(menuList);
+            log.info("translateMenu, count="+count);
         }catch (Throwable t){
             log.warn("asyncTranslateMenu "+t.getMessage());
-            return 0;
         }finally {
             semaphore.release(1);
         }
+        return count;
     }
     @Override
     public Integer translateMenu(Collection<MenuDO> menuList) {
