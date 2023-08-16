@@ -5,7 +5,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd ${DIR}/..
 
 # 1 maven(project dir)
-mvn install -DskipTests=true
+mvn clean install -DskipTests=true
 
 # change to eoa dir
 APPDIR=${DIR}/../eoa-server

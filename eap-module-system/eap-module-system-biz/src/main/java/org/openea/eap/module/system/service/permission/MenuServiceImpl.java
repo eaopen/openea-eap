@@ -171,12 +171,12 @@ public class MenuServiceImpl implements MenuService {
         for(MenuDO menu: menus){
             String i18nKey = getI18nKey(menu);
             String i18nLabel = I18nUtil.t(i18nKey, menu.getName());
-            checkMissI18nKey(menu, i18nLabel);
+//            checkMissI18nKey(menu, i18nLabel);
             if(StrUtil.isNotEmpty(i18nLabel) && !i18nLabel.equals(menu.getName())){
                 menu.setName(i18nLabel);
             }
         }
-        checkMissI18nKey();
+//        checkMissI18nKey();
         return menus;
     }
 
