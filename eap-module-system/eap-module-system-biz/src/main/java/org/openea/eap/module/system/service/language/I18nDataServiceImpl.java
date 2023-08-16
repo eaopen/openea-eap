@@ -184,12 +184,12 @@ public class I18nDataServiceImpl implements I18nDataService {
         }
         // 词典翻译
         if(ObjectUtil.isEmpty(enKey)){
-            // 英文翻译
-            try{
-                enKey = TranslateUtil.translateText(name, "auto", "en-US");
-            }catch (Exception e){
-                log.debug(e.getMessage(), e);
-            }
+            // TODO 英文翻译
+//            try{
+//                enKey = TranslateUtil.translateText(name, "auto", "en-US");
+//            }catch (Exception e){
+//                log.debug(e.getMessage(), e);
+//            }
             // 转拼音
             if(ObjectUtil.isEmpty(enKey) || enKey.equalsIgnoreCase(name)){
                 enKey = PinyinUtil.getPinyin(name);
