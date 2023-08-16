@@ -133,12 +133,12 @@ public class MenuServiceImpl implements MenuService {
     @Override
     public List<MenuDO> getMenuList(MenuListReqVO reqVO) {
         List<MenuDO> menuList =  menuMapper.selectList(reqVO);
-        for(MenuDO menu: menuList){
-            if(ObjectUtil.isEmpty(menu.getAlias())){
-                // update only for dev
-                createAlias(menu, false);
-            }
-        }
+//        for(MenuDO menu: menuList){
+//            if(ObjectUtil.isEmpty(menu.getAlias())){
+//                // update only for dev
+//                createAlias(menu, false);
+//            }
+//        }
         return menuList;
     }
 
@@ -208,11 +208,12 @@ public class MenuServiceImpl implements MenuService {
      * 国际化翻译补漏机制 - 调用自动翻译补漏
      */
     private void checkMissI18nKey(){
-        if(mapMissI18nMenu.isEmpty()){
+        if(CollUtil.isEmpty(mapMissI18nMenu)){
             return;
         }
         // 异步调用增加到菜单翻译资源中
         i18nDataService.translateMenu(mapMissI18nMenu.values());
+        mapMissI18nMenu.clear();
     }
 
     public String getI18nKey(MenuDO menu){
