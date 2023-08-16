@@ -124,6 +124,16 @@ eap:
     webBaseUrl: ${obpm_web_baseurl:http://localhost:3002}
     adminBaseUrl: ${obpm_admin_baseurl:http://localhost:3002}
 
+
+chatgpt:
+  token: ${chatgpt_token:sk-xxxxxxxxxxxxxxxxxxxx} #必填
+  proxy-host: 127.0.0.1 #需要代理时必填
+  proxy-port: 7890 #需要代理时必填
+#  model: text-davinci-003 #可选
+#  chat-model: gpt-3.5-turbo #可选
+#  retries: 10 #可选，默认为5
+#  session-expiration-time: 30 #可选，不填则会话永不过期
+
 justauth:
   enabled: true
   type:

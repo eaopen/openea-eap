@@ -90,4 +90,6 @@ public interface MenuService {
      * @return
      */
     List<MenuDO> toI18n(List<MenuDO> menus);
+
+    Integer updateMenuI18n();
 }

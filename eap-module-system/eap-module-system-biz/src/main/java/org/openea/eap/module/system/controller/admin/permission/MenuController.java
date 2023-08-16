@@ -84,4 +84,12 @@ public class MenuController {
         return success(MenuConvert.INSTANCE.convert(menu));
     }
 
+    @GetMapping("/checkI18n")
+    @Operation(summary = "检查菜单国际化", description = "检查及更新菜单国际化数据")
+    public CommonResult<Integer> checkI18n() {
+        // async invoke
+        menuService.updateMenuI18n();
+        return success(0);
+    }
+
 }

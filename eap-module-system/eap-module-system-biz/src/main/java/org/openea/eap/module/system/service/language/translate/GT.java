@@ -15,6 +15,8 @@ import java.util.Map;
 public class GT {
     private static GT _instance = null;
 
+    private static int timeout = 5000;
+
     /**
      * 获取单例
      * @return
@@ -61,7 +63,7 @@ public class GT {
         formMap.put("dt", "t");
         formMap.put("q", text);
         String resp = HttpRequest.get(PATH).form(formMap)
-                .header("User-Agent", USER_AGENT).charset("UTF8").execute().body();
+                .header("User-Agent", USER_AGENT).charset("UTF8").timeout(timeout).execute().body();
 //        String finalPath=PATH +"?client="+CLIENT+"&sl="+sourceLang+"&tl="+targetLang+"&dt=t&q="+ text ;
         if( null == resp ){
             throw  new Exception("网络异常");

@@ -1,6 +1,7 @@
 package org.openea.eap.module.system.service.permission;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONObject;
@@ -9,6 +10,7 @@ import org.openea.eap.module.system.controller.admin.permission.vo.menu.MenuCrea
 import org.openea.eap.module.system.controller.admin.permission.vo.menu.MenuListReqVO;
 import org.openea.eap.module.system.controller.admin.permission.vo.menu.MenuUpdateReqVO;
 import org.openea.eap.module.system.convert.permission.MenuConvert;
+import org.openea.eap.module.system.dal.dataobject.language.I18nJsonDataDO;
 import org.openea.eap.module.system.dal.dataobject.permission.MenuDO;
 import org.openea.eap.module.system.dal.mysql.permission.MenuMapper;
 import org.openea.eap.module.system.dal.redis.RedisKeyConstants;
@@ -22,6 +24,7 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -53,9 +56,9 @@ public class MenuServiceImpl implements MenuService {
     @Lazy // 延迟，避免循环依赖报错
     private I18nDataService i18nDataService;
 
-    @Resource
-    @Lazy // 延迟，避免循环依赖报错
-    private I18nJsonDataService i18nJsonDataService;
+//    @Resource
+//    @Lazy // 延迟，避免循环依赖报错
+//    private I18nJsonDataService i18nJsonDataService;
 
     @Override
     @CacheEvict(value = RedisKeyConstants.PERMISSION_MENU_ID_LIST, key = "#reqVO.permission")
@@ -134,20 +137,13 @@ public class MenuServiceImpl implements MenuService {
     @Override
     public List<MenuDO> getMenuList(MenuListReqVO reqVO) {
         List<MenuDO> menuList =  menuMapper.selectList(reqVO);
-//        for(MenuDO menu: menuList){
-//            if(ObjectUtil.isEmpty(menu.getAlias())){
-//                // update only for dev
-//                createAlias(menu, false);
-//            }
-//        }
         return menuList;
     }
 
     @Override
     public MenuDO getMenu(Long id) {
         MenuDO menu = menuMapper.selectById(id);
-        // check alias and query i18n
-        createAlias(menu);
+        // query i18n
         String i18nKey = getI18nKey(menu);
         if(ObjectUtil.isNotEmpty(i18nKey)){
             JSONObject json = i18nDataService.getI18nJsonByKey(i18nKey);
@@ -171,20 +167,60 @@ public class MenuServiceImpl implements MenuService {
         for(MenuDO menu: menus){
             String i18nKey = getI18nKey(menu);
             String i18nLabel = I18nUtil.t(i18nKey, menu.getName());
-//            checkMissI18nKey(menu, i18nLabel);
+            checkMissI18nKey(menu, i18nLabel);
             if(StrUtil.isNotEmpty(i18nLabel) && !i18nLabel.equals(menu.getName())){
                 menu.setName(i18nLabel);
             }
         }
-//        checkMissI18nKey();
         return menus;
     }
 
+    @Override
+    @Async
+    public Integer updateMenuI18n() {
+        int count = 0;
+        // 1. prepare will i18n menus
+        // 范围包含db中菜单以及缺少翻译的菜单mapMissI18nMenu，两者有重复
+        List<MenuDO> menuList =  this.getMenuList();
+        Map<String, MenuDO> mapCheckI18n = new HashMap<>();
+        for(MenuDO menu: menuList){
+            String alias = menu.getAlias();
+            if(ObjectUtil.isEmpty(alias)){
+                alias = checkAlias(menu);
+                if(ObjectUtil.isEmpty(alias)) {
+                    alias = i18nDataService.convertEnKey(menu.getName(), "menu");
+                }
+                if(ObjectUtil.isNotEmpty(alias)) {
+                    menu.setAlias(alias);
+                    menuMapper.updateById(menu);
+                }
+            }
+            if(ObjectUtil.isNotEmpty(alias)) {
+                alias = menu.getType() + "__" + alias;
+                if(!mapCheckI18n.containsKey(alias)){
+                    mapCheckI18n.put(alias, menu);
+                }
+            }
+        }
+        for(String key: mapMissI18nMenu.keySet()){
+            if(!mapCheckI18n.containsKey(key)){
+                mapCheckI18n.put(key, mapMissI18nMenu.get(key));
+            }
+        }
+        // 2. check i18n
+        i18nDataService.translateMenu(mapCheckI18n.values());
+        return count;
+    }
 
+
+    // 本地存储，如集群部署可存储到redis中
     private Map<String, MenuDO> mapMissI18nMenu = new Hashtable<>();
 
     /**
      * 国际化翻译补漏机制 - 检查是否需要补翻译
+     *
+     * 保持未翻译菜单由定时任务或其他操作执行翻译
+     *
      * @param menu
      * @param i18nLabel
      */
@@ -198,47 +234,30 @@ public class MenuServiceImpl implements MenuService {
             return;
         }
         String alias =  menu.getAlias();
-        if(ObjectUtil.isEmpty(alias)) {
-            alias = menu.getName();
-        }
-        alias = menu.getType() + "__" + alias;
-        if(!mapMissI18nMenu.containsKey(alias)){
-            mapMissI18nMenu.put(alias, menu);
-        }
-    }
-    /**
-     * 国际化翻译补漏机制 - 调用自动翻译补漏
-     */
-    private void checkMissI18nKey(){
-        if(CollUtil.isEmpty(mapMissI18nMenu)){
-            return;
-        }
-        log.info("checkMissI18nKey, will exec asyncTranslateMenu");
-        try{
-            i18nDataService.asyncTranslateMenu(mapMissI18nMenu.values());
-            mapMissI18nMenu.clear();
-        }catch (Throwable t){
-            log.warn(t.getMessage(), t);
+        if(ObjectUtil.isNotEmpty(alias)) {
+            alias = menu.getType() + "__" + alias;
+            if(!mapMissI18nMenu.containsKey(alias)){
+                mapMissI18nMenu.put(alias, menu);
+            }
         }
     }
 
-    public String getI18nKey(MenuDO menu){
+    public static String getI18nKey(MenuDO menu){
         String i18nKey = null;
         if(MenuTypeEnum.BUTTON.getType().equals(menu.getType())){
             i18nKey = "button.";
         }else{
             i18nKey = "menu.";
         }
-        createAlias(menu);
-        String alias =  menu.getAlias();
+        String alias =  checkAlias(menu);
         if(ObjectUtil.isEmpty(alias) || "null".equalsIgnoreCase(alias)){
             alias = null;
         }
-        if(ObjectUtil.isEmpty(alias)){
-            alias = menu.getName();
+        if(ObjectUtil.isNotEmpty(alias)){
+            i18nKey += alias;
+        }else{
+            i18nKey = null;
         }
-        i18nKey += alias;
-
         return i18nKey;
     }
 
@@ -314,13 +333,10 @@ public class MenuServiceImpl implements MenuService {
         }
 
         // init alias for i18n
-        createAlias(menu);
+        checkAlias(menu);
     }
 
-    private String createAlias(MenuDO menu){
-        return createAlias(menu, false);
-    }
-    private String createAlias(MenuDO menu, boolean withUpdate){
+    private static String checkAlias(MenuDO menu){
         String alias =  menu.getAlias();
         if("null".equalsIgnoreCase(alias)){
             alias = null;
@@ -348,7 +364,7 @@ public class MenuServiceImpl implements MenuService {
         }
         if(ObjectUtil.isEmpty(alias) && ObjectUtil.isNotEmpty(menu.getPath())){
             if(!menu.getPath().startsWith("http")
-            && !menu.getPath().startsWith("#")){
+                    && !menu.getPath().startsWith("#")){
                 // /system 去首/
                 alias = menu.getPath();
                 if(alias.startsWith("/")){
@@ -364,7 +380,7 @@ public class MenuServiceImpl implements MenuService {
             }
         }
         if(ObjectUtil.isEmpty(alias)
-        && MenuTypeEnum.MENU.getType().equals(menu.getType())){
+                && MenuTypeEnum.MENU.getType().equals(menu.getType())){
             // menu
             if(ObjectUtil.isNotEmpty(menu.getComponentName()) ){
                 // 首字母改小写
@@ -379,14 +395,6 @@ public class MenuServiceImpl implements MenuService {
             }
         }
         if(ObjectUtil.isNotEmpty(alias)){
-            menu.setAlias(alias);
-            if(withUpdate) {
-                log.debug(String.format("update menu:%s(%s)",menu.getName(),menu.getAlias()));
-                menuMapper.updateById(menu);
-            }
-        }else{
-            // TODO中文转拼音或英文？
-            alias = i18nDataService.convertEnKey(menu.getName(), "menu");
             menu.setAlias(alias);
         }
         return alias;

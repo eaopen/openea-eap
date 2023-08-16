@@ -21,6 +21,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.nio.charset.Charset;
 import java.util.*;
 import java.util.concurrent.Semaphore;
 
@@ -42,9 +43,6 @@ public class I18nDataServiceImpl implements I18nDataService {
 
     @Resource
     private I18nJsonDataMapper i18nJsonDataMapper;
-
-    @Resource
-    private MenuService menuService;
 
 
     @Override
@@ -100,38 +98,17 @@ public class I18nDataServiceImpl implements I18nDataService {
         return jsJson;
     }
 
-    Semaphore semaphore=new Semaphore(1);
-    @Override
-    @Async
-    public Integer asyncTranslateMenu(Collection<MenuDO> menuList) {
-        int count = 0;
-        // 异步调用增加到菜单翻译资源中
-        int availablePermits=semaphore.availablePermits();
-        if(availablePermits==0){
-            log.debug("无资源，取消translateMenu");
-            return count;
-        }
-        try{
-            semaphore.acquire(1);
-            // TODO 添加到JOB中
-            //count =  translateMenu(menuList);
-            log.info("translateMenu, count="+count);
-        }catch (Throwable t){
-            log.warn("asyncTranslateMenu "+t.getMessage());
-        }finally {
-            semaphore.release(1);
-        }
-        return count;
-    }
+
     @Override
     public Integer translateMenu(Collection<MenuDO> menuList) {
         int count = 0;
         if(CollectionUtil.isEmpty(menuList)){
-            menuList = menuService.getMenuList();
+            return count;
         }
         List<I18nJsonDataDO> listInsertJsonData = new ArrayList<>();
+        List<I18nJsonDataDO> listUpdateJsonData = new ArrayList<>();
         for(MenuDO menu: menuList){
-            String i18nKey = ((MenuServiceImpl)menuService).getI18nKey(menu);
+            String i18nKey = MenuServiceImpl.getI18nKey(menu);
             I18nJsonDataDO menuJsonData = null;
             List<I18nJsonDataDO> jsonDataList = i18nJsonDataMapper.selectList(I18nJsonDataDO::getAlias, i18nKey);
             if(CollectionUtil.isEmpty(jsonDataList)){
@@ -145,7 +122,7 @@ public class I18nDataServiceImpl implements I18nDataService {
                 menuJsonData.setModule("menu");
                 menuJsonData.setAlias(i18nKey);
                 menuJsonData.setName(type+"-"+menu.getName());
-                JSONObject i18nJson = autoTransMenu(type,menu.getAlias(), menu.getName(), StrUtil.length(menu.getName()));
+                JSONObject i18nJson = autoTransMenu(type,menu.getAlias(), menu.getName(), StrUtil.byteLength(menu.getName(), Charset.forName("UTF-8")));
                 if(ObjectUtil.isNotEmpty(i18nJson)){
                     menuJsonData.setJson(i18nJson.toString());
                     menuJsonData.setRemark("auto");
@@ -158,14 +135,49 @@ public class I18nDataServiceImpl implements I18nDataService {
                 }
                 listInsertJsonData.add(menuJsonData);
                 count++;
+                // batch 100
+                if(listInsertJsonData.size()>=100){
+                    i18nJsonDataMapper.insertBatch(listInsertJsonData);
+                    listInsertJsonData.clear();
+                }
             }else{
                 menuJsonData = jsonDataList.get(0);
                 // todo 检查翻译是否空缺
+                JSONObject i18nJson = JSONUtil.parseObj(menuJsonData.getJson());
+                if(i18nJson==null || !i18nJson.containsKey("en-US") || !i18nJson.containsKey("ja-JP")){
+                    String type = "menu";
+                    if(i18nKey.startsWith("button")){
+                        type = "button";
+                    }
+                    i18nJson = autoTransMenu(type,menu.getAlias(), menu.getName(), StrUtil.byteLength(menu.getName(), Charset.forName("UTF-8")));
+                    if(ObjectUtil.isNotEmpty(i18nJson)){
+                        menuJsonData.setJson(i18nJson.toString());
+                        menuJsonData.setRemark("auto-update");
+                        listUpdateJsonData.add(menuJsonData);
+                        count++;
+                        // batch 100
+                        if(listUpdateJsonData.size()>=100){
+                            i18nJsonDataMapper.updateBatch(listUpdateJsonData);
+                            listUpdateJsonData.clear();
+                        }
+                    }
+                }
             }
         }
+
+        int countAdd = 0;
         if(CollectionUtil.isNotEmpty(listInsertJsonData)){
+            countAdd = listInsertJsonData.size();
             i18nJsonDataMapper.insertBatch(listInsertJsonData);
+            listInsertJsonData.clear();
         }
+        int countUpdate = 0;
+        if(CollectionUtil.isNotEmpty(listUpdateJsonData)){
+            countUpdate = listUpdateJsonData.size();
+            i18nJsonDataMapper.updateBatch(listUpdateJsonData);
+            listUpdateJsonData.clear();
+        }
+        log.info(String.format("translateMenu total=%c, add=%c, update=%c",count, countAdd, countUpdate));
         return count;
     }
 
@@ -184,16 +196,21 @@ public class I18nDataServiceImpl implements I18nDataService {
         }
         // 词典翻译
         if(ObjectUtil.isEmpty(enKey)){
-            // TODO 英文翻译
-//            try{
-//                enKey = TranslateUtil.translateText(name, "auto", "en-US");
-//            }catch (Exception e){
-//                log.debug(e.getMessage(), e);
-//            }
+            // 英文翻译
+            try{
+                enKey = TranslateUtil.translateText(name, "auto", "en-US");
+            }catch (Exception e){
+                log.debug(e.getMessage(), e);
+            }
             // 转拼音
             if(ObjectUtil.isEmpty(enKey) || enKey.equalsIgnoreCase(name)){
-                enKey = PinyinUtil.getPinyin(name);
+                enKey = PinyinUtil.getPinyin(name, "-");
             }
+            if(ObjectUtil.isNotEmpty(enKey)){
+                enKey = enKey.replaceAll("  ","-").replaceAll(" ","-");
+                enKey = StrUtil.toCamelCase(enKey, '-');
+            }
+
         }
         // 默认处理
         if(ObjectUtil.isEmpty(enKey)){
@@ -204,10 +221,12 @@ public class I18nDataServiceImpl implements I18nDataService {
 
     @Override
     public JSONObject autoTransMenu(String type, String key, String name, int len) {
-        JSONObject json = new JSONObject();
-        // type: menu偏向名词 button偏向动词
-        json.set("zh-CN", name);
-        // TODO 根据语言类型进行翻译，调用LLM翻译
+        JSONObject json = TranslateUtil.queryMenuI18n(type, key, name, len);
+        if(json==null){
+            json = new JSONObject();
+            // type: menu偏向名词 button偏向动词
+            json.set("zh-CN", name);
+        }
         return json;
     }
 
