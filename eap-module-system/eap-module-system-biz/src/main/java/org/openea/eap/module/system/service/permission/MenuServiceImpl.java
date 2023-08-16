@@ -27,6 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.*;
+import java.util.concurrent.Semaphore;
 
 import static org.openea.eap.framework.common.exception.util.ServiceExceptionUtil.exception;
 import static org.openea.eap.framework.common.util.collection.CollectionUtils.convertList;
@@ -179,7 +180,8 @@ public class MenuServiceImpl implements MenuService {
         return menus;
     }
 
-    private static Map<String, MenuDO> mapMissI18nMenu = new HashMap<>();
+
+    private Map<String, MenuDO> mapMissI18nMenu = new Hashtable<>();
 
     /**
      * 国际化翻译补漏机制 - 检查是否需要补翻译
@@ -211,9 +213,12 @@ public class MenuServiceImpl implements MenuService {
         if(CollUtil.isEmpty(mapMissI18nMenu)){
             return;
         }
-        // 异步调用增加到菜单翻译资源中
-        i18nDataService.translateMenu(mapMissI18nMenu.values());
-        mapMissI18nMenu.clear();
+        try{
+            i18nDataService.asyncTranslateMenu(mapMissI18nMenu.values());
+            mapMissI18nMenu.clear();
+        }catch (Throwable t){
+            log.warn(t.getMessage(), t);
+        }
     }
 
     public String getI18nKey(MenuDO menu){

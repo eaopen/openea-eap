@@ -46,6 +46,7 @@ public interface I18nDataService {
      * @return
      */
     @Async
+    Integer asyncTranslateMenu(Collection<MenuDO> menuList);
     Integer translateMenu(Collection<MenuDO> menuList);
 
     /**

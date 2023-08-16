@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.*;
+import java.util.concurrent.Semaphore;
 
 @Service
 @Slf4j
@@ -99,8 +100,27 @@ public class I18nDataServiceImpl implements I18nDataService {
         return jsJson;
     }
 
+    Semaphore semaphore=new Semaphore(1);
     @Override
     @Async
+    public Integer asyncTranslateMenu(Collection<MenuDO> menuList) {
+        // 异步调用增加到菜单翻译资源中
+        int availablePermits=semaphore.availablePermits();
+        if(availablePermits==0){
+            log.debug("无资源，取消translateMenu");
+            return 0;
+        }
+        try{
+            semaphore.acquire(1);
+            return translateMenu(menuList);
+        }catch (Throwable t){
+            log.warn("asyncTranslateMenu "+t.getMessage());
+            return 0;
+        }finally {
+            semaphore.release(1);
+        }
+    }
+    @Override
     public Integer translateMenu(Collection<MenuDO> menuList) {
         int count = 0;
         if(CollectionUtil.isEmpty(menuList)){
