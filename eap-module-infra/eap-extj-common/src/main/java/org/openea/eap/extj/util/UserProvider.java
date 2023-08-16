@@ -2,6 +2,9 @@ package org.openea.eap.extj.util;
 
 import org.openea.eap.extj.base.UserInfo;
 import org.openea.eap.extj.consts.DeviceType;
+import org.openea.eap.framework.common.util.spring.EapAppUtil;
+import org.openea.eap.module.system.api.oauth2.OAuth2TokenApi;
+import org.openea.eap.module.system.api.oauth2.dto.OAuth2AccessTokenCheckRespDTO;
 import org.springframework.util.ObjectUtils;
 
 //import cn.dev33.satoken.id.SaIdUtil;
@@ -17,6 +20,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 
+import javax.annotation.Resource;
+
 /**
  * todo auth
  */
@@ -28,6 +33,7 @@ public class UserProvider {
 //    private static CacheKeyUtil cacheKeyUtil;
     public static final String USER_INFO_KEY = "userInfo";
     private static final ThreadLocal<UserInfo> USER_CACHE = new ThreadLocal();
+
 
 //    public UserProvider(RedisUtil redisUtil, CacheKeyUtil cacheKeyUtil) {
 //        UserProvider.redisUtil = redisUtil;
@@ -79,7 +85,7 @@ public class UserProvider {
         return loginId;
     }
 
-    public static Boolean isValidToken(String token) {
+    public Boolean isValidToken(String token) {
         UserInfo userInfo = getUser(token);
         return userInfo.getUserId() != null;
     }
@@ -134,25 +140,14 @@ public class UserProvider {
     }
 
     public static UserInfo getUser(String token) {
-        UserInfo userInfo = null;
-        String tokens = null;
-//        if (token != null) {
-//            tokens = cutToken(token);
-//        } else {
-//            try {
-//                tokens = StpUtil.getTokenValue();
-//            } catch (Exception var4) {
-//            }
-//        }
-
-//        if (tokens != null && StpUtil.getLoginIdByToken(tokens) != null) {
-//            userInfo = (UserInfo)StpUtil.getTokenSessionByToken(tokens).get("userInfo");
-//        }
-
-        if (userInfo == null) {
-            userInfo = new UserInfo();
+        // 参考 TokenAuthenticationFilter
+        UserInfo userInfo = new UserInfo();
+        OAuth2TokenApi oauth2TokenApi = (OAuth2TokenApi)EapAppUtil.getBean("oauth2TokenApi");
+        OAuth2AccessTokenCheckRespDTO accessToken = oauth2TokenApi.checkAccessToken(token);
+        if(accessToken!=null){
+            userInfo.setUserId(""+accessToken.getUserId());
+            userInfo.setUserAccount(accessToken.getUserKey());
         }
-
         return userInfo;
     }
 
@@ -165,7 +160,6 @@ public class UserProvider {
             if (userInfo.getUserId() != null) {
                 USER_CACHE.set(userInfo);
             }
-
             return userInfo;
         }
     }
@@ -295,7 +289,7 @@ public class UserProvider {
         return ServletUtil.getIsMobileDevice() ? DeviceType.APP : DeviceType.PC;
     }
 
-    public static boolean isTempUser(UserInfo userInfo) {
+    public boolean isTempUser(UserInfo userInfo) {
         if (userInfo == null) {
             userInfo = getUser();
         }
