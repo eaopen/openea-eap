@@ -126,14 +126,14 @@ public class ImContentServiceImpl extends SuperServiceImpl<ImContentMapper, ImCo
         }
     }
 
-//    @Override
-//    public ImContentEntity getList(String userId, String receiveUserId) {
-//        QueryWrapper<ImContentEntity> queryWrapper = new QueryWrapper<>();
-//        queryWrapper.lambda().eq(ImContentEntity::getSendUserId, userId)
-//                .and(t -> t.eq(ImContentEntity::getReceiveUserId, receiveUserId)).orderByDesc(ImContentEntity::getReceiveTime);
-//        List<ImContentEntity> list = this.list(queryWrapper);
-//        return list.size() > 0 ? list.get(0) : null;
-//    }
+    //@Override
+    public ImContentEntity getList(String userId, String receiveUserId) {
+        QueryWrapper<ImContentEntity> queryWrapper = new QueryWrapper<>();
+        queryWrapper.lambda().eq(ImContentEntity::getSendUserId, userId)
+                .and(t -> t.eq(ImContentEntity::getReceiveUserId, receiveUserId)).orderByDesc(ImContentEntity::getReceiveTime);
+        List<ImContentEntity> list = this.list(queryWrapper);
+        return list.size() > 0 ? list.get(0) : null;
+    }
 
 
     @Override

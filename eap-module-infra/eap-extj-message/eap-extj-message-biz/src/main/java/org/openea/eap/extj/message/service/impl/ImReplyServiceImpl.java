@@ -1,5 +1,7 @@
 package org.openea.eap.extj.message.service.impl;
 
+import cn.hutool.core.util.IdUtil;
+import cn.hutool.core.util.ObjectUtil;
 import org.openea.eap.extj.base.service.SuperServiceImpl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.openea.eap.extj.message.entity.ImReplyEntity;
@@ -46,6 +48,9 @@ public class ImReplyServiceImpl extends SuperServiceImpl<ImReplyMapper, ImReplyE
             entity.setId(imReplyEntity.getId());
             this.updateById(entity);
             return true;
+        }
+        if(ObjectUtil.isEmpty(entity.getId())){
+            entity.setId(IdUtil.getSnowflakeNextIdStr());
         }
         this.save(entity);
         return true;

@@ -146,7 +146,8 @@ public class MessageWebSocket {
                 //Token已存在, 关闭之前的WebSocket, 继续执行后续代码添加新的WebSocket
                 List<OnlineUserModel> tokenList = OnlineUserProvider.getOnlineUserList().stream().filter(t-> {
                     if(receivedToken.equals(t.getToken())){
-                        OnlineUserProvider.closeFrontWs(t, t.getWebSocket());
+                        //todo 先不关闭，待测试
+                        //OnlineUserProvider.closeFrontWs(t, t.getWebSocket());
                         return true;
                     }
                     return false;
@@ -229,9 +230,21 @@ public class MessageWebSocket {
                     JSONObject object = JSONObject.parseObject(messageContent);
                     fileName = object.getString("name");
                 }
-                List<OnlineUserModel> user = OnlineUserProvider.getOnlineUserList().stream().filter(q -> String.valueOf(q.getUserId()).equals(String.valueOf(userInfo.getUserId())) && String.valueOf(q.getTenantId()).equals(tenantId)).collect(Collectors.toList());
+                // && String.valueOf(q.getTenantId()).equals(tenantId)
+                List<OnlineUserModel> user = OnlineUserProvider.getOnlineUserList()
+                        .stream().filter(q -> String.valueOf(q.getUserId()).equals(String.valueOf(userInfo.getUserId())))
+                        .collect(Collectors.toList());
                 OnlineUserModel onlineUser = user.size() > 0 ? user.get(0) : null;
-                List<OnlineUserModel> toUser = OnlineUserProvider.getOnlineUserList().stream().filter(q -> String.valueOf(q.getTenantId()).equals(String.valueOf(onlineUser.getTenantId())) && String.valueOf(q.getUserId()).equals(String.valueOf(toUserId))).collect(Collectors.toList());
+                List<OnlineUserModel> toUser = null;
+                if(onlineUser==null){
+                    toUser = Collections.emptyList();
+                }else{
+                    // String.valueOf(q.getTenantId()).equals(String.valueOf(onlineUser.getTenantId())) &&
+                    toUser = OnlineUserProvider.getOnlineUserList()
+                            .stream()
+                            .filter(q -> String.valueOf(q.getUserId()).equals(String.valueOf(toUserId)))
+                            .collect(Collectors.toList());
+                }
                 if (user.size() != 0) {
                     //saveMessage
                     if (SendMessageTypeEnum.MESSAGE_TEXT.getMessage().equals(messageType)) {
@@ -285,19 +298,6 @@ public class MessageWebSocket {
                             savaMessageModel.setMessageType(messageType);
                             savaMessageModel.setToMessage(messageModel);
                         }
-                        /*List<String> cidList = userDeviceService.getCidList(toUserId);
-                        if(cidList != null && cidList.size()>0){
-                            JSONObject jsonObject = new JSONObject();
-                            jsonObject.put("type","3");
-                            jsonObject.put("name",userInfo.getUserName() + "/"+userInfo.getUserAccount());
-                            jsonObject.put("formUserId",userInfo.getUserId());
-                            jsonObject.put("headIcon",UploaderUtil.uploaderImg(userInfo.getUserIcon()));
-//                            jsonObject.put("title",userInfo.getUserName() + "/"+userInfo.getUserAccount());
-                            String text = JSONObject.toJSONString(jsonObject);
-                            byte[] bytes = text.getBytes(StandardCharsets.UTF_8);
-                            text = Base64.getEncoder().encodeToString(bytes);
-                            uinPush.sendUniPush(cidList, userInfo.getUserName(), "你有一条看聊天消息", "3", text);
-                        }*/
                         OnlineUserProvider.sendMessage(model, savaMessageModel);
                     }
                 }
@@ -450,7 +450,7 @@ public class MessageWebSocket {
 //            log.error("调用onError,租户：" + user.getTenantId() + ",用户：" + user.getUserId());
 //        }
         try {
-            onClose(session);
+            //onClose(session);
         } catch (Exception e) {
 //            log.error("发生error,调用onclose失败，session为：" + session);
         }

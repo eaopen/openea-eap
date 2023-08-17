@@ -2,8 +2,11 @@ package org.openea.eap.extj.permission.service.impl;
 
 import org.openea.eap.extj.permission.entity.UserEntity;
 import org.openea.eap.extj.permission.service.UserService;
+import org.openea.eap.module.system.dal.dataobject.user.AdminUserDO;
+import org.openea.eap.module.system.service.user.AdminUserService;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -11,9 +14,23 @@ import java.util.List;
  */
 @Service
 public class EapUserService implements UserService {
+
+    @Resource
+    private AdminUserService adminUserService;
+
+    private UserEntity covertUser(AdminUserDO adminUser){
+        UserEntity user = new UserEntity();
+        user.setId(""+adminUser.getId());
+        user.setAccount(adminUser.getUsername());
+        user.setRealName(adminUser.getNickname());
+        user.setHeadIcon(adminUser.getAvatar());
+        return user;
+    }
+
     @Override
     public UserEntity getInfo(String userId) {
-        return null;
+        AdminUserDO adminUserDO = adminUserService.getUser(new Long(userId));
+        return covertUser(adminUserDO);
     }
 
     @Override
