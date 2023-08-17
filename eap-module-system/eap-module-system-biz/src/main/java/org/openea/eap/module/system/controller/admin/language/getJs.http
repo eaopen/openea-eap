@@ -1,0 +1,2 @@
+GET http://124.223.81.114:7080/prod-api/system/i18n-data/getJs
+Authorization: Bearer 072bf531c0db472bba0e52824e8bb21b

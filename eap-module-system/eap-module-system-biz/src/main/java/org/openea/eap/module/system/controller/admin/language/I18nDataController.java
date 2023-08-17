@@ -23,7 +23,7 @@ public class I18nDataController {
     private I18nDataService i18nDataService;
 
     @RequestMapping("getJs")
-    @Operation(summary = "获得前端i18n json数据")
+    @Operation(summary = "获得前端i18n json数据",description = "数据json格式 {language:{key:label}}")
     public CommonResult<JSONObject> getJsJson(){
         return success(i18nDataService.getJsJson());
     }

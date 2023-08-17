@@ -1,5 +1,6 @@
 package org.openea.eap.extj.util;
 
+import cn.hutool.core.util.ObjectUtil;
 import org.openea.eap.extj.base.UserInfo;
 import org.openea.eap.extj.consts.DeviceType;
 import org.openea.eap.framework.common.util.spring.EapAppUtil;
@@ -142,12 +143,19 @@ public class UserProvider {
     public static UserInfo getUser(String token) {
         // 参考 TokenAuthenticationFilter
         UserInfo userInfo = new UserInfo();
-        OAuth2TokenApi oauth2TokenApi = (OAuth2TokenApi)EapAppUtil.getBean("oauth2TokenApi");
-        OAuth2AccessTokenCheckRespDTO accessToken = oauth2TokenApi.checkAccessToken(token);
-        if(accessToken!=null){
-            userInfo.setId(""+accessToken.getUserId());
-            userInfo.setUserId(""+accessToken.getUserId());
-            userInfo.setUserAccount(accessToken.getUserKey());
+        if(ObjectUtil.isNotEmpty(token)){
+            try{
+                OAuth2TokenApi oauth2TokenApi = (OAuth2TokenApi)EapAppUtil.getBean("oauth2TokenApi");
+                OAuth2AccessTokenCheckRespDTO accessToken = oauth2TokenApi.checkAccessToken(token);
+                if(accessToken!=null){
+                    userInfo.setId(""+accessToken.getUserId());
+                    userInfo.setUserId(""+accessToken.getUserId());
+                    userInfo.setUserAccount(accessToken.getUserKey());
+                }
+            }catch (Exception e){
+                log.warn(e.getMessage());
+            }
+
         }
         if (userInfo.getUserId() != null) {
             USER_CACHE.set(userInfo);
