@@ -24,6 +24,7 @@ public class EapUserService implements UserService {
         user.setAccount(adminUser.getUsername());
         user.setRealName(adminUser.getNickname());
         user.setHeadIcon(adminUser.getAvatar());
+        user.setEnabledMark(1);
         return user;
     }
 
