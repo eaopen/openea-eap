@@ -1,4 +1,4 @@
-package org.openea.eap.module.visualdev.base.controller;
+package org.openea.eap.module.visualdev.controller.admin.base;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;

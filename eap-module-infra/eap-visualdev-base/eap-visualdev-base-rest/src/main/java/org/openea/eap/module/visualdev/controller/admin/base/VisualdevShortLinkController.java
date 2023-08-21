@@ -1,4 +1,4 @@
-package org.openea.eap.module.visualdev.base.controller;
+package org.openea.eap.module.visualdev.controller.admin.base;
 
 import com.alibaba.fastjson.JSONObject;
 import io.swagger.v3.oas.annotations.Operation;
