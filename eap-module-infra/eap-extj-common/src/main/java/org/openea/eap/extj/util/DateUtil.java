@@ -17,7 +17,9 @@ import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-public class DateUtil extends DateUtils {
+public class DateUtil
+//        extends DateUtils
+{
 
     public static Date getDayBegin() {
         Calendar cal = Calendar.getInstance();

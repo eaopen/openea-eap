@@ -20,5 +20,13 @@ public class RedisUtil {
     public Object get(String cacheKey, int i, int i1) {
         return null;
     }
+
+    public boolean exists(String s) {
+        return true;
+    }
+
+    public Object getString(String s) {
+        return s;
+    }
 }
 

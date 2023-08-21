@@ -1,8 +1,9 @@
-package org.openea.eap.extj.base.entity;
+package org.openea.eap.module.visualdev.extend.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
+import org.openea.eap.extj.base.entity.SuperBaseEntity;
 
 @Data
 @TableName("ext_emailconfig")

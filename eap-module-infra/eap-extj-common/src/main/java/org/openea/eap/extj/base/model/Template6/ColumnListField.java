@@ -23,9 +23,10 @@ public class ColumnListField extends FieLdsModel {
      */
     private String align;
 
-    private String jnpfKey;
     /**
      * 是否勾选
      */
     private Boolean checked;
+
+    private String jnpfKey;
 }

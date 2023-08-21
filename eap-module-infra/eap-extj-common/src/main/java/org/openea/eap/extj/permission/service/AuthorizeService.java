@@ -25,4 +25,5 @@ public interface AuthorizeService
     <T> QueryWrapper<T> getCondition(AuthorizeConditionModel conditionModel);
 
 
+    List<AuthorizeEntity> getListByObjectId(String roleId, String authorizePortalManage);
 }

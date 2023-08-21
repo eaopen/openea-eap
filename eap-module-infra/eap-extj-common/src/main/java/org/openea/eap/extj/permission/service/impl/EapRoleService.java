@@ -5,6 +5,7 @@ import org.openea.eap.extj.permission.model.role.RolePagination;
 import org.openea.eap.extj.permission.service.RoleService;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -40,5 +41,10 @@ public class EapRoleService implements RoleService {
     @Override
     public void delete(RoleEntity entity) {
 
+    }
+
+    @Override
+    public Collection<Object> getListByUserId(String userId) {
+        return null;
     }
 }
