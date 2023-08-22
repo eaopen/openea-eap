@@ -40,7 +40,7 @@ OpenEAP前后端分离，采用后端Spring boot 2.x单体多模块，前端vue2
     - [X] MyBatis Plus
     - [X] Redis
     - [X] MySQL
-    - [ ] Docker
+    - [X] Docker
 
 
 ### 业务平台(面向业务人员)
@@ -54,10 +54,10 @@ OpenEAP前后端分离，采用后端Spring boot 2.x单体多模块，前端vue2
       - [X] 系统通知
     - [X] 切换语言
     - [X] 登录用户
-     - [X] 个人信息 
-     - [X] 布局设置
-     - [ ] 锁屏
-     - [X] 退出登录
+      - [X] 个人信息 
+      - [X] 布局设置
+      - [ ] 锁屏
+      - [X] 退出登录
   - [X] 业务门户
   - [X] 工作流程
     - [X] 待办事宜
