@@ -24,17 +24,34 @@
     <properties>
         <eoa.version>2.0-snapshot</eoa.version>
     </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.openea.eap</groupId>
             <artifactId>eap-module-system-biz</artifactId>
             <version>${revision}</version>
         </dependency>
+
         <dependency>
             <groupId>org.openea.eap</groupId>
             <artifactId>eap-module-infra-biz</artifactId>
             <version>${revision}</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.openea.eap</groupId>
+            <artifactId>eap-module-lowcode-biz</artifactId>
+            <version>${revision}</version>
+        </dependency>
+
+        <!-- 工作流集成 OpenBPM -->
+        <!--        <dependency>-->
+        <!--            <groupId>org.openea.eap</groupId>-->
+        <!--            <artifactId>eap-module-obpm-biz</artifactId>-->
+        <!--            <version>${revision}</version>-->
+        <!--        </dependency>-->
+
+
         <dependency>
             <groupId>org.openea.eap</groupId>
             <artifactId>eap-spring-boot-starter-biz-error-code</artifactId>
@@ -44,23 +61,6 @@
             <groupId>org.openea.eap</groupId>
             <artifactId>eap-spring-boot-starter-biz-i18n</artifactId>
         </dependency>
-
-
-
-
-        <!-- 数据报表 -->
-<!--        <dependency>-->
-<!--            <groupId>org.openea.eap</groupId>-->
-<!--            <artifactId>eap-module-report-biz</artifactId>-->
-<!--            <version>${revision}</version>-->
-<!--        </dependency>-->
-        <!-- 工作流集成 OpenBPM -->
-        <dependency>
-            <groupId>org.openea.eap</groupId>
-            <artifactId>eap-module-obpm-biz</artifactId>
-            <version>${revision}</version>
-        </dependency>
-
 
 
         <!-- spring boot 配置所需依赖 -->

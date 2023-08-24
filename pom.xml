@@ -18,14 +18,11 @@
         <!-- Server 主项目 -->
         <module>eap-server</module>
 
-        <!-- cloud only -->
-        <!-- 增加maven profile=springCloud -->
 
         <!-- 各种 module 拓展 -->
         <module>eap-module-system</module>
         <module>eap-module-infra</module>
         <module>eap-module-lowcode</module>
-<!--        <module>eap-module-report</module>-->
 
         <!-- 示例项目 -->
 <!--        <module>eap-biz-extend/eap-example</module>-->

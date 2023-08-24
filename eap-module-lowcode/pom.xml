@@ -35,6 +35,10 @@
 
         <!-- 调用OpenBPM服务 -->
         <module>eap-obpm-integrate</module>
+
+
+        <!-- 整合 lowcode 服务 -->
+        <module>eap-module-lowcode-biz</module>
     </modules>
 
 </project>
