@@ -18,4 +18,6 @@ public interface DictionaryDataService  {
     DictionaryDataEntity getInfo(String portalCategoryId);
 
     List<DictionaryDataEntity> getList(String id);
+
+    DictionaryDataEntity getSwapInfo(String feil, String dictionaryTypeId);
 }

@@ -28,11 +28,11 @@ import java.util.*;
 
 public class JdbcUtil {
     private static final Logger log = LoggerFactory.getLogger(JdbcUtil.class);
-    private static final String SELECT_MAPPER = "jnpf.database.mapper.JdbcMapper.getList";
-    private static final String UPDATE_MAPPER = "jnpf.database.mapper.JdbcMapper.update";
-    private static final String UPDATE_MAPPERS = "jnpf.database.mapper.JdbcMapper.updates";
-    private static final String DELETE_MAPPER = "jnpf.database.mapper.JdbcMapper.delete";
-    private static final String INSERT_MAPPER = "jnpf.database.mapper.JdbcMapper.insert";
+    private static final String SELECT_MAPPER = "org.openea.eap.extj.database.mapper.JdbcMapper.getList";
+    private static final String UPDATE_MAPPER = "org.openea.eap.extj.database.mapper.JdbcMapper.update";
+    private static final String UPDATE_MAPPERS = "org.openea.eap.extj.database.mapper.JdbcMapper.updates";
+    private static final String DELETE_MAPPER = "org.openea.eap.extj.database.mapper.JdbcMapper.delete";
+    private static final String INSERT_MAPPER = "org.openea.eap.extj.database.mapper.JdbcMapper.insert";
 
     public JdbcUtil() {
     }
@@ -49,7 +49,7 @@ public class JdbcUtil {
             SqlSession sqlSession = getSqlSessionFactory().openSession();
 
             try {
-                var2 = sqlSession.update("jnpf.database.mapper.JdbcMapper.update", dto.getMapParams());
+                var2 = sqlSession.update("org.openea.eap.extj.database.mapper.JdbcMapper.update", dto.getMapParams());
             } finally {
                 if (Collections.singletonList(sqlSession).get(0) != null) {
                     sqlSession.close();
@@ -71,7 +71,7 @@ public class JdbcUtil {
             SqlSession sqlSession = getSqlSessionFactory().openSession();
 
             try {
-                var2 = sqlSession.update("jnpf.database.mapper.JdbcMapper.updates", dto.getMapParams());
+                var2 = sqlSession.update("org.openea.eap.extj.database.mapper.JdbcMapper.updates", dto.getMapParams());
             } finally {
                 if (Collections.singletonList(sqlSession).get(0) != null) {
                     sqlSession.close();

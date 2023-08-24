@@ -62,7 +62,7 @@ public class MessageDataTypeServiceImpl extends SuperServiceImpl<MessageDataType
         }
         boolean pcPermission = false;
         boolean appPermission = false;
-        boolean isPc = ServletUtil.getHeader("jnpf-origin").equals("pc");
+        boolean isPc = ServletUtil.getHeader("eap-origin").equals("pc");
         if (isPc && pcPermission) {
             if (!userProvider.get().getIsAdministrator()) {
                 Object messageDataTypeObj = authorizeService.getCondition(new AuthorizeConditionModel(messageDataTypeQueryWrapper, messageDataTypePagination.getMenuId(), "base_message_data_type"));

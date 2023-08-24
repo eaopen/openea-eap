@@ -296,7 +296,7 @@ public class VisualdevShortLinkController extends SuperController<VisualdevShort
         VisualdevReleaseEntity visualdevEntity = visualdevReleaseService.getById(modelId);
         VisualDevJsonModel visualJsonModel = OnlinePublicUtils.getVisualJsonModel(visualdevEntity);
         //判断请求客户端来源
-        String header = ServletUtil.getHeader("jnpf-origin" );
+        String header = ServletUtil.getHeader("eap-origin" );
         if (!"pc".equals(header)) {
             visualJsonModel.setColumnData(visualJsonModel.getAppColumnData());
         }

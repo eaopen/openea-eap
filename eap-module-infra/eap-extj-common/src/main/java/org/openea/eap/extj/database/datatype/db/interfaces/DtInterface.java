@@ -88,7 +88,7 @@ public interface DtInterface {
      */
     static <T extends DtInterface> Class<T> getClz(String dbType) throws Exception {
         // 数据类型枚举类命名规则：Dt + jnpfDbEncode
-        return (Class<T>)Class.forName("jnpf.database.datatype.db.Dt" + dbType + "Enum");
+        return (Class<T>)Class.forName("org.openea.eap.extj.database.datatype.db.Dt" + dbType + "Enum");
     }
 
 

@@ -151,7 +151,7 @@ public class FilterServiceImpl extends SuperServiceImpl<FilterMapper, FilterEnti
         FilterEntity entity = this.getOne(wrapper);
         // 获取app端还是web端
         String config;
-        boolean	isApp = ServletUtil.getHeader("jnpf-origin").equals("app");
+        boolean	isApp = ServletUtil.getHeader("eap-origin").equals("app");
         if(isApp){
             config = entity.getConfigApp();
         }else{

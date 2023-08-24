@@ -25,4 +25,9 @@ public class EapDictionaryDataService implements DictionaryDataService {
     public List<DictionaryDataEntity> getList(String id) {
         return null;
     }
+
+    @Override
+    public DictionaryDataEntity getSwapInfo(String feil, String dictionaryTypeId) {
+        return null;
+    }
 }

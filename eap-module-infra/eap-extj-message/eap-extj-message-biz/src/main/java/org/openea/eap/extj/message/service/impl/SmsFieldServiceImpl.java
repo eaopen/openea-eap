@@ -36,7 +36,7 @@ public class SmsFieldServiceImpl extends SuperServiceImpl<SmsFieldMapper, SmsFie
     public QueryWrapper<SmsFieldEntity> getChild(MessageTemplateConfigPagination pagination, QueryWrapper<SmsFieldEntity> smsFieldQueryWrapper) {
         boolean pcPermission = false;
         boolean appPermission = false;
-        boolean isPc = ServletUtil.getHeader("jnpf-origin").equals("pc");
+        boolean isPc = ServletUtil.getHeader("eap-origin").equals("pc");
         if (isPc) {
         }
 

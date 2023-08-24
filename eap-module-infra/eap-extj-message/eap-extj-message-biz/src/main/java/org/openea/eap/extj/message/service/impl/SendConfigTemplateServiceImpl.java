@@ -31,7 +31,7 @@ public class SendConfigTemplateServiceImpl extends SuperServiceImpl<SendConfigTe
     public QueryWrapper<SendConfigTemplateEntity> getChild(SendMessageConfigPagination pagination, QueryWrapper<SendConfigTemplateEntity> sendConfigTemplateQueryWrapper) {
         boolean pcPermission = false;
         boolean appPermission = false;
-        boolean isPc = ServletUtil.getHeader("jnpf-origin").equals("pc");
+        boolean isPc = ServletUtil.getHeader("eap-origin").equals("pc");
         if (isPc) {
         }
 

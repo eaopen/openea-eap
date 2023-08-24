@@ -35,7 +35,7 @@ public class TemplateParamServiceImpl extends SuperServiceImpl<TemplateParamMapp
     public QueryWrapper<TemplateParamEntity> getChild(MessageTemplateConfigPagination pagination, QueryWrapper<TemplateParamEntity> templateParamQueryWrapper) {
         boolean pcPermission = false;
         boolean appPermission = false;
-        boolean isPc = ServletUtil.getHeader("jnpf-origin").equals("pc");
+        boolean isPc = ServletUtil.getHeader("eap-origin").equals("pc");
         if (isPc) {
         }
 
