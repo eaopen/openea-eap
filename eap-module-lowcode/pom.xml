@@ -28,6 +28,13 @@
         <!--        <module>eap-visualdev-onlinedev</module>-->
         <!--        <module>eap-visualdev-generater</module>-->
         <module>eap-visualdev-portal</module>
+
+
+        <!-- 报表 -->
+        <module>eap-lowcode-report</module>
+
+        <!-- 拆分infra中低代码部分，如codegen -->
+        <module>eap-lowcode-codegen</module>
     </modules>
 
 </project>

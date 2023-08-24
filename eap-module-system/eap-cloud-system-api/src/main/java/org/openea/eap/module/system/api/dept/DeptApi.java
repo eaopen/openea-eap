@@ -18,7 +18,7 @@ import java.util.Set;
 
 @FeignClient(name = ApiConstants.NAME) // TODO 芋艿：fallbackFactory =
 @Tag(name = "RPC 服务 - 部门")
-public interface DeptApi {
+public interface DeptApiClient extends DeptApi {
 
     String PREFIX = ApiConstants.PREFIX + "/dept";
 

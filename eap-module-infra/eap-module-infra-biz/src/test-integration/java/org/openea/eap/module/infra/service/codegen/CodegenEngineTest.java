@@ -1,9 +1,9 @@
 package org.openea.eap.module.infra.service.codegen;
 
-import org.openea.eap.module.infra.dal.dataobject.codegen.CodegenColumnDO;
-import org.openea.eap.module.infra.dal.dataobject.codegen.CodegenTableDO;
-import org.openea.eap.module.infra.dal.mysql.codegen.CodegenColumnMapper;
-import org.openea.eap.module.infra.dal.mysql.codegen.CodegenTableMapper;
+import org.openea.eap.module.lowcode.dal.dataobject.codegen.CodegenColumnDO;
+import org.openea.eap.module.lowcode.dal.dataobject.codegen.CodegenTableDO;
+import org.openea.eap.module.lowcode.dal.mysql.codegen.CodegenColumnMapper;
+import org.openea.eap.module.lowcode.dal.mysql.codegen.CodegenTableMapper;
 import org.openea.eap.module.infra.service.codegen.inner.CodegenEngine;
 import org.openea.eap.module.infra.test.BaseDbUnitTest;
 import org.junit.jupiter.api.Test;
