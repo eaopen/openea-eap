@@ -52,6 +52,14 @@
             <artifactId>eap-spring-boot-starter-redis</artifactId>
         </dependency>
 
+
+        <!-- Test 测试相关 -->
+        <dependency>
+            <groupId>org.openea.eap</groupId>
+            <artifactId>eap-spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
         <!-- 工具类相关 -->
 
         <dependency>

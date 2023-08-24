@@ -1,6 +1,6 @@
-package org.openea.eap.module.infra.service.codegen;
+package org.openea.eap.module.lowcode.service.codegen;
 
-import org.openea.eap.module.infra.test.BaseDbUnitTest;
+import org.openea.eap.framework.test.core.ut.BaseDbUnitTest;
 import org.junit.jupiter.api.Test;
 
 import javax.annotation.Resource;

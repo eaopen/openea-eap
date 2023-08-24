@@ -20,8 +20,11 @@
     </properties>
 
     <modules>
-        <!-- 调用OpenBPM服务 -->
-        <module>eap-obpm-integrate</module>
+        <!-- 拆分infra中低代码部分，如codegen -->
+        <module>eap-lowcode-codegen</module>
+        <!-- 报表 -->
+        <module>eap-lowcode-report</module>
+
 
         <!-- 在线设计模块, 基于eap-extj-common -->
         <module>eap-visualdev-base</module>
@@ -30,11 +33,8 @@
         <module>eap-visualdev-portal</module>
 
 
-        <!-- 报表 -->
-        <module>eap-lowcode-report</module>
-
-        <!-- 拆分infra中低代码部分，如codegen -->
-        <module>eap-lowcode-codegen</module>
+        <!-- 调用OpenBPM服务 -->
+        <module>eap-obpm-integrate</module>
     </modules>
 
 </project>

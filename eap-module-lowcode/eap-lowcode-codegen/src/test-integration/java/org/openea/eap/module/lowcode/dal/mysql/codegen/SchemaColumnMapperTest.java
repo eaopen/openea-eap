@@ -1,7 +1,7 @@
 package org.openea.eap.module.lowcode.dal.mysql.codegen;
 
 import org.openea.eap.module.tool.dal.dataobject.codegen.SchemaColumnDO;
-import org.openea.eap.module.tool.test.BaseDbUnitTest;
+import org.openea.eap.framework.test.core.ut.BaseDbUnitTest;
 import org.junit.jupiter.api.Test;
 
 import javax.annotation.Resource;
