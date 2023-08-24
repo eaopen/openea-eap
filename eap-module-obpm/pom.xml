@@ -9,9 +9,6 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <modules>
-        <!-- 远程调用OpenBPM服务 -->
-        <module>eap-module-obpm-api</module>
-        <module>eap-module-obpm-biz</module>
     </modules>
     <artifactId>eap-module-obpm</artifactId>
     <packaging>pom</packaging>
