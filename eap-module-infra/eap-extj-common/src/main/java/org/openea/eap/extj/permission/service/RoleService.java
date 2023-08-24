@@ -1,13 +1,10 @@
 package org.openea.eap.extj.permission.service;
 
-import org.openea.eap.extj.base.service.SuperService;
 import org.openea.eap.extj.permission.entity.RoleEntity;
 import org.openea.eap.extj.permission.model.role.RolePagination;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 public interface RoleService
 //        extends SuperService<RoleEntity>
@@ -83,5 +80,5 @@ public interface RoleService
      */
     void delete(RoleEntity entity);
 
-    Collection<Object> getListByUserId(String userId);
+    Collection<RoleEntity> getListByUserId(String userId);
 }

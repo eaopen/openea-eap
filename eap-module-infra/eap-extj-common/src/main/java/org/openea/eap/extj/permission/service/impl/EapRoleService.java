@@ -44,7 +44,7 @@ public class EapRoleService implements RoleService {
     }
 
     @Override
-    public Collection<Object> getListByUserId(String userId) {
+    public Collection<RoleEntity> getListByUserId(String userId) {
         return null;
     }
 }

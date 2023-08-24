@@ -1,6 +1,7 @@
 package org.openea.eap.extj.permission.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
@@ -11,6 +12,9 @@ import lombok.Data;
 @Data
 @TableName("base_role")
 public class RoleEntity extends PermissionEntityBase{
+
+    @TableId("F_id")
+    private String id;
 
     /**
      * 角色类型

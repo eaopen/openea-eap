@@ -3,36 +3,36 @@ package org.openea.eap.module.visualdev.portal.service.impl;
 import cn.hutool.core.collection.CollectionUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import org.apache.commons.lang3.StringUtils;
 import org.openea.eap.extj.base.MyBatisPrimaryBase;
+import org.openea.eap.extj.base.service.SuperServiceImpl;
 import org.openea.eap.extj.base.service.SystemService;
 import org.openea.eap.extj.permission.entity.AuthorizeEntity;
+import org.openea.eap.extj.permission.entity.RoleEntity;
 import org.openea.eap.extj.permission.entity.UserEntity;
 import org.openea.eap.extj.permission.service.AuthorizeService;
 import org.openea.eap.extj.permission.service.RoleService;
 import org.openea.eap.extj.permission.service.UserService;
-import org.openea.eap.module.visualdev.portal.entity.PortalManageEntity;
-import org.openea.eap.module.visualdev.portal.model.portalManage.PortalManagePrimary;
-import org.openea.eap.module.visualdev.portal.model.portalManage.PortalManageVO;
-import org.openea.eap.module.visualdev.portal.constant.PortalConst;
-import org.openea.eap.module.visualdev.portal.entity.PortalDataEntity;
-import org.openea.eap.module.visualdev.portal.entity.PortalEntity;
-import org.openea.eap.module.visualdev.portal.mapper.PortalDataMapper;
-import org.openea.eap.module.visualdev.portal.model.*;
-import org.openea.eap.module.visualdev.portal.service.PortalDataService;
-import org.openea.eap.module.visualdev.portal.service.PortalManageService;
-import org.openea.eap.module.visualdev.portal.service.PortalService;
 import org.openea.eap.extj.util.JsonUtil;
 import org.openea.eap.extj.util.JsonUtilEx;
 import org.openea.eap.extj.util.UserProvider;
-import org.apache.commons.lang3.StringUtils;
+import org.openea.eap.module.visualdev.portal.constant.PortalConst;
+import org.openea.eap.module.visualdev.portal.entity.PortalDataEntity;
+import org.openea.eap.module.visualdev.portal.entity.PortalEntity;
+import org.openea.eap.module.visualdev.portal.entity.PortalManageEntity;
+import org.openea.eap.module.visualdev.portal.mapper.PortalDataMapper;
+import org.openea.eap.module.visualdev.portal.model.*;
+import org.openea.eap.module.visualdev.portal.model.portalManage.PortalManagePrimary;
+import org.openea.eap.module.visualdev.portal.model.portalManage.PortalManageVO;
+import org.openea.eap.module.visualdev.portal.service.PortalDataService;
+import org.openea.eap.module.visualdev.portal.service.PortalManageService;
+import org.openea.eap.module.visualdev.portal.service.PortalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
-import org.openea.eap.extj.base.service.SuperServiceImpl;
-import org.openea.eap.extj.permission.entity.RoleEntity;
 
 /**
  * <p>
@@ -254,7 +254,14 @@ public class PortalDataServiceImpl extends SuperServiceImpl<PortalDataMapper, Po
 
         // 获取用户底下所有权限portalManage
         Supplier<List<String>> authPortalManageIds = ()->{
-            List<String> roleIds = roleService.getListByUserId(userId).stream().map(RoleEntity::getId).collect(Collectors.toList());
+            //List<String> roleIds = roleService.getListByUserId(userId).stream().map(RoleEntity::getId).collect(Collectors.toList());
+            List<String> roleIds = new ArrayList<>();
+            Collection<RoleEntity> roles = roleService.getListByUserId(userId);
+            if(roles!=null){
+                for(RoleEntity role:roles){
+                    roleIds.add(role.getId());
+                }
+            }
             List<String> portalManageIds = new ArrayList<>();
             for (String roleId : roleIds) {
             /* authorize存储 portalManage->item、role->object，本质：门户管理条目与角色关系
