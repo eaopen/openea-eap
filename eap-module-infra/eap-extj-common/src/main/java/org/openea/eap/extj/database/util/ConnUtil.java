@@ -3,15 +3,21 @@ package org.openea.eap.extj.database.util;
 import cn.hutool.core.util.ReflectUtil;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.proxy.jdbc.ConnectionProxy;
+import lombok.extern.slf4j.Slf4j;
+import org.openea.eap.extj.database.entity.DbLinkEntity;
+import org.openea.eap.extj.database.model.dto.PrepSqlDTO;
 import org.openea.eap.extj.database.model.interfaces.DbSourceOrDbLink;
+import org.openea.eap.extj.database.source.DbBase;
 import org.openea.eap.extj.exception.DataException;
+import org.openea.eap.extj.util.StringUtil;
+import org.openea.eap.extj.util.data.DataSourceContextHolder;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Objects;
 import java.util.Properties;
-
+@Slf4j
 public class ConnUtil {
 
     public ConnUtil() {
@@ -42,87 +48,87 @@ public class ConnUtil {
         return PrepSqlDTO.getConn(dbLinkEntity);
     }
 
-    /** @deprecated */
-    @Deprecated
-    private static Connection getConnection(DbSourceOrDbLink dbSourceOrDbLink) throws DataException {
-        return getConnection(dbSourceOrDbLink, (String)null);
-    }
+//    /** @deprecated */
+//    @Deprecated
+//    private static Connection getConnection(DbSourceOrDbLink dbSourceOrDbLink) throws DataException {
+//        return getConnection(dbSourceOrDbLink, (String)null);
+//    }
 
-    /** @deprecated */
-    @Deprecated
-    private static Connection getConnection(DbSourceOrDbLink dataSourceUtil, String dbName) throws DataException {
-        DbLinkEntity dbLinkEntity = dataSourceUtil.init();
-        return DbTypeUtil.checkOracle(dbLinkEntity) ? getOracleConn(dbLinkEntity) : getConnection(dbLinkEntity.getAutoUsername(), dbLinkEntity.getAutoPassword(), getUrl(dbLinkEntity));
-    }
+//    /** @deprecated */
+//    @Deprecated
+//    private static Connection getConnection(DbSourceOrDbLink dataSourceUtil, String dbName) throws DataException {
+//        DbLinkEntity dbLinkEntity = dataSourceUtil.init();
+//        return DbTypeUtil.checkOracle(dbLinkEntity) ? getOracleConn(dbLinkEntity) : getConnection(dbLinkEntity.getAutoUsername(), dbLinkEntity.getAutoPassword(), getUrl(dbLinkEntity));
+//    }
 
-    /** @deprecated */
-    @Deprecated
-    private static Connection getConnection(String userName, String password, String url) throws DataException {
-        DbBase db = DbTypeUtil.getDb(url);
-        return ConnUtil.ConnCommon.createConn(db.getDriver(), userName, password, url);
-    }
+//    /** @deprecated */
+//    @Deprecated
+//    private static Connection getConnection(String userName, String password, String url) throws DataException {
+//        DbBase db = DbTypeUtil.getDb(url);
+//        return ConnUtil.ConnCommon.createConn(db.getDriver(), userName, password, url);
+//    }
 
-    private static Connection getOracleConn(DbLinkEntity dsd) throws DataException {
-        DbOracle dbOracle = new DbOracle();
-        return dbOracle.getOracleConn(dsd, getUrl(dsd));
-    }
+//    private static Connection getOracleConn(DbLinkEntity dsd) throws DataException {
+//        DbOracle dbOracle = new DbOracle();
+//        return dbOracle.getOracleConn(dsd, getUrl(dsd));
+//    }
 
     public static String getUrl(DbSourceOrDbLink dbSourceOrDbLink) {
         return getUrl(dbSourceOrDbLink, (String)null);
     }
 
     public static String getUrl(DbSourceOrDbLink dbSourceOrDbLink, String dbName) {
-        return BaseCommon.getDbBaseConnUrl(dbSourceOrDbLink, dbName);
+        return DbBase.BaseCommon.getDbBaseConnUrl(dbSourceOrDbLink, dbName);
     }
 
     public static void switchConnectionSchema(Connection conn) throws SQLException {
-        if (TenantDataSourceUtil.isMultiTenancy() && DynamicDataSourceUtil.isPrimaryDataSoure()) {
-            String schema = TenantDataSourceUtil.getTenantSchema();
-            if (StringUtil.isNotEmpty(schema)) {
-                Connection tmpConnection = getRealConnection(conn);
-
-                try {
-                    switch (DynamicDataSourceUtil.getPrimaryDbType()) {
-                        case "SQLServer":
-                        case "MySQL":
-                            if (!Objects.equals(tmpConnection.getCatalog(), schema)) {
-                                tmpConnection.setCatalog(schema);
-                            }
-                            break;
-                        case "PostgreSQL":
-                            schema = schema.toLowerCase();
-                            if (!Objects.equals(tmpConnection.getSchema(), schema)) {
-                                tmpConnection.setSchema(schema);
-                            }
-                            break;
-                        case "Oracle":
-                            schema = schema.toUpperCase();
-                            if (!Objects.equals(tmpConnection.getSchema(), schema)) {
-                                tmpConnection.setSchema(schema);
-                            }
-                            break;
-                        case "KingbaseES":
-                        case "DM":
-                        default:
-                            if (!Objects.equals(tmpConnection.getSchema(), schema)) {
-                                tmpConnection.setSchema(schema);
-                            }
-                    }
-                } catch (Exception var7) {
-                    conn.close();
-                    String url = "";
-                    if (tmpConnection instanceof ConnectionProxy) {
-                        try {
-                            url = ((ConnectionProxy)tmpConnection).getDirectDataSource().getUrl();
-                        } catch (Exception var6) {
-                        }
-                    }
-
-                    log.error("切库失败, 租户：{}, URL: {}, Msg: {}", new Object[]{DataSourceContextHolder.getDatasourceId(), url, var7.getMessage()});
-                    throw var7;
-                }
-            }
-        }
+//        if (TenantDataSourceUtil.isMultiTenancy() && DynamicDataSourceUtil.isPrimaryDataSoure()) {
+//            String schema = TenantDataSourceUtil.getTenantSchema();
+//            if (StringUtil.isNotEmpty(schema)) {
+//                Connection tmpConnection = getRealConnection(conn);
+//
+//                try {
+//                    switch (DynamicDataSourceUtil.getPrimaryDbType()) {
+//                        case "SQLServer":
+//                        case "MySQL":
+//                            if (!Objects.equals(tmpConnection.getCatalog(), schema)) {
+//                                tmpConnection.setCatalog(schema);
+//                            }
+//                            break;
+//                        case "PostgreSQL":
+//                            schema = schema.toLowerCase();
+//                            if (!Objects.equals(tmpConnection.getSchema(), schema)) {
+//                                tmpConnection.setSchema(schema);
+//                            }
+//                            break;
+//                        case "Oracle":
+//                            schema = schema.toUpperCase();
+//                            if (!Objects.equals(tmpConnection.getSchema(), schema)) {
+//                                tmpConnection.setSchema(schema);
+//                            }
+//                            break;
+//                        case "KingbaseES":
+//                        case "DM":
+//                        default:
+//                            if (!Objects.equals(tmpConnection.getSchema(), schema)) {
+//                                tmpConnection.setSchema(schema);
+//                            }
+//                    }
+//                } catch (Exception var7) {
+//                    conn.close();
+//                    String url = "";
+//                    if (tmpConnection instanceof ConnectionProxy) {
+//                        try {
+//                            url = ((ConnectionProxy)tmpConnection).getDirectDataSource().getUrl();
+//                        } catch (Exception var6) {
+//                        }
+//                    }
+//
+//                    log.error("切库失败, 租户：{}, URL: {}, Msg: {}", new Object[]{DataSourceContextHolder.getDatasourceId(), url, var7.getMessage()});
+//                    throw var7;
+//                }
+//            }
+//        }
 
     }
 

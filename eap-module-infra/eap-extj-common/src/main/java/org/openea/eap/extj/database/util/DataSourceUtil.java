@@ -3,7 +3,9 @@ package org.openea.eap.extj.database.util;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
+import org.openea.eap.extj.database.entity.DbLinkEntity;
 import org.openea.eap.extj.database.model.interfaces.DbSourceOrDbLink;
+import org.openea.eap.extj.database.sql.model.DbStruct;
 import org.openea.eap.extj.exception.DataException;
 import org.openea.eap.extj.util.StringUtil;
 import org.springframework.beans.BeanUtils;
@@ -61,8 +63,18 @@ public class DataSourceUtil implements DbSourceOrDbLink {
     }
 
 
+    @Override
+    public DbStruct getDbStruct() {
+        return null;
+    }
 
+    @Override
+    public DbLinkEntity init() {
+        return null;
+    }
 
-
-
+    @Override
+    public DbLinkEntity init(String var1) {
+        return null;
+    }
 }

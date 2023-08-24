@@ -7,16 +7,24 @@ import com.baomidou.dynamic.datasource.ds.ItemDataSource;
 import com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DataSourceProperty;
 import com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceProperties;
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
+import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.map.LRUMap;
+import org.openea.eap.extj.config.ConfigValueUtil;
+import org.openea.eap.extj.database.entity.DbLinkEntity;
+import org.openea.eap.extj.exception.DataException;
 import org.openea.eap.extj.util.StringUtil;
 import org.openea.eap.extj.util.data.DataSourceContextHolder;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Optional;
-
+@Setter
+@Slf4j
+@Component
 public class DynamicDataSourceUtil {
 
     private static int MAX_DATASOURCE_COUNT = 300;
@@ -27,13 +35,13 @@ public class DynamicDataSourceUtil {
     private static DefaultDataSourceCreator defaultDataSourceCreator;
     private static ConfigValueUtil configValueUtil;
 
-    public DynamicDataSourceUtil(@Qualifier("dataSourceSystem") DataSource dynamicRoutingDataSource, DynamicDataSourceProperties dynamicDataSourceProperties, DefaultDataSourceCreator defaultDataSourceCreator, ConfigValueUtil configValueUtil, DataSourceUtil dataSourceUtil) {
-        DynamicDataSourceUtil.dynamicRoutingDataSource = (DynamicRoutingDataSource)dynamicRoutingDataSource;
-        DynamicDataSourceUtil.dynamicDataSourceProperties = dynamicDataSourceProperties;
-        DynamicDataSourceUtil.defaultDataSourceCreator = defaultDataSourceCreator;
-        DynamicDataSourceUtil.configValueUtil = configValueUtil;
-        DynamicDataSourceUtil.dataSourceUtil = dataSourceUtil;
-    }
+//    public DynamicDataSourceUtil(@Qualifier("dataSourceSystem") DataSource dynamicRoutingDataSource, DynamicDataSourceProperties dynamicDataSourceProperties, DefaultDataSourceCreator defaultDataSourceCreator, ConfigValueUtil configValueUtil, DataSourceUtil dataSourceUtil) {
+//        DynamicDataSourceUtil.dynamicRoutingDataSource = (DynamicRoutingDataSource)dynamicRoutingDataSource;
+//        DynamicDataSourceUtil.dynamicDataSourceProperties = dynamicDataSourceProperties;
+//        DynamicDataSourceUtil.defaultDataSourceCreator = defaultDataSourceCreator;
+//        DynamicDataSourceUtil.configValueUtil = configValueUtil;
+//        DynamicDataSourceUtil.dataSourceUtil = dataSourceUtil;
+//    }
 
     public static void switchToDataSource(String userName, String password, String url, String dbType) throws DataException, SQLException {
         String tenantId = (String) Optional.ofNullable(DataSourceContextHolder.getDatasourceId()).orElse("");
@@ -56,7 +64,7 @@ public class DynamicDataSourceUtil {
         String dbKey;
         if (dbLinkEntity != null && !StringUtil.isEmpty(dbLinkEntity.getId()) && !"0".equals(dbLinkEntity.getId())) {
             dbKey = (String)Optional.ofNullable(DataSourceContextHolder.getDatasourceId()).orElse("");
-            String dbKey = dbKey + dbLinkEntity.getId();
+             dbKey = dbKey + dbLinkEntity.getId();
             String removeKey = null;
             boolean insert = true;
             synchronized(LockObjectUtil.addLockKey(dbKey)) {
@@ -95,12 +103,12 @@ public class DynamicDataSourceUtil {
             }
 
         } else {
-            if (TenantDataSourceUtil.isTenantAssignDataSource()) {
+//            if (TenantDataSourceUtil.isTenantAssignDataSource()) {
                 dbKey = DataSourceContextHolder.getDatasourceId() + "-" + "master";
                 DynamicDataSourceContextHolder.push(dbKey);
-            } else {
-                DynamicDataSourceContextHolder.push((String)null);
-            }
+//            } else {
+//                DynamicDataSourceContextHolder.push((String)null);
+//            }
 
         }
     }
@@ -136,13 +144,13 @@ public class DynamicDataSourceUtil {
         dataSourceProperty.setDruid(dynamicDataSourceProperties.getDruid());
         dataSourceProperty.setLazy(true);
         dataSourceProperty.getDruid().setBreakAfterAcquireFailure(true);
-        if (dataSourceProperty.getDruid().getValidationQuery() == null && (DbTypeUtil.checkKingbase(dbLinkEntity) || DbTypeUtil.checkDM(dbLinkEntity))) {
-            dataSourceProperty.getDruid().setValidationQuery("select 1;");
-        }
+//        if (dataSourceProperty.getDruid().getValidationQuery() == null && (DbTypeUtil.checkKingbase(dbLinkEntity) || DbTypeUtil.checkDM(dbLinkEntity))) {
+//            dataSourceProperty.getDruid().setValidationQuery("select 1;");
+//        }
 
-        if (DbTypeUtil.checkOracle(dbLinkEntity)) {
-            dataSourceProperty.getDruid().setConnectionProperties(DbOracle.setConnProp("Default", dbLinkEntity.getUserName(), dbLinkEntity.getPassword()));
-        }
+//        if (DbTypeUtil.checkOracle(dbLinkEntity)) {
+//            dataSourceProperty.getDruid().setConnectionProperties(DbOracle.setConnProp("Default", dbLinkEntity.getUserName(), dbLinkEntity.getPassword()));
+//        }
 
         return dataSourceProperty;
     }

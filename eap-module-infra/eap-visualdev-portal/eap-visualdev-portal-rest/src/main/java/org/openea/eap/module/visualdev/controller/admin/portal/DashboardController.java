@@ -10,9 +10,7 @@ import org.openea.eap.extj.base.service.DictionaryTypeService;
 import org.openea.eap.extj.base.vo.ListVO;
 import org.openea.eap.extj.engine.entity.FlowTaskEntity;
 import org.openea.eap.extj.engine.model.flowtask.FlowTaskListModel;
-import org.openea.eap.extj.extend.service.EmailReceiveService;
-import org.openea.eap.extj.extend.service.FlowDelegateService;
-import org.openea.eap.extj.extend.service.FlowTaskService;
+
 import org.openea.eap.extj.message.entity.MessageEntity;
 import org.openea.eap.extj.message.model.NoticeModel;
 import org.openea.eap.extj.message.service.MessageService;
@@ -20,6 +18,9 @@ import org.openea.eap.extj.permission.entity.UserEntity;
 import org.openea.eap.extj.permission.service.UserService;
 import org.openea.eap.extj.portal.model.*;
 import org.openea.eap.extj.util.JsonUtil;
+import org.openea.eap.module.visualdev.extend.service.EmailReceiveService;
+import org.openea.eap.module.visualdev.extend.service.FlowDelegateService;
+import org.openea.eap.module.visualdev.extend.service.FlowTaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

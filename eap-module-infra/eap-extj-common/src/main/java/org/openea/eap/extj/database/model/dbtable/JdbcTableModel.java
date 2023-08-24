@@ -3,7 +3,10 @@ package org.openea.eap.extj.database.model.dbtable;
 import lombok.Data;
 import org.openea.eap.extj.constant.MsgCode;
 import org.openea.eap.extj.database.entity.DbLinkEntity;
+import org.openea.eap.extj.database.model.dbfield.DbFieldModel;
 import org.openea.eap.extj.database.model.dbfield.JdbcColumnModel;
+import org.openea.eap.extj.database.model.interfaces.DbSourceOrDbLink;
+import org.openea.eap.extj.database.util.ConnUtil;
 import org.openea.eap.extj.exception.DataException;
 
 import java.sql.Connection;
@@ -24,8 +27,11 @@ public class JdbcTableModel {
     private String primaryField;
     private List<JdbcColumnModel> jdbcColumnModelList;
 
+    public JdbcTableModel(){
+
+    }
     public JdbcTableModel(DbLinkEntity dbLinkEntity, String table) throws Exception {
-        Connection conn = ConnCommon.getConnRemarks(dbLinkEntity);
+        Connection conn = ConnUtil.ConnCommon.getConnRemarks(dbLinkEntity);
 
         try {
             ResultSet rs = getTableMetaDateRs(conn, table);
@@ -88,7 +94,7 @@ public class JdbcTableModel {
                 list.add(jdbcTableModel);
             }
 
-            ArrayList var7 = list;
+            ArrayList var7 = (ArrayList) list;
             return var7;
         } finally {
             if (Collections.singletonList(rs).get(0) != null) {

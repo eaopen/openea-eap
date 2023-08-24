@@ -1,7 +1,8 @@
 package org.openea.eap.module.visualdev.base.service;
 
 import org.openea.eap.extj.base.service.SuperService;
-import org.openea.eap.module.visualdev.base.entity.DbLinkEntity;
+import org.openea.eap.extj.database.entity.DbLinkEntity;
+import org.openea.eap.extj.exception.DataException;
 
 import java.util.List;
 

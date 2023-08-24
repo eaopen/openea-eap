@@ -4,10 +4,12 @@ import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
 import org.openea.eap.extj.database.util.DataSourceUtil;
 
 import java.util.Date;
 
+@Data
 @TableName("base_dblink")
 public class DbLinkEntity extends DataSourceUtil {
     @TableId("F_ID")
@@ -54,6 +56,7 @@ public class DbLinkEntity extends DataSourceUtil {
         //return (DbLinkEntity)PrepSqlDTO.DB_LINK_FUN.apply(dbLinkId);
         return null;
     }
+    public DbLinkEntity(){}
 
     public DbLinkEntity(String dbType) {
         super.setDbType(dbType);

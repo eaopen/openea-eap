@@ -8,19 +8,29 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.openea.eap.extj.base.controller.SuperController;
 import org.openea.eap.extj.base.ActionResult;
 import org.openea.eap.extj.base.UserInfo;
+import org.openea.eap.extj.base.vo.PaginationVO;
 import org.openea.eap.extj.constant.MsgCode;
 import org.openea.eap.extj.consts.DeviceType;
+import org.openea.eap.extj.database.entity.DbLinkEntity;
+
+import org.openea.eap.extj.exception.DataException;
+import org.openea.eap.extj.exception.LoginException;
+import org.openea.eap.extj.exception.WorkFlowException;
+import org.openea.eap.extj.model.DataModel;
+import org.openea.eap.extj.model.NoDataSourceBind;
+import org.openea.eap.extj.onlinedev.model.OnlineDevData;
+
 import org.openea.eap.module.visualdev.base.entity.VisualdevEntity;
+import org.openea.eap.module.visualdev.base.entity.VisualdevModelDataInfoVO;
 import org.openea.eap.module.visualdev.base.entity.VisualdevReleaseEntity;
 import org.openea.eap.module.visualdev.base.entity.VisualdevShortLinkEntity;
 import org.openea.eap.extj.base.model.ColumnDataModel;
-import org.openea.eap.module.visualdev.base.model.VisualDevJsonModel;
-import org.openea.eap.module.visualdev.base.model.VisualWebTypeEnum;
+import org.openea.eap.module.visualdev.base.model.*;
 import org.openea.eap.module.visualdev.base.model.shortLink.*;
-import org.openea.eap.module.visualdev.base.service.DbLinkService;
-import org.openea.eap.module.visualdev.base.service.VisualdevReleaseService;
-import org.openea.eap.module.visualdev.base.service.VisualdevService;
-import org.openea.eap.module.visualdev.base.service.VisualdevShortLinkService;
+import org.openea.eap.module.visualdev.base.service.*;
+import org.openea.eap.module.visualdev.base.util.FormCheckUtils;
+import org.openea.eap.module.visualdev.base.util.OnlinePublicUtils;
+import org.openea.eap.module.visualdev.base.util.OnlineSwapDataUtils;
 import org.openea.eap.module.visualdev.base.util.VisualUtil;
 import org.openea.eap.extj.config.ConfigValueUtil;
 import org.openea.eap.extj.config.JnpfOauthConfig;
@@ -67,8 +77,6 @@ public class VisualdevShortLinkController extends SuperController<VisualdevShort
     private VisualdevService visualdevService;
     @Autowired
     private VisualdevReleaseService visualdevReleaseService;
-    @Autowired
-    private FormDataService formDataService;
 
     @Autowired
     private DbLinkService dblinkService;
@@ -128,7 +136,7 @@ public class VisualdevShortLinkController extends SuperController<VisualdevShort
 
     @Operation(summary = "修改外链信息" )
     @PutMapping("" )
-    @SaCheckPermission("onlineDev.webDesign" )
+//    @SaCheckPermission("onlineDev.webDesign" )
     public ActionResult saveOrupdate(@RequestBody VisualdevShortLinkForm data) {
         VisualdevShortLinkEntity entity = JsonUtil.getJsonToBean(data, VisualdevShortLinkEntity.class);
         if(entity.getFormLink().contains(oauthConfig.getJnpfDomain())){
@@ -175,7 +183,7 @@ public class VisualdevShortLinkController extends SuperController<VisualdevShort
         if (configValueUtil.isMultiTenancy()) {
             if (StringUtil.isNotEmpty(model.getTenantId())) {
                 //切换成租户库
-                TenantDataSourceUtil.switchTenant(model.getTenantId());
+//                TenantDataSourceUtil.switchTenant(model.getTenantId());
             } else {
                 throw new LoginException("缺少租户信息!" );
             }
@@ -373,7 +381,6 @@ public class VisualdevShortLinkController extends SuperController<VisualdevShort
         if (StringUtil.isNotEmpty(b)) {
             throw new WorkFlowException(b + "不能重复" );
         }
-        OnlineSwapDataUtils.swapDatetime(list,map);
         String mainId = RandomUtil.uuId();
         DataModel dataModel = DataModel.builder().dataNewMap(map).fieLdsModelList(list).tableModelList(tableModels)
                 .mainId(mainId).link(linkEntity).concurrencyLock(concurrency).primaryKeyPolicy(primaryKeyPolicy)

@@ -1,7 +1,10 @@
 package org.openea.eap.extj.database.model.dbfield;
 
 import lombok.Data;
+import org.openea.eap.extj.database.datatype.db.interfaces.DtInterface;
+import org.openea.eap.extj.database.datatype.limit.model.DtModelDTO;
 import org.openea.eap.extj.database.model.dbfield.base.DbFieldModelBase;
+import org.openea.eap.extj.database.util.DbTypeUtil;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -84,7 +87,7 @@ public class JdbcColumnModel extends DbFieldModelBase {
                 list.add(column);
             }
 
-            ArrayList var13 = list;
+            ArrayList var13 = (ArrayList) list;
             return var13;
         } finally {
             if (Collections.singletonList(rs).get(0) != null) {
@@ -117,6 +120,7 @@ public class JdbcColumnModel extends DbFieldModelBase {
 
     public static ResultSet getColumnMetaDateRs(Connection conn, String table) throws Exception {
         DatabaseMetaData dbMetaData = conn.getMetaData();
+
         switch (DbTypeUtil.getDb(conn).getJnpfDbEncode()) {
             case "SQLServer":
                 return dbMetaData.getColumns(conn.getCatalog(), "dbo", table, (String)null);

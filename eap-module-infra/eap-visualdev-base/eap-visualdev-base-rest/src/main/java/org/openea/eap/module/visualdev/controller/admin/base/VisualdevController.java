@@ -9,9 +9,11 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.openea.eap.extj.base.ActionResult;
 import org.openea.eap.extj.base.controller.SuperController;
 import org.openea.eap.extj.base.entity.DictionaryDataEntity;
+import org.openea.eap.extj.base.entity.ModuleEntity;
 import org.openea.eap.extj.base.model.FormDataField;
 import org.openea.eap.extj.base.model.VisualdevTreeChildModel;
 import org.openea.eap.extj.base.service.DictionaryDataService;
+import org.openea.eap.extj.base.service.ModuleService;
 import org.openea.eap.extj.base.vo.ListVO;
 import org.openea.eap.extj.base.vo.PageListVO;
 import org.openea.eap.extj.base.vo.PaginationVO;
@@ -20,12 +22,14 @@ import org.openea.eap.extj.exception.DataException;
 import org.openea.eap.extj.exception.WorkFlowException;
 import org.openea.eap.extj.onlinedev.model.OnlineDevData;
 import org.openea.eap.extj.permission.entity.UserEntity;
+import org.openea.eap.extj.permission.service.UserService;
 import org.openea.eap.module.visualdev.base.entity.VisualdevEntity;
 import org.openea.eap.module.visualdev.base.entity.VisualdevReleaseEntity;
 import org.openea.eap.module.visualdev.base.model.*;
 import org.openea.eap.module.visualdev.base.model.online.VisualMenuModel;
 import org.openea.eap.module.visualdev.base.model.template6.BtnData;
 import org.openea.eap.module.visualdev.base.service.*;
+import org.openea.eap.module.visualdev.base.util.PubulishUtil;
 import org.openea.eap.module.visualdev.base.util.VisualFlowFormUtil;
 import org.openea.eap.module.visualdev.base.util.VisualUtil;
 import org.openea.eap.extj.model.visualJson.FieLdsModel;
@@ -39,7 +43,10 @@ import org.openea.eap.extj.util.RandomUtil;
 import org.openea.eap.extj.util.StringUtil;
 import org.openea.eap.module.visualdev.base.service.VisualdevReleaseService;
 import org.openea.eap.module.visualdev.base.service.VisualdevService;
+import org.openea.eap.module.visualdev.extend.model.flowtemplate.FlowTemplateInfoVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -47,11 +54,10 @@ import java.util.stream.Collectors;
 
 /**
  * 可视化基础模块
- *
  */
-@Tag(name = "可视化基础模块" , description = "Base" )
+@Tag(name = "可视化基础模块", description = "Base")
 @RestController
-@RequestMapping("/api/visualdev/Base" )
+@RequestMapping("/api/visualdev/Base")
 public class VisualdevController extends SuperController<VisualdevService, VisualdevEntity> {
 
     @Autowired
@@ -74,7 +80,7 @@ public class VisualdevController extends SuperController<VisualdevService, Visua
     @Autowired
     private FilterService filterService;
 
-    @Operation(summary = "获取功能列表" )
+    @Operation(summary = "获取功能列表")
     @GetMapping
     //@SaCheckPermission(value = {"onlineDev.webDesign" , "generator.webForm" , "generator.flowForm"}, mode = SaMode.OR)
     public ActionResult<PageListVO<VisualFunctionModel>> list(PaginationVisualdev paginationVisualdev) {
@@ -96,9 +102,9 @@ public class VisualdevController extends SuperController<VisualdevService, Visua
             //避免导入的功能丢失
             model.setCategory(dataEntity != null ? dataEntity.getFullName() : null);
             UserEntity creatorUser = userEntities.stream().filter(t -> t.getId().equals(model.getCreatorUser())).findFirst().orElse(null);
-            model.setCreatorUser(creatorUser != null ? creatorUser.getRealName() + "/" + creatorUser.getAccount() : "" );
+            model.setCreatorUser(creatorUser != null ? creatorUser.getRealName() + "/" + creatorUser.getAccount() : "");
             UserEntity lastmodifyuser = lastUserIdEntities.stream().filter(t -> t.getId().equals(model.getLastModifyUser())).findFirst().orElse(null);
-            model.setLastModifyUser(lastmodifyuser != null ? lastmodifyuser.getRealName() + "/" + lastmodifyuser.getAccount() : "" );
+            model.setLastModifyUser(lastmodifyuser != null ? lastmodifyuser.getRealName() + "/" + lastmodifyuser.getAccount() : "");
             List<ModuleEntity> moduleList = moduleService.getModuleList(entity.getId());
             model.setAppIsRelease(0);
             model.setPcIsRelease(0);
@@ -110,7 +116,7 @@ public class VisualdevController extends SuperController<VisualdevService, Visua
             }
             boolean released = visualdevReleaseService.beenReleased(entity.getId()) > 0;
             model.setIsRelease(released ? 1 : 0);
-            if(Objects.equals(entity.getType(),4)){
+            if (Objects.equals(entity.getType(), 4)) {
                 model.setHasPackage(true);
             }
             modelAll.add(model);
@@ -119,14 +125,14 @@ public class VisualdevController extends SuperController<VisualdevService, Visua
         return ActionResult.page(modelAll, paginationVO);
     }
 
-    @Operation(summary = "获取功能列表下拉框" )
+    @Operation(summary = "获取功能列表下拉框")
     @Parameters({
-            @Parameter(name = "type" , description = "类型(1-应用开发,2-移动开发,3-流程表单,4-Web表单,5-App表单)" ),
-            @Parameter(name = "isRelease" , description = "是否发布" ),
-            @Parameter(name = "webType" , description = "页面类型（1、纯表单，2、表单加列表，3、表单列表工作流、4、数据视图）" ),
-            @Parameter(name = "enableFlow" , description = "是否启用流程" )
+            @Parameter(name = "type", description = "类型(1-应用开发,2-移动开发,3-流程表单,4-Web表单,5-App表单)"),
+            @Parameter(name = "isRelease", description = "是否发布"),
+            @Parameter(name = "webType", description = "页面类型（1、纯表单，2、表单加列表，3、表单列表工作流、4、数据视图）"),
+            @Parameter(name = "enableFlow", description = "是否启用流程")
     })
-    @GetMapping("/Selector" )
+    @GetMapping("/Selector")
     public ActionResult selectorList(Integer type, Integer isRelease, String webType, Integer enableFlow) {
         List<VisualdevEntity> allList;
         List<VisualdevEntity> list = new ArrayList<>();
@@ -136,18 +142,18 @@ public class VisualdevController extends SuperController<VisualdevService, Visua
         } else {
             allList = visualdevService.getList();
         }
-        if (webType !=null){
+        if (webType != null) {
             String[] webTypes = webType.split(",");
-            for (String wbType : webTypes){
+            for (String wbType : webTypes) {
                 List<VisualdevEntity> collect;
-                if (enableFlow!=null){
+                if (enableFlow != null) {
                     collect = allList.stream().filter(l -> l.getWebType().equals(Integer.valueOf(wbType)) && l.getEnableFlow().equals(enableFlow)).collect(Collectors.toList());
                 } else {
                     collect = allList.stream().filter(l -> l.getWebType().equals(Integer.valueOf(wbType))).collect(Collectors.toList());
                 }
                 list.addAll(collect);
             }
-        }else {
+        } else {
             list = allList;
         }
         List<DictionaryDataEntity> dataEntityList = new ArrayList<>();
@@ -175,7 +181,7 @@ public class VisualdevController extends SuperController<VisualdevService, Visua
         } else {
             // type为空时
             for (VisualdevEntity entity : list) {
-                DictionaryDataEntity dataEntity =  visualFlowFormUtil.getdictionaryDataInfo(entity.getCategory());
+                DictionaryDataEntity dataEntity = visualFlowFormUtil.getdictionaryDataInfo(entity.getCategory());
                 if (dataEntity != null) {
                     int i = cate.size();
                     cate.add(dataEntity.getId());
@@ -205,13 +211,13 @@ public class VisualdevController extends SuperController<VisualdevService, Visua
         return ActionResult.success(listVO);
     }
 
-    @Operation(summary = "获取功能信息" )
+    @Operation(summary = "获取功能信息")
     @Parameters({
-            @Parameter(name = "id" , description = "主键" ),
+            @Parameter(name = "id", description = "主键"),
     })
-    @GetMapping("/{id}" )
+    @GetMapping("/{id}")
     //@SaCheckPermission(value = {"onlineDev.webDesign" , "generator.webForm" , "generator.flowForm"}, mode = SaMode.OR)
-    public ActionResult info(@PathVariable("id" ) String id) throws DataException {
+    public ActionResult info(@PathVariable("id") String id) throws DataException {
         VisualdevEntity entity = visualdevService.getInfo(id);
         VisualDevInfoVO vo = JsonUtilEx.getJsonToBeanEx(entity, VisualDevInfoVO.class);
         return ActionResult.success(vo);
@@ -223,15 +229,15 @@ public class VisualdevController extends SuperController<VisualdevService, Visua
      * @param id
      * @return
      */
-    @Operation(summary = "获取表单主表属性下拉框" )
+    @Operation(summary = "获取表单主表属性下拉框")
     @Parameters({
-            @Parameter(name = "id" , description = "主键" ),
+            @Parameter(name = "id", description = "主键"),
             @Parameter(name = "filterType", description = "过滤类型：1-按键事件选择字段列表过滤"),
     })
-    @GetMapping("/{id}/FormDataFields" )
+    @GetMapping("/{id}/FormDataFields")
     //@SaCheckPermission(value = {"onlineDev.webDesign" , "generator.webForm" , "generator.flowForm"}, mode = SaMode.OR)
-    public ActionResult getFormData(@PathVariable("id" ) String id,@RequestParam(value = "filterType",required = false)Integer filterType) {
-        List<FormDataField> fieldList = visualdevModelDataService.fieldList(id,filterType);
+    public ActionResult getFormData(@PathVariable("id") String id, @RequestParam(value = "filterType", required = false) Integer filterType) {
+        List<FormDataField> fieldList = visualdevModelDataService.fieldList(id, filterType);
         ListVO<FormDataField> listVO = new ListVO();
         listVO.setList(fieldList);
         return ActionResult.success(listVO);
@@ -244,12 +250,12 @@ public class VisualdevController extends SuperController<VisualdevService, Visua
      * @param paginationModel
      * @return
      */
-    @Operation(summary = "关联数据分页数据" )
+    @Operation(summary = "关联数据分页数据")
     @Parameters({
-            @Parameter(name = "id" , description = "主键" ),
+            @Parameter(name = "id", description = "主键"),
     })
-    @GetMapping("/{id}/FieldDataSelect" )
-    public ActionResult getFormData(@PathVariable("id" ) String id, PaginationModel paginationModel) {
+    @GetMapping("/{id}/FieldDataSelect")
+    public ActionResult getFormData(@PathVariable("id") String id, PaginationModel paginationModel) {
         VisualdevEntity entity = visualdevService.getInfo(id);
         List<Map<String, Object>> realList = visualdevModelDataService.getPageList(entity, paginationModel);
         PaginationVO paginationVO = JsonUtil.getJsonToBean(paginationModel, PaginationVO.class);
@@ -263,13 +269,13 @@ public class VisualdevController extends SuperController<VisualdevService, Visua
      * @param id
      * @return
      */
-    @Operation(summary = "复制功能" )
+    @Operation(summary = "复制功能")
     @Parameters({
-            @Parameter(name = "id" , description = "主键" ),
+            @Parameter(name = "id", description = "主键"),
     })
-    @PostMapping("/{id}/Actions/Copy" )
+    @PostMapping("/{id}/Actions/Copy")
     //@SaCheckPermission(value = {"onlineDev.webDesign" , "generator.webForm" , "generator.flowForm"}, mode = SaMode.OR)
-    public ActionResult copyInfo(@PathVariable("id" ) String id) throws WorkFlowException {
+    public ActionResult copyInfo(@PathVariable("id") String id) throws WorkFlowException {
         VisualdevReleaseEntity releaseEntity = visualdevReleaseService.getById(id);
         boolean b = releaseEntity != null;
         VisualdevEntity entity;
@@ -288,7 +294,7 @@ public class VisualdevController extends SuperController<VisualdevService, Visua
         entity.setEnCode(entity.getEnCode() + copyNum);
         VisualdevEntity entity1 = JsonUtil.getJsonToBean(entity, VisualdevEntity.class);
         if (entity1.getEnCode().length() > 50 || entity1.getFullName().length() > 50) {
-            return ActionResult.fail("已到达该模板复制上限，请复制源模板" );
+            return ActionResult.fail("已到达该模板复制上限，请复制源模板");
         }
         //启用流程，流程先保存如果不成功直接提示。//>3属于代码生成。不自动创建
         if (OnlineDevData.STATE_ENABLE == entity1.getEnableFlow() && entity1.getType() < 3) {
@@ -301,7 +307,7 @@ public class VisualdevController extends SuperController<VisualdevService, Visua
             visualFlowFormUtil.saveOrUpdateForm(entity1, OnlineDevData.STATE_ENABLE, true);
         }
         visualdevService.create(entity1);
-        return ActionResult.success("复制功能成功" );
+        return ActionResult.success("复制功能成功");
     }
 
 
@@ -311,34 +317,34 @@ public class VisualdevController extends SuperController<VisualdevService, Visua
      * @param id 主键值
      * @return
      */
-    @Operation(summary = "更新功能状态" )
+    @Operation(summary = "更新功能状态")
     @Parameters({
-            @Parameter(name = "id" , description = "主键" ),
+            @Parameter(name = "id", description = "主键"),
     })
-    @PutMapping("/{id}/Actions/State" )
+    @PutMapping("/{id}/Actions/State")
     //@SaCheckPermission(value = {"onlineDev.webDesign" , "generator.webForm" , "generator.flowForm"}, mode = SaMode.OR)
-    public ActionResult update(@PathVariable("id" ) String id) throws Exception {
+    public ActionResult update(@PathVariable("id") String id) throws Exception {
         VisualdevEntity entity = visualdevService.getInfo(id);
         if (entity != null) {
             boolean flag = visualdevService.update(entity.getId(), entity);
             if (flag == false) {
-                return ActionResult.fail("更新失败，任务不存在" );
+                return ActionResult.fail("更新失败，任务不存在");
             }
         }
         return ActionResult.success(MsgCode.SU004.get());
     }
 
 
-    @Operation(summary = "新建功能" )
+    @Operation(summary = "新建功能")
     @PostMapping
     //@SaCheckPermission(value = {"onlineDev.webDesign" , "generator.webForm" , "generator.flowForm"}, mode = SaMode.OR)
     public ActionResult create(@RequestBody VisualDevCrForm visualDevCrForm) throws Exception {
         VisualdevEntity entity = JsonUtil.getJsonToBean(JsonUtilEx.getObjectToString(visualDevCrForm), VisualdevEntity.class);
         if (visualdevService.getObjByEncode(entity.getEnCode(), entity.getType()) > 0) {
-            return ActionResult.fail("编码重复" );
+            return ActionResult.fail("编码重复");
         }
         if (visualdevService.getCountByName(entity.getFullName(), entity.getType()) > 0) {
-            return ActionResult.fail("名称重复" );
+            return ActionResult.fail("名称重复");
         }
         List<TableModel> tableModelList = JsonUtil.getJsonToList(entity.getVisualTables(), TableModel.class);
         FormDataModel formData = JsonUtil.getJsonToBean(entity.getFormData(), FormDataModel.class);
@@ -348,15 +354,15 @@ public class VisualdevController extends SuperController<VisualdevService, Visua
         if (ObjectUtil.isNotNull(formData)) {
             //表单主键策略验证
             if (tableModelList.size() > 0) {
-                boolean isIncre = Objects.equals(formData.getPrimaryKeyPolicy(),2) ;
+                boolean isIncre = Objects.equals(formData.getPrimaryKeyPolicy(), 2);
                 String strategy = !isIncre ? "[雪花ID]" : "[自增长id]";
                 for (TableModel tableModel : tableModelList) {
                     Boolean isAutoIncre = visualdevService.getPrimaryDbField(entity.getDbLinkId(), tableModel.getTable());
                     if (isAutoIncre == null) {
-                        return ActionResult.fail("表[" + tableModel.getTable() + "]无主键!" );
+                        return ActionResult.fail("表[" + tableModel.getTable() + "]无主键!");
                     }
                     if (isIncre != isAutoIncre) {
-                        return ActionResult.fail("主键策略:" + strategy + "，与表[" + tableModel.getTable() + "]主键策略不一致!" );
+                        return ActionResult.fail("主键策略:" + strategy + "，与表[" + tableModel.getTable() + "]主键策略不一致!");
                     }
                 }
             }
@@ -364,7 +370,7 @@ public class VisualdevController extends SuperController<VisualdevService, Visua
             recursionForm.setList(list);
             recursionForm.setTableModelList(tableModelList);
             if (FormCloumnUtil.repetition(recursionForm, new ArrayList<>())) {
-                return ActionResult.fail("子表重复" );
+                return ActionResult.fail("子表重复");
             }
         }
         if (StringUtil.isEmpty(entity.getId())) {
@@ -384,13 +390,13 @@ public class VisualdevController extends SuperController<VisualdevService, Visua
         return ActionResult.success(MsgCode.SU001.get());
     }
 
-    @Operation(summary = "修改功能" )
+    @Operation(summary = "修改功能")
     @Parameters({
-            @Parameter(name = "id" , description = "主键" ),
+            @Parameter(name = "id", description = "主键"),
     })
-    @PutMapping("/{id}" )
+    @PutMapping("/{id}")
     //@SaCheckPermission(value = {"onlineDev.webDesign" , "generator.webForm" , "generator.flowForm"}, mode = SaMode.OR)
-    public ActionResult update(@PathVariable("id" ) String id, @RequestBody VisualDevUpForm visualDevUpForm) throws Exception {
+    public ActionResult update(@PathVariable("id") String id, @RequestBody VisualDevUpForm visualDevUpForm) throws Exception {
         VisualdevEntity visualdevEntity = visualdevService.getInfo(id);
         String enCode = visualdevEntity.getEnCode();
         String fullName = visualdevEntity.getFullName();
@@ -399,18 +405,18 @@ public class VisualdevController extends SuperController<VisualdevService, Visua
 
         Map<String, String> tableMap = visualdevService.getTableMap(entity.getFormData());
         // 如果不是在线的,默认更新所有配置
-        if(!"1".equals(visualDevUpForm.getType())){
-            filterService.updateRuleList(id,entity,1,1,tableMap);
+        if (!"1".equals(visualDevUpForm.getType())) {
+            filterService.updateRuleList(id, entity, 1, 1, tableMap);
         }
 
-        if (!enCode.equals(visualDevUpForm.getEnCode())){
-            if (visualdevService.getObjByEncode(entity.getEnCode(),entity.getType())>0) {
+        if (!enCode.equals(visualDevUpForm.getEnCode())) {
+            if (visualdevService.getObjByEncode(entity.getEnCode(), entity.getType()) > 0) {
                 return ActionResult.fail("编码重复");
             }
         }
         if (!fullName.equals(visualDevUpForm.getFullName())) {
             if (visualdevService.getCountByName(entity.getFullName(), entity.getType()) > 0) {
-                return ActionResult.fail("名称重复" );
+                return ActionResult.fail("名称重复");
             }
         }
         VisualdevReleaseEntity releaseEntity = visualdevReleaseService.getById(id);
@@ -430,7 +436,7 @@ public class VisualdevController extends SuperController<VisualdevService, Visua
                 recursionForm.setList(list);
                 recursionForm.setTableModelList(tableModelList);
                 if (FormCloumnUtil.repetition(recursionForm, new ArrayList<>())) {
-                    return ActionResult.fail("子表重复" );
+                    return ActionResult.fail("子表重复");
                 }
             }
         }
@@ -457,13 +463,13 @@ public class VisualdevController extends SuperController<VisualdevService, Visua
         return ActionResult.success(MsgCode.SU004.get());
     }
 
-    @Operation(summary = "删除功能" )
+    @Operation(summary = "删除功能")
     @Parameters({
-            @Parameter(name = "id" , description = "主键" ),
+            @Parameter(name = "id", description = "主键"),
     })
-    @DeleteMapping("/{id}" )
+    @DeleteMapping("/{id}")
     //@SaCheckPermission(value = {"onlineDev.webDesign" , "generator.webForm" , "generator.flowForm"}, mode = SaMode.OR)
-    public ActionResult delete(@PathVariable("id" ) String id) throws WorkFlowException {
+    public ActionResult delete(@PathVariable("id") String id) throws Exception {
         VisualdevEntity entity = visualdevService.getInfo(id);
         if (entity != null) {
             visualdevService.delete(entity);
@@ -478,11 +484,11 @@ public class VisualdevController extends SuperController<VisualdevService, Visua
         return ActionResult.fail(MsgCode.FA003.get());
     }
 
-    @Operation(summary = "获取模板按钮和列表字段" )
+    @Operation(summary = "获取模板按钮和列表字段")
     @Parameters({
-            @Parameter(name = "moduleId" , description = "模板id" ),
+            @Parameter(name = "moduleId", description = "模板id"),
     })
-    @GetMapping("/ModuleBtn" )
+    @GetMapping("/ModuleBtn")
     //@SaCheckPermission(value = {"onlineDev.webDesign" , "generator.webForm" , "generator.flowForm"}, mode = SaMode.OR)
     public ActionResult getModuleBtn(String moduleId) {
         VisualdevEntity visualdevEntity = visualdevService.getInfo(moduleId);
@@ -490,36 +496,36 @@ public class VisualdevController extends SuperController<VisualdevService, Visua
         VisualUtil.delfKey(visualdevEntity);
         List<BtnData> btnData = new ArrayList<>();
         Map<String, Object> column = JsonUtil.stringToMap(visualdevEntity.getColumnData());
-        if (column.get("columnBtnsList" ) != null) {
-            btnData.addAll(JsonUtil.getJsonToList(JsonUtil.getJsonToListMap(column.get("columnBtnsList" ).toString()), BtnData.class));
+        if (column.get("columnBtnsList") != null) {
+            btnData.addAll(JsonUtil.getJsonToList(JsonUtil.getJsonToListMap(column.get("columnBtnsList").toString()), BtnData.class));
         }
-        if (column.get("btnsList" ) != null) {
-            btnData.addAll(JsonUtil.getJsonToList(JsonUtil.getJsonToListMap(column.get("btnsList" ).toString()), BtnData.class));
+        if (column.get("btnsList") != null) {
+            btnData.addAll(JsonUtil.getJsonToList(JsonUtil.getJsonToListMap(column.get("btnsList").toString()), BtnData.class));
         }
         return ActionResult.success(btnData);
     }
 
-    @Operation(summary = "发布模板" )
+    @Operation(summary = "发布模板")
     @Parameters({
-            @Parameter(name = "id" , description = "主键" ),
+            @Parameter(name = "id", description = "主键"),
     })
-    @PostMapping("/{id}/Actions/Release" )
+    @PostMapping("/{id}/Actions/Release")
     //@SaCheckPermission(value = {"onlineDev.webDesign" , "generator.webForm" , "generator.flowForm"}, mode = SaMode.OR)
-    public ActionResult publish(@PathVariable("id" ) String id, @RequestBody VisualDevPubModel visualDevPubModel) throws Exception {
+    public ActionResult publish(@PathVariable("id") String id, @RequestBody VisualDevPubModel visualDevPubModel) throws Exception {
         //草稿
         VisualdevEntity visualdevEntity = visualdevService.getInfo(id);
         //启用流程判断流程是否设计完成
-        if (Objects.equals(OnlineDevData.STATE_ENABLE,visualdevEntity.getEnableFlow())) {
+        if (Objects.equals(OnlineDevData.STATE_ENABLE, visualdevEntity.getEnableFlow())) {
             FlowTemplateInfoVO templateInfo = visualFlowFormUtil.getTemplateInfo(id);
             if (templateInfo == null || StringUtil.isEmpty(templateInfo.getFlowTemplateJson()) || "[]".equals(templateInfo.getFlowTemplateJson())) {
-                return ActionResult.fail("发布失败，流程未设计！" );
+                return ActionResult.fail("发布失败，流程未设计！");
             }
         }
 
         List<TableModel> tableModels = JsonUtil.getJsonToList(visualdevEntity.getVisualTables(), TableModel.class);
         //数据视图不判断formdata
         if (!VisualWebTypeEnum.DATA_VIEW.getType().equals(visualdevEntity.getWebType())) {
-            String s = VisualUtil.checkPublishVisualModel(visualdevEntity, "发布" );
+            String s = VisualUtil.checkPublishVisualModel(visualdevEntity, "发布");
             if (s != null) {
                 return ActionResult.fail(s);
             }
@@ -528,17 +534,17 @@ public class VisualdevController extends SuperController<VisualdevService, Visua
                     visualdevService.createTable(visualdevEntity);
                 } catch (WorkFlowException e) {
                     e.printStackTrace();
-                    return ActionResult.fail("无表生成有表失败" );
+                    return ActionResult.fail("无表生成有表失败");
                 }
             }
             Map<String, String> tableMap = visualdevService.getTableMap(visualdevEntity.getFormData());
-            filterService.updateRuleList(id,visualdevEntity,visualDevPubModel.getApp(),visualDevPubModel.getPc(),tableMap);
+            filterService.updateRuleList(id, visualdevEntity, visualDevPubModel.getApp(), visualDevPubModel.getPc(), tableMap);
         }
         //线上
         VisualdevEntity clone = new VisualdevEntity();
-         BeanUtil.copyProperties(visualdevEntity,clone);
+        BeanUtil.copyProperties(visualdevEntity, clone);
         // 更新功能-表写入 菜单创建成功后
-        visualdevService.update(id,visualdevEntity);
+        visualdevService.update(id, visualdevEntity);
 
         //将线上版本发布
         VisualMenuModel visual = VisualUtil.getVisual(clone, visualDevPubModel);
@@ -550,10 +556,10 @@ public class VisualdevController extends SuperController<VisualdevService, Visua
         visual.setAppSystemId(Optional.ofNullable(visualDevPubModel.getAppSystemId()).orElse(visualDevPubModel.getAppModuleParentId()));
         Integer integer = pubulishUtil.publishMenu(visual);
         if (integer == 2) {
-            return ActionResult.fail("同步失败,检查编码或名称是否重复" );
+            return ActionResult.fail("同步失败,检查编码或名称是否重复");
         }
         if (integer == 3) {
-            return ActionResult.fail("请选择父级菜单" );
+            return ActionResult.fail("请选择父级菜单");
         }
         VisualdevReleaseEntity releaseEntity = JsonUtil.getJsonToBean(clone, VisualdevReleaseEntity.class);
         visualdevReleaseService.saveOrUpdateIgnoreLogic(releaseEntity);
@@ -562,25 +568,25 @@ public class VisualdevController extends SuperController<VisualdevService, Visua
             visualFlowFormUtil.saveOrUpdateForm(clone, OnlineDevData.STATE_ENABLE, false);
             visualFlowFormUtil.saveOrUpdateFlowTemp(visualdevEntity, 1, false);
         }
-        return ActionResult.success("同步成功" );
+        return ActionResult.success("同步成功");
     }
 
-    @Operation(summary = "回滚模板" )
+    @Operation(summary = "回滚模板")
     @Parameters({
-            @Parameter(name = "id" , description = "主键" ),
+            @Parameter(name = "id", description = "主键"),
     })
-    @GetMapping("/{id}/Actions/RollbackTemplate" )
+    @GetMapping("/{id}/Actions/RollbackTemplate")
     //@SaCheckPermission(value = {"onlineDev.webDesign" , "generator.webForm" , "generator.flowForm"}, mode = SaMode.OR)
-    public ActionResult RollbackTemplate(@PathVariable("id" ) String id) {
+    public ActionResult RollbackTemplate(@PathVariable("id") String id) {
         VisualdevReleaseEntity releaseEntity = visualdevReleaseService.getById(id);
         boolean b = releaseEntity == null;
         if (b) {
-            return ActionResult.fail("回滚失败,暂无线上版本" );
+            return ActionResult.fail("回滚失败,暂无线上版本");
         } else {
             VisualdevEntity visualdevEntity = JsonUtil.getJsonToBean(releaseEntity, VisualdevEntity.class);
             visualdevService.updateById(visualdevEntity);
         }
-        return ActionResult.success("回滚成功" );
+        return ActionResult.success("回滚成功");
     }
 
 }

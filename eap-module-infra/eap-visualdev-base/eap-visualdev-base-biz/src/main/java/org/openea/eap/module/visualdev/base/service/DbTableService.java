@@ -1,5 +1,12 @@
 package org.openea.eap.module.visualdev.base.service;
 
+import org.openea.eap.extj.base.Page;
+import org.openea.eap.extj.base.Pagination;
+import org.openea.eap.extj.database.model.dbfield.DbFieldModel;
+import org.openea.eap.extj.database.model.dbtable.DbTableFieldModel;
+import org.openea.eap.extj.database.model.page.DbTableDataForm;
+import org.openea.eap.extj.exception.DataException;
+
 import java.util.List;
 import java.util.Map;
 
