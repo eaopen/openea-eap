@@ -16,7 +16,7 @@
     <properties>
         <revision>2.0.4-snapshot</revision>
         <!-- 统一依赖管理 -->
-        <spring.boot.version>2.7.13</spring.boot.version>
+        <spring.boot.version>2.7.14</spring.boot.version>
 
         <!-- Web 相关 -->
         <servlet.versoin>2.5</servlet.versoin>

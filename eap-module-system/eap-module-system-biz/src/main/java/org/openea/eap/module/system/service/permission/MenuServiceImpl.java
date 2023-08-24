@@ -61,7 +61,8 @@ public class MenuServiceImpl implements MenuService {
 //    private I18nJsonDataService i18nJsonDataService;
 
     @Override
-    @CacheEvict(value = RedisKeyConstants.PERMISSION_MENU_ID_LIST, key = "#reqVO.permission")
+    @CacheEvict(value = RedisKeyConstants.PERMISSION_MENU_ID_LIST, key = "#reqVO.permission",
+            condition = "#reqVO.permission != null")
     public Long createMenu(MenuCreateReqVO reqVO) {
         // 校验父菜单存在
         validateParentMenu(reqVO.getParentId(), null);
@@ -309,7 +310,7 @@ public class MenuServiceImpl implements MenuService {
         }
         // 如果 id 为空，说明不用比较是否为相同 id 的菜单
         if (id == null) {
-            throw exception(MENU_NAME_DUPLICATE);
+            return;
         }
         if (!menu.getId().equals(id)) {
             throw exception(MENU_NAME_DUPLICATE);
