@@ -18,7 +18,7 @@ import org.openea.eap.extj.model.visualJson.TableModel;
 import org.openea.eap.extj.util.JsonUtil;
 import org.openea.eap.extj.util.StringUtil;
 import org.openea.eap.extj.util.visual.JnpfKeyConsts;
-import org.openea.eap.module.visualdev.base.mapper.FlowFormDataMapper;
+import org.openea.eap.module.visualdev.extend.mapper.FlowFormDataMapper;
 import org.openea.eap.module.visualdev.extend.util.FlowFormDataUtil;
 import org.openea.eap.module.visualdev.extend.util.FormPublicUtils;
 import org.springframework.beans.factory.annotation.Autowired;

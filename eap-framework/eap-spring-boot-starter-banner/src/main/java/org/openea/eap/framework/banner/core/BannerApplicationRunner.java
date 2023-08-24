@@ -28,9 +28,9 @@ public class BannerApplicationRunner implements ApplicationRunner {
                     "https://doc.iocoder.cn");
 
             // 数据报表
-            if (isNotPresent("org.openea.eap.module.report.framework.security.config.SecurityConfiguration")) {
-                System.out.println("[报表模块 eap-module-report - 已禁用]");
-            }
+//            if (isNotPresent("org.openea.eap.module.report.framework.security.config.SecurityConfiguration")) {
+//                System.out.println("[报表模块 eap-module-report - 已禁用]");
+//            }
             // 工作流
             // flowable: org.openea.eap.framework.flowable.config.EapFlowableConfiguration
             // obpm: OpenBpm based on Activiti

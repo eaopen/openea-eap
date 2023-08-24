@@ -26,6 +26,12 @@
             <version>${revision}</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.openea.eap</groupId>
+            <artifactId>eap-module-infra-api</artifactId>
+            <version>${revision}</version>
+        </dependency>
+
         <!-- 业务组件 -->
         <dependency>
             <groupId>org.openea.eap</groupId>

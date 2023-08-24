@@ -15,7 +15,6 @@ import org.openea.eap.module.system.dal.dataobject.user.AdminUserDO;
 import org.openea.eap.module.system.dal.mysql.user.AdminUserMapper;
 import org.openea.eap.module.system.service.user.AdminUserService;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.scheduling.annotation.Async;
@@ -167,7 +166,12 @@ public class ObpmOrgSyncService implements InitializingBean {
         if(ObjectUtils.isEmpty(querySql)){
             return null;
         }
-        JdbcTemplate obpmJdbcTemplate = EapAppUtil.getBean(ObmpClientService.class).getObpmJdbcTemplate();
+        ObmpClientService obmpClientService = EapAppUtil.getBean(ObmpClientService.class);
+        if(obmpClientService==null){
+            log.warn("queryObpmListData fail: obmpClientService is null");
+            return null;
+        }
+        JdbcTemplate obpmJdbcTemplate = obmpClientService.getObpmJdbcTemplate();
         if(obpmJdbcTemplate==null){
             log.warn("queryObpmListData fail: obpmJdbcTemplate is null");
             return null;

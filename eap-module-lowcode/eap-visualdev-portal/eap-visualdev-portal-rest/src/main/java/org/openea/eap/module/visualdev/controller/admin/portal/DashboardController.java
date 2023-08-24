@@ -10,7 +10,6 @@ import org.openea.eap.extj.base.service.DictionaryTypeService;
 import org.openea.eap.extj.base.vo.ListVO;
 import org.openea.eap.extj.engine.entity.FlowTaskEntity;
 import org.openea.eap.extj.engine.model.flowtask.FlowTaskListModel;
-
 import org.openea.eap.extj.message.entity.MessageEntity;
 import org.openea.eap.extj.message.model.NoticeModel;
 import org.openea.eap.extj.message.service.MessageService;

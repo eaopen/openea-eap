@@ -62,7 +62,7 @@ public class PortalController extends SuperController<PortalService, PortalEntit
     private PortalManageService portalManageService;
 
     @Operation(summary = "门户列表" )
-    @GetMapping
+    @GetMapping("/list")
     //@SaCheckPermission("onlineDev.visualPortal" )
     public ActionResult list(PortalPagination portalPagination) {
         List<VisualFunctionModel> modelAll = portalService.getModelList(portalPagination);
@@ -120,7 +120,7 @@ public class PortalController extends SuperController<PortalService, PortalEntit
     }
 
     @Operation(summary = "创建门户" )
-    @PostMapping()
+    @PostMapping("/create")
     //@SaCheckPermission("onlineDev.visualPortal" )
     @DSTransactional
     public ActionResult<String> create(@RequestBody @Valid PortalCrForm portalCrForm) throws Exception {

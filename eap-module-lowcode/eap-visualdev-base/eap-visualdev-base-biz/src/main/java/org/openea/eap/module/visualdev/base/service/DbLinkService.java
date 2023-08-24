@@ -3,6 +3,7 @@ package org.openea.eap.module.visualdev.base.service;
 import org.openea.eap.extj.base.service.SuperService;
 import org.openea.eap.extj.database.model.entity.DbLinkEntity;
 import org.openea.eap.extj.exception.DataException;
+import org.openea.eap.module.visualdev.base.model.PaginationDbLink;
 
 import java.util.List;
 
@@ -14,13 +15,13 @@ public interface DbLinkService  extends SuperService<DbLinkEntity> {
      */
     List<DbLinkEntity> getList();
 
-//    /**
-//     * 列表关键字查询
-//     *
-//     * @param pagination 数据连接分页
-//     * @return ignore
-//     */
-//    List<DbLinkEntity> getList(PaginationDbLink pagination);
+    /**
+     * 列表关键字查询
+     *
+     * @param pagination 数据连接分页
+     * @return ignore
+     */
+    List<DbLinkEntity> getList(PaginationDbLink pagination);
 
     /**
      * 信息

@@ -14,7 +14,7 @@ import org.springframework.validation.annotation.Validated;
 import javax.annotation.Resource;
 
 import static org.openea.eap.framework.common.exception.util.ServiceExceptionUtil.exception;
-import static org.openea.eap.module.report.enums.ErrorCodeConstants.GO_VIEW_PROJECT_NOT_EXISTS;
+//import static org.openea.eap.module.report.enums.ErrorCodeConstants.GO_VIEW_PROJECT_NOT_EXISTS;
 
 /**
  * GoView 项目 Service 实现类
@@ -56,7 +56,8 @@ public class GoViewProjectServiceImpl implements GoViewProjectService {
 
     private void validateProjectExists(Long id) {
         if (goViewProjectMapper.selectById(id) == null) {
-            throw exception(GO_VIEW_PROJECT_NOT_EXISTS);
+            //throw exception(GO_VIEW_PROJECT_NOT_EXISTS);
+            throw exception(5001,"GO_VIEW_PROJECT_NOT_EXISTS");
         }
     }
 

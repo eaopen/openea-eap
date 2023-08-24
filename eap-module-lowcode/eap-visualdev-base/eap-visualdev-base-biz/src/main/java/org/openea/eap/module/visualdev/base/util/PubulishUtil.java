@@ -3,15 +3,15 @@ package org.openea.eap.module.visualdev.base.util;
 import org.openea.eap.extj.base.UserInfo;
 import org.openea.eap.extj.base.entity.ModuleEntity;
 import org.openea.eap.extj.base.service.ModuleService;
-import org.openea.eap.extj.util.StringUtil;
 import org.openea.eap.extj.util.UserProvider;
 import org.openea.eap.module.visualdev.base.model.online.PerColModels;
 import org.openea.eap.module.visualdev.base.model.online.VisualMenuModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
+@Component
 public class PubulishUtil {
 
     @Autowired

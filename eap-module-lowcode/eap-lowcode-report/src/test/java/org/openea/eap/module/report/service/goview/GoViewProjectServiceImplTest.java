@@ -16,7 +16,7 @@ import static org.openea.eap.framework.common.util.object.ObjectUtils.cloneIgnor
 import static org.openea.eap.framework.test.core.util.AssertUtils.assertPojoEquals;
 import static org.openea.eap.framework.test.core.util.AssertUtils.assertServiceException;
 import static org.openea.eap.framework.test.core.util.RandomUtils.*;
-import static org.openea.eap.module.report.enums.ErrorCodeConstants.GO_VIEW_PROJECT_NOT_EXISTS;
+import static org.openea.eap.module.infra.enums.ErrorCodeConstants.GO_VIEW_PROJECT_NOT_EXISTS;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
