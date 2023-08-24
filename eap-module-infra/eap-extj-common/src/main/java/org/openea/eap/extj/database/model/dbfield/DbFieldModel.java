@@ -1,17 +1,12 @@
 package org.openea.eap.extj.database.model.dbfield;
 
 import lombok.Data;
-import org.openea.eap.extj.database.datatype.limit.model.DtModel;
-import org.openea.eap.extj.database.datatype.limit.model.DtModelDTO;
-import org.openea.eap.extj.database.model.dbfield.base.DbFieldModelBase;
+import org.openea.eap.extj.database.datatype.model.DtModel;
+import org.openea.eap.extj.database.datatype.model.DtModelDTO;
 import org.openea.eap.extj.database.model.dto.ModelDTO;
 import org.openea.eap.extj.database.model.interfaces.JdbcGetMod;
-import org.openea.eap.extj.database.util.DbTypeUtil;
-import org.openea.eap.extj.emnus.DbAliasEnum;
 import org.openea.eap.extj.exception.DataException;
-import org.openea.eap.extj.util.StringUtil;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 @Data

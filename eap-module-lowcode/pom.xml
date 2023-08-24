@@ -10,6 +10,11 @@
     </parent>
     <artifactId>eap-module-lowcode</artifactId>
     <packaging>pom</packaging>
+    <description>
+        低代码工具 ，提升研发效率与质量。
+        例如说：代码生成器、接口文档等等
+        计划增加可视化开发功能
+    </description>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
@@ -17,6 +22,12 @@
     <modules>
         <!-- 调用OpenBPM服务 -->
         <module>eap-obpm-integrate</module>
+
+        <!-- 在线设计模块, 基于eap-extj-common -->
+        <module>eap-visualdev-base</module>
+        <!--        <module>eap-visualdev-onlinedev</module>-->
+        <!--        <module>eap-visualdev-generater</module>-->
+        <module>eap-visualdev-portal</module>
     </modules>
 
 </project>

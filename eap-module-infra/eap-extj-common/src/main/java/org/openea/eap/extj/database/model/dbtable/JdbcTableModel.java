@@ -2,7 +2,7 @@ package org.openea.eap.extj.database.model.dbtable;
 
 import lombok.Data;
 import org.openea.eap.extj.constant.MsgCode;
-import org.openea.eap.extj.database.entity.DbLinkEntity;
+import org.openea.eap.extj.database.model.entity.DbLinkEntity;
 import org.openea.eap.extj.database.model.dbfield.DbFieldModel;
 import org.openea.eap.extj.database.model.dbfield.JdbcColumnModel;
 import org.openea.eap.extj.database.model.interfaces.DbSourceOrDbLink;

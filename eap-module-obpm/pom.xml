@@ -9,6 +9,10 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <modules>
+        <!-- 内嵌OpenBPM服务 -->
+        <module>eap-module-obpm-adapter</module>
+        <module>eap-module-obpm-extend</module>
+        <module>eap-module-obpm-server</module>
     </modules>
     <artifactId>eap-module-obpm</artifactId>
     <packaging>pom</packaging>
@@ -112,24 +116,5 @@
 
         </dependencies>
     </dependencyManagement>
-
-    <profiles>
-        <!-- SpringCloud运行环境 -->
-        <profile>
-            <id>springCloud</id>
-            <modules>
-
-            </modules>
-        </profile>
-        <profile>
-            <id>obpmServer</id>
-            <modules>
-                <!-- 内嵌OpenBPM服务 -->
-                <module>eap-module-obpm-adapter</module>
-                <module>eap-module-obpm-extend</module>
-                <module>eap-module-obpm-server</module>
-            </modules>
-        </profile>
-    </profiles>
 
 </project>

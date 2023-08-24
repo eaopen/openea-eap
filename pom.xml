@@ -25,7 +25,6 @@
         <module>eap-module-system</module>
         <module>eap-module-infra</module>
         <module>eap-module-lowcode</module>
-        <module>eap-module-obpm</module>
 <!--        <module>eap-module-report</module>-->
 
         <!-- 示例项目 -->
@@ -240,6 +239,12 @@
                     </dependency>
                 </dependencies>
             </dependencyManagement>
+        </profile>
+        <profile>
+            <id>obpmServer</id>
+            <modules>
+                <module>eap-module-obpm</module>
+            </modules>
         </profile>
         <profile>
             <id>bizExtend</id>

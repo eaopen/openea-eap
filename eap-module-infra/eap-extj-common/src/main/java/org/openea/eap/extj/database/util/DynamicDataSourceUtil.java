@@ -11,11 +11,10 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.map.LRUMap;
 import org.openea.eap.extj.config.ConfigValueUtil;
-import org.openea.eap.extj.database.entity.DbLinkEntity;
+import org.openea.eap.extj.database.model.entity.DbLinkEntity;
 import org.openea.eap.extj.exception.DataException;
 import org.openea.eap.extj.util.StringUtil;
 import org.openea.eap.extj.util.data.DataSourceContextHolder;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;

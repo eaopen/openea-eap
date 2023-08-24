@@ -2,20 +2,16 @@ package org.openea.eap.extj.database.util;
 
 import cn.hutool.core.util.ReflectUtil;
 import com.alibaba.druid.pool.DruidDataSource;
-import com.alibaba.druid.proxy.jdbc.ConnectionProxy;
 import lombok.extern.slf4j.Slf4j;
-import org.openea.eap.extj.database.entity.DbLinkEntity;
+import org.openea.eap.extj.database.model.entity.DbLinkEntity;
 import org.openea.eap.extj.database.model.dto.PrepSqlDTO;
 import org.openea.eap.extj.database.model.interfaces.DbSourceOrDbLink;
 import org.openea.eap.extj.database.source.DbBase;
 import org.openea.eap.extj.exception.DataException;
-import org.openea.eap.extj.util.StringUtil;
-import org.openea.eap.extj.util.data.DataSourceContextHolder;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.Objects;
 import java.util.Properties;
 @Slf4j
 public class ConnUtil {

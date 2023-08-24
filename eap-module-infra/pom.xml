@@ -17,9 +17,6 @@
         1. 我们放基础设施的运维与管理，支撑上层的通用与核心业务。
         例如说：定时任务的管理、服务器的信息等等
         增加消息对话机制
-        2. 研发工具，提升研发效率与质量。
-        例如说：代码生成器、接口文档等等
-        计划增加可视化开发功能
     </description>
 
     <modules>
@@ -29,13 +26,6 @@
         <module>eap-extj-common</module>
         <!-- 消息/IM模块, 基于eap-extj-common -->
         <module>eap-extj-message</module>
-
-
-        <!-- 在线设计模块, 基于eap-extj-common -->
-        <module>eap-visualdev-base</module>
-<!--        <module>eap-visualdev-onlinedev</module>-->
-<!--        <module>eap-visualdev-generater</module>-->
-        <module>eap-visualdev-portal</module>
 
         <module>eap-module-infra-biz</module>
 
@@ -54,42 +44,14 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-annotation</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.swagger.core.v3</groupId>
-            <artifactId>swagger-annotations</artifactId>
-        </dependency>
-        <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-extension</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>cn.hutool</groupId>
-            <artifactId>hutool-all</artifactId>
         </dependency>
         <dependency>
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>
             <version>13.0</version>
             <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
@@ -108,18 +70,48 @@
             <artifactId>spring-context-support</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.mybatis.dynamic-sql</groupId>
-            <artifactId>mybatis-dynamic-sql</artifactId>
-        </dependency>
-        <dependency>
             <groupId>commons-codec</groupId>
             <artifactId>commons-codec</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.swagger.core.v3</groupId>
+            <artifactId>swagger-annotations</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jodd</groupId>
+            <artifactId>jodd-bean</artifactId>
+            <version>5.1.6</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+        </dependency>
     </dependencies>
-
-
-
-
 
     <dependencyManagement>
         <dependencies>
@@ -188,14 +180,6 @@
             </dependency>
 
             <dependency>
-                <groupId>org.mybatis.dynamic-sql</groupId>
-                <artifactId>mybatis-dynamic-sql</artifactId>
-                <version>1.5.0</version>
-            </dependency>
-
-
-
-            <dependency>
                 <groupId>dingtalk-sdk-java</groupId>
                 <artifactId>taobao-sdk-java</artifactId>
                 <version>1.0</version>
@@ -231,8 +215,6 @@
                 <artifactId>sa-token</artifactId>
                 <version>1.6.0</version>
             </dependency>
-
-
         </dependencies>
     </dependencyManagement>
 

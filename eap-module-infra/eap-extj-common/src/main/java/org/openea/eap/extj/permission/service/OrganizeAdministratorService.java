@@ -3,6 +3,8 @@ package org.openea.eap.extj.permission.service;
 
 
 
+import org.openea.eap.extj.permission.entity.OrganizeAdministratorEntity;
+
 import java.util.List;
 
 /**
@@ -12,7 +14,7 @@ import java.util.List;
 public interface OrganizeAdministratorService
 //        extends SuperService<OrganizeAdministratorEntity>
 {
-
+    List<OrganizeAdministratorEntity> getListByUserID(String userId);
 
 
 //    /**

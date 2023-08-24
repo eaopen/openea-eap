@@ -3,7 +3,7 @@ package org.openea.eap.extj.database.model.dto;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
-import org.openea.eap.extj.database.entity.DbLinkEntity;
+import org.openea.eap.extj.database.model.entity.DbLinkEntity;
 import org.openea.eap.extj.database.util.ConnUtil;
 import org.openea.eap.extj.database.util.DataSourceUtil;
 import org.openea.eap.extj.database.util.DynamicDataSourceUtil;
@@ -51,10 +51,10 @@ public class PrepSqlDTO {
      */
     private List<?> dataList = new ArrayList<>();
 
-//    /**
-//     * 批量参数
-//     */
-//    private List<List<?>> multiDataList = new ArrayList<>();
+    /**
+     * 批量参数
+     */
+    private List<List<?>> multiDataList = new ArrayList<>();
 
     /**
      * SQL命令类型

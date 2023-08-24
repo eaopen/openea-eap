@@ -2,8 +2,7 @@ package org.openea.eap.extj.database.model.dbfield;
 
 import lombok.Data;
 import org.openea.eap.extj.database.datatype.db.interfaces.DtInterface;
-import org.openea.eap.extj.database.datatype.limit.model.DtModelDTO;
-import org.openea.eap.extj.database.model.dbfield.base.DbFieldModelBase;
+import org.openea.eap.extj.database.datatype.model.DtModelDTO;
 import org.openea.eap.extj.database.util.DbTypeUtil;
 
 import java.sql.*;

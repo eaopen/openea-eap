@@ -3,12 +3,11 @@ package org.openea.eap.extj.database.util;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
-import org.openea.eap.extj.database.entity.DbLinkEntity;
+import org.openea.eap.extj.database.model.entity.DbLinkEntity;
 import org.openea.eap.extj.database.model.interfaces.DbSourceOrDbLink;
 import org.openea.eap.extj.database.sql.model.DbStruct;
 import org.openea.eap.extj.exception.DataException;
 import org.openea.eap.extj.util.StringUtil;
-import org.springframework.beans.BeanUtils;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 

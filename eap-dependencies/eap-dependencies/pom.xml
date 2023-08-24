@@ -29,6 +29,7 @@
         <mybatis-plus-generator.version>3.5.3.1</mybatis-plus-generator.version>
         <dynamic-datasource.version>3.6.1</dynamic-datasource.version>
         <mybatis-plus-join-boot-starter.version>1.4.5</mybatis-plus-join-boot-starter.version>
+        <mybatis-dynamic-sql.version>1.5.0</mybatis-dynamic-sql.version>
         <redisson.version>3.18.0</redisson.version>
         <dm8.jdbc.version>8.1.2.141</dm8.jdbc.version>
 
@@ -285,7 +286,11 @@
                 <version>${mybatis-plus-join-boot-starter.version}</version>
             </dependency>
 
-
+            <dependency>
+                <groupId>org.mybatis.dynamic-sql</groupId>
+                <artifactId>mybatis-dynamic-sql</artifactId>
+                <version>${mybatis-dynamic-sql.version}</version>
+            </dependency>
 
             <dependency>
                 <groupId>org.openea.eap</groupId>

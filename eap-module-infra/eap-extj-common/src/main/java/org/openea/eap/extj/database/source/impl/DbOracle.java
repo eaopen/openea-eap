@@ -2,7 +2,7 @@ package org.openea.eap.extj.database.source.impl;
 
 import com.baomidou.mybatisplus.annotation.DbType;
 import org.openea.eap.extj.database.constant.DbConst;
-import org.openea.eap.extj.database.entity.DbLinkEntity;
+import org.openea.eap.extj.database.model.entity.DbLinkEntity;
 import org.openea.eap.extj.database.model.dbfield.DbFieldModel;
 import org.openea.eap.extj.database.source.DbBase;
 import org.openea.eap.extj.database.sql.model.DbStruct;

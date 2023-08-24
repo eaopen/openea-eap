@@ -4,8 +4,8 @@ import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Getter;
 import org.openea.eap.extj.database.datatype.limit.base.DtLimitModel;
-import org.openea.eap.extj.database.datatype.limit.model.DtModel;
-import org.openea.eap.extj.database.datatype.limit.model.DtModelDTO;
+import org.openea.eap.extj.database.datatype.model.DtModel;
+import org.openea.eap.extj.database.datatype.model.DtModelDTO;
 
 @Data
 public abstract class DtLimitBase {

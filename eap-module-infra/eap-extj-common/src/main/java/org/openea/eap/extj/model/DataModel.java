@@ -7,7 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.openea.eap.extj.base.UserInfo;
-import org.openea.eap.extj.database.entity.DbLinkEntity;
+import org.openea.eap.extj.database.model.entity.DbLinkEntity;
 import org.openea.eap.extj.model.visualJson.FieLdsModel;
 import org.openea.eap.extj.model.visualJson.TableModel;
 import org.openea.eap.extj.permission.entity.UserEntity;

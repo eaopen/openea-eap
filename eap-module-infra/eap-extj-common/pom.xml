@@ -208,13 +208,6 @@
             <groupId>org.mybatis.dynamic-sql</groupId>
             <artifactId>mybatis-dynamic-sql</artifactId>
         </dependency>
-
-<!--        <dependency>-->
-<!--            <groupId>cn.dev33</groupId>-->
-<!--            <artifactId>sa-token</artifactId>-->
-<!--        </dependency>-->
-
-
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -236,6 +229,11 @@
         <dependency>
             <groupId>io.swagger.core.v3</groupId>
             <artifactId>swagger-annotations</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-annotations</artifactId>
+            <version>1.6.8</version>
         </dependency>
 
     </dependencies>
