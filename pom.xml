@@ -239,6 +239,9 @@
         </profile>
         <profile>
             <id>obpmServer</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
             <modules>
                 <module>eap-module-obpm</module>
             </modules>

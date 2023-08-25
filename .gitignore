@@ -47,7 +47,7 @@ refer/**
 **/.flattened-pom.xml
 
 
-**/openea-docker-login.sh
+docker/openea-docker-login.sh
 
 # eoa will move
 #eoa-server/**

@@ -22,7 +22,8 @@
         集成OpenBPM
     </description>
     <properties>
-        <openbpm.version>3.5.1b</openbpm.version>
+        <openbpm.version>3.5.2</openbpm.version>
+        <openbpm-webjar.version>3-dev</openbpm-webjar.version>
     </properties>
 
     <repositories>
@@ -112,6 +113,12 @@
                 <groupId>org.szopen.openbpm</groupId>
                 <artifactId>form-rest</artifactId>
                 <version>${openbpm.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.szopen.openbpm</groupId>
+                <artifactId>bpm-admin-webjar</artifactId>
+                <version>${openbpm-webjar.version}</version>
             </dependency>
 
         </dependencies>
