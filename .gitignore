@@ -57,3 +57,5 @@ docker/openea-docker-login.sh
 dev10.docker.env
 #dev10_update.sh
 #dev10_clean.sh
+
+eoa-server/src/main/resources/application-dev114.yaml
