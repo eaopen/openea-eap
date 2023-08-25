@@ -196,7 +196,7 @@ eap:
   obpm:
     proxy: ${obpm_proxy:true}
     apiBaseUrl: ${obpm_api_baseurl:/obpm-server}
-    webBaseUrl: ${obpm_web_baseurl:/obpm-web}
+    webBaseUrl: ${obpm_web_baseurl:/obpm-web1}
     adminBaseUrl: ${obpm_admin_baseurl:/obpm-admin}
   web:
     admin-ui:
@@ -204,6 +204,10 @@ eap:
   security:
     permit-all_urls:
       - /admin-api/mp/open/** # 微信公众号开放平台，微信回调接口，不需要登录
+      - /admin-api/obpm-admin/**
+      - /obpm-admin/**
+      - /admin-api/obpm-web1/**
+      - /obpm-web1/**
   websocket:
     enable: true # websocket的开关
     path: /websocket/message # 路径

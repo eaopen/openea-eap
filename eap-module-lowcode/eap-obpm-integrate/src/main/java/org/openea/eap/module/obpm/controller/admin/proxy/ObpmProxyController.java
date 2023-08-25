@@ -14,11 +14,13 @@ import org.openea.eap.framework.security.core.util.SecurityFrameworkUtils;
 import org.openea.eap.module.obpm.service.obpm.ObmpClientService;
 import org.openea.eap.module.obpm.service.obpm.ObpmUtil;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.util.StreamUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.net.URL;
 import java.util.Map;
 
@@ -39,7 +41,25 @@ public class ObpmProxyController {
 
     @SneakyThrows
     @RequestMapping( method = RequestMethod.GET,
-            value={"/bpm/instance/**", "/bpm/task/**", "/bpm/form/**",
+            value={"/obpm-admin/**","/obpm-web1/**"})
+    public void proxyWeb(HttpServletRequest request, HttpServletResponse response, @RequestHeader Map<String, String> headers){
+        String url = checkRequestUrl(request);
+        String obpmUrl = obmpClientService.getProxyUrl(url);
+        checkHeaderHost(headers, obpmUrl);
+        checkHeaderAuth(headers);
+        // 使用 HttpUtil 发送 GET 请求
+        HttpResponse webRes = HttpUtil.createGet(obpmUrl)
+                .addHeaders(headers) // 添加请求头
+                .execute();
+        response.setStatus(webRes.getStatus());
+        webRes.headers().forEach((key, value) -> value.forEach( it -> {response.setHeader(key, it);}));
+        StreamUtils.copy(webRes.bodyStream(), response.getOutputStream());
+    }
+
+    @SneakyThrows
+    @RequestMapping( method = RequestMethod.GET,
+            value={"/obpm-server/**","/obpm-api/**","/obpm/**",
+                    "/bpm/instance/**", "/bpm/task/**", "/bpm/form/**",
                     "/form/formDefData/**", "/form/formCustDialog/**",
                     "/form/formCustSql/**",
                     "/sys/tools/**","/sys/dataDict/**"})
@@ -57,7 +77,8 @@ public class ObpmProxyController {
 
     @SneakyThrows
     @RequestMapping( method = RequestMethod.POST,
-            value={"/bpm/instance/**", "/bpm/task/**", "/bpm/form/**",
+            value={"/obpm-server/**","/obpm-api/**","/obpm/**",
+                    "/bpm/instance/**", "/bpm/task/**", "/bpm/form/**",
                     "/form/formDefData/**", "/form/formCustDialog/**",
                     "/form/formCustSql/**",
                     "/sys/tools/**","/sys/dataDict/**"})

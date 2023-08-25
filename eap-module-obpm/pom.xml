@@ -10,9 +10,9 @@
     <modelVersion>4.0.0</modelVersion>
     <modules>
         <!-- 内嵌OpenBPM服务 -->
-        <module>eap-module-obpm-adapter</module>
-        <module>eap-module-obpm-extend</module>
-        <module>eap-module-obpm-server</module>
+        <module>eap-obpm-adapter</module>
+        <module>eap-obpm-extend</module>
+        <module>eap-obpm-server</module>
     </modules>
     <artifactId>eap-module-obpm</artifactId>
     <packaging>pom</packaging>

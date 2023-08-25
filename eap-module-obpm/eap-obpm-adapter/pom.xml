@@ -9,7 +9,7 @@
         <version>${revision}</version>
     </parent>
 
-    <artifactId>eap-module-obpm-adapter</artifactId>
+    <artifactId>eap-obpm-adapter</artifactId>
     <name>${project.artifactId}</name>
 
     <dependencies>

@@ -8,7 +8,6 @@ import com.baomidou.dynamic.datasource.DynamicRoutingDataSource;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
@@ -133,10 +132,25 @@ public class ObmpClientService {
     public String getProxyUrl(String url) {
         String obpmUrl = obpmClientBaseUrl;
         if(ObjectUtils.isNotEmpty(url)){
+            // 去掉 "/admin-api"
             if(url.startsWith("/admin-api")){
-                obpmUrl += url.substring(url.indexOf("/admin-api")+10);
-            }else if(url.indexOf("/obpm/")>=0){
-                obpmUrl += url.substring(url.indexOf("/obpm")+5);
+                url = url.substring(url.indexOf("/admin-api")+10);
+            }
+            // 检查obpm后端API前缀  /obpm-server, /obpm-api, /obpm
+            // 检查obpm前端UI bpm-admin前缀 /obpm-admin, /obpm-web1
+            // 前端代理性能差，仅用于开发或演示环境，生产可配置nginx反向代理
+            if(url.indexOf("/obpm-server/")>=0){
+                obpmUrl += url.substring(url.indexOf("/obpm-server")+12);
+            }else if(url.indexOf("/obpm-api/")>=0){
+                obpmUrl += url.substring(url.indexOf("/obpm-api")+9);
+            }else if(url.indexOf("/obpm/")>=0) {
+                obpmUrl += url.substring(url.indexOf("/obpm") + 5);
+
+            }else if(url.indexOf("/obpm-admin/")>=0){
+                obpmUrl += "/bpm-admin"+ url.substring(url.indexOf("/obpm-admin")+11);
+            }else if(url.indexOf("/obpm-web1/")>=0){
+                obpmUrl += "/bpm-admin"+ url.substring(url.indexOf("/obpm-web1")+10);
+
             }else if(url.startsWith("/")){
                 obpmUrl += url;
             }else{

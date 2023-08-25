@@ -9,7 +9,7 @@
         <version>${revision}</version>
     </parent>
 
-    <artifactId>eap-module-obpm-server</artifactId>
+    <artifactId>eap-obpm-server</artifactId>
 
     <properties>
         <java.version>1.8</java.version>
@@ -48,7 +48,7 @@
 
         <dependency>
             <groupId>org.openea.eap</groupId>
-            <artifactId>eap-module-obpm-extend</artifactId>
+            <artifactId>eap-obpm-extend</artifactId>
             <version>${project.version}</version>
             <exclusions>
                 <exclusion>
@@ -69,6 +69,12 @@
             <artifactId>bpm-db</artifactId>
         </dependency>
         -->
+
+        <dependency>
+            <groupId>org.szopen.openbpm</groupId>
+            <artifactId>bpm-admin-webjar</artifactId>
+            <version>3-dev</version>
+        </dependency>
 
     </dependencies>
 

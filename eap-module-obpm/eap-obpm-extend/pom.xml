@@ -9,12 +9,12 @@
         <version>${revision}</version>
     </parent>
 
-    <artifactId>eap-module-obpm-extend</artifactId>
+    <artifactId>eap-obpm-extend</artifactId>
 
     <dependencies>
         <dependency>
             <groupId>org.openea.eap</groupId>
-            <artifactId>eap-module-obpm-adapter</artifactId>
+            <artifactId>eap-obpm-adapter</artifactId>
             <version>${project.version}</version>
             <scope>provided</scope>
         </dependency>
