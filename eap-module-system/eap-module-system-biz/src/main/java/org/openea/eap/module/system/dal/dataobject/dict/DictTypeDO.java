@@ -56,7 +56,7 @@ public class DictTypeDO extends BaseDO {
     private Long parentId;
 
     /**
-     * 数据类型 data/json/sql
+     * 数据类型 data/json/sql/api
      * 默认为data
      */
     private String dataType;
@@ -74,8 +74,6 @@ public class DictTypeDO extends BaseDO {
      * 默认为当前数据源
      */
     private String dataDs;
-
-
 
     /**
      * 备注
