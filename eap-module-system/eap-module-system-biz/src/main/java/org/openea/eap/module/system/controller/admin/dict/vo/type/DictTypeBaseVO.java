@@ -26,4 +26,23 @@ public class DictTypeBaseVO {
     @Schema(description = "备注", example = "快乐的备注")
     private String remark;
 
+    // 扩展字段
+    @Schema(description = "树形")
+    private Integer isTree;
+
+    @Schema(description = "上级")
+    private Long parentId;
+
+    @Schema(description = "数据类型 data/json/sql, 默认为data")
+    private String dataType;
+
+    @Schema(description = "json数据")
+    private String dataJson;
+
+    @Schema(description = "查询sql")
+    private String dataSql;
+
+    @Schema(description = " 查询sql数据源")
+    private String dataDs;
+
 }

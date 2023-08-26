@@ -315,10 +315,7 @@ https://github.com/renrenio/renren-fast-vue
 
 https://github.com/renrenio/renren-security
 
-* JNPF开发平台
 
-官方文档，非开源  
-https://service.jnpfsoft.com/index/index/operate.html?cid=331&product_id=89
 
 ## 🐶 参考--芋道开源新手必读
 * 演示地址【Vue2 + element-ui】：<http://dashboard.eap.iocoder.cn>

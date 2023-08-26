@@ -20,4 +20,7 @@ public class DictTypeSimpleRespVO {
     @Schema(description = "字典类型", requiredMode = Schema.RequiredMode.REQUIRED, example = "sys_common_sex")
     private String type;
 
+    @Schema(description = "数据类型 data/json/sql, 默认为data")
+    private String dataType;
+
 }

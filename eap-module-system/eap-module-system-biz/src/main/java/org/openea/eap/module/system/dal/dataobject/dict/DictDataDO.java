@@ -35,7 +35,7 @@ public class DictDataDO extends BaseDO {
      */
     private String value;
     /**
-     * 字典类型
+     * 字典类型（dictKey）
      *
      * 冗余 {@link DictDataDO#getDictType()}
      */
@@ -61,5 +61,12 @@ public class DictDataDO extends BaseDO {
      * 备注
      */
     private String remark;
+
+    // 扩展字段
+    /**
+     * 上级 parentId
+     * 用于树形结构
+     */
+    private Long parentId;
 
 }

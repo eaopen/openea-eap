@@ -56,6 +56,7 @@ public class DictDataServiceImpl implements DictDataService {
 
     @Override
     public PageResult<DictDataDO> getDictDataPage(DictDataPageReqVO reqVO) {
+        // TODO dataType
         return dictDataMapper.selectPage(reqVO);
     }
 

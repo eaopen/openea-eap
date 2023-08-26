@@ -25,4 +25,8 @@ public class DictTypeExportReqVO {
     @Schema(description = "创建时间")
     private LocalDateTime[] createTime;
 
+
+    @Schema(description = "数据类型 data/json/sql, 默认为data")
+    private String dataType;
+
 }
