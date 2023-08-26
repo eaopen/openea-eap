@@ -1,5 +1,6 @@
 package org.openea.eap.module.system.controller.admin.dict.vo.data;
 
+import com.alibaba.fastjson.JSONObject;
 import org.openea.eap.framework.common.pojo.PageParam;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -23,4 +24,6 @@ public class DictDataPageReqVO extends PageParam {
     @Schema(description = "展示状态,参见 CommonStatusEnum 枚举类", example = "1")
     private Integer status;
 
+    @Schema(description = "数据类型 data/json/sql, 默认为data")
+    private String dataType;
 }

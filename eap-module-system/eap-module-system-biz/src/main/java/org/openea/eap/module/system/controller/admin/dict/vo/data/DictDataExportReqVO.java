@@ -17,6 +17,9 @@ public class DictDataExportReqVO {
     @Size(max = 100, message = "字典类型类型长度不能超过100个字符")
     private String dictType;
 
+    @Schema(description = "数据类型 data/json/sql, 默认为data")
+    private String dataType;
+
     @Schema(description = "展示状态,参见 CommonStatusEnum 枚举类", example = "1")
     private Integer status;
 

@@ -1,6 +1,8 @@
 package org.openea.eap.module.system.service.dict;
 
 import cn.hutool.core.collection.CollUtil;
+import com.google.common.annotations.VisibleForTesting;
+import lombok.extern.slf4j.Slf4j;
 import org.openea.eap.framework.common.enums.CommonStatusEnum;
 import org.openea.eap.framework.common.pojo.PageResult;
 import org.openea.eap.framework.common.util.collection.CollectionUtils;
@@ -12,8 +14,7 @@ import org.openea.eap.module.system.convert.dict.DictDataConvert;
 import org.openea.eap.module.system.dal.dataobject.dict.DictDataDO;
 import org.openea.eap.module.system.dal.dataobject.dict.DictTypeDO;
 import org.openea.eap.module.system.dal.mysql.dict.DictDataMapper;
-import com.google.common.annotations.VisibleForTesting;
-import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -28,24 +29,24 @@ import static org.openea.eap.module.system.enums.ErrorCodeConstants.*;
 /**
  * 字典数据 Service 实现类
  *
- * @author ruoyi
  */
 @Service
+@ConditionalOnMissingBean(DictDataService.class)
 @Slf4j
 public class DictDataServiceImpl implements DictDataService {
 
     /**
      * 排序 dictType > sort
      */
-    private static final Comparator<DictDataDO> COMPARATOR_TYPE_AND_SORT = Comparator
+    protected static final Comparator<DictDataDO> COMPARATOR_TYPE_AND_SORT = Comparator
             .comparing(DictDataDO::getDictType)
             .thenComparingInt(DictDataDO::getSort);
 
     @Resource
-    private DictTypeService dictTypeService;
+    protected DictTypeService dictTypeService;
 
     @Resource
-    private DictDataMapper dictDataMapper;
+    protected DictDataMapper dictDataMapper;
 
     @Override
     public List<DictDataDO> getDictDataList() {
@@ -56,7 +57,6 @@ public class DictDataServiceImpl implements DictDataService {
 
     @Override
     public PageResult<DictDataDO> getDictDataPage(DictDataPageReqVO reqVO) {
-        // TODO dataType
         return dictDataMapper.selectPage(reqVO);
     }
 
