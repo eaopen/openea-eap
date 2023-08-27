@@ -2,6 +2,7 @@ package org.openea.eap.module.visualdev.extend.util;
 
 import lombok.Cleanup;
 import lombok.extern.slf4j.Slf4j;
+import org.openea.eap.extj.model.DataModel;
 import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
@@ -29,5 +30,11 @@ public class FlowFormDataUtil {
             pKeyName = pKeyName.toUpperCase();
         }
         return pKeyName;
+    }
+
+    public void create(DataModel dataModel) {
+    }
+
+    public void update(DataModel dataModel) {
     }
 }

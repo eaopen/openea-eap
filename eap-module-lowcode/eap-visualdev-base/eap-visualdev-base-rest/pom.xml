@@ -23,13 +23,11 @@
             <version>${project.version}</version>
         </dependency>
 
-<!--        <dependency>-->
-<!--            <groupId>org.openea.eap</groupId>-->
-<!--            <artifactId>eap-visualdev-onlinedev-biz</artifactId>-->
-<!--            <version>${project.version}</version>-->
-<!--        </dependency>-->
-
-
+        <dependency>
+            <groupId>org.openea.eap</groupId>
+            <artifactId>eap-visualdev-onlinedev-biz</artifactId>
+            <version>${project.version}</version>
+        </dependency>
 
     </dependencies>
 

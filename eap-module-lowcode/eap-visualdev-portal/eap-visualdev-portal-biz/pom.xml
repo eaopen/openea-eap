@@ -29,8 +29,7 @@
             <artifactId>eap-visualdev-base-biz</artifactId>
             <version>${project.version}</version>
         </dependency>
-
-
+        
     </dependencies>
 
 </project>

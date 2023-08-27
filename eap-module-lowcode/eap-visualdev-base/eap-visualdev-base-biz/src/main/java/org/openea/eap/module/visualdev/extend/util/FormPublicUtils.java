@@ -13,7 +13,7 @@ import org.openea.eap.extj.util.DateUtil;
 import org.openea.eap.extj.util.JsonUtil;
 import org.openea.eap.extj.util.StringUtil;
 import org.openea.eap.extj.util.visual.JnpfKeyConsts;
-import org.openea.eap.module.visualdev.extend.model.form.MultipleControlEnum;
+import org.openea.eap.module.visualdev.onlinedev.model.OnlineDevEnum.MultipleControlEnum;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
