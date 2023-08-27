@@ -416,7 +416,7 @@ public class VisualUtils {
                 message = "系统自动生成";
                 break;
             case JnpfKeyConsts.COMSELECT:
-                message = model.getMultiple() ? "例:引迈信息/产品部,引迈信息/技术部" : "例:引迈信息/技术部";
+                message = model.getMultiple() ? "例:XX信息/产品部,XX信息/技术部" : "例:XX信息/技术部";
                 break;
             case JnpfKeyConsts.DEPSELECT:
                 message = model.getMultiple() ? "例:产品部/部门编码,技术部/部门编码" : "例:技术部/部门编码";

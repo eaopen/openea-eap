@@ -26,8 +26,6 @@ public class InterfaceUtil {
      * 验证签名
      * @param
      * @return
-     * @copyright 引迈信息技术有限公司
-     * @date 2022/6/14
      */
     public static boolean verifySignature(String secret, String author) throws NoSuchAlgorithmException, InvalidKeyException, UnsupportedEncodingException {
         String method = ServletUtil.getRequest().getMethod();
@@ -52,8 +50,6 @@ public class InterfaceUtil {
      * map转 name=value&name=value格式
      * @param
      * @return
-     * @copyright 引迈信息技术有限公司
-     * @date 2022/6/14
      */
     public static String createLinkStringByGet(Map<String, String> params) throws UnsupportedEncodingException {
         List<String> keys = new ArrayList<String>(params.keySet());
@@ -76,8 +72,6 @@ public class InterfaceUtil {
      * 判断map内有没有指定key的值
      * @param
      * @return
-     * @copyright 引迈信息技术有限公司
-     * @date 2022/6/14
      */
     public static boolean checkParam(Map<String,String> map,String str){
         if(CollectionUtil.isEmpty(map)){

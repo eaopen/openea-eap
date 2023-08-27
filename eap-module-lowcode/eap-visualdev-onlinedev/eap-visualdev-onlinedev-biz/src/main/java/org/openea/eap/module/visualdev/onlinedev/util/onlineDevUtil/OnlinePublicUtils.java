@@ -422,8 +422,6 @@ public class OnlinePublicUtils {
 	 *
 	 * @param conditionConfig 条件配置，true==，false模糊查询
 	 * @return
-	 * @copyright 引迈信息技术有限公司
-	 * @date 2023/1/5
 	 */
 	public static boolean mapCompar(Map<String, Object> conditionMap, Map<String, Object> hashMap2, Map<String, Boolean> conditionConfig) {
 		boolean isChange = false;

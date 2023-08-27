@@ -878,8 +878,6 @@ public class VisualDevListServiceImpl extends SuperServiceImpl<VisualdevModelDat
      *  达梦或者oracle 别名太长转换-别名还原
      * @param
      * @return
-     * @copyright 引迈信息技术有限公司
-     * @date 2023/3/16
      */
     private void setAliasKey(List<Map<String, Object>> dataList, Map<String, String> aliasMap) {
         if (dataList.size() > 0 && aliasMap.size() > 0) {

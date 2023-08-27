@@ -51,8 +51,7 @@ public class VisualFlowFormUtil {
      *
      * @param
      * @return
-     * @copyright 引迈信息技术有限公司
-     * @date 2022/12/29
+
      */
     public ActionResult saveOrUpdateFlowTemp(VisualdevEntity entity, Integer state, Boolean isSave) {
         ActionResult result;
@@ -95,8 +94,6 @@ public class VisualFlowFormUtil {
      *
      * @param
      * @return
-     * @copyright 引迈信息技术有限公司
-     * @date 2022/12/29
      */
     public void saveOrUpdateForm(VisualdevEntity entity, int enabledMark, boolean isSave) throws WorkFlowException {
         String userId = userProvider.get().getUserId();
@@ -149,8 +146,6 @@ public class VisualFlowFormUtil {
      *
      * @param
      * @return
-     * @copyright 引迈信息技术有限公司
-     * @date 2022/12/29
      */
     public void deleteTemplateInfo(String id) {
         String msg = "";
@@ -182,8 +177,6 @@ public class VisualFlowFormUtil {
      *
      * @param
      * @return
-     * @copyright 引迈信息技术有限公司
-     * @date 2022/12/29
      */
     public List<DictionaryDataEntity> getListByTypeDataCode(Integer type) {
         return getListByTypeDataCode(DictionaryDataEnum.getTypeId(type));
@@ -194,8 +187,6 @@ public class VisualFlowFormUtil {
      *
      * @param
      * @return
-     * @copyright 引迈信息技术有限公司
-     * @date 2022/12/29
      */
     public DictionaryDataEntity getdictionaryDataInfo(String category) {
         return dictionaryDataService.getInfo(category);
@@ -207,8 +198,6 @@ public class VisualFlowFormUtil {
      *
      * @param
      * @return
-     * @copyright 引迈信息技术有限公司
-     * @date 2022/12/28
      */
     public String categaryMapping(String devCateId) {
         //流程分类
@@ -254,8 +243,6 @@ public class VisualFlowFormUtil {
      *
      * @param
      * @return
-     * @copyright 引迈信息技术有限公司
-     * @date 2022/12/29
      */
     public void deleteFlowForm(String id) {
         try {
