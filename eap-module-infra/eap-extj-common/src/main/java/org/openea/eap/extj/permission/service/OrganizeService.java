@@ -1,7 +1,12 @@
 package org.openea.eap.extj.permission.service;
 
 
+import org.openea.eap.extj.permission.entity.OrganizeEntity;
+
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * 组织机构
@@ -11,6 +16,20 @@ public interface OrganizeService
 //        extends SuperService<OrganizeEntity>
 {
     List<String> getUnderOrganizations(String orgId);
+
+    Collection<Object> listByIds(List<String> orgIds);
+
+    OrganizeEntity getInfo(String organizeId);
+
+    List<OrganizeEntity> getOrgRedisList();
+
+    Map<String, Object> getOrgMap();
+
+    List<OrganizeEntity> getOrgEntityList(Set<String> orgList);
+
+    Map<String, Object> getOrgNameAndId(String s);
+
+    Map<String, Object> getOrgEncodeAndName(String department);
 
 //    /**
 //     * 列表

@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * todo eap
@@ -52,5 +54,20 @@ public class EapUserService implements UserService {
     @Override
     public void updateById(UserEntity update) {
 
+    }
+
+    @Override
+    public Map<String, Object> getUserMap() {
+        return null;
+    }
+
+    @Override
+    public List<UserEntity> getUserNameList(Set<String> userList) {
+        return null;
+    }
+
+    @Override
+    public Map<String, Object> getUserNameAndIdMap() {
+        return null;
     }
 }

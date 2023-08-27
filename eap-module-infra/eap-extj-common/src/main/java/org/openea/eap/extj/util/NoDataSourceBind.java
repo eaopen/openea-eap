@@ -1,4 +1,4 @@
-package org.openea.eap.extj.model;
+package org.openea.eap.extj.util;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

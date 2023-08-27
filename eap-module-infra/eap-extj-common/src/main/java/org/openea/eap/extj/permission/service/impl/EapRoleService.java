@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * todo eap
@@ -45,6 +47,21 @@ public class EapRoleService implements RoleService {
 
     @Override
     public Collection<RoleEntity> getListByUserId(String userId) {
+        return null;
+    }
+
+    @Override
+    public List<RoleEntity> getSwaptListByIds(Set<String> roleList) {
+        return null;
+    }
+
+    @Override
+    public Map<String, Object> getRoleMap() {
+        return null;
+    }
+
+    @Override
+    public Map<String, Object> getRoleNameAndIdMap() {
         return null;
     }
 }

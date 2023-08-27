@@ -25,6 +25,12 @@ public interface UserService
 
     void updateById(UserEntity update);
 
+    Map<String, Object> getUserMap();
+
+    List<UserEntity> getUserNameList(Set<String> userList);
+
+    Map<String, Object> getUserNameAndIdMap();
+
 //    /*======================get接口========================*/
 //
 //    List<UserEntity> getAdminList();

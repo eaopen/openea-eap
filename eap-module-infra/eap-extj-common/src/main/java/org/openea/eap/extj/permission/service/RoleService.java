@@ -5,6 +5,8 @@ import org.openea.eap.extj.permission.model.role.RolePagination;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public interface RoleService
 //        extends SuperService<RoleEntity>
@@ -81,4 +83,10 @@ public interface RoleService
     void delete(RoleEntity entity);
 
     Collection<RoleEntity> getListByUserId(String userId);
+
+    List<RoleEntity> getSwaptListByIds(Set<String> roleList);
+
+    Map<String, Object> getRoleMap();
+
+    Map<String, Object> getRoleNameAndIdMap();
 }

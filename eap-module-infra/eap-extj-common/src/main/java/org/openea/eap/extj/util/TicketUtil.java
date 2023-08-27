@@ -19,6 +19,13 @@ public class TicketUtil {
         return null;
     }
 
+    public static Boolean parseTicket(String token) {
+        return true;
+    }
+
+    public static void deleteTicket(String token) {
+    }
+
 //    public static String createTicket(Object value, long timeout) {
 //        return SaTempUtil.createToken(value, timeout);
 //    }

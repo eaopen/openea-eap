@@ -1,6 +1,7 @@
 package org.openea.eap.extj.permission.service;
 
 
+import org.openea.eap.extj.permission.entity.UserRelationEntity;
 
 import java.util.List;
 
@@ -172,4 +173,14 @@ public interface UserRelationService
      * @param deptIdList
      */
     void syncDingUserRelation(String sysObjId, List<Long> deptIdList);
+
+    /**
+     * 根据对象主键获取列表
+     *
+     * @param objectId 对象主键
+     * @return
+     */
+    List<UserRelationEntity> getListByObjectIdAll(List<String> objectId);
+
+    List<UserRelationEntity> getListByUserId(String userId, String department);
 }
