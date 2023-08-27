@@ -3,6 +3,8 @@ package org.openea.eap.module.obpm.service.org;
 import org.openbpm.org.api.model.IUser;
 import org.openbpm.org.api.model.IUserRole;
 import org.openbpm.org.api.service.UserService;
+import org.openea.eap.framework.common.enums.CommonStatusEnum;
+import org.openea.eap.module.system.dal.dataobject.user.AdminUserDO;
 import org.openea.eap.module.system.service.user.AdminUserService;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
@@ -19,16 +21,23 @@ public class EapUserServiceImpl implements UserService{
 
     @Override
     public IUser getUserById(String userId) {
-        return null;
+        Long eapUserId = OrgConvertUtil.convertUserId(userId);
+        AdminUserDO adminUserDO = adminUserService.getUser(eapUserId);
+        return OrgConvertUtil.convertUser(adminUserDO);
     }
 
     @Override
     public IUser getUserByAccount(String account) {
-        return null;
+        AdminUserDO adminUserDO = adminUserService.getUserByUsername(account);
+        return OrgConvertUtil.convertUser(adminUserDO);
     }
 
     @Override
     public List<? extends IUser> getUserListByGroup(String groupType, String groupId) {
+
+        //adminUserService.getUserListByDeptIds()
+        //adminUserService.getUserListByPostIds()
+
         return null;
     }
 
@@ -39,7 +48,8 @@ public class EapUserServiceImpl implements UserService{
 
     @Override
     public List<? extends IUser> getAllUser() {
-        return null;
+        List<AdminUserDO> listUser =  adminUserService.getUserListByStatus(CommonStatusEnum.ENABLE.getStatus());
+        return OrgConvertUtil.convertUsers(listUser);
     }
 
     @Override

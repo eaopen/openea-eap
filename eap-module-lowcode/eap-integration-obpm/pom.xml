@@ -8,7 +8,7 @@
         <version>${revision}</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>eap-obpm-integrate</artifactId>
+    <artifactId>eap-integration-obpm</artifactId>
 
     <name>${project.artifactId}</name>
     <description>

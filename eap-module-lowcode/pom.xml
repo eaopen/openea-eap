@@ -32,10 +32,8 @@
         <!--        <module>eap-visualdev-generater</module>-->
         <module>eap-visualdev-portal</module>
 
-
-        <!-- 调用OpenBPM服务 -->
-        <module>eap-obpm-integrate</module>
-
+        <!-- 集成工作流平台 OpenBPM -->
+        <module>eap-integration-obpm</module>
 
         <!-- 整合 lowcode 服务 -->
         <module>eap-module-lowcode-biz</module>

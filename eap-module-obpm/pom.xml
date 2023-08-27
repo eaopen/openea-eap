@@ -9,10 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <modules>
-        <!-- 内嵌OpenBPM服务 -->
-        <module>eap-obpm-adapter</module>
-        <module>eap-obpm-extend</module>
-        <module>eap-obpm-server</module>
+
     </modules>
     <artifactId>eap-module-obpm</artifactId>
     <packaging>pom</packaging>
@@ -124,4 +121,18 @@
         </dependencies>
     </dependencyManagement>
 
+    <profiles>
+        <profile>
+            <id>obpmServer</id>
+            <!-- 独立OpenBPM服务 -->
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <modules>
+                <module>eap-obpm-adapter</module>
+                <module>eap-obpm-extend</module>
+                <module>eap-obpm-server</module>
+            </modules>
+        </profile>
+    </profiles>
 </project>

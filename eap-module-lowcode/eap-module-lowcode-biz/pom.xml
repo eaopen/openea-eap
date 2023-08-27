@@ -36,7 +36,7 @@
 
         <dependency>
             <groupId>org.openea.eap</groupId>
-            <artifactId>eap-obpm-integrate</artifactId>
+            <artifactId>eap-integration-obpm</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>
