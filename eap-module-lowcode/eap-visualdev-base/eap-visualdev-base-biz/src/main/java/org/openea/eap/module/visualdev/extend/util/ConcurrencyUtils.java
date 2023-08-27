@@ -83,8 +83,6 @@ public class ConcurrencyUtils {
      * 根据枚举获取字段对象
      * @param
      * @return
-     * @copyright 引迈信息技术有限公司
-     * @date 2023/1/14
      */
     public static DbFieldModel getDbFieldModel(TableFeildsEnum tableFeildsEnum){
         DbFieldModel dbFieldModel=new DbFieldModel();

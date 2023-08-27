@@ -32,8 +32,6 @@ public interface FlowFormService extends SuperService<FlowFormEntity> {
      * 创建
      * @param
      * @return
-     * @copyright 引迈信息技术有限公司
-     * @date 2022/9/29
      */
     Boolean create(FlowFormEntity entity) throws WorkFlowException;
 
@@ -41,48 +39,36 @@ public interface FlowFormService extends SuperService<FlowFormEntity> {
      * 修改
      * @param
      * @return
-     * @copyright 引迈信息技术有限公司
-     * @date 2022/9/29
      */
     Boolean update(FlowFormEntity entity) throws Exception;
     /**
      * 查询列表
      * @param
      * @return
-     * @copyright 引迈信息技术有限公司
-     * @date 2022/7/1
      */
     List<FlowFormEntity> getList(FlowFormPage flowFormPage);
     /**
      * 查询列表
      * @param
      * @return
-     * @copyright 引迈信息技术有限公司
-     * @date 2022/7/1
      */
     List<FlowFormEntity> getListForSelect(FlowFormPage flowFormPage);
     /**
      * 发布/回滚
      * @param isRelease 是否发布：1-发布 0-回滚
      * @return
-     * @copyright 引迈信息技术有限公司
-     * @date 2022/7/1
      */
     ActionResult release(String id, Integer isRelease) throws WorkFlowException ;
     /**
      * 复制表单
      * @param
      * @return
-     * @copyright 引迈信息技术有限公司
-     * @date 2022/7/1
      */
     boolean copyForm(String id);
     /**
      * 导入表单
      * @param
      * @return
-     * @copyright 引迈信息技术有限公司
-     * @date 2022/7/1
      */
     ActionResult ImportData(FlowFormEntity entity) throws WorkFlowException;
 

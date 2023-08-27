@@ -28,8 +28,8 @@
 
         <!-- 在线设计模块, 基于eap-extj-common -->
         <module>eap-visualdev-base</module>
-        <!--        <module>eap-visualdev-onlinedev</module>-->
-        <!--        <module>eap-visualdev-generater</module>-->
+        <module>eap-visualdev-onlinedev</module>
+<!--        <module>eap-visualdev-generater</module>-->
         <module>eap-visualdev-portal</module>
 
         <!-- 集成工作流平台 OpenBPM -->

@@ -1,5 +1,6 @@
 package org.openea.eap.module.visualdev.base.util;
 
+import lombok.extern.slf4j.Slf4j;
 import org.openea.eap.extj.base.ActionResult;
 import org.openea.eap.extj.base.entity.DictionaryDataEntity;
 import org.openea.eap.extj.base.entity.DictionaryTypeEntity;
@@ -7,19 +8,18 @@ import org.openea.eap.extj.base.service.DictionaryDataService;
 import org.openea.eap.extj.base.service.DictionaryTypeService;
 import org.openea.eap.extj.constant.MsgCode;
 import org.openea.eap.extj.exception.WorkFlowException;
-import org.openea.eap.extj.onlinedev.model.OnlineDevData;
-import org.openea.eap.module.visualdev.base.entity.VisualdevEntity;
 import org.openea.eap.extj.util.JsonUtil;
 import org.openea.eap.extj.util.StringUtil;
 import org.openea.eap.extj.util.UserProvider;
 import org.openea.eap.extj.util.enums.DictionaryDataEnum;
-import lombok.extern.slf4j.Slf4j;
+import org.openea.eap.module.visualdev.base.entity.VisualdevEntity;
 import org.openea.eap.module.visualdev.extend.entity.FlowFormEntity;
 import org.openea.eap.module.visualdev.extend.entity.FlowTemplateEntity;
 import org.openea.eap.module.visualdev.extend.model.flowtemplate.FlowTemplateCrForm;
 import org.openea.eap.module.visualdev.extend.model.flowtemplate.FlowTemplateInfoVO;
 import org.openea.eap.module.visualdev.extend.service.FlowFormService;
 import org.openea.eap.module.visualdev.extend.service.FlowTemplateService;
+import org.openea.eap.module.visualdev.onlinedev.model.OnlineDevData;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -51,8 +51,7 @@ public class VisualFlowFormUtil {
      *
      * @param
      * @return
-     * @copyright 引迈信息技术有限公司
-     * @date 2022/12/29
+
      */
     public ActionResult saveOrUpdateFlowTemp(VisualdevEntity entity, Integer state, Boolean isSave) {
         ActionResult result;
@@ -95,8 +94,6 @@ public class VisualFlowFormUtil {
      *
      * @param
      * @return
-     * @copyright 引迈信息技术有限公司
-     * @date 2022/12/29
      */
     public void saveOrUpdateForm(VisualdevEntity entity, int enabledMark, boolean isSave) throws WorkFlowException {
         String userId = userProvider.get().getUserId();
@@ -149,8 +146,6 @@ public class VisualFlowFormUtil {
      *
      * @param
      * @return
-     * @copyright 引迈信息技术有限公司
-     * @date 2022/12/29
      */
     public void deleteTemplateInfo(String id) {
         String msg = "";
@@ -182,8 +177,6 @@ public class VisualFlowFormUtil {
      *
      * @param
      * @return
-     * @copyright 引迈信息技术有限公司
-     * @date 2022/12/29
      */
     public List<DictionaryDataEntity> getListByTypeDataCode(Integer type) {
         return getListByTypeDataCode(DictionaryDataEnum.getTypeId(type));
@@ -194,8 +187,6 @@ public class VisualFlowFormUtil {
      *
      * @param
      * @return
-     * @copyright 引迈信息技术有限公司
-     * @date 2022/12/29
      */
     public DictionaryDataEntity getdictionaryDataInfo(String category) {
         return dictionaryDataService.getInfo(category);
@@ -207,8 +198,6 @@ public class VisualFlowFormUtil {
      *
      * @param
      * @return
-     * @copyright 引迈信息技术有限公司
-     * @date 2022/12/28
      */
     public String categaryMapping(String devCateId) {
         //流程分类
@@ -254,8 +243,6 @@ public class VisualFlowFormUtil {
      *
      * @param
      * @return
-     * @copyright 引迈信息技术有限公司
-     * @date 2022/12/29
      */
     public void deleteFlowForm(String id) {
         try {
