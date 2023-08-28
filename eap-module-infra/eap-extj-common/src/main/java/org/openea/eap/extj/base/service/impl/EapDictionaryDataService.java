@@ -4,6 +4,7 @@ import org.openea.eap.extj.base.entity.DictionaryDataEntity;
 import org.openea.eap.extj.base.service.DictionaryDataService;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -13,7 +14,7 @@ import java.util.List;
 public class EapDictionaryDataService implements DictionaryDataService {
     @Override
     public List<DictionaryDataEntity> getDicList(String id) {
-        return null;
+        return Collections.emptyList();
     }
 
     @Override
@@ -23,7 +24,7 @@ public class EapDictionaryDataService implements DictionaryDataService {
 
     @Override
     public List<DictionaryDataEntity> getList(String id) {
-        return null;
+        return Collections.emptyList();
     }
 
     @Override
