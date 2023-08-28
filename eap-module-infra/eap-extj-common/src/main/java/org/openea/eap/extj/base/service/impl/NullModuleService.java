@@ -8,6 +8,7 @@ import org.openea.eap.extj.base.vo.DownloadVO;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -16,22 +17,22 @@ import java.util.function.Function;
 public class NullModuleService implements ModuleService {
     @Override
     public List<ModuleEntity> getList() {
-        return null;
+        return Collections.emptyList();
     }
 
     @Override
     public List<ModuleEntity> getList(List<String> list) {
-        return null;
+        return Collections.emptyList();
     }
 
     @Override
     public List<ModuleEntity> getList(String systemId, String category, String keyword, String type, String enabledMark, String parentId) {
-        return null;
+        return Collections.emptyList();
     }
 
     @Override
     public List<ModuleEntity> getList(String id) {
-        return null;
+        return Collections.emptyList();
     }
 
     @Override
@@ -46,7 +47,7 @@ public class NullModuleService implements ModuleService {
 
     @Override
     public List<ModuleEntity> getInfoByFullName(String fullName, String systemId) {
-        return null;
+        return Collections.emptyList();
     }
 
     @Override
@@ -96,7 +97,7 @@ public class NullModuleService implements ModuleService {
 
     @Override
     public List<ModuleEntity> getModuleList(String visualId) {
-        return null;
+        return Collections.emptyList();
     }
 
     @Override

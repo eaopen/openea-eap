@@ -7,6 +7,7 @@ import org.openea.eap.module.system.service.user.AdminUserService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -38,17 +39,17 @@ public class EapUserService implements UserService {
 
     @Override
     public List<UserEntity> getUserName(List<String> collect) {
-        return null;
+        return Collections.emptyList();
     }
 
     @Override
     public List<String> getUserIdList(List<String> userIds) {
-        return null;
+        return Collections.emptyList();
     }
 
     @Override
     public List<String> getListId() {
-        return null;
+        return  Collections.emptyList();
     }
 
     @Override
@@ -63,7 +64,7 @@ public class EapUserService implements UserService {
 
     @Override
     public List<UserEntity> getUserNameList(Set<String> userList) {
-        return null;
+        return  Collections.emptyList();
     }
 
     @Override
