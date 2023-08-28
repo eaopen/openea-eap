@@ -13,7 +13,7 @@ cd ${APPDIR}
 
 # 2 maven in eoa dir
 mvn clean
-mvn install -DskipTests=true
+mvn install -DskipTests=true -PobpmServer
 
 # 3 docker build
 # docker image vars
