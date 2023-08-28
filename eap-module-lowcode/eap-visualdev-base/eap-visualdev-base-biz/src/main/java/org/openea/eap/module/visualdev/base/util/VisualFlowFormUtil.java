@@ -24,6 +24,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -234,6 +235,8 @@ public class VisualFlowFormUtil {
         List<DictionaryDataEntity> list = null;
         if (dictionaryTypeEntity != null) {
             list = dictionaryDataService.getList(dictionaryTypeEntity.getId());
+        }else{
+            list = Collections.emptyList();
         }
         return list;
     }
