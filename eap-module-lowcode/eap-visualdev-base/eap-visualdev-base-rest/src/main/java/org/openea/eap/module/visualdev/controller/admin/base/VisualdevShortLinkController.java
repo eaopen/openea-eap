@@ -37,7 +37,6 @@ import org.openea.eap.module.visualdev.base.service.VisualdevService;
 import org.openea.eap.module.visualdev.base.service.VisualdevShortLinkService;
 import org.openea.eap.module.visualdev.base.util.FormCheckUtils;
 import org.openea.eap.module.visualdev.base.util.OnlinePublicUtils;
-import org.openea.eap.module.visualdev.onlinedev.util.onlineDevUtil.OnlineSwapDataUtils;
 import org.openea.eap.module.visualdev.base.util.VisualUtil;
 import org.openea.eap.module.visualdev.onlinedev.model.OnlineDevData;
 import org.openea.eap.module.visualdev.onlinedev.model.VisualdevModelDataCrForm;
@@ -45,6 +44,7 @@ import org.openea.eap.module.visualdev.onlinedev.model.VisualdevModelDataInfoVO;
 import org.openea.eap.module.visualdev.onlinedev.service.VisualDevInfoService;
 import org.openea.eap.module.visualdev.onlinedev.service.VisualDevListService;
 import org.openea.eap.module.visualdev.onlinedev.service.VisualdevModelDataService;
+import org.openea.eap.module.visualdev.onlinedev.util.onlineDevUtil.OnlineSwapDataUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
