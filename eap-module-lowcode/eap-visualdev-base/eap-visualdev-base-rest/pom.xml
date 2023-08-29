@@ -29,6 +29,12 @@
             <version>${project.version}</version>
         </dependency>
 
+        <!-- 拼音 -->
+        <dependency>
+            <groupId>com.belerweb</groupId>
+            <artifactId>pinyin4j</artifactId>
+        </dependency>
+
     </dependencies>
 
 </project>

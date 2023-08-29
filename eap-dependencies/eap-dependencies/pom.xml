@@ -617,6 +617,28 @@
                 <version>${jsoup.version}</version>
             </dependency>
 
+            <!-- 第三方依赖 -->
+            <!-- 安全认证 -->
+            <dependency>
+                <groupId>cn.dev33</groupId>
+                <artifactId>sa-token</artifactId>
+                <version>1.6.0</version>
+            </dependency>
+
+            <!--二维码-->
+            <dependency>
+                <groupId>com.google.zxing</groupId>
+                <artifactId>core</artifactId>
+                <version>3.5.1</version>
+            </dependency>
+
+            <!-- 拼音 -->
+            <dependency>
+                <groupId>com.belerweb</groupId>
+                <artifactId>pinyin4j</artifactId>
+                <version>2.5.1</version>
+            </dependency>
+
             <!-- 三方云服务相关 -->
             <dependency>
                 <groupId>com.squareup.okio</groupId>
