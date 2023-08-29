@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.apache.commons.lang3.StringUtils;
 import org.openea.eap.extj.base.MyBatisPrimaryBase;
+import org.openea.eap.extj.base.UserInfo;
 import org.openea.eap.extj.base.service.SuperServiceImpl;
 import org.openea.eap.extj.base.service.SystemService;
 import org.openea.eap.extj.permission.entity.AuthorizeEntity;
@@ -13,9 +14,8 @@ import org.openea.eap.extj.permission.entity.UserEntity;
 import org.openea.eap.extj.permission.service.AuthorizeService;
 import org.openea.eap.extj.permission.service.RoleService;
 import org.openea.eap.extj.permission.service.UserService;
-import org.openea.eap.extj.util.JsonUtil;
-import org.openea.eap.extj.util.JsonUtilEx;
-import org.openea.eap.extj.util.UserProvider;
+import org.openea.eap.extj.util.*;
+import org.openea.eap.module.visualdev.base.util.RandomUtil;
 import org.openea.eap.module.visualdev.portal.constant.PortalConst;
 import org.openea.eap.module.visualdev.portal.entity.PortalDataEntity;
 import org.openea.eap.module.visualdev.portal.entity.PortalEntity;
@@ -150,6 +150,13 @@ public class PortalDataServiceImpl extends SuperServiceImpl<PortalDataMapper, Po
         if(list.size() < 1){
             PortalDataEntity creEntity = primary.getEntity();
             creEntity.setFormData(formData);
+            String authorSignature = ServletUtil.getRequest().getHeader(Constants.AUTHORIZATION);
+            UserInfo userInfo = userProvider.get(authorSignature.substring(7,authorSignature.length()));
+
+            creEntity.setCreatorUserId(userInfo.getUserId());
+            if (StringUtil.isEmpty(creEntity.getId())) {
+                creEntity.setId(RandomUtil.uuId());
+            }
             save(creEntity);
         }else if(list.size() == 1){
             PortalDataEntity upEntity = list.get(0);

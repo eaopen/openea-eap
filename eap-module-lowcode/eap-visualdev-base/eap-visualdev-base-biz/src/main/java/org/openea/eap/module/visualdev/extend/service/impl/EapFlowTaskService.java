@@ -8,6 +8,7 @@ import org.openea.eap.module.visualdev.extend.model.flowtask.PaginationFlowTask;
 import org.openea.eap.module.visualdev.extend.service.FlowTaskService;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -17,7 +18,7 @@ import java.util.List;
 public class EapFlowTaskService implements FlowTaskService {
     @Override
     public List<FlowTaskEntity> getWaitList() {
-        return null;
+        return Collections.emptyList();
     }
 
     @Override
@@ -42,17 +43,17 @@ public class EapFlowTaskService implements FlowTaskService {
 
     @Override
     public List<FlowTaskListModel> getTrialList() {
-        return null;
+        return Collections.emptyList();
     }
 
     @Override
     public List<FlowTaskListModel> getCirculateList() {
-        return null;
+        return Collections.emptyList();
     }
 
     @Override
     public List<FlowTaskListModel> getDashboardAllWaitList() {
-        return null;
+        return Collections.emptyList();
     }
 
     @Override

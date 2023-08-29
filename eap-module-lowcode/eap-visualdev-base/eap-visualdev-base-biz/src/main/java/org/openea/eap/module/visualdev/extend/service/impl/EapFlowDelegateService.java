@@ -5,6 +5,7 @@ import org.openea.eap.module.visualdev.extend.service.FlowDelegateService;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.Collections;
 
 /**
  * todo eap
@@ -13,6 +14,6 @@ import java.util.Collection;
 public class EapFlowDelegateService implements FlowDelegateService {
     @Override
     public Collection<Object> getList() {
-        return null;
+        return Collections.emptyList();
     }
 }

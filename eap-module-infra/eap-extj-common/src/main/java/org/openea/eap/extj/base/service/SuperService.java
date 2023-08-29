@@ -112,8 +112,10 @@ public interface SuperService<T> extends IService<T> {
     boolean saveOrUpdateIgnoreLogic(T var1);
 
     default T getByIdIgnoreLogic(Serializable id) {
-        return this.getBaseMapper().selectByIdIgnoreLogic(id);
+//        return this.getBaseMapper().selectByIdIgnoreLogic(id);
+        return this.getBaseMapper().selectById(id);
     }
+
 
     default List<T> listByIdsIgnoreLogic(Collection<? extends Serializable> idList) {
         return this.getBaseMapper().selectBatchIdsIgnoreLogic(idList);

@@ -17,7 +17,11 @@ public class FileUploadUtils {
     }
 
     public static FileInfo uploadFile(byte[] bytes, String path, String fileName) {
-        return null;
+        FileInfo fileInfo=new FileInfo();
+        fileInfo.setId(RandomUtil.uuId());
+        fileInfo.setPath(path);
+        fileInfo.setFilename(fileName);
+        return fileInfo;
     }
     public static byte[] downloadFileByte(String temporaryFilePath, String fileName, boolean b) {
         return null;

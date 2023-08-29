@@ -1,9 +1,12 @@
 package org.openea.eap.extj.util;
 
+import org.openea.eap.extj.base.FileInfo;
 import org.openea.eap.extj.base.vo.DownloadVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+
+import java.nio.charset.StandardCharsets;
 
 /**
  *
@@ -24,10 +27,10 @@ public class DataFileExport implements FileExport {
             json = "";
         }
         fileName = fileName + System.currentTimeMillis() + "." + tableName;
-//        FileInfo fileInfo = FileUploadUtils.uploadFile(json.getBytes(StandardCharsets.UTF_8), filePath, fileName);
-//        DownloadVO vo = DownloadVO.builder().name(fileInfo.getFilename()).url(UploaderUtil.uploaderFile(fileInfo.getFilename() + "#export") + "&name=" + fileName).build();
-//        return vo;
-        return null;
+        FileInfo fileInfo = FileUploadUtils.uploadFile(json.getBytes(StandardCharsets.UTF_8), filePath, fileName);
+        DownloadVO vo = DownloadVO.builder().name(fileInfo.getFilename()).url(UploaderUtil.uploaderFile(fileInfo.getFilename() + "#export") + "&name=" + fileName).build();
+        return vo;
+//        return null;
     }
 
     private String containsSensitive(String fileName) {
