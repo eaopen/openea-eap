@@ -1,12 +1,12 @@
 package org.openea.eap.extj.base.model;
 
 import lombok.Data;
-
+import org.openea.eap.extj.util.treeutil.SumTree;
 import java.io.Serializable;
 import java.util.Date;
 
 @Data
-public class DictionaryDataExportModel implements Serializable {
+public class DictionaryDataExportModel extends SumTree implements Serializable{
     /**
      * 主键
      */
