@@ -46,6 +46,8 @@
         <jedis-mock.version>1.0.7</jedis-mock.version>
         <mockito-inline.version>4.11.0</mockito-inline.version>
         <!-- Bpm 工作流相关 -->
+        <openbpm.version>3.5.2</openbpm.version>
+        <openbpm-webjar.version>3-dev</openbpm-webjar.version>
         <flowable.version>6.8.0</flowable.version>
         <!-- 工具类相关 -->
         <captcha-plus.version>1.0.6</captcha-plus.version>
@@ -77,7 +79,6 @@
         <jimureport.version>1.5.8</jimureport.version>
         <xercesImpl.version>2.12.2</xercesImpl.version>
         <wx-java-mp.version>4.5.0</wx-java-mp.version>
-
 
     </properties>
 
