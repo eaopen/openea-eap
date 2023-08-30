@@ -33,48 +33,20 @@ public class DictionaryDataController  extends SuperController<DictionaryDataSer
     private DictionaryTypeService dictionaryTypeService;
 
     @ApiOperation("获取数据字典列表(分类+内容)")
-    @GetMapping("/All")
-    public ActionResult<ListVO<Map<String, Object>>> allBindDictionary() {
+    @GetMapping("/All-simple")
+    public ActionResult<ListVO<Map<String, Object>>> allBindDictionarySimple() {
         List<DictionaryTypeEntity> dictionaryTypeList = dictionaryTypeService.getList();
         List<Map<String, Object>> list = new ArrayList<>();
         for (DictionaryTypeEntity dictionaryTypeEntity : dictionaryTypeList) {
             List<DictionaryDataEntity> childNodeList = dictionaryDataService.getList(dictionaryTypeEntity.getId(), true);
-            if (dictionaryTypeEntity.getIsTree().compareTo(1) == 0) {
-                List<Map<String, Object>> selectList = new ArrayList<>();
                 for (DictionaryDataEntity item : childNodeList) {
-                    Map<String, Object> ht = new HashMap<>(16);
-                    ht.put("fullName", item.getFullName());
-                    ht.put("id", item.getId());
-                    ht.put("parentId", item.getParentId());
-                    selectList.add(ht);
+                    Map<String, Object> htItem = new HashMap<>(16);
+                    htItem.put("dictType",dictionaryTypeEntity.getEnCode());
+                    htItem.put("lable", item.getFullName());
+                    htItem.put("value", item.getId());
+                    htItem.put("parentId", dictionaryTypeEntity.getId());
+                    list.add(htItem);
                 }
-                List<DictionaryDataExportModel> jsonToList = JsonUtil.getJsonToList(selectList, DictionaryDataExportModel.class);
-                //==============转换树
-                List<SumTree<DictionaryDataExportModel>> list1 = TreeDotUtils.convertListToTreeDot(jsonToList);
-                List<DictionaryDataEntity> list2 = JsonUtil.getJsonToList(list1, DictionaryDataEntity.class);
-                //==============
-                Map<String, Object> htItem = new HashMap<>(16);
-                htItem.put("id", dictionaryTypeEntity.getId());
-                htItem.put("enCode", dictionaryTypeEntity.getEnCode());
-                htItem.put("dictionaryList", list2);
-                htItem.put("isTree", 1);
-                list.add(htItem);
-            } else {
-                List<Map<String, Object>> selectList = new ArrayList<>();
-                for (DictionaryDataEntity item : childNodeList) {
-                    Map<String, Object> ht = new HashMap<>(16);
-                    ht.put("enCode", item.getEnCode());
-                    ht.put("id", item.getId());
-                    ht.put("fullName", item.getFullName());
-                    selectList.add(ht);
-                }
-                Map<String, Object> htItem = new HashMap<>(16);
-                htItem.put("id", dictionaryTypeEntity.getId());
-                htItem.put("enCode", dictionaryTypeEntity.getEnCode());
-                htItem.put("dictionaryList", selectList);
-                htItem.put("isTree", 0);
-                list.add(htItem);
-            }
         }
         ListVO<Map<String, Object>> vo = new ListVO<>();
         vo.setList(list);
