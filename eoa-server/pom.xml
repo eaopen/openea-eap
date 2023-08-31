@@ -51,6 +51,12 @@
         <!--            <version>${revision}</version>-->
         <!--        </dependency>-->
 
+        <!-- 微信公众号管理 -->
+        <dependency>
+            <groupId>org.openea.eap</groupId>
+            <artifactId>eap-mp-biz</artifactId>
+            <version>${revision}</version>
+        </dependency>
 
         <dependency>
             <groupId>org.openea.eap</groupId>
