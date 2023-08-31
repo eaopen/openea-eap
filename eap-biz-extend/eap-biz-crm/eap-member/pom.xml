@@ -4,22 +4,23 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <groupId>org.openea.eap</groupId>
-        <artifactId>eap-biz-extend</artifactId>
+        <artifactId>eap-biz-crm</artifactId>
         <version>${revision}</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>eap-biz-crm</artifactId>
+    <artifactId>eap-member</artifactId>
     <packaging>pom</packaging>
 
     <name>${project.artifactId}</name>
     <description>
-        CRM相关
+        CRM相关 会员member
     </description>
 
     <modules>
 
         <!-- member 模块，我们放会员业务 -->
-        <module>eap-member</module>
+        <module>eap-module-member-api</module>
+        <module>eap-module-member-biz</module>
     </modules>
 
     <profiles>

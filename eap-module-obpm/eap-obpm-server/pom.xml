@@ -53,7 +53,7 @@
             <exclusions>
                 <exclusion>
                     <groupId>org.openea.eap</groupId>
-                    <artifactId>>eap-module-obpm-adapter</artifactId>
+                    <artifactId>>eap-obpm-adapter</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>

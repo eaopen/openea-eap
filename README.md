@@ -3,7 +3,7 @@ This project is licensed under the terms of the MIT license.
 ## 概述 
 开放企业应用平台，整合各种开源项目作为企业应用快速开发的基础框架，支持i8n国际化。
 
-本次改版以芋道开源 YunaiV/ruoyi-vue-pro (MIT许可)为基础改版，整合OBPM、MSP、Jeecg等开源项目的部分模块。
+本次改版以芋道开源 YunaiV/ruoyi-vue-pro (MIT许可)为基础改版，整合OBPM、MSP、Jeecg、MCMS等开源项目的部分模块。
 OpenEAP前后端分离，采用后端Spring boot 2.x单体多模块，前端vue2+element-UI 主流路线，预留无缝升级机制。
 单体服务无缝切换为微服务（部分完成）。
 
@@ -296,6 +296,11 @@ https://github.com/zhangdaiscott/jeecg-boot
 
 https://help.jeecg.com/
 
+* MCMS
+
+基于Spring、SpringMVC、Mybatis架构，MStore提供更多好用的插件与模板（文章、商城、微信、论坛、会员、评论、支付、积分、工作流、任务调度等，同时提供上百套免费模板任意选择），价值源自分享！
+
+https://github.com/ming-soft/MCMS
 
 * eladmin
 

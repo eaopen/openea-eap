@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <modules>
-
+        <module>eap-mp</module>
     </modules>
     <artifactId>eap-biz-cms</artifactId>
     <packaging>pom</packaging>

@@ -4,31 +4,23 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <groupId>org.openea.eap</groupId>
-        <artifactId>eap-biz-extend</artifactId>
+        <artifactId>eap-member</artifactId>
         <version>${revision}</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>eap-biz-crm</artifactId>
-    <packaging>pom</packaging>
+    <artifactId>eap-module-member-api</artifactId>
+    <packaging>jar</packaging>
 
     <name>${project.artifactId}</name>
     <description>
-        CRM相关
+        member 模块 API，暴露给其它模块调用
     </description>
 
-    <modules>
-
-        <!-- member 模块，我们放会员业务 -->
-        <module>eap-member</module>
-    </modules>
-
-    <profiles>
-        <!-- SpringCloud运行环境 -->
-        <profile>
-            <id>springCloud</id>
-            <modules>
-            </modules>
-        </profile>
-    </profiles>
+    <dependencies>
+        <dependency>
+            <groupId>org.openea.eap</groupId>
+            <artifactId>eap-common</artifactId>
+        </dependency>
+    </dependencies>
 
 </project>

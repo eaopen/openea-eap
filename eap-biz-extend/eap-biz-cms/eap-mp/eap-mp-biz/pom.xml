@@ -4,23 +4,23 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <groupId>org.openea.eap</groupId>
-        <artifactId>eap-biz-crm</artifactId>
+        <artifactId>eap-mp</artifactId>
         <version>${revision}</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>eap-module-member-biz</artifactId>
+    <artifactId>eap-mp-biz</artifactId>
     <packaging>jar</packaging>
 
     <name>${project.artifactId}</name>
     <description>
-        member 模块，我们放会员业务。
-        例如说：会员中心等等
+        mp 模块，我们放微信微信公众号。
+        例如说：提供微信公众号的账号、菜单、粉丝、标签、消息、自动回复、素材、模板通知、运营数据等功能
     </description>
 
     <dependencies>
         <dependency>
             <groupId>org.openea.eap</groupId>
-            <artifactId>eap-module-member-api</artifactId>
+            <artifactId>eap-mp-api</artifactId>
             <version>${revision}</version>
         </dependency>
         <dependency>
@@ -42,6 +42,10 @@
         <dependency>
             <groupId>org.openea.eap</groupId>
             <artifactId>eap-spring-boot-starter-biz-weixin</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.openea.eap</groupId>
+            <artifactId>eap-spring-boot-starter-biz-tenant</artifactId>
         </dependency>
 
         <!-- Web 相关 -->
@@ -80,13 +84,11 @@
         </dependency>
 
         <!-- 工具类相关 -->
-
-
         <dependency>
             <groupId>org.openea.eap</groupId>
-            <artifactId>eap-spring-boot-starter-biz-tenant</artifactId>
+            <artifactId>eap-spring-boot-starter-excel</artifactId>
         </dependency>
-    </dependencies>
 
+    </dependencies>
 
 </project>
