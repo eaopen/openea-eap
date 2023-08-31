@@ -24,8 +24,9 @@
         <module>eap-module-infra</module>
         <module>eap-module-lowcode</module>
         <module>eap-module-obpm</module>
-        <!-- 示例项目 -->
-<!--        <module>eap-biz-extend/eap-example</module>-->
+
+        <!-- 扩展项目，包含示例项目 -->
+        <module>eap-biz-extend</module>
 
     </modules>
 
@@ -237,16 +238,6 @@
                 </dependencies>
             </dependencyManagement>
         </profile>
-        <profile>
-            <id>bizExtend</id>
-            <activation>
-                <activeByDefault>false</activeByDefault>
-            </activation>
-            <modules>
-                <module>eap-biz-extend</module>
-            </modules>
-        </profile>
-
     </profiles>
 
 </project>
