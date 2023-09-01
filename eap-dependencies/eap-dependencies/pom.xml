@@ -68,6 +68,7 @@
         <netty-all.version>4.1.90.Final</netty-all.version>
         <ip2region.version>2.7.0</ip2region.version>
         <commons-fileupload.version>1.5</commons-fileupload.version>
+        <sa-token.version>1.31.0</sa-token.version>
         <!-- 三方云服务相关 -->
         <okio.version>3.4.0</okio.version>
         <okhttp3.version>4.10.0</okhttp3.version>
@@ -655,8 +656,13 @@
             <!-- 安全认证 -->
             <dependency>
                 <groupId>cn.dev33</groupId>
-                <artifactId>sa-token</artifactId>
-                <version>1.6.0</version>
+                <artifactId>sa-token-spring-boot-starter</artifactId>
+                <version>${sa-token.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.dev33</groupId>
+                <artifactId>sa-token-core</artifactId>
+                <version>${sa-token.version}</version>
             </dependency>
 
             <!--二维码-->

@@ -19,6 +19,17 @@
 
         <dependency>
             <groupId>org.openea.eap</groupId>
+            <artifactId>eap-extj-common</artifactId>
+            <version>${revision}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.dev33</groupId>
+            <artifactId>sa-token-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.openea.eap</groupId>
             <artifactId>eap-visualdev-base-biz</artifactId>
             <version>${project.version}</version>
         </dependency>

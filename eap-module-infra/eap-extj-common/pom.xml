@@ -37,6 +37,23 @@
 
         <dependency>
             <groupId>org.openea.eap</groupId>
+            <artifactId>eap-module-system-biz</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>cn.dev33</groupId>
+            <artifactId>sa-token-spring-boot-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.dev33</groupId>
+            <artifactId>sa-token-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.openea.eap</groupId>
             <artifactId>eap-spring-boot-starter-mybatis</artifactId>
         </dependency>
 
