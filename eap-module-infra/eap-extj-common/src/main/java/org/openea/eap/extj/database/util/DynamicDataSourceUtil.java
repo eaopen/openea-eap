@@ -12,9 +12,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.map.LRUMap;
 import org.openea.eap.extj.config.ConfigValueUtil;
 import org.openea.eap.extj.database.model.entity.DbLinkEntity;
+import org.openea.eap.extj.database.source.impl.DbOracle;
 import org.openea.eap.extj.exception.DataException;
 import org.openea.eap.extj.util.StringUtil;
 import org.openea.eap.extj.util.data.DataSourceContextHolder;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
@@ -34,13 +36,13 @@ public class DynamicDataSourceUtil {
     private static DefaultDataSourceCreator defaultDataSourceCreator;
     private static ConfigValueUtil configValueUtil;
 
-//    public DynamicDataSourceUtil(@Qualifier("dataSourceSystem") DataSource dynamicRoutingDataSource, DynamicDataSourceProperties dynamicDataSourceProperties, DefaultDataSourceCreator defaultDataSourceCreator, ConfigValueUtil configValueUtil, DataSourceUtil dataSourceUtil) {
-//        DynamicDataSourceUtil.dynamicRoutingDataSource = (DynamicRoutingDataSource)dynamicRoutingDataSource;
-//        DynamicDataSourceUtil.dynamicDataSourceProperties = dynamicDataSourceProperties;
-//        DynamicDataSourceUtil.defaultDataSourceCreator = defaultDataSourceCreator;
-//        DynamicDataSourceUtil.configValueUtil = configValueUtil;
-//        DynamicDataSourceUtil.dataSourceUtil = dataSourceUtil;
-//    }
+    public DynamicDataSourceUtil(DataSource dynamicRoutingDataSource, DynamicDataSourceProperties dynamicDataSourceProperties, DefaultDataSourceCreator defaultDataSourceCreator, ConfigValueUtil configValueUtil, DataSourceUtil dataSourceUtil) {
+        DynamicDataSourceUtil.dynamicRoutingDataSource = (DynamicRoutingDataSource)dynamicRoutingDataSource;
+        DynamicDataSourceUtil.dynamicDataSourceProperties = dynamicDataSourceProperties;
+        DynamicDataSourceUtil.defaultDataSourceCreator = defaultDataSourceCreator;
+        DynamicDataSourceUtil.configValueUtil = configValueUtil;
+        DynamicDataSourceUtil.dataSourceUtil = dataSourceUtil;
+    }
 
     public static void switchToDataSource(String userName, String password, String url, String dbType) throws DataException, SQLException {
         String tenantId = (String) Optional.ofNullable(DataSourceContextHolder.getDatasourceId()).orElse("");
@@ -143,13 +145,13 @@ public class DynamicDataSourceUtil {
         dataSourceProperty.setDruid(dynamicDataSourceProperties.getDruid());
         dataSourceProperty.setLazy(true);
         dataSourceProperty.getDruid().setBreakAfterAcquireFailure(true);
-//        if (dataSourceProperty.getDruid().getValidationQuery() == null && (DbTypeUtil.checkKingbase(dbLinkEntity) || DbTypeUtil.checkDM(dbLinkEntity))) {
-//            dataSourceProperty.getDruid().setValidationQuery("select 1;");
-//        }
+        if (dataSourceProperty.getDruid().getValidationQuery() == null && (DbTypeUtil.checkKingbase(dbLinkEntity) || DbTypeUtil.checkDM(dbLinkEntity))) {
+            dataSourceProperty.getDruid().setValidationQuery("select 1;");
+        }
 
-//        if (DbTypeUtil.checkOracle(dbLinkEntity)) {
-//            dataSourceProperty.getDruid().setConnectionProperties(DbOracle.setConnProp("Default", dbLinkEntity.getUserName(), dbLinkEntity.getPassword()));
-//        }
+        if (DbTypeUtil.checkOracle(dbLinkEntity)) {
+            dataSourceProperty.getDruid().setConnectionProperties(DbOracle.setConnProp("Default", dbLinkEntity.getUserName(), dbLinkEntity.getPassword()));
+        }
 
         return dataSourceProperty;
     }

@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
+import org.openea.eap.extj.database.model.dto.PrepSqlDTO;
 import org.openea.eap.extj.database.util.DataSourceUtil;
 
 import java.util.Date;
@@ -52,9 +53,7 @@ public class DbLinkEntity extends DataSourceUtil {
     private Boolean oracleExtend;
 
     public static DbLinkEntity newInstance(String dbLinkId) {
-        // TODO
-        //return (DbLinkEntity)PrepSqlDTO.DB_LINK_FUN.apply(dbLinkId);
-        return null;
+        return (DbLinkEntity) PrepSqlDTO.DB_LINK_FUN.apply(dbLinkId);
     }
     public DbLinkEntity(){}
 

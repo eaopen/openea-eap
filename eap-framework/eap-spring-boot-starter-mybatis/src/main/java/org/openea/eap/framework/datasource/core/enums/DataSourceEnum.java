@@ -19,6 +19,9 @@ public interface DataSourceEnum {
      */
     String SLAVE = "slave";
 
+    /**
+     * OpenBPM database
+     */
     String OBPM = "obpm";
 
 }

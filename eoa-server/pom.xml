@@ -44,19 +44,13 @@
             <version>${revision}</version>
         </dependency>
 
-        <!-- 工作流集成 OpenBPM -->
-        <!--        <dependency>-->
-        <!--            <groupId>org.openea.eap</groupId>-->
-        <!--            <artifactId>eap-module-obpm-biz</artifactId>-->
-        <!--            <version>${revision}</version>-->
-        <!--        </dependency>-->
 
         <!-- 微信公众号管理 -->
-        <dependency>
-            <groupId>org.openea.eap</groupId>
-            <artifactId>eap-mp-biz</artifactId>
-            <version>${revision}</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.openea.eap</groupId>-->
+<!--            <artifactId>eap-mp-biz</artifactId>-->
+<!--            <version>${revision}</version>-->
+<!--        </dependency>-->
 
         <dependency>
             <groupId>org.openea.eap</groupId>

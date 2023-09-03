@@ -8,6 +8,7 @@ import org.openea.eap.extj.database.util.ConnUtil;
 import org.openea.eap.extj.database.util.DataSourceUtil;
 import org.openea.eap.extj.database.util.DynamicDataSourceUtil;
 
+import org.openea.eap.extj.database.util.TenantDataSourceUtil;
 import org.openea.eap.extj.exception.DataException;
 import org.openea.eap.extj.util.XSSEscape;
 import org.openea.eap.extj.util.context.SpringContext;
@@ -114,7 +115,7 @@ public class PrepSqlDTO {
                     DynamicDataSourceUtil.switchToDataSource(dbLinkEntity.getUserName(), dbLinkEntity.getPassword(), dbLinkEntity.getUrl(), dbLinkEntity.getDbType());
                 }else{
                     //初始化租户系统指定源
-//                    TenantDataSourceUtil.initTenantAssignDataSource();
+                    TenantDataSourceUtil.initTenantAssignDataSource();
                     //切换只主库
                     DynamicDataSourceUtil.switchToDataSource(null);
                 }

@@ -49,6 +49,7 @@ public class DictDataServiceImplExt extends DictDataServiceImpl implements DictD
         return Collections.emptyList();
     }
 
+
     public List<DictDataDO> getDictDataListByJson(String dictType){
         List<DictDataDO> dictDataList = new ArrayList<>();
         try{
@@ -62,6 +63,19 @@ public class DictDataServiceImplExt extends DictDataServiceImpl implements DictD
                 dictData.setExtendProps(jsonItem);
                 dictDataList.add(dictData);
             }
+        }catch (Throwable t){
+            log.warn(t.getMessage());
+        }
+        return dictDataList;
+    }
+
+    public List<DictDataDO> getDictDataListBySql(String dictType){
+        List<DictDataDO> dictDataList = new ArrayList<>();
+        try{
+            DictTypeDO dictTypeDO = this.dictTypeService.getDictType(dictType);
+            String ds = dictTypeDO.getDataDs();
+            String sql = dictTypeDO.getDataSql();
+
         }catch (Throwable t){
             log.warn(t.getMessage());
         }

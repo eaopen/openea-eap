@@ -4,9 +4,14 @@ import org.openea.eap.extj.database.model.TenantVO;
 import org.openea.eap.extj.database.model.interfaces.DbSourceOrDbLink;
 import org.openea.eap.extj.exception.LoginException;
 
+/**
+ * disable tenant
+ */
 public class TenantDataSourceUtil {
 
-
+    public static boolean isMultiTenancy() {
+        return false;
+    }
 
     public static boolean isTenantAssignDataSource() {
         return false;
@@ -22,4 +27,11 @@ public class TenantDataSourceUtil {
         return null;
     }
 
+
+    public static String getTenantSchema() {
+        return null;
+    }
+
+    public static void initTenantAssignDataSource() {
+    }
 }
