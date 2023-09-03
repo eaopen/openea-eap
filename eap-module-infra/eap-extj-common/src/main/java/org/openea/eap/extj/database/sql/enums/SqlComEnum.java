@@ -55,25 +55,23 @@ public enum SqlComEnum implements SqlFrameBase {
 
     public SqlFrameBase getSqlFrameEnum(String dbEncode) {
         if (this.getFrameEnums() != null) {
-            Iterator var2 = this.getFrameEnums().iterator();
-
-            while(var2.hasNext()) {
-                SqlFrameBase sqlEnum = (SqlFrameBase)var2.next();
-                if (sqlEnum.getDbEncode().equals(dbEncode)) {
+            Iterator it = this.getFrameEnums().iterator();
+            while(it.hasNext()) {
+                SqlFrameBase sqlEnum = (SqlFrameBase)it.next();
+                if (sqlEnum.getDbEncode().equalsIgnoreCase(dbEncode)) {
                     return sqlEnum;
                 }
             }
         }
-
         return null;
     }
 
     public SqlFrameBase getSqlFrameEnum(SqlFrameBase sqlFrameBase) {
         if (this.getFrameEnums() != null) {
-            Iterator var2 = this.getFrameEnums().iterator();
+            Iterator it = this.getFrameEnums().iterator();
 
-            while(var2.hasNext()) {
-                SqlFrameBase sqlEnum = (SqlFrameBase)var2.next();
+            while(it.hasNext()) {
+                SqlFrameBase sqlEnum = (SqlFrameBase)it.next();
                 if (sqlEnum.equals(sqlFrameBase)) {
                     return sqlEnum;
                 }

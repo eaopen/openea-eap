@@ -7,6 +7,7 @@ import org.openea.eap.extj.database.source.DbBase;
 import org.openea.eap.extj.database.sql.model.DbStruct;
 import org.openea.eap.extj.database.sql.util.SqlFrameUtil;
 import org.openea.eap.extj.database.util.DbTypeUtil;
+import org.openea.eap.extj.database.util.TenantDataSourceUtil;
 import org.openea.eap.extj.exception.DataException;
 import org.openea.eap.extj.util.StringUtil;
 
@@ -26,7 +27,7 @@ public interface SqlFrameBase {
 
     default PrepSqlDTO getPrepSqlDto(DbSourceOrDbLink dataSourceMod, String table) {
         List<String> list = new ArrayList();
-        //TenantDataSourceUtil.initDataSourceTenantDbName(dataSourceMod);
+        TenantDataSourceUtil.initDataSourceTenantDbName(dataSourceMod);
         this.setStructParams(table, dataSourceMod.getDbStruct(), list);
         return (new PrepSqlDTO(this.getSqlFrame(), list)).withConn((DbLinkEntity)dataSourceMod);
     }

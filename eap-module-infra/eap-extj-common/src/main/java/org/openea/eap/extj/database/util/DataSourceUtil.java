@@ -121,4 +121,23 @@ public class DataSourceUtil implements DbSourceOrDbLink {
         dbStruct.setOracleParam(getOracleParam());
         return dbStruct;
     }
+
+    public DataSourceUtil() {
+    }
+
+
+    public static String getDbNameFromJdbcUrl(String jdbcUrl) {
+        String url = jdbcUrl;
+        if(jdbcUrl.contains("?")){
+            url = jdbcUrl.split("\\?")[0];
+        }
+        String[] parts = url.split("/");
+        if (parts.length > 0) {
+            String dbName = parts[parts.length - 1];
+            return dbName;
+        }
+        return null;
+    }
+
+
 }

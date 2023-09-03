@@ -9,5 +9,5 @@ import java.util.Map;
 
 @Mapper
 public interface JdbcMapper extends BaseMapper<Object> {
-    List<Map<String, Object>> getList(@Param("sql") String var1);
+    List<Map<String, Object>> getList(@Param("sql") String sql);
 }

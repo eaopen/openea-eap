@@ -8,5 +8,5 @@ public interface DbSourceOrDbLink {
 
     DbLinkEntity init();
 
-    DbLinkEntity init(String var1);
+    DbLinkEntity init(String dbName);
 }

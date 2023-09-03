@@ -25,6 +25,11 @@
         </dependency>
 
         <dependency>
+            <groupId>org.openea.eap</groupId>
+            <artifactId>eap-spring-boot-starter-mybatis</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>org.mybatis.dynamic-sql</groupId>
             <artifactId>mybatis-dynamic-sql</artifactId>
         </dependency>

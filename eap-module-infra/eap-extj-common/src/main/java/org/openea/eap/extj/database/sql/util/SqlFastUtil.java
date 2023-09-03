@@ -256,7 +256,7 @@ public class SqlFastUtil {
 
     public static List<DbTableFieldModel> getTableList(DbLinkEntity dbLinkEntity, String methodName) throws Exception {
         NotTenantPluginHolder.setNotSwitchFlag();
-        List list;
+        List list = null;
         if (StringUtil.isNotEmpty(methodName) && DbAliasEnum.TABLE_TYPE.getAlias().equals(methodName)) {
             list = JdbcUtil.queryCustomMods(SqlComEnum.TABLESANDVIEW.getPrepSqlDto(dbLinkEntity, ""), DbTableFieldModel.class);
             return (List)list.stream().sorted(Comparator.comparing(DbTableFieldModel::getType).thenComparing(DbTableModelBase::getTable)).collect(Collectors.toList());

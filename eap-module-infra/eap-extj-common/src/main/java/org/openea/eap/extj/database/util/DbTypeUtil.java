@@ -142,7 +142,7 @@ public class DbTypeUtil {
 
         for(int var4 = 0; var4 < var3; ++var4) {
             String enEncode = var2[var4];
-            if (enEncode.equals(dbType)) {
+            if (enEncode.equalsIgnoreCase(dbType)) {
                 return enEncode;
             }
         }

@@ -7,7 +7,6 @@ import org.openea.eap.extj.database.model.entity.DbLinkEntity;
 import org.openea.eap.extj.database.util.ConnUtil;
 import org.openea.eap.extj.database.util.DataSourceUtil;
 import org.openea.eap.extj.database.util.DynamicDataSourceUtil;
-
 import org.openea.eap.extj.database.util.TenantDataSourceUtil;
 import org.openea.eap.extj.exception.DataException;
 import org.openea.eap.extj.util.XSSEscape;
@@ -23,21 +22,10 @@ import java.util.function.Function;
 @Accessors(chain = true)
 public class PrepSqlDTO {
 
-    private static DataSource getDataSource(){
-        return SpringContext.getBean(DataSource.class);
-    }
-
     /**
      * 数据连接方法接口函数
      */
     public static Function<String, DbLinkEntity> DB_LINK_FUN;
-
-    /**
-     * conn连接
-     */
-//    @Getter(value = AccessLevel.NONE)
-//    @Setter(value = AccessLevel.NONE)
-//    private Connection connection;
 
     private DbLinkEntity dbLinkEntity;
 
@@ -61,11 +49,18 @@ public class PrepSqlDTO {
      * SQL命令类型
      */
     private String sqlCommandType;
+
+
     public final static String INSERT = "insert";
     public final static String DELETE = "delete";
     public final static String UPDATE = "update";
     public final static String SELECT = "select";
     public final static String CRE_UP_DE = "creUpDe";
+
+
+    private static DataSource getDataSource(){
+        return SpringContext.getBean(DataSource.class);
+    }
 
     /**
      * 获取切源后的数据源连接, 并清除自动切源记录
@@ -76,9 +71,9 @@ public class PrepSqlDTO {
     public static Connection getConn(DbLinkEntity dbLinkEntity) throws DataException {
         try{
             return new PrepSqlDTO().withConn(dbLinkEntity).switchConn().getConnection();
-        }catch (SQLException d){
-            d.printStackTrace();
-            throw new DataException(d.getMessage());
+        }catch (SQLException e){
+            e.printStackTrace();
+            throw new DataException(e.getMessage());
         }
     }
 
@@ -106,23 +101,21 @@ public class PrepSqlDTO {
      * @throws DataException
      */
     public PrepSqlDTO switchConn() throws SQLException, DataException {
-        if(this.dbLinkEntity != null){
-            if(this.dbLinkEntity.getId() != null && !"0".equals(this.dbLinkEntity.getId())){
-                // 增加并切换数据源
-                DynamicDataSourceUtil.switchToDataSource(dbLinkEntity);
-            }else {
-                if(dbLinkEntity.getUrl() != null){
-                    DynamicDataSourceUtil.switchToDataSource(dbLinkEntity.getUserName(), dbLinkEntity.getPassword(), dbLinkEntity.getUrl(), dbLinkEntity.getDbType());
-                }else{
-                    //初始化租户系统指定源
-                    TenantDataSourceUtil.initTenantAssignDataSource();
-                    //切换只主库
-                    DynamicDataSourceUtil.switchToDataSource(null);
-                }
-            }
-        }else {
+        if (this.dbLinkEntity == null) {
             throw new SQLException("dbLinkEntity数据库连接对象不能为空");
         }
+        if(this.dbLinkEntity.getId() != null && !"0".equals(this.dbLinkEntity.getId())){
+            // 增加并切换数据源
+            DynamicDataSourceUtil.switchToDataSource(dbLinkEntity);
+        }else if(dbLinkEntity.getUrl() != null){
+            DynamicDataSourceUtil.switchToDataSource(dbLinkEntity.getUserName(), dbLinkEntity.getPassword(), dbLinkEntity.getUrl(), dbLinkEntity.getDbType());
+        }else{
+            //初始化租户系统指定源
+            TenantDataSourceUtil.initTenantAssignDataSource();
+            //切换只主库
+            DynamicDataSourceUtil.switchToDataSource(null);
+        }
+
         return this;
     }
 

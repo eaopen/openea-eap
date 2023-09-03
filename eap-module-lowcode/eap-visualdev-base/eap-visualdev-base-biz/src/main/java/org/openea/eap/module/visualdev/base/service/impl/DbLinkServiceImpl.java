@@ -1,7 +1,10 @@
 package org.openea.eap.module.visualdev.base.service.impl;
 
+import cn.hutool.core.util.ObjectUtil;
+import com.alibaba.druid.pool.DruidDataSource;
 import com.baomidou.dynamic.datasource.DynamicRoutingDataSource;
 import com.baomidou.dynamic.datasource.annotation.DSTransactional;
+import com.baomidou.dynamic.datasource.ds.ItemDataSource;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -192,7 +195,7 @@ public class DbLinkServiceImpl extends SuperServiceImpl<DbLinkMapper, DbLinkEnti
             if(TenantDataSourceUtil.isTenantAssignDataSource()){
                 // 默认数据库, 租户管理指定租户数据源
 //                dbLinkEntity = TenantDataSourceUtil.getTenantAssignDataSource(DataSourceContextHolder.getDatasourceId()).toDbLinkEntity();
-//                dbLinkEntity.setId("0");
+                dbLinkEntity.setId("0");
             }else {
                 // 默认数据库查询，从配置获取数据源信息
                 BeanUtils.copyProperties(dataSourceUtils, dbLinkEntity);
@@ -214,6 +217,27 @@ public class DbLinkServiceImpl extends SuperServiceImpl<DbLinkMapper, DbLinkEnti
 
     @Override
     public void afterPropertiesSet(){
+        // fix dataSourceUtils is empty
+        if(dataSource!=null
+                && dataSourceUtils!=null && ObjectUtil.isEmpty(dataSourceUtils.getDbName())){
+            if(dataSource instanceof DynamicRoutingDataSource){
+                DruidDataSource druidDs =  (DruidDataSource)((ItemDataSource)((DynamicRoutingDataSource)dataSource).getDataSource("master")).getRealDataSource();
+                BeanUtils.copyProperties(druidDs, dataSourceUtils);
+                dataSourceUtils.setDriver(druidDs.getDriverClassName());
+                String dbType = druidDs.getDbType();
+                for(int i=0; i<DbBase.DB_ENCODES.length; i++){
+                    if(DbBase.DB_ENCODES[i].equalsIgnoreCase(dbType)){
+                        dbType = DbBase.DB_ENCODES[i];
+                        break;
+                    }
+                }
+                dataSourceUtils.setDbType(dbType);
+                String dbName = DataSourceUtil.getDbNameFromJdbcUrl(druidDs.getUrl());
+                dataSourceUtils.setDbName(dbName);
+                dataSourceUtils.setUserName(druidDs.getUsername());
+            }
+        }
+
         PrepSqlDTO.DB_LINK_FUN = (dbLinkId)-> {
             try {
                 return (DbLinkEntity) getResource(dbLinkId);
@@ -223,5 +247,7 @@ public class DbLinkServiceImpl extends SuperServiceImpl<DbLinkMapper, DbLinkEnti
             return null;
         };
     }
+
+
 
 }

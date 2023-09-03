@@ -1,5 +1,6 @@
 package org.openea.eap.extj.database.util;
 
+import cn.hutool.core.util.ObjectUtil;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.baomidou.dynamic.datasource.DynamicRoutingDataSource;
 import com.baomidou.dynamic.datasource.creator.DefaultDataSourceCreator;
@@ -16,7 +17,6 @@ import org.openea.eap.extj.database.source.impl.DbOracle;
 import org.openea.eap.extj.exception.DataException;
 import org.openea.eap.extj.util.StringUtil;
 import org.openea.eap.extj.util.data.DataSourceContextHolder;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
@@ -46,6 +46,10 @@ public class DynamicDataSourceUtil {
 
     public static void switchToDataSource(String userName, String password, String url, String dbType) throws DataException, SQLException {
         String tenantId = (String) Optional.ofNullable(DataSourceContextHolder.getDatasourceId()).orElse("");
+        if(ObjectUtil.isEmpty(tenantId) || "0".equals(tenantId)){
+            return;
+        }
+
         String dbKey = tenantId + userName + password + url;
         DbLinkEntity dbLinkEntity = new DbLinkEntity();
         dbLinkEntity.setId(dbKey);
@@ -104,13 +108,12 @@ public class DynamicDataSourceUtil {
             }
 
         } else {
-//            if (TenantDataSourceUtil.isTenantAssignDataSource()) {
+            if (TenantDataSourceUtil.isTenantAssignDataSource()) {
                 dbKey = DataSourceContextHolder.getDatasourceId() + "-" + "master";
                 DynamicDataSourceContextHolder.push(dbKey);
-//            } else {
-//                DynamicDataSourceContextHolder.push((String)null);
-//            }
-
+            } else {
+                DynamicDataSourceContextHolder.push((String)null);
+            }
         }
     }
 

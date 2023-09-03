@@ -93,7 +93,7 @@ public class JdbcUtil {
             SqlSession sqlSession = getSqlSessionFactory().openSession();
 
             try {
-                var2 = sqlSession.update("jnpf.database.mapper.JdbcMapper.delete", dto.getMapParams());
+                var2 = sqlSession.update("org.openea.eap.extj.database.mapper.JdbcMapper.delete", dto.getMapParams());
             } finally {
                 if (Collections.singletonList(sqlSession).get(0) != null) {
                     sqlSession.close();
@@ -115,7 +115,7 @@ public class JdbcUtil {
             SqlSession sqlSession = getSqlSessionFactory().openSession();
 
             try {
-                var2 = sqlSession.update("jnpf.database.mapper.JdbcMapper.insert", dto.getMapParams());
+                var2 = sqlSession.update("org.openea.eap.extj.database.mapper.JdbcMapper.insert", dto.getMapParams());
             } finally {
                 if (Collections.singletonList(sqlSession).get(0) != null) {
                     sqlSession.close();
@@ -275,7 +275,7 @@ public class JdbcUtil {
             SqlSession sqlSession = getSqlSessionFactory().openSession();
 
             try {
-                sqlSession.select("jnpf.database.mapper.JdbcMapper.getList", dto.getMapParams(), handler);
+                sqlSession.select("org.openea.eap.extj.database.mapper.JdbcMapper.getList", dto.getMapParams(), handler);
             } finally {
                 if (Collections.singletonList(sqlSession).get(0) != null) {
                     sqlSession.close();
@@ -310,7 +310,7 @@ public class JdbcUtil {
             SqlSession sqlSession = getSqlSessionFactory().openSession();
 
             try {
-                sqlSession.select("jnpf.database.mapper.JdbcMapper.getList", dto.getMapParams(), handler);
+                sqlSession.select("org.openea.eap.extj.database.mapper.JdbcMapper.getList", dto.getMapParams(), handler);
             } finally {
                 if (Collections.singletonList(sqlSession).get(0) != null) {
                     sqlSession.close();
@@ -337,15 +337,15 @@ public class JdbcUtil {
                     t.setMod(new ModelDTO(ResetSetHolder.getResultSet(), dbEncode));
                     t =  XSSEscape.escapeObj(t);
                     customMods.add(t);
-                } catch (Exception var5) {
-                    var5.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
 
             };
             SqlSession sqlSession = getSqlSessionFactory().openSession();
 
             try {
-                sqlSession.select("jnpf.database.mapper.JdbcMapper.getList", dto.getMapParams(), handler);
+                sqlSession.select("org.openea.eap.extj.database.mapper.JdbcMapper.getList", dto.getMapParams(), handler);
             } finally {
                 if (Collections.singletonList(sqlSession).get(0) != null) {
                     sqlSession.close();
