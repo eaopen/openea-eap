@@ -327,9 +327,9 @@ public class JdbcUtil {
     public static <T extends JdbcGetMod> List<T> getMybatisModel2(PrepSqlDTO dto, Class<T> modType) throws Exception {
         dto.switchConn();
 
-        List<T> customMods = new ArrayList();
-        try {
 
+        try {
+            List<T> customMods = new ArrayList();
             String dbEncode = dto.getDbLinkEntity().getDbType();
             ResultHandler<?> handler = (handle) -> {
                 try {
@@ -352,11 +352,10 @@ public class JdbcUtil {
                 }
 
             }
+            return customMods;
         } finally {
             DynamicDataSourceUtil.clearSwitchDataSource();
         }
-
-        return customMods;
     }
 }
 

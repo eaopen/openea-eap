@@ -17,7 +17,6 @@ import org.openea.eap.extj.base.vo.DownloadVO;
 import org.openea.eap.extj.config.ConfigValueUtil;
 import org.openea.eap.extj.constant.MsgCode;
 import org.openea.eap.extj.exception.DataException;
-import org.openea.eap.extj.exception.WorkFlowException;
 import org.openea.eap.extj.message.entity.MessageDataTypeEntity;
 import org.openea.eap.extj.message.entity.MessageTemplateConfigEntity;
 import org.openea.eap.extj.message.entity.SmsFieldEntity;

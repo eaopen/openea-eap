@@ -1,7 +1,6 @@
 package org.openea.eap.framework.mybatis.config;
 
 import cn.hutool.core.util.StrUtil;
-import org.openea.eap.framework.mybatis.core.handler.DefaultDBFieldHandler;
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.baomidou.mybatisplus.core.incrementer.IKeyGenerator;
@@ -9,7 +8,10 @@ import com.baomidou.mybatisplus.extension.incrementer.*;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.plugin.Interceptor;
 import org.mybatis.spring.annotation.MapperScan;
+import org.openea.eap.extj.database.plugins.ResultSetInterceptor;
+import org.openea.eap.framework.mybatis.core.handler.DefaultDBFieldHandler;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
@@ -30,6 +32,11 @@ public class EapMybatisAutoConfiguration {
         MybatisPlusInterceptor mybatisPlusInterceptor = new MybatisPlusInterceptor();
         mybatisPlusInterceptor.addInnerInterceptor(new PaginationInnerInterceptor()); // 分页插件
         return mybatisPlusInterceptor;
+    }
+
+    @Bean
+    public Interceptor resultSetInterceptor(){
+        return new ResultSetInterceptor();
     }
 
     @Bean

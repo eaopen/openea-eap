@@ -14,7 +14,6 @@ import org.openea.eap.extj.base.entity.DictionaryTypeEntity;
 import org.openea.eap.extj.base.service.DictionaryDataService;
 import org.openea.eap.extj.base.service.DictionaryTypeService;
 import org.openea.eap.extj.base.vo.PageListVO;
-import org.openea.eap.extj.base.Pagination;
 import org.openea.eap.extj.base.vo.PaginationVO;
 import org.openea.eap.extj.constant.MsgCode;
 import org.openea.eap.extj.message.entity.MessageEntity;
