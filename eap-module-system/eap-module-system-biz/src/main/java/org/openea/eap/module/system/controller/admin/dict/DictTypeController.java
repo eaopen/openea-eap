@@ -1,5 +1,10 @@
 package org.openea.eap.module.system.controller.admin.dict;
 
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
+import org.openea.eap.extj.base.vo.ListVO;
+import org.openea.eap.extj.util.JsonUtil;
 import org.openea.eap.framework.common.pojo.CommonResult;
 import org.openea.eap.framework.common.pojo.PageResult;
 import org.openea.eap.framework.excel.core.util.ExcelUtils;
@@ -11,6 +16,8 @@ import org.openea.eap.module.system.service.dict.DictTypeService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Operation;
+import org.openea.eap.module.system.util.SumTree;
+import org.openea.eap.module.system.util.TreeDotUtils;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -84,7 +91,7 @@ public class DictTypeController {
     @GetMapping("/list-all-parent/{id}")
     @Operation(summary = "获取所有字典分类下拉框列表", description = "包括开启 + 禁用的字典类型，主要用于前端的下拉选项")
     // 无需添加权限认证，因为前端全局都需要
-    public CommonResult<List<Map<String,Object>>> getParentDictTypeList(@PathVariable(value = "id", required = true) String id) {
+    public CommonResult<Map<String,Object>> getParentDictTypeList(@PathVariable(value = "id", required = true) String id) {
         List<DictTypeDO> list = dictTypeService.getDictTypeList();
         if (!"0".equals(id)){
             list.remove(dictTypeService.getDictType(id));
@@ -95,40 +102,43 @@ public class DictTypeController {
                 Map<String,Object> map=new HashMap<>();
                 map.put("id",dictTypeDO.getId());
                 map.put("enCode",dictTypeDO.getType());
-                map.put("parentid","-1");
-                map.put("fullname",dictTypeDO.getName());
+                map.put("parentId","-1");
+                map.put("fullName",dictTypeDO.getName());
                 map.put("dataType",dictTypeDO.getDataType());
                 map.put("hasChildren",false);
+                map.put("children",Collections.emptyList());
                 listVo.add(map);
             }
         }
-        for (DictTypeDO dictTypeDO : list) {
-            if (dictTypeDO.getParentId()!=null && dictTypeDO.getParentId()!=0){
-                for (Map<String, Object> mapo : listVo) {
-                    if(mapo.get("id").equals(dictTypeDO.getParentId())){
-                        List<Map<String,Object>> list1=new ArrayList<>();
-                        Map<String,Object> map=new HashMap<>();
-                        map.put("id",dictTypeDO.getId());
-                        map.put("enCode",dictTypeDO.getType());
-                        map.put("parentid","-1");
-                        map.put("fullname",dictTypeDO.getName());
-                        map.put("hasChildren",false);
-                        map.put("dataType",dictTypeDO.getDataType());
-                        list1.add(map);
-                        if (mapo.get("children")!=null){
-                            List children = Collections.singletonList(mapo.get("children"));
-                            children.add(map);
-                            mapo.put("hasChildren",true);
-                            mapo.put("children",children);
-                        }else {
-                            mapo.put("hasChildren", true);
-                            mapo.put("children", list1);
-                        }
-                    }
-                }
-            }
-        }
-        return success(listVo);
+//        for (DictTypeDO dictTypeDO : list) {
+//            if (dictTypeDO.getParentId()!=null && dictTypeDO.getParentId()!=0){
+//                for (Map<String, Object> mapo : listVo) {
+//                    if(mapo.get("id").equals(dictTypeDO.getParentId())){
+//                        List<Map<String,Object>> list1=new ArrayList<>();
+//                        Map<String,Object> map=new HashMap<>();
+//                        map.put("id",dictTypeDO.getId());
+//                        map.put("enCode",dictTypeDO.getType());
+//                        map.put("parentid","-1");
+//                        map.put("fullname",dictTypeDO.getName());
+//                        map.put("hasChildren",false);
+//                        map.put("dataType",dictTypeDO.getDataType());
+//                        list1.add(map);
+//                        if (mapo.get("children")!=null){
+//                            List children = Collections.singletonList(mapo.get("children"));
+//                            children.add(map);
+//                            mapo.put("hasChildren",true);
+//                            mapo.put("children",children);
+//                        }else {
+//                            mapo.put("hasChildren", true);
+//                            mapo.put("children", list1);
+//                        }
+//                    }
+//                }
+//            }
+//        }
+        Map map=new HashMap();
+        map.put("list",listVo);
+        return success(map);
     }
 
     @Operation(summary = "导出数据类型")
@@ -142,4 +152,33 @@ public class DictTypeController {
         ExcelUtils.write(response, "字典类型.xls", "类型列表", DictTypeExcelVO.class, data);
     }
 
+//    /**
+//     * 获取字典分类
+//     *
+//     * @param dictionaryTypeId 分类id、分类编码
+//     * @return ignore
+//     */
+//    @ApiOperation("获取某个字典数据下拉框列表")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "dictionaryTypeId", value = "数据分类id", required = true)
+//    })
+//    @GetMapping("/{dictionaryTypeId}/Data/Selector")
+//    public CommonResult<List> selectorOneTreeView(@PathVariable("dictionaryTypeId") String dictionaryTypeId) {
+//        List<DictTypeDO> list = dictTypeService.getDictTypeList();
+//        List listVo=new ArrayList<>();
+//        for (DictTypeDO dictTypeDO : list) {
+//            if ((dictTypeDO.getId()!=null && dictTypeDO.getId().equals(dictionaryTypeId)) || (dictTypeDO.getParentId()!=null && dictTypeDO.getParentId().equals(dictionaryTypeId))){
+//                Map<String,Object> map=new HashMap<>();
+//                map.put("id",dictTypeDO.getId());
+//                map.put("enCode",dictTypeDO.getType());
+//                map.put("parentid",dictTypeDO.getParentId()!=null?dictTypeDO.getParentId():-1);
+//                map.put("fullname",dictTypeDO.getName());
+//                map.put("dataType",dictTypeDO.getDataType());
+//                listVo.add(map);
+//            }
+//        }
+//        List<SumTree<List>> sumTrees = TreeDotUtils.convertListToTreeDot(listVo);
+////        List list = JsonUtil.getJsonToList(sumTrees);
+//        return success(sumTrees);
+//    }
 }
