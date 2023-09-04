@@ -496,6 +496,12 @@
 
             <dependency>
                 <groupId>org.openea.eap</groupId>
+                <artifactId>eap-extj-common</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.openea.eap</groupId>
                 <artifactId>eap-spring-boot-starter-excel</artifactId>
                 <version>${revision}</version>
             </dependency>

@@ -10,12 +10,16 @@ import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerIntercept
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.plugin.Interceptor;
 import org.mybatis.spring.annotation.MapperScan;
+import org.openea.eap.extj.database.plugins.MyDynamicDataSourceAutoRollbackInterceptor;
+import org.openea.eap.extj.database.plugins.MyMasterSlaveAutoRoutingPlugin;
 import org.openea.eap.extj.database.plugins.ResultSetInterceptor;
 import org.openea.eap.framework.mybatis.core.handler.DefaultDBFieldHandler;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.ConfigurableEnvironment;
+
+import javax.sql.DataSource;
 
 /**
  * MyBaits 配置类
@@ -34,10 +38,22 @@ public class EapMybatisAutoConfiguration {
         return mybatisPlusInterceptor;
     }
 
+
+    @Bean
+    public Interceptor myMasterSlaveAutoRoutingPlugin(DataSource dataSource){
+        return  new MyMasterSlaveAutoRoutingPlugin(dataSource);
+    }
+
+    @Bean
+    public Interceptor myDynamicDataSourceAutoRollbackInterceptor(){
+        return new MyDynamicDataSourceAutoRollbackInterceptor();
+    }
+
     @Bean
     public Interceptor resultSetInterceptor(){
         return new ResultSetInterceptor();
     }
+
 
     @Bean
     public MetaObjectHandler defaultMetaObjectHandler(){

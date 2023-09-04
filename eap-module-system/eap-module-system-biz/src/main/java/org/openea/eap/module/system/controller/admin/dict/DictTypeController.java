@@ -1,10 +1,8 @@
 package org.openea.eap.module.system.controller.admin.dict;
 
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
-import org.openea.eap.extj.base.vo.ListVO;
-import org.openea.eap.extj.util.JsonUtil;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.openea.eap.framework.common.pojo.CommonResult;
 import org.openea.eap.framework.common.pojo.PageResult;
 import org.openea.eap.framework.excel.core.util.ExcelUtils;
@@ -13,11 +11,6 @@ import org.openea.eap.module.system.controller.admin.dict.vo.type.*;
 import org.openea.eap.module.system.convert.dict.DictTypeConvert;
 import org.openea.eap.module.system.dal.dataobject.dict.DictTypeDO;
 import org.openea.eap.module.system.service.dict.DictTypeService;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.Operation;
-import org.openea.eap.module.system.util.SumTree;
-import org.openea.eap.module.system.util.TreeDotUtils;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;

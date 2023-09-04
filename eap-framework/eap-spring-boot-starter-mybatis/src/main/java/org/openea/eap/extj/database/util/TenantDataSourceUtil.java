@@ -94,4 +94,10 @@ public class TenantDataSourceUtil {
     }
 
 
+    public static void removeAllAssignDataSource() {
+    }
+
+    public static String getTenantAssignDataSourceMasterKeyName() {
+        return "master";
+    }
 }
