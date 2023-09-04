@@ -70,7 +70,10 @@ public class InterfaceOauthController extends SuperController<InterfaceOauthServ
                 item.setTenantId(userProvider.get().getTenantId());
             }
             if (item.getCreatorUserId() != null) {
-                item.setCreatorUser(userService.getInfo(item.getCreatorUserId()).getRealName());
+                UserEntity user = userService.getInfo(item.getCreatorUserId());
+                if(user!=null){
+                    item.setCreatorUser(user.getRealName());
+                }
             }
         });
         PaginationVO paginationVO = JsonUtil.getJsonToBean(pagination, PaginationVO.class);

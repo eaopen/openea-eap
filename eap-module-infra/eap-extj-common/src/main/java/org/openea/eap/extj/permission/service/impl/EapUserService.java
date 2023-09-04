@@ -1,5 +1,6 @@
 package org.openea.eap.extj.permission.service.impl;
 
+import lombok.extern.slf4j.Slf4j;
 import org.openea.eap.extj.permission.entity.UserEntity;
 import org.openea.eap.extj.permission.service.UserService;
 import org.openea.eap.module.system.dal.dataobject.user.AdminUserDO;
@@ -16,6 +17,7 @@ import java.util.Set;
  * todo eap
  */
 @Service
+@Slf4j
 public class EapUserService implements UserService {
 
     @Resource
@@ -33,8 +35,13 @@ public class EapUserService implements UserService {
 
     @Override
     public UserEntity getInfo(String userId) {
-        AdminUserDO adminUserDO = adminUserService.getUser(new Long(userId));
-        return covertUser(adminUserDO);
+        try{
+            AdminUserDO adminUserDO = adminUserService.getUser(new Long(userId));
+            return covertUser(adminUserDO);
+        }catch (Throwable t){
+            log.warn(t.getMessage());
+        }
+        return null;
     }
 
     @Override
