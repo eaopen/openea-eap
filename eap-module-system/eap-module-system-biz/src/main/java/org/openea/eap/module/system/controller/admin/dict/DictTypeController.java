@@ -19,7 +19,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
-import java.util.List;
+import java.util.*;
 
 import static org.openea.eap.framework.common.pojo.CommonResult.success;
 import static org.openea.eap.framework.operatelog.core.enums.OperateTypeEnum.EXPORT;
@@ -79,6 +79,56 @@ public class DictTypeController {
     public CommonResult<List<DictTypeSimpleRespVO>> getSimpleDictTypeList() {
         List<DictTypeDO> list = dictTypeService.getDictTypeList();
         return success(DictTypeConvert.INSTANCE.convertList(list));
+    }
+
+    @GetMapping("/list-all-parent/{id}")
+    @Operation(summary = "获取所有字典分类下拉框列表", description = "包括开启 + 禁用的字典类型，主要用于前端的下拉选项")
+    // 无需添加权限认证，因为前端全局都需要
+    public CommonResult<List<Map<String,Object>>> getParentDictTypeList(@PathVariable(value = "id", required = true) String id) {
+        List<DictTypeDO> list = dictTypeService.getDictTypeList();
+        if (!"0".equals(id)){
+            list.remove(dictTypeService.getDictType(id));
+        }
+        List<Map<String,Object>> listVo=new ArrayList<>();
+        for (DictTypeDO dictTypeDO : list) {
+            if (dictTypeDO.getParentId()==null || dictTypeDO.getParentId()==0){
+                Map<String,Object> map=new HashMap<>();
+                map.put("id",dictTypeDO.getId());
+                map.put("enCode",dictTypeDO.getType());
+                map.put("parentid","-1");
+                map.put("fullname",dictTypeDO.getName());
+                map.put("dataType",dictTypeDO.getDataType());
+                map.put("hasChildren",false);
+                listVo.add(map);
+            }
+        }
+        for (DictTypeDO dictTypeDO : list) {
+            if (dictTypeDO.getParentId()!=null && dictTypeDO.getParentId()!=0){
+                for (Map<String, Object> mapo : listVo) {
+                    if(mapo.get("id").equals(dictTypeDO.getParentId())){
+                        List<Map<String,Object>> list1=new ArrayList<>();
+                        Map<String,Object> map=new HashMap<>();
+                        map.put("id",dictTypeDO.getId());
+                        map.put("enCode",dictTypeDO.getType());
+                        map.put("parentid","-1");
+                        map.put("fullname",dictTypeDO.getName());
+                        map.put("hasChildren",false);
+                        map.put("dataType",dictTypeDO.getDataType());
+                        list1.add(map);
+                        if (mapo.get("children")!=null){
+                            List children = Collections.singletonList(mapo.get("children"));
+                            children.add(map);
+                            mapo.put("hasChildren",true);
+                            mapo.put("children",children);
+                        }else {
+                            mapo.put("hasChildren", true);
+                            mapo.put("children", list1);
+                        }
+                    }
+                }
+            }
+        }
+        return success(listVo);
     }
 
     @Operation(summary = "导出数据类型")

@@ -1,5 +1,8 @@
 package org.openea.eap.module.system.controller.admin.dict;
 
+import com.xingyuv.http.util.StringUtil;
+import org.openea.eap.module.system.controller.admin.dict.vo.type.DictTypeSimpleRespVO;
+import org.openea.eap.module.system.convert.dict.DictTypeConvert;
 import org.openea.eap.module.system.dal.dataobject.dict.DictDataDO;
 import org.openea.eap.framework.common.pojo.CommonResult;
 import org.openea.eap.framework.common.pojo.PageResult;
@@ -7,10 +10,12 @@ import org.openea.eap.framework.excel.core.util.ExcelUtils;
 import org.openea.eap.framework.operatelog.core.annotations.OperateLog;
 import org.openea.eap.module.system.controller.admin.dict.vo.data.*;
 import org.openea.eap.module.system.convert.dict.DictDataConvert;
+import org.openea.eap.module.system.dal.dataobject.dict.DictTypeDO;
 import org.openea.eap.module.system.service.dict.DictDataService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Operation;
+import org.openea.eap.module.system.service.dict.DictTypeService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -20,9 +25,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.stream.Collectors;
 
 import static org.openea.eap.framework.common.pojo.CommonResult.success;
 import static org.openea.eap.framework.operatelog.core.enums.OperateTypeEnum.EXPORT;
@@ -64,8 +68,11 @@ public class DictDataController {
     @GetMapping("/list-all-simple")
     @Operation(summary = "获得全部字典数据列表", description = "一般用于管理后台缓存字典数据在本地")
     // 无需添加权限认证，因为前端全局都需要
-    public CommonResult<List<DictDataSimpleRespVO>> getSimpleDictDataList() {
+    public CommonResult<List<DictDataSimpleRespVO>> getSimpleDictDataList(@RequestParam(required = false) String keys) {
         List<DictDataDO> list = dictDataService.getDictDataList();
+        if (keys!=null && StringUtil.isNotEmpty(keys)){
+            list = list.stream().filter(t -> keys.contains(t.getDictType())).collect(Collectors.toList());
+        }
         return success(DictDataConvert.INSTANCE.convertList(list));
     }
 
