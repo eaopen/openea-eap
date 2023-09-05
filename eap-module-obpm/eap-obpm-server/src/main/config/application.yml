@@ -19,6 +19,9 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher   #fix升级问题
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
 
   datasource:
     type: ${ds_type:com.zaxxer.hikari.HikariDataSource}
@@ -64,9 +67,9 @@ spring:
     multipart:
       max-file-size: ${max-file-size:1073741824} #1GB
       max-request-size: ${max-request-size:1073741824} #1GB
-  messages:
-    basename: i18n/messages,i18n/sys,i18n/org,i18n/bus,i18n/form,i18n/wf
-    encoding: UTF-8
+  #messages:
+    #basename: i18n/messages,i18n/sys,i18n/org,i18n/bus,i18n/form,i18n/wf
+    #encoding: UTF-8
 
 #具体配置项可查看http://www.mybatis.org/mybatis-3/configuration.html#properties
 mybatis-plus:
