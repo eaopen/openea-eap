@@ -178,6 +178,11 @@ public class DictDataServiceImpl implements DictDataService {
     }
 
     @Override
+    public List<DictDataDO> getDictData(String dictType) {
+        return dictDataMapper.selectByDictType(dictType);
+    }
+
+    @Override
     public DictDataDO parseDictData(String dictType, String label) {
         return dictDataMapper.selectByDictTypeAndLabel(dictType, label);
     }

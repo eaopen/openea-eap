@@ -98,6 +98,14 @@ public interface DictDataService {
     DictDataDO getDictData(String dictType, String value);
 
     /**
+     * 根据字典类型获得指定的字典数据
+     *
+     * @param dictType 字典类型
+     * @return 字典数据
+     */
+    List<DictDataDO> getDictData(String dictType);
+
+    /**
      * 解析获得指定的字典数据，从缓存中
      *
      * @param dictType 字典类型

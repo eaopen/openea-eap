@@ -28,6 +28,9 @@ public interface DictDataMapper extends BaseMapperX<DictDataDO> {
         return selectList(new LambdaQueryWrapper<DictDataDO>().eq(DictDataDO::getDictType, dictType)
                 .in(DictDataDO::getValue, values));
     }
+    default List<DictDataDO> selectByDictType(String dictType) {
+        return selectList(new LambdaQueryWrapper<DictDataDO>().eq(DictDataDO::getDictType, dictType));
+    }
 
     default long selectCountByDictType(String dictType) {
         return selectCount(DictDataDO::getDictType, dictType);
