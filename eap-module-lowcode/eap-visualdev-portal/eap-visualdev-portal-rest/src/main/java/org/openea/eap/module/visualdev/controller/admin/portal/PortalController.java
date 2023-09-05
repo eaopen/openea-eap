@@ -1,11 +1,13 @@
 package org.openea.eap.module.visualdev.controller.admin.portal;
 
+import cn.hutool.core.map.MapUtil;
 import com.baomidou.dynamic.datasource.annotation.DSTransactional;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.openea.eap.extj.base.ActionResult;
+import org.openea.eap.extj.base.UserInfo;
 import org.openea.eap.extj.base.controller.SuperController;
 import org.openea.eap.extj.base.vo.ListVO;
 import org.openea.eap.extj.base.vo.PageListVO;
@@ -13,6 +15,12 @@ import org.openea.eap.extj.base.vo.PaginationVO;
 import org.openea.eap.extj.constant.MsgCode;
 import org.openea.eap.extj.emnus.ExportModelTypeEnum;
 import org.openea.eap.extj.emnus.ModuleTypeEnum;
+import org.openea.eap.module.system.controller.admin.auth.vo.AuthPermissionInfoRespVO;
+import org.openea.eap.module.system.convert.auth.AuthConvert;
+import org.openea.eap.module.system.dal.dataobject.permission.MenuDO;
+import org.openea.eap.module.system.enums.permission.MenuTypeEnum;
+import org.openea.eap.module.system.service.permission.MenuService;
+import org.openea.eap.module.system.service.permission.PermissionServiceImpl;
 import org.openea.eap.module.visualdev.portal.entity.PortalManageEntity;
 import org.openea.eap.module.visualdev.base.model.VisualFunctionModel;
 import org.openea.eap.module.visualdev.portal.service.PortalManageService;
@@ -26,17 +34,20 @@ import org.openea.eap.module.visualdev.portal.service.PortalService;
 import org.openea.eap.extj.util.*;
 import org.openea.eap.extj.util.treeutil.newtreeutil.TreeDotUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import scala.util.Success;
 
+import javax.annotation.Resource;
 import javax.validation.Valid;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
+
+import static org.openea.eap.framework.common.util.collection.CollectionUtils.filterList;
+import static org.openea.eap.module.system.dal.dataobject.permission.MenuDO.ID_ROOT;
 
 /**
  * 可视化门户
@@ -60,6 +71,10 @@ public class PortalController extends SuperController<PortalService, PortalEntit
     private PortalDataService portalDataService;
     @Autowired
     private PortalManageService portalManageService;
+    @Resource
+    private MenuService menuService;
+    @Resource
+    private PermissionServiceImpl permissionService;
 
     @Operation(summary = "门户列表" )
     @GetMapping("/list")
@@ -268,4 +283,86 @@ public class PortalController extends SuperController<PortalService, PortalEntit
         return ActionResult.page(voList, paginationVO);
     }
 
+    @Operation(summary = "获取菜单下拉列表")
+    @GetMapping("/Selector/All")
+    public ActionResult<Map> getSelectorAll(){
+        String authorSignature = ServletUtil.getRequest().getHeader(Constants.AUTHORIZATION);
+        UserInfo userInfo = userProvider.get(authorSignature.substring(7,authorSignature.length()));
+        List<MenuDO> menuList = permissionService.getUserMenuListByUser(Long.parseLong(userInfo.getId()), userInfo.getUserName());
+        // i18n
+        menuList = menuService.toI18n(menuList);
+//        List<AuthPermissionInfoRespVO.MenuVO> listMenuTree = AuthConvert.INSTANCE.buildMenuTree(menuList);
+//        List<Map<String,Object>> list=new ArrayList<>();
+//        for (MenuDO menuDO : menuList) {
+//            if (menuDO.getParentId()!=null && menuDO.getParentId()==0) {
+//                Map<String, Object> map = new HashMap<>();
+//                map.put("enCode", menuDO.getAlias());
+//                map.put("enabledMark", 1);
+//                map.put("fullName", menuDO.getName());
+//                map.put("hasChildren", true);
+//                map.put("hasModule", false);
+//                map.put("icon", menuDO.getIcon());
+//                map.put("id", menuDO.getId());
+//                map.put("linkTarget", null);
+//                map.put("parentId", "-1");
+//                map.put("propertyJson", null);
+//                map.put("sortCode", menuDO.getSort());
+//                map.put("systemId", null);
+//                map.put("type", 0);
+//                map.put("urlAddress", menuDO.getPath());
+//                list.add(map);
+//            }
+//        }
+//        for (AuthPermissionInfoRespVO.MenuVO menuVO : listMenuTree) {
+//            for (Map<String, Object> map : list) {
+//                if (menuVO.getId().toString().equals(MapUtil.getStr(map,"id"))){
+//                    map.put("children",menuVO.getChildren());
+////                    list.add(map);
+//                }
+//            }
+//        }
+        menuList.removeIf(menu -> menu.getType().equals(MenuTypeEnum.BUTTON.getType()));
+        // 排序，保证菜单的有序性
+        menuList.sort(Comparator.comparing(MenuDO::getSort));
+        Map<Long, Map> treeNodeMap = new LinkedHashMap<>();
+        menuList.forEach(menu -> treeNodeMap.put(menu.getId(), transToMeanue(menu)));
+        treeNodeMap.values().stream().filter(node -> !MapUtil.getStr(node,"parentId").equals(ID_ROOT)).forEach(childNode -> {
+            // 获得父节点
+            Map parentNode = treeNodeMap.get(Long.parseLong(MapUtil.getStr(childNode,"parentId")));
+            if (parentNode == null) {
+                LoggerFactory.getLogger(getClass()).warn("[buildRouterTree][resource({}) 找不到父资源({})]",
+                        MapUtil.getStr(childNode,"id"), MapUtil.getStr(childNode,"parentId"));
+                return;
+            }
+            // 将自己添加到父节点中
+            if (parentNode.get("children") == null) {
+                parentNode.put("children",new ArrayList<>());
+            }
+            List<Map<String,Object>> children = (List<Map<String, Object>>) parentNode.get("children");
+            children.add(childNode);
+            parentNode.put("children",children);
+        });
+        List<Map> rootMenue = filterList(treeNodeMap.values(), node -> ID_ROOT.toString().equals(MapUtil.getStr(node, "parentId")));
+        Map<String,Object> map=new HashMap<>();
+        map.put("list",rootMenue);
+        return ActionResult.success(map);
+    }
+    Map transToMeanue(MenuDO menuDO){
+        Map<String, Object> map = new HashMap<>();
+        map.put("enCode", menuDO.getAlias());
+        map.put("enabledMark", 1);
+        map.put("fullName", menuDO.getName());
+        map.put("hasChildren", true);
+        map.put("hasModule", false);
+        map.put("icon", menuDO.getIcon());
+        map.put("id", menuDO.getId());
+        map.put("linkTarget", null);
+        map.put("parentId", menuDO.getParentId());
+        map.put("propertyJson", null);
+        map.put("sortCode", menuDO.getSort());
+        map.put("systemId", null);
+        map.put("type", 0);
+        map.put("urlAddress", menuDO.getPath());
+        return map;
+    }
 }
