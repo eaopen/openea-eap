@@ -33,7 +33,6 @@ import org.apache.ibatis.logging.slf4j.Slf4jImpl;
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.type.JdbcType;
-import org.mybatis.spring.annotation.MapperScan;
 import org.openea.eap.extj.base.entity.SuperBaseEntity;
 import org.openea.eap.extj.config.ConfigValueUtil;
 import org.openea.eap.extj.database.model.entity.DbLinkEntity;
@@ -53,7 +52,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
@@ -68,19 +68,19 @@ import java.util.*;
 /**
  * MybatisPlus配置类
  *
- *
+ * @deprecated
  */
 @Slf4j
-@Configuration
-@ComponentScan("jnpf")
-@DependsOn({"tenantDataSourceUtil"})
-@MapperScan(basePackages = {"jnpf.*.mapper", "jnpf.mapper", "com.xxl.job.admin.dao"})
+//@Configuration
+//@ComponentScan("org.openea,eap")
+//@DependsOn({"tenantDataSourceUtil"})
+//@MapperScan(basePackages = {"**.mapper", "mapper", "com.xxl.job.admin.dao"})
 public class MybatisPlusConfig {
 
     /**
      * 对接数据库的实体层
      */
-    static final String ALIASES_PACKAGE = "jnpf.*.entity;com.xxl.job.admin.core.model";
+    static final String ALIASES_PACKAGE = "org.openea.eap.*.entity;com.xxl.job.admin.core.model";
 
     @Autowired
     private DataSourceUtil dataSourceUtil;
@@ -109,7 +109,7 @@ public class MybatisPlusConfig {
     @Bean
     @ConditionalOnClass(name = "org.springframework.cloud.loadbalancer.annotation.LoadBalancerClient")
     public Object scanAllEntity(SqlSessionFactory sqlSessionFactory){
-        Set<Class<?>> classes =  ClassUtil.scanCandidateComponents("jnpf", c->
+        Set<Class<?>> classes =  ClassUtil.scanCandidateComponents("org.openea.eap", c->
                 !Modifier.isAbstract(c.getModifiers()) && SuperBaseEntity.SuperTBaseEntity.class.isAssignableFrom(c)
         );
         for (Class<?> aClass : classes) {

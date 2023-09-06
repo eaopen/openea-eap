@@ -167,7 +167,7 @@ public class DbTypeUtil {
      */
     private static String checkDbTypeExist(String dbType, Boolean exceptionOnOff) throws DataException {
         for(String enEncode : DbBase.DB_ENCODES){
-            if(enEncode.equals(dbType)){
+            if(enEncode.equalsIgnoreCase(dbType)){
                 return enEncode;
             }
         }

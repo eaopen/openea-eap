@@ -1,6 +1,7 @@
 package org.openea.eap.extj.database.util;
 
 import cn.hutool.core.text.StrPool;
+import cn.hutool.core.util.ObjectUtil;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.baomidou.dynamic.datasource.DynamicRoutingDataSource;
 import com.baomidou.dynamic.datasource.creator.DefaultDataSourceCreator;
@@ -19,8 +20,6 @@ import org.openea.eap.extj.exception.DataException;
 import org.openea.eap.extj.util.LockObjectUtil;
 import org.openea.eap.extj.util.StringUtil;
 import org.openea.eap.extj.util.data.DataSourceContextHolder;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
@@ -36,7 +35,7 @@ import java.util.Optional;
 @Setter
 @Slf4j
 @Component
-@ConditionalOnMissingBean(DynamicDataSourceUtil.class)
+//@ConditionalOnMissingBean(DynamicDataSourceUtil.class)
 public class DynamicDataSourceUtil {
 
     private static int MAX_DATASOURCE_COUNT = 300;
@@ -51,7 +50,8 @@ public class DynamicDataSourceUtil {
     private static DefaultDataSourceCreator defaultDataSourceCreator;
     private static ConfigValueUtil configValueUtil;
 
-    public DynamicDataSourceUtil(@Qualifier("dataSourceSystem") DataSource  dynamicRoutingDataSource
+    // @Qualifier("dataSourceSystem") DataSource  dynamicRoutingDataSource
+    public DynamicDataSourceUtil(DataSource  dynamicRoutingDataSource
             , DynamicDataSourceProperties dynamicDataSourceProperties
             , DefaultDataSourceCreator defaultDataSourceCreator
             , ConfigValueUtil configValueUtil
@@ -75,6 +75,10 @@ public class DynamicDataSourceUtil {
      */
     public static void switchToDataSource(String userName, String password, String url, String dbType) throws DataException, SQLException {
         String tenantId = Optional.ofNullable(DataSourceContextHolder.getDatasourceId()).orElse("");
+        if(ObjectUtil.isEmpty(tenantId) || "0".equals(tenantId)){
+            return;
+        }
+
         String dbKey = tenantId + userName + password + url;
         DbLinkEntity dbLinkEntity = new DbLinkEntity();
         dbLinkEntity.setId(dbKey);
@@ -110,7 +114,12 @@ public class DynamicDataSourceUtil {
             return;
         }
         String tenantId = Optional.ofNullable(DataSourceContextHolder.getDatasourceId()).orElse("");
-        String dbKey = tenantId + dbLinkEntity.getId();
+        if(ObjectUtil.isEmpty(tenantId) || "0".equals(tenantId)){
+            return;
+        }
+
+        //String dbKey = tenantId + dbLinkEntity.getId();
+        String dbKey = (String)Optional.ofNullable(DataSourceContextHolder.getDatasourceId()).orElse("") + dbLinkEntity.getId();
         String removeKey = null;
         boolean insert = true;
         synchronized (LockObjectUtil.addLockKey(dbKey)) {

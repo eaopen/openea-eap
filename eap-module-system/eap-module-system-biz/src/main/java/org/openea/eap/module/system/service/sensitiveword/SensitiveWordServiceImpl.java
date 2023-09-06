@@ -16,7 +16,6 @@ import org.openea.eap.module.system.convert.sensitiveword.SensitiveWordConvert;
 import org.openea.eap.module.system.dal.dataobject.sensitiveword.SensitiveWordDO;
 import org.openea.eap.module.system.dal.mysql.sensitiveword.SensitiveWordMapper;
 import org.openea.eap.module.system.util.collection.SimpleTrie;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -24,7 +23,6 @@ import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 
 import static org.openea.eap.framework.common.exception.util.ServiceExceptionUtil.exception;
 import static org.openea.eap.framework.common.util.collection.CollectionUtils.filterList;
@@ -114,7 +112,7 @@ public class SensitiveWordServiceImpl implements SensitiveWordService {
      *
      * 目的：多节点部署时，通过轮询”通知“所有节点，进行刷新
      */
-    @Scheduled(initialDelay = 60, fixedRate = 60, timeUnit = TimeUnit.SECONDS)
+    //@Scheduled(initialDelay = 60, fixedRate = 60, timeUnit = TimeUnit.SECONDS)
     public void refreshLocalCache() {
         // 情况一：如果缓存里没有数据，则直接刷新缓存
         if (CollUtil.isEmpty(sensitiveWordCache)) {

@@ -7,6 +7,9 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import static org.openea.eap.extj.config.JnpfOauthConfig.PREFIX;
 
 
+/**
+ * @deprecated
+ */
 @Data
 @ConfigurationProperties(prefix = PREFIX)
 public class JnpfOauthConfig {

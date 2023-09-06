@@ -30,7 +30,6 @@ import java.util.stream.Collectors;
 /**
  * 常用SQL快捷使用工具
  *
- * 
  */
 @Slf4j
 public class SqlFastUtil {

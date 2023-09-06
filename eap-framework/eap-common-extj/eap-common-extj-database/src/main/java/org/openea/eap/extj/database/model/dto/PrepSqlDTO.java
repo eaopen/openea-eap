@@ -1,16 +1,16 @@
 package org.openea.eap.extj.database.model.dto;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 import org.openea.eap.extj.database.model.entity.DbLinkEntity;
 import org.openea.eap.extj.database.util.ConnUtil;
 import org.openea.eap.extj.database.util.DataSourceUtil;
 import org.openea.eap.extj.database.util.DynamicDataSourceUtil;
 import org.openea.eap.extj.database.util.TenantDataSourceUtil;
-import org.openea.eap.extj.database.util.*;
 import org.openea.eap.extj.exception.DataException;
 import org.openea.eap.extj.util.XSSEscape;
 import org.openea.eap.extj.util.context.SpringContext;
-import lombok.*;
-import lombok.experimental.Accessors;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -112,23 +112,23 @@ public class PrepSqlDTO {
      * @throws DataException
      */
     public PrepSqlDTO switchConn() throws SQLException, DataException {
-        if(this.dbLinkEntity != null){
-            if(this.dbLinkEntity.getId() != null && !"0".equals(this.dbLinkEntity.getId())){
-                // 增加并切换数据源
-                DynamicDataSourceUtil.switchToDataSource(dbLinkEntity);
-            }else {
-                if(dbLinkEntity.getUrl() != null){
-                    DynamicDataSourceUtil.switchToDataSource(dbLinkEntity.getUserName(), dbLinkEntity.getPassword(), dbLinkEntity.getUrl(), dbLinkEntity.getDbType());
-                }else{
-                    //初始化租户系统指定源
-                    TenantDataSourceUtil.initTenantAssignDataSource();
-                    //切换只主库
-                    DynamicDataSourceUtil.switchToDataSource(null);
-                }
-            }
-        }else {
+        if (this.dbLinkEntity == null) {
             throw new SQLException("dbLinkEntity数据库连接对象不能为空");
         }
+
+        if(this.dbLinkEntity.getId() != null && !"0".equals(this.dbLinkEntity.getId())){
+            // 增加并切换数据源
+            DynamicDataSourceUtil.switchToDataSource(dbLinkEntity);
+        }else if(dbLinkEntity.getUrl() != null){
+            DynamicDataSourceUtil.switchToDataSource(dbLinkEntity.getUserName(), dbLinkEntity.getPassword(), dbLinkEntity.getUrl(), dbLinkEntity.getDbType());
+        }else{
+            //初始化租户系统指定源
+            TenantDataSourceUtil.initTenantAssignDataSource();
+            //切换只主库
+            DynamicDataSourceUtil.switchToDataSource(null);
+
+        }
+
         return this;
     }
 

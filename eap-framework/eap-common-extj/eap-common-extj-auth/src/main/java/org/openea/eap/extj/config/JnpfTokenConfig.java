@@ -7,7 +7,9 @@ import org.openea.eap.extj.util.TenantProvider;
 
 import java.util.Optional;
 
-
+/**
+ * @deprecated
+ */
 public class JnpfTokenConfig extends SaTokenConfig {
 
 

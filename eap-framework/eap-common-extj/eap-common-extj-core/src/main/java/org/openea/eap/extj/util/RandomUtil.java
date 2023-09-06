@@ -16,9 +16,6 @@ import java.util.Random;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-/**
- *
- */
 @Component
 @Slf4j
 public class RandomUtil {

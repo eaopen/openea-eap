@@ -4,13 +4,12 @@ package org.openea.eap.extj.database.config;
 import com.alibaba.druid.support.http.StatViewServlet;
 import com.alibaba.druid.support.http.WebStatFilter;
 import org.openea.eap.extj.database.util.ConnUtil;
-import org.openea.eap.extj.exception.DataException;
 import org.openea.eap.extj.database.util.DataSourceUtil;
+import org.openea.eap.extj.exception.DataException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 import javax.sql.DataSource;
 import java.util.Arrays;
@@ -20,9 +19,9 @@ import java.util.Map;
 /**
  * 数据源配置
  *
- *
+ * @deprecated
  */
-@Configuration
+//@Configuration
 public class DruidConfig {
 
     @Autowired

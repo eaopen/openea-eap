@@ -36,11 +36,11 @@ import java.util.Map;
 @Slf4j
 public class JdbcUtil {
 
-    private final static String SELECT_MAPPER = "jnpf.base.mapper.DbBackupMapper.getList";
-    private final static String UPDATE_MAPPER = "jnpf.base.mapper.DbBackupMapper.update";
-    private final static String UPDATE_MAPPERS = "jnpf.base.mapper.DbBackupMapper.updates";
-    private final static String DELETE_MAPPER = "jnpf.base.mapper.DbBackupMapper.delete";
-    private final static String INSERT_MAPPER = "jnpf.base.mapper.DbBackupMapper.insert";
+    private final static String SELECT_MAPPER = "org.openea.eap.extj.database.mapper.JdbcMapper.getList";
+    private final static String UPDATE_MAPPER = "org.openea.eap.extj.database.mapper.JdbcMapper.update";
+    private final static String UPDATE_MAPPERS = "org.openea.eap.extj.database.mapper.JdbcMapper.updates";
+    private final static String DELETE_MAPPER = "org.openea.eap.extj.database.mapper.JdbcMapper.delete";
+    private final static String INSERT_MAPPER = "org.openea.eap.extj.database.mapper.JdbcMapper.insert";
 
     private static SqlSessionFactory getSqlSessionFactory(){
         return SpringContext.getBean(SqlSessionFactory.class);
