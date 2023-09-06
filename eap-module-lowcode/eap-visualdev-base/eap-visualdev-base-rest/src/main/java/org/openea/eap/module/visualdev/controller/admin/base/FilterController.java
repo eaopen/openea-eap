@@ -2,14 +2,13 @@ package org.openea.eap.module.visualdev.controller.admin.base;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import org.openea.eap.extj.base.ActionResult;
+import org.openea.eap.extj.util.RandomUtil;
 import org.openea.eap.module.visualdev.base.entity.FilterEntity;
 import org.openea.eap.module.visualdev.base.model.filter.FilterInfo;
 import org.openea.eap.module.visualdev.base.model.filter.FilterQuery;
 import org.openea.eap.module.visualdev.base.service.FilterService;
-import org.openea.eap.module.visualdev.base.util.RandomUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;

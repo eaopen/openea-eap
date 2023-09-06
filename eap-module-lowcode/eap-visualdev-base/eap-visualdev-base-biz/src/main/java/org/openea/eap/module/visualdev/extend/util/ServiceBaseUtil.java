@@ -2,7 +2,7 @@ package org.openea.eap.module.visualdev.extend.util;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import org.openea.eap.extj.database.model.dbfield.DbFieldModel;
-import org.openea.eap.extj.database.model.dbfield.DbFieldModelBase;
+import org.openea.eap.extj.database.model.dbfield.base.DbFieldModelBase;
 import org.openea.eap.extj.database.model.dbtable.DbTableFieldModel;
 import org.openea.eap.extj.database.model.entity.DbLinkEntity;
 import org.springframework.stereotype.Component;

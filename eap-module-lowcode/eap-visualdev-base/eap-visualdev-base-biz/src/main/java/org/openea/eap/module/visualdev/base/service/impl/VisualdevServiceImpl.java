@@ -9,17 +9,13 @@ import org.openea.eap.extj.base.service.SuperServiceImpl;
 import org.openea.eap.extj.database.model.dbfield.DbFieldModel;
 import org.openea.eap.extj.database.model.dbtable.DbTableFieldModel;
 import org.openea.eap.extj.exception.WorkFlowException;
-import org.openea.eap.extj.model.visualJson.FieLdsModel;
-import org.openea.eap.extj.model.visualJson.FormCloumnUtil;
-import org.openea.eap.extj.model.visualJson.FormDataModel;
-import org.openea.eap.extj.model.visualJson.TableModel;
-import org.openea.eap.extj.model.visualJson.analysis.FormAllModel;
-import org.openea.eap.extj.model.visualJson.analysis.RecursionForm;
-import org.openea.eap.extj.model.visualJson.config.ConfigModel;
+import org.openea.eap.extj.model.FormAllModel;
+import org.openea.eap.extj.model.visualJson.*;
+import org.openea.eap.extj.model.visualJson.fields.config.ConfigModel;
+import org.openea.eap.extj.util.EapUserProvider;
 import org.openea.eap.extj.util.JsonUtil;
 import org.openea.eap.extj.util.RandomUtil;
 import org.openea.eap.extj.util.StringUtil;
-import org.openea.eap.extj.util.UserProvider;
 import org.openea.eap.extj.util.visual.JnpfKeyConsts;
 import org.openea.eap.module.visualdev.base.entity.VisualdevEntity;
 import org.openea.eap.module.visualdev.base.entity.VisualdevReleaseEntity;
@@ -52,7 +48,7 @@ public class VisualdevServiceImpl extends SuperServiceImpl<VisualdevMapper, Visu
     @Autowired
     private FlowFormService flowFormService;
     @Autowired
-    private UserProvider userProvider;
+    private EapUserProvider userProvider;
     @Autowired
     private VisualDevTableCre visualDevTableCreUtil;
     @Autowired

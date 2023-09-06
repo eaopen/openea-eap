@@ -4,9 +4,9 @@ import com.baomidou.dynamic.datasource.annotation.DSTransactional;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.openea.eap.extj.base.Page;
 import org.openea.eap.extj.base.service.SuperServiceImpl;
+import org.openea.eap.extj.util.EapUserProvider;
 import org.openea.eap.extj.util.RandomUtil;
 import org.openea.eap.extj.util.StringUtil;
-import org.openea.eap.extj.util.UserProvider;
 import org.openea.eap.module.visualdev.extend.entity.ProvinceEntity;
 import org.openea.eap.module.visualdev.extend.mapper.ProvinceMapper;
 import org.openea.eap.module.visualdev.extend.service.ProvinceService;
@@ -23,7 +23,7 @@ import java.util.Objects;
 public class ProvinceServiceImpl extends SuperServiceImpl<ProvinceMapper, ProvinceEntity> implements ProvinceService {
 
     @Autowired
-    private UserProvider userProvider;
+    private EapUserProvider userProvider;
 
     @Override
     public boolean isExistByFullName(String fullName, String id) {

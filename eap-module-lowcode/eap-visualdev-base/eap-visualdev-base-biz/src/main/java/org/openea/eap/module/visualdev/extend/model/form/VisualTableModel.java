@@ -5,17 +5,22 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.openea.eap.extj.model.visualJson.analysis.FormAllModel;
+import org.openea.eap.extj.model.FormAllModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
+
+/**
+ *
+ * 
+ */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class VisualTableModel {
-    private JSONArray jsonArray;
+    private  JSONArray jsonArray;
     private List<FormAllModel> formAllModel=new ArrayList<>();
     private String table;
     private String linkId;

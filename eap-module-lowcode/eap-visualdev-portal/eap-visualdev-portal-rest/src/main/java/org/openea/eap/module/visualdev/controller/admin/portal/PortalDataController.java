@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.extern.slf4j.Slf4j;
 import org.openea.eap.extj.base.ActionResult;
 import org.openea.eap.extj.base.UserInfo;
 import org.openea.eap.extj.base.controller.SuperController;
@@ -11,16 +12,15 @@ import org.openea.eap.extj.base.service.SystemService;
 import org.openea.eap.extj.constant.MsgCode;
 import org.openea.eap.extj.permission.service.AuthorizeService;
 import org.openea.eap.extj.permission.service.UserService;
-import org.openea.eap.module.visualdev.portal.service.PortalManageService;
+import org.openea.eap.extj.util.CacheKeyUtil;
+import org.openea.eap.extj.util.EapUserProvider;
+import org.openea.eap.extj.util.RedisUtil;
 import org.openea.eap.module.visualdev.portal.constant.PortalConst;
 import org.openea.eap.module.visualdev.portal.entity.PortalEntity;
 import org.openea.eap.module.visualdev.portal.model.*;
 import org.openea.eap.module.visualdev.portal.service.PortalDataService;
+import org.openea.eap.module.visualdev.portal.service.PortalManageService;
 import org.openea.eap.module.visualdev.portal.service.PortalService;
-import org.openea.eap.extj.util.CacheKeyUtil;
-import org.openea.eap.extj.util.RedisUtil;
-import org.openea.eap.extj.util.UserProvider;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -38,7 +38,7 @@ import javax.validation.Valid;
 public class PortalDataController extends SuperController<PortalService, PortalEntity> {
 
     @Autowired
-    private UserProvider userProvider;
+    private EapUserProvider userProvider;
     @Autowired
     private UserService userService;
     @Autowired
@@ -71,8 +71,8 @@ public class PortalDataController extends SuperController<PortalService, PortalE
         }else {
             userInfo.setAppSystemId(id);
         }
-        UserProvider.setLocalLoginUser(userInfo);
-        UserProvider.setLoginUser(userInfo);
+        EapUserProvider.setLocalLoginUser(userInfo);
+        EapUserProvider.setLoginUser(userInfo);
         return ActionResult.success("设置成功" );
     }
 

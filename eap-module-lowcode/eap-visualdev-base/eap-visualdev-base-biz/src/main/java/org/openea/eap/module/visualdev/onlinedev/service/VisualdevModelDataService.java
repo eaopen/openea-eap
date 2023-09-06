@@ -5,11 +5,11 @@ import org.openea.eap.extj.base.model.FormDataField;
 import org.openea.eap.extj.base.service.SuperService;
 import org.openea.eap.extj.exception.DataException;
 import org.openea.eap.extj.exception.WorkFlowException;
-import org.openea.eap.extj.model.DataModel;
 import org.openea.eap.module.visualdev.base.entity.VisualdevEntity;
 import org.openea.eap.module.visualdev.base.entity.VisualdevModelDataEntity;
 import org.openea.eap.module.visualdev.base.model.PaginationModel;
 import org.openea.eap.module.visualdev.base.model.VisualDevJsonModel;
+import org.openea.eap.module.visualdev.extend.model.flow.DataModel;
 import org.openea.eap.module.visualdev.onlinedev.model.PaginationModelExport;
 import org.openea.eap.module.visualdev.onlinedev.model.VisualdevModelDataInfoVO;
 

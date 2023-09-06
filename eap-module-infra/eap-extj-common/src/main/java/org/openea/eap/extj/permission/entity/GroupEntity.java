@@ -2,8 +2,8 @@ package org.openea.eap.extj.permission.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
-import org.openea.eap.extj.base.entity.SuperExtendEntity;
 import lombok.Data;
+import org.openea.eap.extj.base.entity.SuperExtendEntity;
 
 /**
  * 分组管理

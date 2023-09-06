@@ -11,7 +11,6 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.openea.eap.extj.base.FileInfo;
 import org.openea.eap.extj.base.model.ColumnDataModel;
-import org.openea.eap.extj.base.model.Template6.ColumnListField;
 import org.openea.eap.extj.base.vo.DownloadVO;
 import org.openea.eap.extj.config.ConfigValueUtil;
 import org.openea.eap.extj.database.model.dbtable.JdbcTableModel;
@@ -20,6 +19,7 @@ import org.openea.eap.extj.database.model.interfaces.DbSourceOrDbLink;
 import org.openea.eap.extj.database.util.ConnUtil;
 import org.openea.eap.extj.database.util.DataSourceUtil;
 import org.openea.eap.extj.exception.DataException;
+import org.openea.eap.extj.model.visualJson.ColumnListField;
 import org.openea.eap.extj.model.visualJson.FieLdsModel;
 import org.openea.eap.extj.model.visualJson.FormDataModel;
 import org.openea.eap.extj.util.*;
@@ -46,7 +46,7 @@ public class VisualUtils {
 
     private static DataSourceUtil dataSourceUtil = SpringContext.getBean(DataSourceUtil.class);
     private static ConfigValueUtil configValueUtil = SpringContext.getBean(ConfigValueUtil.class);
-    private static UserProvider userProvider = SpringContext.getBean(UserProvider.class);
+    private static EapUserProvider userProvider = SpringContext.getBean(EapUserProvider.class);
     private static FlowFormDataUtil flowFormDataUtil = SpringContext.getBean(FlowFormDataUtil.class);
 
 

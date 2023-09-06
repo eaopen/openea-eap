@@ -24,6 +24,7 @@ import org.openea.eap.extj.permission.model.datainterface.DataInterfaceVarEnum;
 import org.openea.eap.extj.permission.service.OrganizeAdministratorService;
 import org.openea.eap.extj.permission.service.OrganizeService;
 import org.openea.eap.extj.util.*;
+import org.openea.eap.extj.util.jscript.JScriptUtil;
 import org.openea.eap.extj.util.wxutil.HttpUtil;
 import org.openea.eap.module.visualdev.base.entity.DataInterfaceEntity;
 import org.openea.eap.module.visualdev.base.entity.InterfaceOauthEntity;
@@ -51,7 +52,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class DataInterfaceServiceImpl extends SuperServiceImpl<DataInterfaceMapper, DataInterfaceEntity> implements DataInterfaceService {
     @Autowired
-    private UserProvider userProvider;
+    private EapUserProvider userProvider;
     @Autowired
     private DbLinkService dblinkService;
     @Autowired
@@ -943,7 +944,7 @@ public class DataInterfaceServiceImpl extends SuperServiceImpl<DataInterfaceMapp
             }
             //获取token
             if (StringUtil.isEmpty(token)) {
-                token = UserProvider.getToken();
+                token = EapUserProvider.getToken();
             }
             String jsonObjects = jsonObject.size() > 0 ? jsonObject.toJSONString() : null;
             // 请求头

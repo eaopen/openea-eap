@@ -7,9 +7,9 @@ import org.openea.eap.extj.base.mapper.DictionaryTypeMapper;
 import org.openea.eap.extj.base.service.DictionaryDataService;
 import org.openea.eap.extj.base.service.DictionaryTypeService;
 import org.openea.eap.extj.base.service.SuperServiceImpl;
+import org.openea.eap.extj.util.EapUserProvider;
 import org.openea.eap.extj.util.RandomUtil;
 import org.openea.eap.extj.util.StringUtil;
-import org.openea.eap.extj.util.UserProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 public class DictionaryTypeServiceImpl extends SuperServiceImpl<DictionaryTypeMapper, DictionaryTypeEntity> implements DictionaryTypeService {
 
     @Autowired
-    private UserProvider userProvider;
+    private EapUserProvider userProvider;
     @Autowired
     private DictionaryDataService dictionaryDataService;
 

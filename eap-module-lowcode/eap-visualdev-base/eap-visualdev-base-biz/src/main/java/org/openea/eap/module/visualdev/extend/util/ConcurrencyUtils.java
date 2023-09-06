@@ -2,7 +2,7 @@ package org.openea.eap.module.visualdev.extend.util;
 
 import cn.hutool.core.bean.BeanUtil;
 import org.openea.eap.extj.database.model.dbfield.DbFieldModel;
-import org.openea.eap.extj.database.model.dbfield.DbFieldModelBase;
+import org.openea.eap.extj.database.model.dbfield.base.DbFieldModelBase;
 import org.openea.eap.extj.database.model.dbtable.DbTableFieldModel;
 import org.openea.eap.extj.exception.WorkFlowException;
 import org.openea.eap.extj.model.visualJson.TableModel;

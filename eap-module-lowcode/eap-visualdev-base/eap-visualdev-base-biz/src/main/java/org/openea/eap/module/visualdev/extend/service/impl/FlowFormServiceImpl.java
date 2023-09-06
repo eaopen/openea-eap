@@ -11,16 +11,12 @@ import org.openea.eap.extj.base.ActionResult;
 import org.openea.eap.extj.base.service.SuperServiceImpl;
 import org.openea.eap.extj.constant.MsgCode;
 import org.openea.eap.extj.exception.WorkFlowException;
-import org.openea.eap.extj.model.visualJson.FieLdsModel;
-import org.openea.eap.extj.model.visualJson.FormCloumnUtil;
-import org.openea.eap.extj.model.visualJson.FormDataModel;
-import org.openea.eap.extj.model.visualJson.TableModel;
-import org.openea.eap.extj.model.visualJson.analysis.FormAllModel;
-import org.openea.eap.extj.model.visualJson.analysis.RecursionForm;
+import org.openea.eap.extj.model.FormAllModel;
+import org.openea.eap.extj.model.visualJson.*;
+import org.openea.eap.extj.util.EapUserProvider;
 import org.openea.eap.extj.util.JsonUtil;
 import org.openea.eap.extj.util.RandomUtil;
 import org.openea.eap.extj.util.StringUtil;
-import org.openea.eap.extj.util.UserProvider;
 import org.openea.eap.module.visualdev.base.service.DbTableService;
 import org.openea.eap.module.visualdev.extend.entity.FlowFormEntity;
 import org.openea.eap.module.visualdev.extend.mapper.FlowFormMapper;
@@ -41,7 +37,7 @@ import java.util.*;
 public class FlowFormServiceImpl extends SuperServiceImpl<FlowFormMapper, FlowFormEntity> implements FlowFormService {
 
     @Autowired
-    private UserProvider userProvider;
+    private EapUserProvider userProvider;
 
     @Autowired
     private VisualDevTableCre formTableCre;

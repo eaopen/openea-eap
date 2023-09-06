@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.openea.eap.extj.base.ActionResult;
+import org.openea.eap.extj.base.NoDataSourceBind;
 import org.openea.eap.extj.base.UserInfo;
 import org.openea.eap.extj.base.controller.SuperController;
 import org.openea.eap.extj.base.model.ColumnDataModel;
@@ -18,7 +19,6 @@ import org.openea.eap.extj.database.model.entity.DbLinkEntity;
 import org.openea.eap.extj.exception.DataException;
 import org.openea.eap.extj.exception.LoginException;
 import org.openea.eap.extj.exception.WorkFlowException;
-import org.openea.eap.extj.model.DataModel;
 import org.openea.eap.extj.model.visualJson.FieLdsModel;
 import org.openea.eap.extj.model.visualJson.FormDataModel;
 import org.openea.eap.extj.model.visualJson.TableModel;
@@ -38,6 +38,7 @@ import org.openea.eap.module.visualdev.base.service.VisualdevShortLinkService;
 import org.openea.eap.module.visualdev.base.util.FormCheckUtils;
 import org.openea.eap.module.visualdev.base.util.OnlinePublicUtils;
 import org.openea.eap.module.visualdev.base.util.VisualUtil;
+import org.openea.eap.module.visualdev.extend.model.flow.DataModel;
 import org.openea.eap.module.visualdev.onlinedev.model.OnlineDevData;
 import org.openea.eap.module.visualdev.onlinedev.model.VisualdevModelDataCrForm;
 import org.openea.eap.module.visualdev.onlinedev.model.VisualdevModelDataInfoVO;
@@ -69,7 +70,7 @@ public class VisualdevShortLinkController extends SuperController<VisualdevShort
     private VisualdevShortLinkService visualdevShortLinkService;
 
     @Autowired
-    private UserProvider userProvider;
+    private EapUserProvider userProvider;
 
     @Autowired
     private JnpfOauthConfig oauthConfig;
@@ -201,7 +202,7 @@ public class VisualdevShortLinkController extends SuperController<VisualdevShort
         VisualdevShortLinkModel model = aesDecodeMatchDatabase(encryption);
         String link = "";
         VisualdevShortLinkEntity entity = visualdevShortLinkService.getById(id);
-        DeviceType deviceType = UserProvider.getDeviceForAgent();
+        DeviceType deviceType = EapUserProvider.getDeviceForAgent();
         if (entity != null) {
             if (DeviceType.PC.equals(deviceType)) {
                 link = oauthConfig.getJnpfFrontDomain() + entity.getRealPcLink();

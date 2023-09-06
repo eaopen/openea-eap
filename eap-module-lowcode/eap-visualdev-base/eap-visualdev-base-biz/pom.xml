@@ -13,6 +13,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>org.openea.eap</groupId>
             <artifactId>eap-common</artifactId>
         </dependency>
@@ -20,7 +25,6 @@
         <dependency>
             <groupId>org.openea.eap</groupId>
             <artifactId>eap-extj-common</artifactId>
-            <version>${project.version}</version>
         </dependency>
 
         <dependency>
@@ -47,7 +51,16 @@
         <dependency>
             <groupId>cn.afterturn</groupId>
             <artifactId>easypoi-base</artifactId>
-            <version>4.4.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>javax.mail</artifactId>
         </dependency>
 
     </dependencies>

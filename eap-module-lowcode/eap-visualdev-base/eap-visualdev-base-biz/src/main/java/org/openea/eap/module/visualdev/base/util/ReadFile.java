@@ -1,13 +1,13 @@
 package org.openea.eap.module.visualdev.base.util;
 
-import org.openea.eap.module.visualdev.base.model.read.ReadEnum;
-import org.openea.eap.module.visualdev.base.model.read.ReadListVO;
-import org.openea.eap.module.visualdev.base.model.read.ReadModel;
+import lombok.Cleanup;
+import lombok.extern.slf4j.Slf4j;
 import org.openea.eap.extj.util.FileUtil;
 import org.openea.eap.extj.util.RandomUtil;
 import org.openea.eap.extj.util.XSSEscape;
-import lombok.Cleanup;
-import lombok.extern.slf4j.Slf4j;
+import org.openea.eap.module.visualdev.base.model.read.ReadEnum;
+import org.openea.eap.module.visualdev.base.model.read.ReadListVO;
+import org.openea.eap.module.visualdev.base.model.read.ReadModel;
 
 import java.io.*;
 import java.util.ArrayList;

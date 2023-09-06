@@ -2,13 +2,14 @@ package org.openea.eap.extj.message.controller.admin.message;
 
 
 //import cn.dev33.satoken.annotation.SaCheckPermission;
+
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
-import org.openea.eap.extj.base.controller.SuperController;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import io.swagger.v3.oas.annotations.Operation;
 import org.openea.eap.extj.base.ActionResult;
 import org.openea.eap.extj.base.UserInfo;
+import org.openea.eap.extj.base.controller.SuperController;
 import org.openea.eap.extj.base.entity.DictionaryDataEntity;
 import org.openea.eap.extj.base.entity.DictionaryTypeEntity;
 import org.openea.eap.extj.base.service.DictionaryDataService;
@@ -16,8 +17,8 @@ import org.openea.eap.extj.base.service.DictionaryTypeService;
 import org.openea.eap.extj.base.vo.PageListVO;
 import org.openea.eap.extj.base.vo.PaginationVO;
 import org.openea.eap.extj.constant.MsgCode;
-import org.openea.eap.extj.message.entity.MessageEntity;
 import org.openea.eap.extj.exception.DataException;
+import org.openea.eap.extj.message.entity.MessageEntity;
 import org.openea.eap.extj.message.entity.MessageReceiveEntity;
 import org.openea.eap.extj.message.model.NoticePagination;
 import org.openea.eap.extj.message.model.message.*;
@@ -34,7 +35,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**

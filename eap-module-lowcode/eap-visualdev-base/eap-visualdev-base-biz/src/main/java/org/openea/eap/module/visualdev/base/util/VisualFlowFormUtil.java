@@ -8,9 +8,9 @@ import org.openea.eap.extj.base.service.DictionaryDataService;
 import org.openea.eap.extj.base.service.DictionaryTypeService;
 import org.openea.eap.extj.constant.MsgCode;
 import org.openea.eap.extj.exception.WorkFlowException;
+import org.openea.eap.extj.util.EapUserProvider;
 import org.openea.eap.extj.util.JsonUtil;
 import org.openea.eap.extj.util.StringUtil;
-import org.openea.eap.extj.util.UserProvider;
 import org.openea.eap.extj.util.enums.DictionaryDataEnum;
 import org.openea.eap.module.visualdev.base.entity.VisualdevEntity;
 import org.openea.eap.module.visualdev.extend.entity.FlowFormEntity;
@@ -45,7 +45,7 @@ public class VisualFlowFormUtil {
     @Autowired
     private DictionaryDataService dictionaryDataService;
     @Autowired
-    private UserProvider userProvider;
+    private EapUserProvider userProvider;
 
     /**
      * 修改流程基本信息及状态

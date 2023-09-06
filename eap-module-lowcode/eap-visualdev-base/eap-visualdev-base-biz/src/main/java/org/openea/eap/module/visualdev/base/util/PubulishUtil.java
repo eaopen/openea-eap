@@ -1,9 +1,10 @@
 package org.openea.eap.module.visualdev.base.util;
 
 import org.openea.eap.extj.base.UserInfo;
+import org.openea.eap.extj.util.RandomUtil;
 import org.openea.eap.extj.base.entity.ModuleEntity;
 import org.openea.eap.extj.base.service.ModuleService;
-import org.openea.eap.extj.util.UserProvider;
+import org.openea.eap.extj.util.EapUserProvider;
 import org.openea.eap.module.visualdev.base.model.online.PerColModels;
 import org.openea.eap.module.visualdev.base.model.online.VisualMenuModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,7 @@ import java.util.List;
 public class PubulishUtil {
 
     @Autowired
-    private UserProvider userProvider;
+    private EapUserProvider userProvider;
     @Autowired
     private ModuleService moduleService;
 

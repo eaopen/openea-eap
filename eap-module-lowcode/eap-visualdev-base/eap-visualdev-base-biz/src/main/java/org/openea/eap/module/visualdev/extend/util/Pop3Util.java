@@ -1,5 +1,6 @@
 package org.openea.eap.module.visualdev.extend.util;
 
+
 import lombok.Cleanup;
 import lombok.extern.slf4j.Slf4j;
 import org.openea.eap.extj.base.entity.MailAccount;

@@ -14,9 +14,9 @@ import org.openea.eap.extj.constant.MsgCode;
 import org.openea.eap.extj.exception.DataException;
 import org.openea.eap.extj.permission.entity.UserEntity;
 import org.openea.eap.extj.permission.service.UserService;
+import org.openea.eap.extj.util.EapUserProvider;
 import org.openea.eap.extj.util.JsonUtil;
 import org.openea.eap.extj.util.StringUtil;
-import org.openea.eap.extj.util.UserProvider;
 import org.openea.eap.module.visualdev.base.entity.DataInterfaceEntity;
 import org.openea.eap.module.visualdev.base.entity.DataInterfaceLogEntity;
 import org.openea.eap.module.visualdev.base.entity.InterfaceOauthEntity;
@@ -50,7 +50,7 @@ public class InterfaceOauthController extends SuperController<InterfaceOauthServ
     private UserService userService;
 
     @Autowired
-    private UserProvider userProvider;
+    private EapUserProvider userProvider;
 
 
     /**

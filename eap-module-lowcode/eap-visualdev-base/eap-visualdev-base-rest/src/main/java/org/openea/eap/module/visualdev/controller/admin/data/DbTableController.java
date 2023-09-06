@@ -17,7 +17,7 @@ import org.openea.eap.extj.base.vo.PageListVO;
 import org.openea.eap.extj.base.vo.PaginationVO;
 import org.openea.eap.extj.config.ConfigValueUtil;
 import org.openea.eap.extj.constant.MsgCode;
-import org.openea.eap.extj.database.datatype.model.DtModelDTO;
+import org.openea.eap.extj.database.datatype.limit.model.DtModelDTO;
 import org.openea.eap.extj.database.model.dbfield.DbFieldModel;
 import org.openea.eap.extj.database.model.dbtable.DbTableFieldModel;
 import org.openea.eap.extj.database.model.page.DbTableDataForm;

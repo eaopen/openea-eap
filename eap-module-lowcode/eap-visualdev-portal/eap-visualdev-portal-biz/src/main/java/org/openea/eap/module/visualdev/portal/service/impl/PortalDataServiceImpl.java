@@ -15,7 +15,6 @@ import org.openea.eap.extj.permission.service.AuthorizeService;
 import org.openea.eap.extj.permission.service.RoleService;
 import org.openea.eap.extj.permission.service.UserService;
 import org.openea.eap.extj.util.*;
-import org.openea.eap.module.visualdev.base.util.RandomUtil;
 import org.openea.eap.module.visualdev.portal.constant.PortalConst;
 import org.openea.eap.module.visualdev.portal.entity.PortalDataEntity;
 import org.openea.eap.module.visualdev.portal.entity.PortalEntity;
@@ -48,7 +47,7 @@ public class PortalDataServiceImpl extends SuperServiceImpl<PortalDataMapper, Po
     @Autowired
     private UserService userService;
     @Autowired
-    private UserProvider userProvider;
+    private EapUserProvider userProvider;
     @Autowired
     private PortalService portalService;
     @Autowired

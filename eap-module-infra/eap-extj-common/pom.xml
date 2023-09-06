@@ -19,6 +19,21 @@
 
         <dependency>
             <groupId>org.openea.eap</groupId>
+            <artifactId>eap-common-extj-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.openea.eap</groupId>
+            <artifactId>eap-common-extj-auth</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.openea.eap</groupId>
+            <artifactId>eap-common-extj-database</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.openea.eap</groupId>
             <artifactId>eap-module-infra-api</artifactId>
             <version>${project.version}</version>
         </dependency>
@@ -33,12 +48,12 @@
             <groupId>org.openea.eap</groupId>
             <artifactId>eap-module-system-biz</artifactId>
             <version>${project.version}</version>
+            <scope>compile</scope>
         </dependency>
 
         <dependency>
-            <groupId>org.openea.eap</groupId>
-            <artifactId>eap-module-system-biz</artifactId>
-            <version>${project.version}</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
         </dependency>
 
 
@@ -50,6 +65,11 @@
         <dependency>
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
         </dependency>
 
         <dependency>
@@ -91,27 +111,12 @@
             <artifactId>eap-spring-boot-starter-biz-ip</artifactId>
         </dependency>
 
-        <!--        <dependency>-->
-        <!--            <groupId>io.swagger.core.v3</groupId>-->
-        <!--            <artifactId>swagger-annotations</artifactId>-->
-        <!--        </dependency>-->
-        <dependency>
-            <groupId>cn.afterturn</groupId>
-            <artifactId>easypoi-annotation</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-annotation</artifactId>
-        </dependency>
+
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-annotations</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>com.nimbusds</groupId>
-            <artifactId>nimbus-jose-jwt</artifactId>
-        </dependency>
 
         <!-- Alibaba Fastjson -->
         <dependency>
@@ -185,10 +190,6 @@
         </dependency>
 
 
-        <dependency>
-            <groupId>commons-fileupload</groupId>
-            <artifactId>commons-fileupload</artifactId>
-        </dependency>
 
         <dependency>
             <groupId>commons-io</groupId>
@@ -240,17 +241,61 @@
             <artifactId>spring-tx</artifactId>
         </dependency>
         <dependency>
-            <groupId>cn.hutool</groupId>
-            <artifactId>hutool-all</artifactId>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-annotations</artifactId>
         </dependency>
+
+
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>13.0</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>javax.mail</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>io.swagger.core.v3</groupId>
             <artifactId>swagger-annotations</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.swagger</groupId>
-            <artifactId>swagger-annotations</artifactId>
-            <version>1.6.8</version>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jodd</groupId>
+            <artifactId>jodd-bean</artifactId>
+            <version>5.1.6</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-annotation</artifactId>
         </dependency>
 
     </dependencies>

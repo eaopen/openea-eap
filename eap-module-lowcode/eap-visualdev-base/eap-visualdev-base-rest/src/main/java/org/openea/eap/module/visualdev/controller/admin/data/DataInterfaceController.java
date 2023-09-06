@@ -9,11 +9,13 @@ import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.openea.eap.extj.base.ActionResult;
 import org.openea.eap.extj.base.ActionResultCode;
+import org.openea.eap.extj.base.NoDataSourceBind;
 import org.openea.eap.extj.base.UserInfo;
 import org.openea.eap.extj.base.controller.SuperController;
 import org.openea.eap.extj.base.entity.DictionaryDataEntity;
 import org.openea.eap.extj.base.service.DictionaryDataService;
 import org.openea.eap.extj.base.service.DictionaryTypeService;
+import org.openea.eap.extj.base.util.dbutil.TableUtil;
 import org.openea.eap.extj.base.vo.DownloadVO;
 import org.openea.eap.extj.base.vo.ListVO;
 import org.openea.eap.extj.base.vo.PageListVO;
@@ -21,7 +23,6 @@ import org.openea.eap.extj.base.vo.PaginationVO;
 import org.openea.eap.extj.config.ConfigValueUtil;
 import org.openea.eap.extj.constant.DbSensitiveConstant;
 import org.openea.eap.extj.constant.MsgCode;
-import org.openea.eap.extj.database.util.TableUtil;
 import org.openea.eap.extj.database.util.TenantDataSourceUtil;
 import org.openea.eap.extj.emnus.ModuleTypeEnum;
 import org.openea.eap.extj.exception.DataException;
@@ -62,7 +63,7 @@ public class DataInterfaceController extends SuperController<DataInterfaceServic
     @Autowired
     private FileExport fileExport;
     @Autowired
-    private UserProvider userProvider;
+    private EapUserProvider userProvider;
 
     /**
      * 获取接口列表(分页)
@@ -464,7 +465,7 @@ public class DataInterfaceController extends SuperController<DataInterfaceServic
                         return ActionResult.fail(ActionResultCode.SessionOverdue.getMessage());
                     }
                 } else {
-                    UserInfo userInfo = UserProvider.getUser();
+                    UserInfo userInfo = EapUserProvider.getUser();
                     if (Objects.isNull(userInfo.getUserId())) {
                         return ActionResult.fail(ActionResultCode.SessionOverdue.getMessage());
                     }
@@ -555,7 +556,7 @@ public class DataInterfaceController extends SuperController<DataInterfaceServic
                     return ActionResult.fail(ActionResultCode.SessionOverdue.getMessage());
                 }
             } else {
-                UserInfo userInfo = UserProvider.getUser();
+                UserInfo userInfo = EapUserProvider.getUser();
                 if (Objects.isNull(userInfo.getUserId())) {
                     return ActionResult.fail(ActionResultCode.SessionOverdue.getMessage());
                 }
@@ -596,7 +597,7 @@ public class DataInterfaceController extends SuperController<DataInterfaceServic
                     return ActionResult.fail(ActionResultCode.SessionOverdue.getMessage());
                 }
             } else {
-                UserInfo userInfo = UserProvider.getUser();
+                UserInfo userInfo = EapUserProvider.getUser();
                 if (Objects.isNull(userInfo.getUserId())) {
                     return ActionResult.fail(ActionResultCode.SessionOverdue.getMessage());
                 }

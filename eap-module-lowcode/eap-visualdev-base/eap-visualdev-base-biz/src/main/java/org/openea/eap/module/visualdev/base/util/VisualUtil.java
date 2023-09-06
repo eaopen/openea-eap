@@ -1,19 +1,17 @@
 package org.openea.eap.module.visualdev.base.util;
 
+import org.apache.commons.lang3.StringUtils;
 import org.openea.eap.extj.base.model.ColumnDataModel;
-import org.openea.eap.extj.base.model.Template6.ColumnListField;
 import org.openea.eap.extj.constant.MsgCode;
+import org.openea.eap.extj.model.FormAllModel;
+import org.openea.eap.extj.model.FormColumnModel;
+import org.openea.eap.extj.model.FormEnum;
 import org.openea.eap.extj.model.visualJson.*;
-import org.openea.eap.extj.model.visualJson.analysis.FormAllModel;
-import org.openea.eap.extj.model.visualJson.analysis.FormColumnModel;
-import org.openea.eap.extj.model.visualJson.analysis.FormEnum;
-import org.openea.eap.extj.model.visualJson.analysis.RecursionForm;
-import org.openea.eap.extj.model.visualJson.config.ConfigModel;
+import org.openea.eap.extj.model.visualJson.fields.config.ConfigModel;
 import org.openea.eap.extj.permission.model.authorize.AuthorizeConditionEnum;
 import org.openea.eap.extj.util.JsonUtil;
 import org.openea.eap.extj.util.RandomUtil;
 import org.openea.eap.extj.util.StringUtil;
-import org.apache.commons.lang3.StringUtils;
 import org.openea.eap.extj.util.visual.JnpfKeyConsts;
 import org.openea.eap.module.visualdev.base.entity.VisualdevEntity;
 import org.openea.eap.module.visualdev.base.model.VisualDevPubModel;

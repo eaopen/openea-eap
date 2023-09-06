@@ -1,11 +1,11 @@
 package org.openea.eap.module.visualdev.base.util;
 
 import cn.hutool.core.collection.CollectionUtil;
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.codec.binary.Hex;
 import org.openea.eap.extj.util.DateUtil;
 import org.openea.eap.extj.util.ServletUtil;
 import org.openea.eap.extj.util.StringUtil;
-import org.apache.commons.codec.binary.Base64;
-import org.apache.commons.codec.binary.Hex;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;

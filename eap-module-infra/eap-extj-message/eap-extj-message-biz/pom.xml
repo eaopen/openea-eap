@@ -28,8 +28,6 @@
             <scope>compile</scope>
         </dependency>
 
-
-
         <!-- Web 相关 -->
         <dependency>
             <groupId>org.openea.eap</groupId>

@@ -1,9 +1,9 @@
 package org.openea.eap.module.visualdev.onlinedev.model.OnlineDevListModel;
 
 import lombok.Data;
-import org.openea.eap.extj.model.visualJson.SlotModel;
-import org.openea.eap.extj.model.visualJson.config.ConfigModel;
-import org.openea.eap.extj.model.visualJson.props.PropsModel;
+import org.openea.eap.extj.model.visualJson.fields.config.ConfigModel;
+import org.openea.eap.extj.model.visualJson.fields.props.PropsModel;
+import org.openea.eap.extj.model.visualJson.fields.slot.SlotModel;
 
 /**
  *

@@ -9,27 +9,30 @@ import org.openea.eap.extj.base.UserInfo;
 import org.openea.eap.extj.base.entity.DictionaryDataEntity;
 import org.openea.eap.extj.base.service.DictionaryDataService;
 import org.openea.eap.extj.base.service.DictionaryTypeService;
+import org.openea.eap.extj.base.service.SuperServiceImpl;
 import org.openea.eap.extj.base.service.SystemService;
 import org.openea.eap.extj.permission.entity.UserEntity;
 import org.openea.eap.extj.permission.service.UserService;
-import org.openea.eap.module.visualdev.portal.entity.PortalManageEntity;
+import org.openea.eap.extj.util.*;
+import org.openea.eap.extj.util.enums.DictionaryDataEnum;
 import org.openea.eap.module.visualdev.base.model.VisualFunctionModel;
+import org.openea.eap.module.visualdev.portal.constant.PortalConst;
+import org.openea.eap.module.visualdev.portal.entity.PortalEntity;
+import org.openea.eap.module.visualdev.portal.entity.PortalManageEntity;
+import org.openea.eap.module.visualdev.portal.mapper.PortalMapper;
+import org.openea.eap.module.visualdev.portal.model.PortalPagination;
+import org.openea.eap.module.visualdev.portal.model.PortalSelectModel;
+import org.openea.eap.module.visualdev.portal.model.PortalSelectVO;
+import org.openea.eap.module.visualdev.portal.model.PortalViewPrimary;
 import org.openea.eap.module.visualdev.portal.model.portalManage.PortalManagePage;
 import org.openea.eap.module.visualdev.portal.model.portalManage.PortalManagePageDO;
 import org.openea.eap.module.visualdev.portal.model.portalManage.PortalManagePrimary;
-import org.openea.eap.module.visualdev.portal.constant.PortalConst;
-import org.openea.eap.module.visualdev.portal.entity.PortalEntity;
-import org.openea.eap.module.visualdev.portal.mapper.PortalMapper;
-import org.openea.eap.module.visualdev.portal.model.*;
+import org.openea.eap.module.visualdev.portal.model.portalManage.PortalManageVO;
 import org.openea.eap.module.visualdev.portal.service.PortalDataService;
 import org.openea.eap.module.visualdev.portal.service.PortalManageService;
 import org.openea.eap.module.visualdev.portal.service.PortalService;
-import org.openea.eap.extj.util.*;
-import org.openea.eap.extj.util.enums.DictionaryDataEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.openea.eap.extj.base.service.SuperServiceImpl;
-import org.openea.eap.module.visualdev.portal.model.portalManage.PortalManageVO;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -45,7 +48,7 @@ public class PortalServiceImpl extends SuperServiceImpl<PortalMapper, PortalEnti
     @Autowired
     private PortalManageService portalManageService;
     @Autowired
-    private UserProvider userProvider;
+    private EapUserProvider userProvider;
     @Autowired
     private UserService userService;
     @Autowired

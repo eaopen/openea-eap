@@ -6,48 +6,45 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.extern.slf4j.Slf4j;
 import org.openea.eap.extj.base.ActionResult;
 import org.openea.eap.extj.base.UserInfo;
 import org.openea.eap.extj.base.controller.SuperController;
+import org.openea.eap.extj.base.vo.DownloadVO;
 import org.openea.eap.extj.base.vo.ListVO;
 import org.openea.eap.extj.base.vo.PageListVO;
 import org.openea.eap.extj.base.vo.PaginationVO;
+import org.openea.eap.extj.config.ConfigValueUtil;
 import org.openea.eap.extj.constant.MsgCode;
 import org.openea.eap.extj.emnus.ExportModelTypeEnum;
 import org.openea.eap.extj.emnus.ModuleTypeEnum;
-import org.openea.eap.module.system.controller.admin.auth.vo.AuthPermissionInfoRespVO;
-import org.openea.eap.module.system.convert.auth.AuthConvert;
+import org.openea.eap.extj.util.*;
+import org.openea.eap.extj.util.treeutil.newtreeutil.TreeDotUtils;
 import org.openea.eap.module.system.dal.dataobject.permission.MenuDO;
 import org.openea.eap.module.system.enums.permission.MenuTypeEnum;
 import org.openea.eap.module.system.service.permission.MenuService;
 import org.openea.eap.module.system.service.permission.PermissionServiceImpl;
-import org.openea.eap.module.visualdev.portal.entity.PortalManageEntity;
 import org.openea.eap.module.visualdev.base.model.VisualFunctionModel;
-import org.openea.eap.module.visualdev.portal.service.PortalManageService;
-import org.openea.eap.extj.base.vo.DownloadVO;
-import org.openea.eap.extj.config.ConfigValueUtil;
 import org.openea.eap.module.visualdev.portal.constant.PortalConst;
 import org.openea.eap.module.visualdev.portal.entity.PortalEntity;
+import org.openea.eap.module.visualdev.portal.entity.PortalManageEntity;
 import org.openea.eap.module.visualdev.portal.model.*;
 import org.openea.eap.module.visualdev.portal.service.PortalDataService;
+import org.openea.eap.module.visualdev.portal.service.PortalManageService;
 import org.openea.eap.module.visualdev.portal.service.PortalService;
-import org.openea.eap.extj.util.*;
-import org.openea.eap.extj.util.treeutil.newtreeutil.TreeDotUtils;
-import lombok.extern.slf4j.Slf4j;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import scala.util.Success;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.util.*;
 
 import static org.openea.eap.framework.common.util.collection.CollectionUtils.filterList;
-import static org.openea.eap.module.system.dal.dataobject.permission.MenuDO.ID_ROOT;
+
 
 /**
  * 可视化门户
@@ -60,7 +57,7 @@ import static org.openea.eap.module.system.dal.dataobject.permission.MenuDO.ID_R
 public class PortalController extends SuperController<PortalService, PortalEntity> {
 
     @Autowired
-    private UserProvider userProvider;
+    private EapUserProvider userProvider;
     @Autowired
     private PortalService portalService;
     @Autowired
@@ -326,7 +323,7 @@ public class PortalController extends SuperController<PortalService, PortalEntit
         menuList.sort(Comparator.comparing(MenuDO::getSort));
         Map<Long, Map> treeNodeMap = new LinkedHashMap<>();
         menuList.forEach(menu -> treeNodeMap.put(menu.getId(), transToMeanue(menu)));
-        treeNodeMap.values().stream().filter(node -> !MapUtil.getStr(node,"parentId").equals(ID_ROOT)).forEach(childNode -> {
+        treeNodeMap.values().stream().filter(node -> !MapUtil.getStr(node,"parentId").equals(MenuDO.ID_ROOT)).forEach(childNode -> {
             // 获得父节点
             Map parentNode = treeNodeMap.get(Long.parseLong(MapUtil.getStr(childNode,"parentId")));
             if (parentNode == null) {
@@ -342,7 +339,7 @@ public class PortalController extends SuperController<PortalService, PortalEntit
             children.add(childNode);
             parentNode.put("children",children);
         });
-        List<Map> rootMenue = filterList(treeNodeMap.values(), node -> ID_ROOT.toString().equals(MapUtil.getStr(node, "parentId")));
+        List<Map> rootMenue = filterList(treeNodeMap.values(), node -> MenuDO.ID_ROOT.toString().equals(MapUtil.getStr(node, "parentId")));
         Map<String,Object> map=new HashMap<>();
         map.put("list",rootMenue);
         return ActionResult.success(map);

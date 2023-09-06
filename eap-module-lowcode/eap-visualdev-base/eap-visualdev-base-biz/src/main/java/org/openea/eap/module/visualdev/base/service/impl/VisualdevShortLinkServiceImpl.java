@@ -1,8 +1,8 @@
 package org.openea.eap.module.visualdev.base.service.impl;
 
+import org.openea.eap.extj.base.service.SuperServiceImpl;
 import org.openea.eap.module.visualdev.base.entity.VisualdevShortLinkEntity;
 import org.openea.eap.module.visualdev.base.mapper.VisualdevShortLinkMapper;
-import org.openea.eap.extj.base.service.SuperServiceImpl;
 import org.openea.eap.module.visualdev.base.service.VisualdevShortLinkService;
 import org.springframework.stereotype.Service;
 

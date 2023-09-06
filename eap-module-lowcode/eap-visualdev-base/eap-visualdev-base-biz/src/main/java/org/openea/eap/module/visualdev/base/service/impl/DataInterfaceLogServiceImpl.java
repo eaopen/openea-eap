@@ -19,7 +19,7 @@ import java.util.List;
 @Service
 public class DataInterfaceLogServiceImpl extends SuperServiceImpl<DataInterfaceLogMapper, DataInterfaceLogEntity> implements DataInterfaceLogService {
     @Autowired
-    private UserProvider userProvider;
+    private EapUserProvider userProvider;
 
     @Override
     public void create(String dateInterfaceId, Integer invokWasteTime) {

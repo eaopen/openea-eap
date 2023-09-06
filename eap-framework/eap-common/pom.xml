@@ -169,7 +169,6 @@
         <dependency>
             <groupId>io.swagger</groupId>
             <artifactId>swagger-annotations</artifactId>
-            <version>1.6.8</version>
         </dependency>
 
     </dependencies>

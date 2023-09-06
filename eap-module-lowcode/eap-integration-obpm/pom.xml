@@ -19,6 +19,7 @@
             <groupId>org.openea.eap</groupId>
             <artifactId>eap-module-system-biz</artifactId>
             <version>${project.version}</version>
+            <scope>compile</scope>
         </dependency>
 
 

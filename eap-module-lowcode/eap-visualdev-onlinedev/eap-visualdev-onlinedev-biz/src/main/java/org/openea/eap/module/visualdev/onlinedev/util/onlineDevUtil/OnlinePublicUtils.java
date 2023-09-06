@@ -1,13 +1,13 @@
 package org.openea.eap.module.visualdev.onlinedev.util.onlineDevUtil;
 
 import org.openea.eap.extj.base.model.ColumnDataModel;
+import org.openea.eap.extj.model.FormEnum;
+import org.openea.eap.extj.model.FormModel;
 import org.openea.eap.extj.model.visualJson.FieLdsModel;
 import org.openea.eap.extj.model.visualJson.FormDataModel;
 import org.openea.eap.extj.model.visualJson.TableModel;
-import org.openea.eap.extj.model.visualJson.analysis.FormEnum;
-import org.openea.eap.extj.model.visualJson.analysis.FormModel;
-import org.openea.eap.extj.model.visualJson.config.ConfigModel;
-import org.openea.eap.extj.model.visualJson.props.PropsBeanModel;
+import org.openea.eap.extj.model.visualJson.fields.config.ConfigModel;
+import org.openea.eap.extj.model.visualJson.fields.props.PropsBeanModel;
 import org.openea.eap.extj.util.JsonUtil;
 import org.openea.eap.extj.util.StringUtil;
 import org.openea.eap.extj.util.visual.JnpfKeyConsts;

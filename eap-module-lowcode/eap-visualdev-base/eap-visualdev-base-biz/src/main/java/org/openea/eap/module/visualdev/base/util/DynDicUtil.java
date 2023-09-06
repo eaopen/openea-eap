@@ -3,7 +3,6 @@ package org.openea.eap.module.visualdev.base.util;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.openea.eap.extj.base.ActionResult;
-
 import org.openea.eap.extj.base.entity.DictionaryDataEntity;
 import org.openea.eap.extj.base.service.DictionaryDataService;
 import org.openea.eap.extj.util.CacheKeyUtil;

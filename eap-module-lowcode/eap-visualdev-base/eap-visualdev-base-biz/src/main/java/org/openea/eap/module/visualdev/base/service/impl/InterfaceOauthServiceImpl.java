@@ -6,9 +6,9 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.openea.eap.extj.base.service.SuperServiceImpl;
 import org.openea.eap.extj.exception.DataException;
 import org.openea.eap.extj.util.DateUtil;
+import org.openea.eap.extj.util.EapUserProvider;
 import org.openea.eap.extj.util.RandomUtil;
 import org.openea.eap.extj.util.StringUtil;
-import org.openea.eap.extj.util.UserProvider;
 import org.openea.eap.module.visualdev.base.entity.InterfaceOauthEntity;
 import org.openea.eap.module.visualdev.base.mapper.InterfaceOauthMapper;
 import org.openea.eap.module.visualdev.base.model.InterfaceOauth.PaginationOauth;
@@ -22,7 +22,7 @@ import java.util.List;
 public class InterfaceOauthServiceImpl extends SuperServiceImpl<InterfaceOauthMapper, InterfaceOauthEntity> implements InterfaceOauthService {
 
     @Autowired
-    private UserProvider userProvider;
+    private EapUserProvider userProvider;
 
 
     @Override

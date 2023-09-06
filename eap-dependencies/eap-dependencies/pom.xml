@@ -21,8 +21,13 @@
         <!-- Web 相关 -->
         <servlet.versoin>2.5</servlet.versoin>
         <swagger.version>2.2.8</swagger.version>
+        <swagger-model.version>2.2.8</swagger-model.version>
+        <swagger-ui.version>1.9.6</swagger-ui.version>
+        <swagger-annotations.version>1.6.11</swagger-annotations.version>
         <springdoc.version>1.6.15</springdoc.version>
         <knife4j.version>4.1.0</knife4j.version>
+        <nimbus-jose-jwt.version>9.22</nimbus-jose-jwt.version>
+
         <!-- DB 相关 -->
         <druid.version>1.2.18</druid.version>
         <mybatis-plus.version>3.5.3.1</mybatis-plus.version>
@@ -31,6 +36,13 @@
         <mybatis-plus-join-boot-starter.version>1.4.5</mybatis-plus-join-boot-starter.version>
         <mybatis-dynamic-sql.version>1.5.0</mybatis-dynamic-sql.version>
         <redisson.version>3.18.0</redisson.version>
+        <pagehelper.version>5.3.2</pagehelper.version>
+        <mysql.version>8.0.29</mysql.version>
+        <oracle.version>21.9.0.0</oracle.version>
+        <kingbase.version>2.0</kingbase.version>
+        <postgre.version>42.6.0</postgre.version>
+        <sqlserver.version>11.2.1.jre8</sqlserver.version>
+        <dm18.version>1.8.0</dm18.version>
         <dm8.jdbc.version>8.1.2.141</dm8.jdbc.version>
 
 
@@ -55,7 +67,10 @@
         <lombok.version>1.18.28</lombok.version>
         <mapstruct.version>1.5.5.Final</mapstruct.version>
         <hutool.version>5.8.20</hutool.version>
+        <javax-mail.version>1.6.2</javax-mail.version>
         <easyexcel.verion>3.3.2</easyexcel.verion>
+        <poi.version>4.1.2</poi.version>
+        <easypoi-base.version>4.4.0</easypoi-base.version>
         <velocity.version>2.3</velocity.version>
         <screw.version>1.0.5</screw.version>
         <fastjson.version>1.2.83</fastjson.version>
@@ -67,6 +82,7 @@
         <tika-core.version>2.7.0</tika-core.version>
         <netty-all.version>4.1.90.Final</netty-all.version>
         <ip2region.version>2.7.0</ip2region.version>
+        <yitter-idgenerator.version>1.0.6</yitter-idgenerator.version>
         <commons-fileupload.version>1.5</commons-fileupload.version>
         <sa-token.version>1.31.0</sa-token.version>
         <!-- 三方云服务相关 -->
@@ -74,8 +90,10 @@
         <okhttp3.version>4.10.0</okhttp3.version>
         <commons-io.version>2.11.0</commons-io.version>
         <minio.version>8.5.4</minio.version>
+        <dingtalk.verssion>1.0</dingtalk.verssion>
         <aliyun-java-sdk-core.version>4.6.3</aliyun-java-sdk-core.version>
         <aliyun-java-sdk-dysmsapi.version>2.2.1</aliyun-java-sdk-dysmsapi.version>
+        <dysmsapi.version>2.0.8</dysmsapi.version>
         <tencentcloud-sdk-java.version>3.1.758</tencentcloud-sdk-java.version>
         <justauth.version>1.0.1</justauth.version>
         <jimureport.version>1.5.8</jimureport.version>
@@ -207,6 +225,13 @@
                 <version>${swagger.version}</version>
             </dependency>
 
+            <!-- 兼容旧版 swagger-annotations 待优化 -->
+            <dependency>
+                <groupId>io.swagger</groupId>
+                <artifactId>swagger-annotations</artifactId>
+                <version>${swagger-annotations.version}</version>
+            </dependency>
+
             <!-- 接口文档 UI：解决 knife4j 引入的 Spring Doc 版本太老 -->
             <dependency>
                 <groupId>org.springdoc</groupId>
@@ -280,11 +305,6 @@
 
             <dependency>
                 <groupId>com.baomidou</groupId>
-                <artifactId>mybatis-plus-generator</artifactId> <!-- 代码生成器，使用它解析表结构 -->
-                <version>${mybatis-plus-generator.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.baomidou</groupId>
                 <artifactId>dynamic-datasource-spring-boot-starter</artifactId> <!-- 多数据源 -->
                 <version>${dynamic-datasource.version}</version>
             </dependency>
@@ -300,6 +320,54 @@
                 <artifactId>mybatis-dynamic-sql</artifactId>
                 <version>${mybatis-dynamic-sql.version}</version>
             </dependency>
+
+            <!-- 代码生成 -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-generator</artifactId>
+                <version>${mybatis-plus-generator.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <artifactId>mybatis-plus-extension</artifactId>
+                        <groupId>com.baomidou</groupId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <!-- mysql -->
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql.version}</version>
+            </dependency>
+
+            <!-- Oracle-->
+            <dependency>
+                <groupId>com.oracle.database.jdbc</groupId>
+                <artifactId>ojdbc8</artifactId>
+                <version>${oracle.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.oracle.database.nls</groupId>
+                <artifactId>orai18n</artifactId>
+                <version>${oracle.version}</version>
+            </dependency>
+
+            <!--PostGre-->
+            <dependency>
+                <groupId>org.postgresql</groupId>
+                <artifactId>postgresql</artifactId>
+                <version>${postgre.version}</version>
+            </dependency>
+
+            <!--sqlserver-->
+            <dependency>
+                <groupId>com.microsoft.sqlserver</groupId>
+                <artifactId>mssql-jdbc</artifactId>
+                <version>${sqlserver.version}</version>
+            </dependency>
+
+
 
             <dependency>
                 <groupId>org.openea.eap</groupId>
@@ -502,6 +570,24 @@
 
             <dependency>
                 <groupId>org.openea.eap</groupId>
+                <artifactId>eap-common-extj-core</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.openea.eap</groupId>
+                <artifactId>eap-common-extj-auth</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.openea.eap</groupId>
+                <artifactId>eap-common-extj-database</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.openea.eap</groupId>
                 <artifactId>eap-spring-boot-starter-excel</artifactId>
                 <version>${revision}</version>
             </dependency>
@@ -534,11 +620,52 @@
                 <version>${hutool.version}</version>
             </dependency>
 
+            <!-- excel工具 -->
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>easyexcel</artifactId>
                 <version>${easyexcel.verion}</version>
             </dependency>
+            <dependency>
+                <groupId>cn.afterturn</groupId>
+                <artifactId>easypoi-base</artifactId>
+                <version>${easypoi-base.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <artifactId>commons-compress</artifactId>
+                        <groupId>org.apache.commons</groupId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi</artifactId>
+                <version>${poi.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi-ooxml</artifactId>
+                <version>${poi.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi-ooxml-schemas</artifactId>
+                <version>${poi.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.nimbusds</groupId>
+                <artifactId>nimbus-jose-jwt</artifactId>
+                <version>${nimbus-jose-jwt.version}</version>
+            </dependency>
+
+            <!-- 雪花ID生成器 -->
+            <dependency>
+                <groupId>com.github.yitter</groupId>
+                <artifactId>yitter-idgenerator</artifactId>
+                <version>${yitter-idgenerator.version}</version>
+            </dependency>
+
             <dependency>
                 <groupId>commons-io</groupId>
                 <artifactId>commons-io</artifactId>
@@ -604,6 +731,15 @@
                 </exclusions>
             </dependency>
 
+
+            <!-- javax.mail => jakarta.mail -->
+            <dependency>
+                <groupId>com.sun.mail</groupId>
+                <artifactId>javax.mail</artifactId>
+                <version>${javax-mail.version}</version>
+            </dependency>
+
+
             <dependency>
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
@@ -658,6 +794,14 @@
                 <version>${jsoup.version}</version>
             </dependency>
 
+            <!--pagehelper分页插件-->
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper</artifactId>
+                <version>${pagehelper.version}</version>
+            </dependency>
+
+
             <!-- 第三方依赖 -->
             <!-- 安全认证 -->
             <dependency>
@@ -667,9 +811,32 @@
             </dependency>
             <dependency>
                 <groupId>cn.dev33</groupId>
+                <artifactId>sa-token-jwt</artifactId>
+                <version>${sa-token.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>cn.hutool</groupId>
+                        <artifactId>hutool-jwt</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>cn.dev33</groupId>
+                <artifactId>sa-token-dao-redis-jackson</artifactId>
+                <version>${sa-token.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <artifactId>spring-boot-starter-data-redis</artifactId>
+                        <groupId>org.springframework.boot</groupId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>cn.dev33</groupId>
                 <artifactId>sa-token-core</artifactId>
                 <version>${sa-token.version}</version>
             </dependency>
+
 
             <!--二维码-->
             <dependency>
@@ -707,6 +874,26 @@
                 <version>${minio.version}</version>
             </dependency>
 
+            <!--短信钉钉及企业微信-->
+            <!-- 钉钉API的Jar -->
+            <dependency>
+                <groupId>dingtalk-sdk-java</groupId>
+                <artifactId>taobao-sdk-java</artifactId>
+                <version>${dingtalk.verssion}</version>
+            </dependency>
+            <dependency>
+                <groupId>dingtalk-sdk-java</groupId>
+                <artifactId>taobao-sdk-java-source</artifactId>
+                <version>${dingtalk.verssion}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.tencentcloudapi</groupId>
+                <artifactId>tencentcloud-sdk-java</artifactId>
+                <version>${tencentcloud-sdk-java.version}</version>
+            </dependency>
+
+
             <!-- SMS SDK begin -->
             <dependency>
                 <groupId>com.aliyun</groupId>
@@ -723,10 +910,18 @@
                     </exclusion>
                 </exclusions>
             </dependency>
+
+            <!-- -->
             <dependency>
                 <groupId>com.aliyun</groupId>
                 <artifactId>aliyun-java-sdk-dysmsapi</artifactId>
                 <version>${aliyun-java-sdk-dysmsapi.version}</version>
+            </dependency>
+            <!-- 临时版本 -->
+            <dependency>
+                <groupId>com.aliyun</groupId>
+                <artifactId>dysmsapi20170525</artifactId>
+                <version>${dysmsapi.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.tencentcloudapi</groupId>
@@ -734,6 +929,13 @@
                 <version>${tencentcloud-sdk-java.version}</version>
             </dependency>
             <!-- SMS SDK end -->
+
+            <dependency>
+                <groupId>com.aliyun</groupId>
+                <artifactId>alibaba-dingtalk-service-sdk</artifactId>
+                <version>${alibaba-dingtalk-service-sdk.version}</version>
+            </dependency>
+
 
             <!-- 社交登陆（例如说，个人微信、企业微信等等） -->
             <dependency>

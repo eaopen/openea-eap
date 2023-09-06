@@ -17,9 +17,9 @@ import org.openea.eap.extj.database.model.entity.DbLinkEntity;
 import org.openea.eap.extj.database.source.DbBase;
 import org.openea.eap.extj.database.util.*;
 import org.openea.eap.extj.exception.DataException;
+import org.openea.eap.extj.util.EapUserProvider;
 import org.openea.eap.extj.util.RandomUtil;
 import org.openea.eap.extj.util.StringUtil;
-import org.openea.eap.extj.util.UserProvider;
 import org.openea.eap.module.visualdev.base.mapper.DbLinkMapper;
 import org.openea.eap.module.visualdev.base.model.PaginationDbLink;
 import org.openea.eap.module.visualdev.base.service.DbLinkService;
@@ -42,7 +42,7 @@ public class DbLinkServiceImpl extends SuperServiceImpl<DbLinkMapper, DbLinkEnti
     @Autowired
     private DataSourceUtil dataSourceUtils;
     @Autowired
-    private UserProvider userProvider;
+    private EapUserProvider userProvider;
     @Autowired
     private ConfigValueUtil configValueUtil;
     @Autowired

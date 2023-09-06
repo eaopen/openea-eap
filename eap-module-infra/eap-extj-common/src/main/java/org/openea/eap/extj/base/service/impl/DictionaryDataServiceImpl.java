@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
 public class DictionaryDataServiceImpl extends SuperServiceImpl<DictionaryDataMapper, DictionaryDataEntity> implements DictionaryDataService {
 
     @Autowired
-    private UserProvider userProvider;
+    private EapUserProvider userProvider;
     @Autowired
     private DictionaryTypeService dictionaryTypeService;
     @Autowired

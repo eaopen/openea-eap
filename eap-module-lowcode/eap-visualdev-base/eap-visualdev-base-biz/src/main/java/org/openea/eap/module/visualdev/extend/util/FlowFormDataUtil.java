@@ -2,7 +2,7 @@ package org.openea.eap.module.visualdev.extend.util;
 
 import lombok.Cleanup;
 import lombok.extern.slf4j.Slf4j;
-import org.openea.eap.extj.model.DataModel;
+import org.openea.eap.module.visualdev.extend.model.flow.DataModel;
 import org.springframework.stereotype.Component;
 
 import java.sql.Connection;

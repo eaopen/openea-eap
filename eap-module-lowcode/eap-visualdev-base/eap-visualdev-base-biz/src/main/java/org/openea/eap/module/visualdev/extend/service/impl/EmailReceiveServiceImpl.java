@@ -44,7 +44,7 @@ import java.util.stream.Collectors;
 public class EmailReceiveServiceImpl extends SuperServiceImpl<EmailReceiveMapper, EmailReceiveEntity> implements EmailReceiveService {
 
     @Autowired
-    private UserProvider userProvider;
+    private EapUserProvider userProvider;
     @Autowired
     private EmailSendService emailSendService;
     @Autowired

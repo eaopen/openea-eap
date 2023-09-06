@@ -2,9 +2,9 @@ package org.openea.eap.module.visualdev.base.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.openea.eap.extj.base.service.SuperServiceImpl;
+import org.openea.eap.extj.util.EapUserProvider;
 import org.openea.eap.extj.util.RandomUtil;
 import org.openea.eap.extj.util.StringUtil;
-import org.openea.eap.extj.util.UserProvider;
 import org.openea.eap.module.visualdev.base.entity.ComFieldsEntity;
 import org.openea.eap.module.visualdev.base.mapper.BaseComFieldsMapper;
 import org.openea.eap.module.visualdev.base.service.ComFieldsService;
@@ -18,7 +18,7 @@ import java.util.List;
 public class ComFieldsServiceImpl extends SuperServiceImpl<BaseComFieldsMapper, ComFieldsEntity> implements ComFieldsService {
 
     @Autowired
-    private UserProvider userProvider;
+    private EapUserProvider userProvider;
 
 
     @Override

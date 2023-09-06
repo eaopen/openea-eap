@@ -1,14 +1,14 @@
 package org.openea.eap.module.visualdev.extend.util;
 
+import org.openea.eap.extj.model.FormAllModel;
+import org.openea.eap.extj.model.FormEnum;
+import org.openea.eap.extj.model.FormModel;
 import org.openea.eap.extj.model.visualJson.FieLdsModel;
 import org.openea.eap.extj.model.visualJson.FormCloumnUtil;
+import org.openea.eap.extj.model.visualJson.RecursionForm;
 import org.openea.eap.extj.model.visualJson.TableModel;
-import org.openea.eap.extj.model.visualJson.analysis.FormAllModel;
-import org.openea.eap.extj.model.visualJson.analysis.FormEnum;
-import org.openea.eap.extj.model.visualJson.analysis.FormModel;
-import org.openea.eap.extj.model.visualJson.analysis.RecursionForm;
-import org.openea.eap.extj.model.visualJson.config.ConfigModel;
-import org.openea.eap.extj.model.visualJson.props.PropsBeanModel;
+import org.openea.eap.extj.model.visualJson.fields.config.ConfigModel;
+import org.openea.eap.extj.model.visualJson.fields.props.PropsBeanModel;
 import org.openea.eap.extj.util.DateUtil;
 import org.openea.eap.extj.util.JsonUtil;
 import org.openea.eap.extj.util.StringUtil;

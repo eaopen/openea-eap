@@ -1,8 +1,8 @@
 package org.openea.eap.module.visualdev.onlinedev.model.OnlineDevListModel;
 
-import org.openea.eap.extj.model.visualJson.config.ConfigPropsModel;
-import org.openea.eap.extj.model.visualJson.config.RegListModel;
 import lombok.Data;
+import org.openea.eap.extj.model.visualJson.fields.config.ConfigPropsModel;
+import org.openea.eap.extj.model.visualJson.fields.config.RegListModel;
 
 import java.util.List;
 

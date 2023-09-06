@@ -2,10 +2,6 @@ package org.openea.eap.module.visualdev.base.util;
 
 import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.annotation.DbType;
-import org.openea.eap.extj.database.source.DbBase;
-import org.openea.eap.extj.util.DateUtil;
-import org.openea.eap.extj.util.JsonUtil;
-import org.openea.eap.extj.util.StringUtil;
 import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
 import org.mybatis.dynamic.sql.AndOrCriteriaGroup;
@@ -13,6 +9,10 @@ import org.mybatis.dynamic.sql.SqlBuilder;
 import org.mybatis.dynamic.sql.SqlTable;
 import org.mybatis.dynamic.sql.select.QueryExpressionDSL;
 import org.mybatis.dynamic.sql.select.SelectModel;
+import org.openea.eap.extj.database.source.DbBase;
+import org.openea.eap.extj.util.DateUtil;
+import org.openea.eap.extj.util.JsonUtil;
+import org.openea.eap.extj.util.StringUtil;
 import org.openea.eap.module.visualdev.extend.util.FormPublicUtils;
 
 import java.math.BigDecimal;
