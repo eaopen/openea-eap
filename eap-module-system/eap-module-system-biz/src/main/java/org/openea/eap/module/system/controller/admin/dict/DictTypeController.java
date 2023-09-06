@@ -17,6 +17,7 @@ import org.openea.eap.module.system.dal.dataobject.dict.DictDataDO;
 import org.openea.eap.module.system.dal.dataobject.dict.DictTypeDO;
 import org.openea.eap.module.system.service.dict.DictDataService;
 import org.openea.eap.module.system.service.dict.DictTypeService;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +30,9 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import static org.openea.eap.framework.common.pojo.CommonResult.success;
+import static org.openea.eap.framework.common.util.collection.CollectionUtils.filterList;
 import static org.openea.eap.framework.operatelog.core.enums.OperateTypeEnum.EXPORT;
+import static org.openea.eap.module.system.dal.dataobject.permission.MenuDO.ID_ROOT;
 
 @Tag(name = "管理后台 - 字典类型")
 @RestController
@@ -98,49 +101,27 @@ public class DictTypeController {
         if (!"0".equals(id)){
             list.remove(dictTypeService.getDictType(id));
         }
-        List<Map<String,Object>> listVo=new ArrayList<>();
-        for (DictTypeDO dictTypeDO : list) {
-            if (dictTypeDO.getParentId()==null || dictTypeDO.getParentId()==0){
-                Map<String,Object> map=new HashMap<>();
-                map.put("id",dictTypeDO.getId());
-                map.put("enCode",dictTypeDO.getType());
-                map.put("parentId","-1");
-                map.put("fullName",dictTypeDO.getName());
-                map.put("dataType",dictTypeDO.getDataType());
-                map.put("hasChildren",false);
-                map.put("children",null);
-                listVo.add(map);
+        Map<Long, Map> treeNodeMap = new LinkedHashMap<>();
+        list.forEach(dictTypeDO -> treeNodeMap.put(dictTypeDO.getId(), transToMap(dictTypeDO)));
+        treeNodeMap.values().stream().filter(node -> !MapUtil.getStr(node,"parentId").equals(ID_ROOT)).forEach(childNode -> {
+            // 获得父节点
+            Map parentNode = treeNodeMap.get(Long.parseLong(MapUtil.getStr(childNode,"parentId")));
+            if (parentNode == null) {
+                LoggerFactory.getLogger(getClass()).warn("[buildRouterTree][resource({}) 找不到父资源({})]",
+                        MapUtil.getStr(childNode,"id"), MapUtil.getStr(childNode,"parentId"));
+                return;
             }
-        }
-        for (DictTypeDO dictTypeDO : list) {
-            if (dictTypeDO.getParentId()!=null && dictTypeDO.getParentId()!=0){
-                for (Map<String, Object> mapo : listVo) {
-                    if(mapo.get("id").equals(dictTypeDO.getParentId())){
-                        List<Map<String,Object>> list1=new ArrayList<>();
-                        Map<String,Object> map=new HashMap<>();
-                        map.put("id",dictTypeDO.getId());
-                        map.put("enCode",dictTypeDO.getType());
-                        map.put("parentId",dictTypeDO.getParentId());
-                        map.put("fullName",dictTypeDO.getName());
-                        map.put("hasChildren",false);
-                        map.put("children",null);
-                        map.put("dataType",dictTypeDO.getDataType());
-                        list1.add(map);
-                        if (mapo.get("children")!=null){
-                            List<Map<String,Object>> children = (List<Map<String, Object>>) mapo.get("children");
-                            children.add(map);
-                            mapo.put("hasChildren",true);
-                            mapo.put("children",children);
-                        }else {
-                            mapo.put("hasChildren", true);
-                            mapo.put("children", list1);
-                        }
-                    }
-                }
+            // 将自己添加到父节点中
+            if (parentNode.get("children") == null) {
+                parentNode.put("children",new ArrayList<>());
             }
-        }
+            List<Map<String,Object>> children = (List<Map<String, Object>>) parentNode.get("children");
+            children.add(childNode);
+            parentNode.put("children",children);
+        });
+        List<Map> rootMenue = filterList(treeNodeMap.values(), node -> ("-1").equals(MapUtil.getStr(node, "parentId")));
         Map map=new HashMap();
-        map.put("list",listVo);
+        map.put("list",rootMenue);
         return success(map);
     }
 
@@ -183,5 +164,16 @@ public class DictTypeController {
         Map map=new HashMap();
         map.put("list",listV1);
         return success(map);
+    }
+    Map transToMap(DictTypeDO dictTypeDO){
+        Map<String,Object> map=new HashMap<>();
+        map.put("id",dictTypeDO.getId());
+        map.put("enCode",dictTypeDO.getType());
+        map.put("parentId",(dictTypeDO.getParentId()==null || dictTypeDO.getParentId()==0)?-1:dictTypeDO.getParentId());
+        map.put("fullName",dictTypeDO.getName());
+        map.put("dataType",dictTypeDO.getDataType());
+        map.put("hasChildren",false);
+        map.put("children",null);
+        return map;
     }
 }
