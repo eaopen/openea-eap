@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 import org.openea.eap.extj.base.ActionResult;
 import org.openea.eap.extj.base.UserInfo;
 import org.openea.eap.extj.base.controller.SuperController;
@@ -29,10 +30,21 @@ import org.openea.eap.extj.util.enums.ExportModelTypeEnum;
 import org.openea.eap.extj.util.enums.ModuleTypeEnum;
 import org.openea.eap.extj.util.file.FileExport;
 import org.openea.eap.extj.util.treeutil.newtreeutil.TreeDotUtils;
+import org.openea.eap.framework.security.core.LoginUser;
 import org.openea.eap.module.system.dal.dataobject.permission.MenuDO;
+import org.openea.eap.module.system.dal.dataobject.user.AdminUserDO;
 import org.openea.eap.module.system.enums.permission.MenuTypeEnum;
 import org.openea.eap.module.system.service.permission.MenuService;
 import org.openea.eap.module.system.service.permission.PermissionServiceImpl;
+import org.openea.eap.module.system.service.user.AdminUserService;
+import org.openea.eap.module.visualdev.base.model.VisualFunctionModel;
+import org.openea.eap.module.visualdev.portal.constant.PortalConst;
+import org.openea.eap.module.visualdev.portal.entity.PortalEntity;
+import org.openea.eap.module.visualdev.portal.entity.PortalManageEntity;
+import org.openea.eap.module.visualdev.portal.model.*;
+import org.openea.eap.module.visualdev.portal.service.PortalDataService;
+import org.openea.eap.module.visualdev.portal.service.PortalManageService;
+import org.openea.eap.module.visualdev.portal.service.PortalService;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +57,7 @@ import javax.validation.Valid;
 import java.util.*;
 
 import static org.openea.eap.framework.common.util.collection.CollectionUtils.filterList;
+import static org.openea.eap.framework.security.core.util.SecurityFrameworkUtils.getLoginUserId;
 
 
 /**
@@ -73,6 +86,8 @@ public class PortalController extends SuperController<PortalService, PortalEntit
     private MenuService menuService;
     @Resource
     private PermissionServiceImpl permissionService;
+    @Resource
+    private AdminUserService userService;
 
     @Operation(summary = "门户列表" )
     @GetMapping("/list")
@@ -284,41 +299,10 @@ public class PortalController extends SuperController<PortalService, PortalEntit
     @Operation(summary = "获取菜单下拉列表")
     @GetMapping("/Selector/All")
     public ActionResult<Map> getSelectorAll(){
-        String authorSignature = ServletUtil.getRequest().getHeader(Constants.AUTHORIZATION);
-        UserInfo userInfo = userProvider.get(authorSignature.substring(7,authorSignature.length()));
-        List<MenuDO> menuList = permissionService.getUserMenuListByUser(Long.parseLong(userInfo.getId()), userInfo.getUserName());
+        AdminUserDO user = userService.getUser(getLoginUserId());
+        List<MenuDO> menuList = permissionService.getUserMenuListByUser(user.getId(), user.getUsername());
         // i18n
         menuList = menuService.toI18n(menuList);
-//        List<AuthPermissionInfoRespVO.MenuVO> listMenuTree = AuthConvert.INSTANCE.buildMenuTree(menuList);
-//        List<Map<String,Object>> list=new ArrayList<>();
-//        for (MenuDO menuDO : menuList) {
-//            if (menuDO.getParentId()!=null && menuDO.getParentId()==0) {
-//                Map<String, Object> map = new HashMap<>();
-//                map.put("enCode", menuDO.getAlias());
-//                map.put("enabledMark", 1);
-//                map.put("fullName", menuDO.getName());
-//                map.put("hasChildren", true);
-//                map.put("hasModule", false);
-//                map.put("icon", menuDO.getIcon());
-//                map.put("id", menuDO.getId());
-//                map.put("linkTarget", null);
-//                map.put("parentId", "-1");
-//                map.put("propertyJson", null);
-//                map.put("sortCode", menuDO.getSort());
-//                map.put("systemId", null);
-//                map.put("type", 0);
-//                map.put("urlAddress", menuDO.getPath());
-//                list.add(map);
-//            }
-//        }
-//        for (AuthPermissionInfoRespVO.MenuVO menuVO : listMenuTree) {
-//            for (Map<String, Object> map : list) {
-//                if (menuVO.getId().toString().equals(MapUtil.getStr(map,"id"))){
-//                    map.put("children",menuVO.getChildren());
-////                    list.add(map);
-//                }
-//            }
-//        }
         menuList.removeIf(menu -> menu.getType().equals(MenuTypeEnum.BUTTON.getType()));
         // 排序，保证菜单的有序性
         menuList.sort(Comparator.comparing(MenuDO::getSort));
@@ -345,7 +329,7 @@ public class PortalController extends SuperController<PortalService, PortalEntit
         map.put("list",rootMenue);
         return ActionResult.success(map);
     }
-    Map transToMeanue(MenuDO menuDO){
+    Map transToMeanue(@NotNull MenuDO menuDO){
         Map<String, Object> map = new HashMap<>();
         map.put("enCode", menuDO.getAlias());
         map.put("enabledMark", 1);
