@@ -27,7 +27,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 import static org.openea.eap.framework.common.pojo.CommonResult.success;
 import static org.openea.eap.framework.common.util.collection.CollectionUtils.filterList;
@@ -107,8 +106,11 @@ public class DictTypeController {
             // 获得父节点
             Map parentNode = treeNodeMap.get(Long.parseLong(MapUtil.getStr(childNode,"parentId")));
             if (parentNode == null) {
-                LoggerFactory.getLogger(getClass()).warn("[buildRouterTree][resource({}) 找不到父资源({})]",
-                        MapUtil.getStr(childNode,"id"), MapUtil.getStr(childNode,"parentId"));
+                String parentId = MapUtil.getStr(childNode,"parentId");
+                if(!"-1".equals(parentId) && !"0".equals(parentId)) {
+                    LoggerFactory.getLogger(getClass()).warn("[buildRouterTree][resource({}) 找不到父资源({})]",
+                            MapUtil.getStr(childNode, "id"), MapUtil.getStr(childNode, "parentId"));
+                }
                 return;
             }
             // 将自己添加到父节点中

@@ -66,6 +66,9 @@ public class ConcurrencyUtils {
 	 */
 	private void addFeild(String table, String linkId,TableFeildsEnum tableFeildsEnum) throws Exception {
 		List<DbFieldModelBase> fieldList = serviceUtil.getDbTableModel(linkId, table);
+		if (fieldList==null){
+			return;
+		}
 		DbFieldModelBase dbFieldModel = fieldList.stream().filter(f -> f.getField().equalsIgnoreCase(tableFeildsEnum.getField())).findFirst().orElse(null);
 		boolean hasVersion = dbFieldModel!=null;
 		if (!hasVersion){
@@ -108,6 +111,9 @@ public class ConcurrencyUtils {
 		for (TableModel tableModel : tableList) {
 			List<DbFieldModel> data = serviceUtil.getFieldList(dbLinkId, tableModel.getTable());
 			DbFieldModel dbFieldModel = data.stream().filter(DbFieldModel::getIsPrimaryKey).findFirst().orElse(null);
+			if (data.size()==0){
+				return true;
+			}
 			if (dbFieldModel == null) {
 				throw new WorkFlowException("表[" + tableModel.getTable() + " ]无主键!");
 			}
