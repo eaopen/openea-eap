@@ -1,8 +1,6 @@
 package org.openea.eap.extj.base;
 
-/**
- *
- */
+
 public class DataSourceInfo {
 
     //TODO 这个类准备删除掉

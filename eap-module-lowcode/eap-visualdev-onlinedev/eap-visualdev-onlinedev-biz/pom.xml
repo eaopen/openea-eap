@@ -14,7 +14,7 @@
     <dependencies>
         <dependency>
             <groupId>org.openea.eap</groupId>
-            <artifactId>eap-extj-common</artifactId>
+            <artifactId>eap-extj-provider</artifactId>
             <version>${project.version}</version>
         </dependency>
 
@@ -24,16 +24,22 @@
             <version>${project.version}</version>
         </dependency>
 
+
         <dependency>
             <groupId>org.openea.eap</groupId>
             <artifactId>eap-visualdev-base-biz</artifactId>
             <version>${project.version}</version>
         </dependency>
+
         <dependency>
-            <groupId>com.github.pagehelper</groupId>
-            <artifactId>pagehelper</artifactId>
-            <version>5.3.2</version>
-            <scope>compile</scope>
+            <groupId>org.openea.eap</groupId>
+            <artifactId>eap-flow-form-biz</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openea.eap</groupId>
+            <artifactId>eap-flow-engine-biz</artifactId>
+            <version>${project.version}</version>
         </dependency>
 
 

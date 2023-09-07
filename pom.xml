@@ -11,7 +11,7 @@
 
         <!-- dependencies/framework, support boot & cloud -->
         <module>eap-dependencies/eap-dependencies</module>
-        <module>eap-dependencies/eap-cloud-dependencies</module>
+<!--        <module>eap-dependencies/eap-cloud-dependencies</module>-->
         <module>eap-framework</module>
 
         <!-- boot only -->
@@ -23,7 +23,6 @@
         <module>eap-module-system</module>
         <module>eap-module-infra</module>
         <module>eap-module-lowcode</module>
-        <module>eap-module-obpm</module>
 
         <!-- 扩展项目，包含示例项目 -->
         <module>eap-biz-extend</module>

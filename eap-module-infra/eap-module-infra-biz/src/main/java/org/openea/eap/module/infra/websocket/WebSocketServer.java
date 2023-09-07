@@ -1,12 +1,8 @@
 package org.openea.eap.module.infra.websocket;
 
 import lombok.extern.slf4j.Slf4j;
-import org.openea.eap.extj.message.websocket.MessageWebSocket;
-import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import javax.websocket.*;
-import javax.websocket.server.ServerEndpoint;
 import java.util.concurrent.Semaphore;
 
 /**

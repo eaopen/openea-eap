@@ -30,19 +30,6 @@
             <version>${project.version}</version>
         </dependency>
 
-
-        <dependency>
-            <groupId>org.openea.eap</groupId>
-            <artifactId>eap-extj-common</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.openea.eap</groupId>
-            <artifactId>eap-extj-message-rest</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
         <!-- 业务组件 -->
         <dependency>
             <groupId>org.openea.eap</groupId>

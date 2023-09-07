@@ -570,6 +570,12 @@
 
             <dependency>
                 <groupId>org.openea.eap</groupId>
+                <artifactId>eap-extj-provider</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.openea.eap</groupId>
                 <artifactId>eap-common-extj-core</artifactId>
                 <version>${revision}</version>
             </dependency>

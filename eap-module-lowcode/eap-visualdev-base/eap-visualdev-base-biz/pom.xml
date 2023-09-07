@@ -24,12 +24,32 @@
 
         <dependency>
             <groupId>org.openea.eap</groupId>
-            <artifactId>eap-extj-common</artifactId>
+            <artifactId>eap-extj-provider</artifactId>
         </dependency>
 
         <dependency>
             <groupId>org.openea.eap</groupId>
             <artifactId>eap-visualdev-base-entity</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.openea.eap</groupId>
+            <artifactId>eap-visualdev-onlinedev-entity</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.openea.eap</groupId>
+            <artifactId>eap-flow-engine-entity</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.openea.eap</groupId>
+            <artifactId>eap-flow-engine-biz</artifactId>
             <version>${project.version}</version>
         </dependency>
 

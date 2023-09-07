@@ -1,8 +1,6 @@
 package org.openea.eap.extj.constant;
 
-/**
- *
- */
+
 public class FileTypeConstant {
     /**
      * 用户头像存储路径

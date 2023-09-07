@@ -12,10 +12,14 @@
     <artifactId>eap-visualdev-base-rest</artifactId>
 
     <dependencies>
+
+
         <dependency>
             <groupId>org.openea.eap</groupId>
-            <artifactId>eap-spring-boot-starter-web</artifactId>
+            <artifactId>eap-visualdev-onlinedev-biz</artifactId>
+            <version>${project.version}</version>
         </dependency>
+
 
         <dependency>
             <groupId>org.openea.eap</groupId>
@@ -24,32 +28,15 @@
 
         <dependency>
             <groupId>org.openea.eap</groupId>
-            <artifactId>eap-extj-common</artifactId>
+            <artifactId>eap-extj-provider</artifactId>
             <version>${revision}</version>
         </dependency>
 
         <dependency>
-            <groupId>cn.dev33</groupId>
-            <artifactId>sa-token-core</artifactId>
-        </dependency>
-
-        <dependency>
             <groupId>org.openea.eap</groupId>
-            <artifactId>eap-visualdev-base-biz</artifactId>
-            <version>${project.version}</version>
+            <artifactId>eap-spring-boot-starter-web</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>org.openea.eap</groupId>
-            <artifactId>eap-visualdev-onlinedev-biz</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
-        <!-- 拼音 -->
-        <dependency>
-            <groupId>com.belerweb</groupId>
-            <artifactId>pinyin4j</artifactId>
-        </dependency>
 
     </dependencies>
 

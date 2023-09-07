@@ -5,10 +5,7 @@ import cn.dev33.satoken.temp.SaTempUtil;
 import org.springframework.stereotype.Component;
 
 
-/**
- *
- * 
- */
+
 @Component
 public class TicketUtil {
 

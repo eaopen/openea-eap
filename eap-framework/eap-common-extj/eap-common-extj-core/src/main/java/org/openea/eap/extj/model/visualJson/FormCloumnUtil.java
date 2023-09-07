@@ -1,10 +1,10 @@
 package org.openea.eap.extj.model.visualJson;
 
-import org.openea.eap.extj.model.*;
 import org.openea.eap.extj.model.visual.JnpfKeyConsts;
-import org.openea.eap.extj.model.visualJson.fields.config.ConfigModel;
-import org.openea.eap.extj.model.visualJson.fields.props.PropsBeanModel;
-import org.openea.eap.extj.model.visualJson.fields.props.PropsModel;
+import org.openea.eap.extj.model.visualJson.analysis.*;
+import org.openea.eap.extj.model.visualJson.config.ConfigModel;
+import org.openea.eap.extj.model.visualJson.props.PropsBeanModel;
+import org.openea.eap.extj.model.visualJson.props.PropsModel;
 import org.openea.eap.extj.util.JsonUtil;
 import org.openea.eap.extj.util.RandomUtil;
 import org.openea.eap.extj.util.StringUtil;

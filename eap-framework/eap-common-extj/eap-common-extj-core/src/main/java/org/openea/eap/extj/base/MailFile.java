@@ -2,10 +2,7 @@ package org.openea.eap.extj.base;
 
 import lombok.Data;
 
-/**
- *
- * 
- */
+
 @Data
 public class MailFile {
     private String fileId;

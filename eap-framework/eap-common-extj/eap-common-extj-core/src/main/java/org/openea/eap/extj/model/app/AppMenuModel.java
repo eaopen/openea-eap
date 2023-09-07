@@ -3,10 +3,7 @@ package org.openea.eap.extj.model.app;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-/**
- *
- * 
- */
+
 @Data
 public class AppMenuModel {
     @ApiModelProperty(value = "扩展字段")

@@ -20,13 +20,8 @@
 
     <modules>
         <module>eap-module-infra-api</module>
-
-        <!-- 通用扩展，适配eap-common和eap-system -->
-        <module>eap-extj-common</module>
-        <!-- 消息/IM模块, 基于eap-extj-common -->
-        <module>eap-extj-message</module>
-
         <module>eap-module-infra-biz</module>
+        <module>eap-module-infra-rest</module>
 
     </modules>
 

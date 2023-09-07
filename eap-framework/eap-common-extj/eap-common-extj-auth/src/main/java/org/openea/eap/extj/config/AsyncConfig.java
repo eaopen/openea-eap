@@ -19,7 +19,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 /**
  * 提供一个全局的Spring线程池对象
  *
- * @deprecated
+ * @deprecated replace by EapAsyncAutoConfiguration
  */
 @Slf4j
 //@Configuration

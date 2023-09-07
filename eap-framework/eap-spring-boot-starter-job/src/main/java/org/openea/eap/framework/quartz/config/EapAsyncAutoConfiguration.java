@@ -36,7 +36,7 @@ public class EapAsyncAutoConfiguration implements AsyncConfigurer {
         };
     }
 
-    @Bean(name = "asyncPoolTaskExecutor")
+    @Bean(name = {"asyncPoolTaskExecutor","threadPoolTaskExecutor"})
     public ThreadPoolTaskExecutor executor() {
         ThreadPoolTaskExecutor taskExecutor = new ThreadPoolTaskExecutor();
         //核心线程数

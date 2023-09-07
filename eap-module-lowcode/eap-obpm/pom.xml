@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>eap-module-lowcode</artifactId>
+        <groupId>org.openea.eap</groupId>
+        <version>${revision}</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>eap-obpm</artifactId>
+    <packaging>pom</packaging>
+
+    <name>${project.artifactId}</name>
+    <description>
+        集成OpenBPM
+    </description>
+    <properties>
+        <openbpm.version>3.5.2</openbpm.version>
+        <openbpm-webjar.version>3-dev</openbpm-webjar.version>
+    </properties>
+
+    <modules>
+<!--        <module>eap-obpm-adapter</module>-->
+<!--        <module>eap-obpm-extend</module>-->
+        <module>eap-obpm-server</module>
+    </modules>
+
+    <repositories>
+        <repository>
+            <id>aliyunmaven</id>
+            <name>aliyun</name>
+            <url>https://maven.aliyun.com/repository/public</url>
+        </repository>
+        <repository>
+            <id>openea-reps-mvn</id>
+            <name>coding-openea</name>
+            <url>https://openea-maven.pkg.coding.net/repository/reps/mvn/</url>
+        </repository>
+        <repository>
+            <id>github-mvn-openea</id>
+            <name>github-openea</name>
+            <url>https://maven.pkg.github.com/eaopen/mvn-repo</url>
+        </repository>
+    </repositories>
+
+    <dependencyManagement>
+        <dependencies>
+
+            <dependency>
+                <groupId>org.szopen.openbpm</groupId>
+                <artifactId>bpm-starter</artifactId>
+                <version>${openbpm.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-starter-data-mongodb</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.mongodb</groupId>
+                        <artifactId>mongodb-driver-sync</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>org.szopen.openbpm</groupId>
+                <artifactId>bpm-auth-security</artifactId>
+                <version>${openbpm.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.szopen.openbpm</groupId>
+                <artifactId>bpm-db</artifactId>
+                <version>${openbpm.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.szopen.openbpm</groupId>
+                <artifactId>bpm-base-api</artifactId>
+                <version>${openbpm.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.szopen.openbpm</groupId>
+                <artifactId>bpm-base-rest</artifactId>
+                <version>${openbpm.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.szopen.openbpm</groupId>
+                <artifactId>bpm-org-api</artifactId>
+                <version>${openbpm.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.szopen.openbpm</groupId>
+                <artifactId>bpm-sys-api</artifactId>
+                <version>${openbpm.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.szopen.openbpm</groupId>
+                <artifactId>form-core</artifactId>
+                <version>${openbpm.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.szopen.openbpm</groupId>
+                <artifactId>bus-rest</artifactId>
+                <version>${openbpm.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.szopen.openbpm</groupId>
+                <artifactId>form-rest</artifactId>
+                <version>${openbpm.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.szopen.openbpm</groupId>
+                <artifactId>bpm-admin-webjar</artifactId>
+                <version>${openbpm-webjar.version}</version>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+
+
+</project>

@@ -18,9 +18,10 @@
             <version>${project.version}</version>
         </dependency>
 
+
         <dependency>
             <groupId>org.openea.eap</groupId>
-            <artifactId>eap-visualdev-base-entity</artifactId>
+            <artifactId>eap-flow-engine-entity</artifactId>
             <version>${project.version}</version>
         </dependency>
 

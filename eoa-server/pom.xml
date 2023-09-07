@@ -28,19 +28,19 @@
     <dependencies>
         <dependency>
             <groupId>org.openea.eap</groupId>
-            <artifactId>eap-module-system-biz</artifactId>
+            <artifactId>eap-module-system-rest</artifactId>
             <version>${revision}</version>
         </dependency>
 
         <dependency>
             <groupId>org.openea.eap</groupId>
-            <artifactId>eap-module-infra-biz</artifactId>
+            <artifactId>eap-module-infra-rest</artifactId>
             <version>${revision}</version>
         </dependency>
 
         <dependency>
             <groupId>org.openea.eap</groupId>
-            <artifactId>eap-module-lowcode-biz</artifactId>
+            <artifactId>eap-module-lowcode-rest</artifactId>
             <version>${revision}</version>
         </dependency>
 

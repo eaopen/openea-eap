@@ -42,6 +42,12 @@
 
         <dependency>
             <groupId>org.openea.eap</groupId>
+            <artifactId>eap-flow-engine-biz</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.openea.eap</groupId>
             <artifactId>eap-module-system-biz</artifactId>
             <version>${project.version}</version>
             <scope>compile</scope>

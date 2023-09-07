@@ -11,6 +11,12 @@
     <modules>
         <module>eap-module-system-api</module>
         <module>eap-module-system-biz</module>
+        <!-- 扩展支持extj-support -->
+        <module>eap-extj-support</module>
+        <!-- 消息/IM模块 -->
+        <module>eap-extj-message</module>
+
+        <module>eap-module-system-rest</module>
     </modules>
     <artifactId>eap-module-system</artifactId>
     <packaging>pom</packaging>

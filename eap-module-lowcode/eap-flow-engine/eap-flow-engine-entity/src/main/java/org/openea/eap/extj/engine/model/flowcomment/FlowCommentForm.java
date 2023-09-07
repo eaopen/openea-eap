@@ -1,0 +1,21 @@
+package org.openea.eap.extj.engine.model.flowcomment;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
+
+@Data
+public class FlowCommentForm {
+
+    @Schema(description = "附件")
+    private String file;
+
+    @Schema(description = "图片")
+    private String image;
+
+    @Schema(description = "流程id")
+    private String taskId;
+
+    @Schema(description = "文本")
+    private String text;
+
+}
