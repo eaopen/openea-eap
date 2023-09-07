@@ -429,6 +429,8 @@ public class VisualdevController extends SuperController<VisualdevService, Visua
                 }
             }
         }
+        //先不启用流程
+        entity.setEnableFlow(0);
         //修改流程表单同步信息 type<3属于功能设计
         if (OnlineDevData.STATE_ENABLE == entity.getEnableFlow() && entity.getType() < 3) {
             entity.setId(id);
