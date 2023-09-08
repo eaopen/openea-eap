@@ -36,7 +36,7 @@ OpenEAP前后端分离，采用后端Spring boot 2.x单体多模块，前端vue2
     - [ ] Mobile/PAD
   - 主要框架及组件默认配置
     - [X] Spring Boot
-    - [X] Spring Security(OAuth2)
+    - [X] Spring Security(OAuth2) / SA-Token
     - [X] MyBatis Plus
     - [X] Redis
     - [X] MySQL
@@ -68,6 +68,8 @@ OpenEAP前后端分离，采用后端Spring boot 2.x单体多模块，前端vue2
     - [X] 流程委托
   - [ ] 扩展业务
     - [ ] 内容管理CMS/WCMS
+      - [ ] 微信公众号管理
+      - [ ] 网站内容管理，后台管理以及网站静态化
     - [ ] 企业知识库(集成AI大模型)
     - [ ] 客户关系管理CRM
       - [ ] 客户管理2B
@@ -75,7 +77,6 @@ OpenEAP前后端分离，采用后端Spring boot 2.x单体多模块，前端vue2
     - [ ] 电商Mall(商品/订单/支付/物流)
     - [ ] 产品设计管理PLM
     - [ ] 社交工具/媒体集成
-      - [ ] 微信公众号
 
 
 ### 运营管理/系统管理（面向系统运行维护人员） 
@@ -101,6 +102,7 @@ OpenEAP前后端分离，采用后端Spring boot 2.x单体多模块，前端vue2
     - [X] 流程引擎(OpenBPM,定制Activiti)
     - [X] 流程设计(OpenBPM)
     - [ ] 流程辅助（插件、脚本等）
+    - [ ] 简化流程
     - [X] 流程监控
   - 数据应用设计开发
     - [X] 数据链接(开发)
@@ -296,11 +298,13 @@ https://github.com/zhangdaiscott/jeecg-boot
 
 https://help.jeecg.com/
 
-* MCMS
+* RuoYi-Vue-CMS
 
-基于Spring、SpringMVC、Mybatis架构，MStore提供更多好用的插件与模板（文章、商城、微信、论坛、会员、评论、支付、积分、工作流、任务调度等，同时提供上百套免费模板任意选择），价值源自分享！
+RuoYi-Vue-CMS是前后端分离的企业级内容管理系统。
+项目基于RuoYi-Vue重构，集成SaToken用户权限，xxl-job任务调度。
+支持站群管理、多平台静态化、元数据模型扩展、轻松组织各种复杂内容形态、多语言、全文检索。
 
-https://github.com/ming-soft/MCMS
+https://gitee.com/liweiyi/RuoYi-Vue-CMS
 
 * eladmin
 
@@ -320,6 +324,11 @@ https://github.com/renrenio/renren-fast-vue
 
 https://github.com/renrenio/renren-security
 
+* vue-element-admin
+
+vue-element-admin 是一个后台前端解决方案，它基于 vue 和 element-ui实现。
+
+https://github.com/PanJiaChen/vue-element-admin
 
 
 ## 🐶 参考--芋道开源新手必读
