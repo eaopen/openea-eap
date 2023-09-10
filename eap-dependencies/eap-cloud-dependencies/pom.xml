@@ -14,7 +14,7 @@
     <url>https://github.com/eaopen/openea-eap</url>
 
     <properties>
-        <revision>2.0.4-snapshot</revision>
+        <revision>2.1.0-snapshot</revision>
         <!-- 统一依赖管理 -->
         <spring.boot.version>2.7.14</spring.boot.version>
 
