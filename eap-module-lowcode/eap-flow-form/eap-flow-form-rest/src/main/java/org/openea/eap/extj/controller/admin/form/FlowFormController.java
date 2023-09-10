@@ -16,7 +16,6 @@ import org.openea.eap.extj.base.vo.DownloadVO;
 import org.openea.eap.extj.base.vo.PaginationVO;
 import org.openea.eap.extj.config.ConfigValueUtil;
 import org.openea.eap.extj.constant.MsgCode;
-import org.openea.eap.extj.emnus.ModuleTypeEnum;
 import org.openea.eap.extj.form.entity.FlowFormEntity;
 import org.openea.eap.extj.form.entity.FlowFormRelationEntity;
 import org.openea.eap.extj.exception.WorkFlowException;
@@ -36,6 +35,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.openea.eap.extj.util.enums.ModuleTypeEnum;
 
 import java.util.ArrayList;
 import java.util.Date;

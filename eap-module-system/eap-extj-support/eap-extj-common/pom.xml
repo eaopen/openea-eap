@@ -61,6 +61,13 @@
         </dependency>
 
 
+        <!-- 三方云服务相关 -->
+        <dependency>
+            <groupId>org.openea.eap</groupId>
+            <artifactId>eap-spring-boot-starter-file</artifactId>
+        </dependency>
+
+
         <dependency>
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token-spring-boot-starter</artifactId>

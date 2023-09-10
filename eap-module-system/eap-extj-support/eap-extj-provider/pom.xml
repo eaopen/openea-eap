@@ -28,10 +28,15 @@
             <version>${project.version}</version>
         </dependency>
 
-
         <dependency>
             <groupId>org.openea.eap</groupId>
             <artifactId>eap-module-infra-api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.openea.eap</groupId>
+            <artifactId>eap-file-biz</artifactId>
             <version>${project.version}</version>
         </dependency>
 

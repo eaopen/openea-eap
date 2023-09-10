@@ -1,8 +1,8 @@
 package org.openea.eap.extj.generater.util.common;
 
-import org.openea.eap.extj.util.XSSEscape;
-import org.openea.eap.extj.emnus.ModuleTypeEnum;
 import lombok.Cleanup;
+import org.openea.eap.extj.util.XSSEscape;
+import org.openea.eap.extj.util.enums.ModuleTypeEnum;
 
 import java.io.File;
 import java.io.FileWriter;

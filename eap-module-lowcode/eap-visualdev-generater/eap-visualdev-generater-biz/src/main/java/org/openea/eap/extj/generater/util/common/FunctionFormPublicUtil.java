@@ -1,21 +1,21 @@
 package org.openea.eap.extj.generater.util.common;
 
+import lombok.Cleanup;
+import org.openea.eap.extj.base.entity.VisualdevEntity;
+import org.openea.eap.extj.base.model.DownloadCodeForm;
 import org.openea.eap.extj.form.entity.FlowFormEntity;
 import org.openea.eap.extj.form.model.form.DraftJsonModel;
 import org.openea.eap.extj.form.model.form.FormDraftJsonModel;
-import org.openea.eap.extj.util.JsonUtil;
-import org.openea.eap.extj.util.StringUtil;
-import org.openea.eap.extj.base.entity.VisualdevEntity;
-import org.openea.eap.extj.base.model.DownloadCodeForm;
+import org.openea.eap.extj.model.visual.JnpfKeyConsts;
 import org.openea.eap.extj.model.visualJson.FieLdsModel;
 import org.openea.eap.extj.model.visualJson.FormCloumnUtil;
 import org.openea.eap.extj.model.visualJson.FormDataModel;
 import org.openea.eap.extj.model.visualJson.TableModel;
 import org.openea.eap.extj.model.visualJson.analysis.*;
 import org.openea.eap.extj.model.visualJson.config.ConfigModel;
-import org.openea.eap.extj.emnus.ModuleTypeEnum;
-import org.openea.eap.extj.model.visual.JnpfKeyConsts;
-import lombok.Cleanup;
+import org.openea.eap.extj.util.JsonUtil;
+import org.openea.eap.extj.util.StringUtil;
+import org.openea.eap.extj.util.enums.ModuleTypeEnum;
 
 import java.io.File;
 import java.io.FileWriter;

@@ -17,7 +17,6 @@ import org.openea.eap.extj.base.vo.DownloadVO;
 import org.openea.eap.extj.base.vo.ListVO;
 import org.openea.eap.extj.config.ConfigValueUtil;
 import org.openea.eap.extj.constant.MsgCode;
-import org.openea.eap.extj.emnus.ModuleTypeEnum;
 import org.openea.eap.extj.entity.VisualCategoryEntity;
 import org.openea.eap.extj.entity.VisualConfigEntity;
 import org.openea.eap.extj.entity.VisualEntity;
