@@ -5,7 +5,6 @@ import java.lang.annotation.*;
 /**
  * 控件属性
  *
- * 
  */
 @Documented
 @Target({ElementType.FIELD})

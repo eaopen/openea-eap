@@ -11,6 +11,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>eap-common</module>
+        <module>eap-common-obpm</module>
         <module>eap-common-extj</module>
 
         <module>eap-spring-boot-starter-banner</module>

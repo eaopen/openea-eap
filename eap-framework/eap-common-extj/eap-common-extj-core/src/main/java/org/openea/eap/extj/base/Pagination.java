@@ -6,10 +6,6 @@ import lombok.Data;
 
 import java.util.List;
 
-/**
- *
- *
- */
 @Data
 public class Pagination extends Page{
     @ApiModelProperty(value = "每页条数",example = "20")

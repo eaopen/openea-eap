@@ -1,4 +1,4 @@
-package org.openea.eap.extj.util;
+package org.openea.eap.extj.util.file;
 
 import org.openea.eap.extj.base.vo.DownloadVO;
 

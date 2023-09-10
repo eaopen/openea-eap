@@ -1,50 +1,50 @@
 package org.openea.eap.extj.util;
 
+import lombok.extern.slf4j.Slf4j;
 import org.openea.eap.extj.base.FileInfo;
 import org.openea.eap.extj.base.vo.DownloadVO;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.openea.eap.extj.util.file.DbSensitiveConstant;
+import org.openea.eap.extj.util.file.FileExport;
 import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
 
 /**
- *
- * todo eap待处理
+ *  数据接口文件导入导出
  */
 @Component
+@Slf4j
 public class DataFileExport implements FileExport {
 
-    private static final Logger log = LoggerFactory.getLogger(DataFileExport.class);
-
-    public DataFileExport() {
-    }
-
-    public DownloadVO exportFile(Object clazz, String filePath, String fileName, String tableName) {
-        fileName = this.containsSensitive(fileName);
-        String json = JsonUtil.getObjectToString(clazz);
+    @Override
+    public DownloadVO exportFile(Object obj, String filePath, String fileName, String tableName) {
+        fileName = containsSensitive(fileName);
+        /** 1.model拼凑成Json字符串 */
+        String json = JsonUtil.getObjectToString(obj);
+        /** 2.写入到文件中 */
+        fileName += System.currentTimeMillis() + "." + tableName;
         if (json == null) {
             json = "";
         }
-        fileName = fileName + System.currentTimeMillis() + "." + tableName;
         FileInfo fileInfo = FileUploadUtils.uploadFile(json.getBytes(StandardCharsets.UTF_8), filePath, fileName);
-        DownloadVO vo = DownloadVO.builder().name(fileInfo.getFilename()).url(UploaderUtil.uploaderFile(fileInfo.getFilename() + "#export") + "&name=" + fileName).build();
+        /** 生成下载下载文件路径 */
+        DownloadVO vo = DownloadVO.builder().name(fileInfo.getFilename()).url(UploaderUtil.uploaderFile(fileInfo.getFilename() + "#" + "export") + "&name=" + fileName).build();
         return vo;
-//        return null;
     }
 
+    /**
+     * 替换敏感字
+     *
+     * @param fileName
+     * @return
+     */
     private String containsSensitive(String fileName) {
         if (StringUtil.isNotEmpty(fileName)) {
-            String[] split = "<,>,/,\\\\,:,|".split(",");
-            String[] var3 = split;
-            int var4 = split.length;
-
-            for(int var5 = 0; var5 < var4; ++var5) {
-                String str = var3[var5];
+            String[] split = DbSensitiveConstant.FILE_SENSITIVE.split(",");
+            for (String str : split) {
                 fileName = fileName.replaceAll(str, "");
             }
         }
-
         return fileName;
     }
 }

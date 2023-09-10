@@ -5,7 +5,6 @@ import java.lang.annotation.*;
 /**
  * 角色权限验证
  *
- *
  */
 @Documented
 @Target({ElementType.METHOD})

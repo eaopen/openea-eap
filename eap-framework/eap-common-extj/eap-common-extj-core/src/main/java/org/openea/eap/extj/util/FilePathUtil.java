@@ -4,9 +4,6 @@ import org.openea.eap.extj.config.ConfigValueUtil;
 import org.openea.eap.extj.constant.FileTypeConstant;
 import org.openea.eap.extj.util.context.SpringContext;
 
-/**
- * 
- */
 public class FilePathUtil {
 
     private static ConfigValueUtil configValueUtil = SpringContext.getBean(ConfigValueUtil.class);

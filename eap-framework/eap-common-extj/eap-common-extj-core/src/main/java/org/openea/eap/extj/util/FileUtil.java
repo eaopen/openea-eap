@@ -20,10 +20,6 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-/**
- *
- *
- */
 @Slf4j
 public class FileUtil {
 

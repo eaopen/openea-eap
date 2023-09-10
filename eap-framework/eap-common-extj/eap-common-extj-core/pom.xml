@@ -12,6 +12,10 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.openea.eap</groupId>
+            <artifactId>eap-common</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
         </dependency>
