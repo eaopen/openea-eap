@@ -34,7 +34,6 @@
 
         <!-- 在线设计模块 -->
         <module>eap-visualdev-onlinedev</module>
-<!--        <module>eap-visualdev-generater</module>-->
         <module>eap-visualdev-portal</module>
 
         <!-- 数据大屏设计 -->
@@ -42,8 +41,14 @@
         <!-- 报表 -->
         <module>eap-lowcode-report</module>
 
+
+        <!-- 代码生成 -->
+        <!-- 两个模块 mybatis-plus-generator 版本不一致，统一前二选一 -->
+        <!-- mybatis-plus-generator  3.4.1 需要升级 -->
+        <module>eap-visualdev-generater</module>
         <!-- 拆分infra中低代码部分，如codegen -->
-        <module>eap-lowcode-codegen</module>
+        <!-- mybatis-plus-generator 3.5.3 -->
+<!--        <module>eap-lowcode-codegen</module>-->
 
         <!-- 整合 lowcode 服务 -->
         <module>eap-module-lowcode-biz</module>

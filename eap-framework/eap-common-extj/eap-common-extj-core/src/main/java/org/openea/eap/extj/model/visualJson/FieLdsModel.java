@@ -48,7 +48,7 @@ public class FieLdsModel {
     private Object autosize;
     private Integer step;
     private Boolean stepstrictly;
-    private String controlsposition;
+    private String controlsPosition;
     private Object textStyle;
     private Integer lineHeight;
     private Integer fontSize;
@@ -250,5 +250,24 @@ public class FieLdsModel {
      */
     private Integer tableType;
     private String beforeVmodel;
+
+
+    //数字输入-金额大小写等属性
+    private String addonAfter;
+    private String addonBefore;
+    private Boolean isAmountChinese;
+    private Boolean thousands;
+
+    //时间控件新增字段
+    private String startTime;
+    private String endTime;
+    private String startRelationField;
+    private String endRelationField;
+
+
+
+    public boolean isThousands() {
+        return thousands;
+    }
 }
 

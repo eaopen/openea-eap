@@ -1,8 +1,8 @@
 package org.openea.eap.extj.generater.util.common;
 
-import org.openea.eap.extj.entity.FlowFormEntity;
-import org.openea.eap.extj.model.form.DraftJsonModel;
-import org.openea.eap.extj.model.form.FormDraftJsonModel;
+import org.openea.eap.extj.form.entity.FlowFormEntity;
+import org.openea.eap.extj.form.model.form.DraftJsonModel;
+import org.openea.eap.extj.form.model.form.FormDraftJsonModel;
 import org.openea.eap.extj.util.JsonUtil;
 import org.openea.eap.extj.util.StringUtil;
 import org.openea.eap.extj.base.entity.VisualdevEntity;

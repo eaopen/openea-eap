@@ -40,11 +40,18 @@
             <version>${project.version}</version>
         </dependency>
 
-<!--        <dependency>-->
-<!--            <groupId>org.openea.eap</groupId>-->
-<!--            <artifactId>eap-visualdev-generater-rest</artifactId>-->
-<!--            <version>${project.version}</version>-->
-<!--        </dependency>-->
+
+        <!--        <dependency>-->
+        <!--            <groupId>org.openea.eap</groupId>-->
+        <!--            <artifactId>eap-lowcode-codegen</artifactId>-->
+        <!--            <version>${project.version}</version>-->
+        <!--        </dependency>-->
+
+        <dependency>
+            <groupId>org.openea.eap</groupId>
+            <artifactId>eap-visualdev-generater-rest</artifactId>
+            <version>${project.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>org.openea.eap</groupId>

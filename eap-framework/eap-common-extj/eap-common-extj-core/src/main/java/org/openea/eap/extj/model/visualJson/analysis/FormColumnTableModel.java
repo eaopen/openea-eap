@@ -60,4 +60,8 @@ public class FormColumnTableModel {
     private boolean required = false;
 
     private String aliasClassName;
+
+
+    private List<String> thousandsField;
+
 }

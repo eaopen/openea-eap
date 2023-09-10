@@ -1,4 +1,4 @@
-package org.openea.eap.module.infra.service.db;
+package org.openea.eap.module.lowcode.service.db;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.lang.Assert;
@@ -10,6 +10,7 @@ import com.baomidou.mybatisplus.generator.config.StrategyConfig;
 import com.baomidou.mybatisplus.generator.config.builder.ConfigBuilder;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.DateType;
+import org.openea.eap.module.infra.service.db.DataSourceConfigService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

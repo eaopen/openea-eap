@@ -8,7 +8,7 @@ import org.openea.eap.framework.common.exception.util.ServiceExceptionUtil;
 import org.openea.eap.framework.common.pojo.PageResult;
 import org.openea.eap.framework.common.util.collection.CollectionUtils;
 import org.openea.eap.module.infra.enums.ErrorCodeConstants;
-import org.openea.eap.module.infra.service.db.DatabaseTableService;
+import org.openea.eap.module.lowcode.service.db.DatabaseTableService;
 import org.openea.eap.module.lowcode.controller.admin.codegen.vo.CodegenCreateListReqVO;
 import org.openea.eap.module.lowcode.controller.admin.codegen.vo.CodegenUpdateReqVO;
 import org.openea.eap.module.lowcode.controller.admin.codegen.vo.table.CodegenTablePageReqVO;

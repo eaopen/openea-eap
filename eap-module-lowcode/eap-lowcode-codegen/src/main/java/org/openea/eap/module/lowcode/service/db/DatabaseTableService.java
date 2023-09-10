@@ -1,4 +1,4 @@
-package org.openea.eap.module.infra.service.db;
+package org.openea.eap.module.lowcode.service.db;
 
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 

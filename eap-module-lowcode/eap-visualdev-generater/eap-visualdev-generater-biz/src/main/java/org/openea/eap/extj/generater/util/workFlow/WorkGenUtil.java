@@ -14,7 +14,7 @@ import org.openea.eap.extj.base.util.SourceUtil;
 import org.openea.eap.extj.constant.MsgCode;
 import org.openea.eap.extj.database.model.entity.DbLinkEntity;
 import org.openea.eap.extj.database.util.TenantDataSourceUtil;
-import org.openea.eap.extj.entity.FlowFormEntity;
+import org.openea.eap.extj.form.entity.FlowFormEntity;
 import org.openea.eap.extj.model.visual.JnpfKeyConsts;
 import org.openea.eap.extj.util.DateUtil;
 import org.openea.eap.extj.util.JsonUtil;

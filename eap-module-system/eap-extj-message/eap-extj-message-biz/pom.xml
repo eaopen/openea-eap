@@ -24,7 +24,7 @@
         <dependency>
             <groupId>org.openea.eap</groupId>
             <artifactId>eap-extj-message-entity</artifactId>
-            <version>2.0.4-snapshot</version>
+            <version>${project.version}</version>
             <scope>compile</scope>
         </dependency>
 
