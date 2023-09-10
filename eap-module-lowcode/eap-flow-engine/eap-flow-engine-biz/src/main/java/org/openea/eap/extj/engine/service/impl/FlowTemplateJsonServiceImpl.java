@@ -18,15 +18,13 @@ import org.openea.eap.extj.engine.model.flowengine.shuntjson.childnode.Propertie
 import org.openea.eap.extj.engine.model.flowengine.shuntjson.nodejson.ChildNodeList;
 import org.openea.eap.extj.engine.model.flowengine.shuntjson.nodejson.ConditionList;
 import org.openea.eap.extj.engine.model.flowtemplatejson.FlowTemplateJsonPage;
-import org.openea.eap.extj.entity.FlowFormEntity;
+import org.openea.eap.extj.form.entity.FlowFormEntity;
 import org.openea.eap.extj.exception.WorkFlowException;
 import org.openea.eap.extj.util.*;
 import org.openea.eap.extj.engine.mapper.FlowTemplateJsonMapper;
 import org.openea.eap.extj.engine.service.FlowTemplateJsonService;
 import org.openea.eap.extj.engine.service.FlowTemplateService;
 import org.openea.eap.extj.engine.util.FlowJsonUtil;
-import org.openea.eap.extj.util.*;
-import org.openea.eap.extj.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

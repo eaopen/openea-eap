@@ -32,7 +32,7 @@ import org.openea.eap.extj.database.model.entity.DbLinkEntity;
 import org.openea.eap.extj.exception.DataException;
 import org.openea.eap.extj.exception.LoginException;
 import org.openea.eap.extj.exception.WorkFlowException;
-import org.openea.eap.extj.model.flow.DataModel;
+import org.openea.eap.extj.form.model.flow.DataModel;
 import org.openea.eap.extj.model.visualJson.*;
 import org.openea.eap.extj.onlinedev.model.VisualdevModelDataCrForm;
 import org.openea.eap.extj.onlinedev.model.VisualdevModelDataInfoVO;
@@ -41,6 +41,7 @@ import org.openea.eap.extj.onlinedev.service.VisualDevListService;
 import org.openea.eap.extj.onlinedev.service.VisualdevModelDataService;
 import org.openea.eap.extj.onlinedev.util.onlineDevUtil.OnlineSwapDataUtils;
 import org.openea.eap.extj.util.*;
+import org.openea.eap.extj.form.util.FormCheckUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

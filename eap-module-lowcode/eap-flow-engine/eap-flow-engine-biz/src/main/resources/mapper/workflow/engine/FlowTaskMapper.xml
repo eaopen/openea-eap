@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.openea.eap.extj.engine.mapper.FlowTaskMapper">
+
+    <resultMap id="FlowTask" type="org.openea.eap.extj.engine.model.flowtask.FlowTaskListModel">
+        <id column="F_Id" property="id"/>
+        <result column="F_ProcessId" property="processId"/>
+        <result column="F_EnCode" property="enCode"/>
+        <result column="F_FullName" property="fullName"/>
+        <result column="F_FlowUrgent" property="flowUrgent"/>
+        <result column="F_FlowId" property="flowId"/>
+        <result column="F_FlowCode" property="flowCode"/>
+        <result column="F_FlowName" property="flowName"/>
+        <result column="F_FlowCategory" property="flowCategory"/>
+        <result column="F_StartTime" property="startTime"/>
+        <result column="F_EndTime" property="endTime"/>
+        <result column="F_ThisStep" property="thisStep"/>
+        <result column="F_ThisStepId" property="thisStepId"/>
+        <result column="F_Status" property="status"/>
+        <result column="F_Completion" property="completion"/>
+        <result column="F_CreatorUserId" property="creatorUserId"/>
+        <result column="F_CreatorTime" property="creatorTime"/>
+        <result column="F_HandleId" property="handleId"/>
+        <result column="F_NodeName" property="nodeName"/>
+        <result column="F_NodePropertyJson" property="approversProperties"/>
+        <result column="F_Description" property="description"/>
+        <result column="F_FlowVersion" property="flowVersion"/>
+        <result column="F_DelegateUser" property="delegateUser"/>
+        <result column="F_TemplateId" property="templateId"/>
+    </resultMap>
+
+    <select id="getTrialList" parameterType="map" resultMap="FlowTask">
+        SELECT r.F_Id AS F_Id, t.F_ProcessId, t.F_EnCode,t.F_StartTime, t.F_FullName, t.F_FlowUrgent, t.F_FlowId ,
+        t.F_FlowCode , t.F_FlowName, t.F_FlowCategory, t.F_EndTime, r.F_NodeName AS F_ThisStep, r.F_TaskNodeId AS F_ThisStepId,
+        r.F_HandleStatus AS F_Status, t.F_Completion, t.F_CreatorUserId, r.F_HandleTime AS F_CreatorTime, t.F_LastModifyUserId,
+        t.F_LastModifyTime,r.F_HandleId,o.F_HandleId AS F_DelegateUser
+        FROM flow_task t left join flow_taskoperatorrecord r on r.F_TaskId = t.F_Id
+        LEFT JOIN flow_taskoperator o on r.F_TaskOperatorId = o.F_Id
+        WHERE 1=1 AND (r.F_HandleStatus = 0 OR r.F_HandleStatus = 1 OR r.F_HandleStatus = 10)
+        AND r.F_TaskOperatorId is not null AND r.F_HandleId = #{map.handleId}
+        <if test="map.keyWord != null and map.keyWord!=''">
+            AND (t.F_EnCode like #{map.keyWord} or t.F_FullName like #{map.keyWord})
+        </if>
+
+        <if test="map.startTime != null and map.startTime!='' and map.endTime != null and map.endTime!=''">
+            <choose>
+                <when test="map.oracle != null and map.oracle!=''">
+                    AND r.F_HandleTime Between TO_DATE(#{map.startTime},'yyyy-mm-dd HH24:mi:ss') AND
+                    TO_DATE(#{map.endTime},'yyyy-mm-dd HH24:mi:ss')
+                </when>
+                <otherwise>
+                    AND r.F_HandleTime Between #{map.startTime} and #{map.endTime}
+                </otherwise>
+            </choose>
+        </if>
+
+        <if test="map.flowCategory != null and map.flowCategory!=''">
+            AND t.F_FlowCategory = #{map.flowCategory}
+        </if>
+
+        <if test="map.creatorUserId != null and map.creatorUserId!=''">
+            AND t.F_CreatorUserId = #{map.creatorUserId}
+        </if>
+
+        <if test="map.templateId != null and map.templateId!=''">
+            AND t.F_TemplateId = #{map.templateId}
+        </if>
+
+        <if test="map.flowList != null and map.flowList.size()>0">
+            AND t.F_FlowId in
+            <foreach collection="map.flowList" item="value" separator="," open="(" close=")">
+                #{value}
+            </foreach>
+        </if>
+
+        <if test="map.flowUrgent != null and map.flowUrgent!=''">
+            AND t.F_FlowUrgent = #{map.flowUrgent}
+        </if>
+        Order by r.F_HandleTime DESC
+    </select>
+
+    <select id="getCirculateList" parameterType="map" resultMap="FlowTask">
+        SELECT t.F_Id, t.F_ProcessId,t.F_EnCode, t.F_FullName, t.F_FlowUrgent, t.F_FlowId , t.F_FlowCode , t.F_FlowName,
+        t.F_FlowCategory,t.F_StartTime, t.F_EndTime, c.F_NodeName AS F_ThisStep, c.F_TaskNodeId AS F_ThisStepId, t.F_Status,
+        t.F_Completion, t.F_CreatorUserId,c.F_CreatorTime, t.F_LastModifyUserId, t.F_LastModifyTime FROM flow_task t
+        left join flow_taskcirculate c on c.F_TaskId = t.F_Id WHERE 1=1
+        <if test="map.objectId != null and map.objectId.size()>0">
+            and c.F_ObjectId in
+            <foreach collection="map.objectId" item="value" separator="," open="(" close=")">
+                #{value}
+            </foreach>
+        </if>
+
+        <if test="map.keyWord != null and map.keyWord!=''">
+            AND (t.F_EnCode like #{map.keyWord} or t.F_FullName like #{map.keyWord})
+        </if>
+
+        <if test="map.startTime != null and map.startTime!='' and map.endTime != null and map.endTime!=''">
+            <choose>
+                <when test="map.oracle != null and map.oracle!=''">
+                    AND c.F_CreatorTime Between TO_DATE(#{map.startTime},'yyyy-mm-dd HH24:mi:ss') AND
+                    TO_DATE(#{map.endTime},'yyyy-mm-dd HH24:mi:ss')
+                </when>
+                <otherwise>
+                    AND c.F_CreatorTime Between #{map.startTime} and #{map.endTime}
+                </otherwise>
+            </choose>
+        </if>
+
+        <if test="map.templateId != null and map.templateId!=''">
+            AND t.F_TemplateId = #{map.templateId}
+        </if>
+
+        <if test="map.flowList != null and map.flowList.size()>0">
+            AND t.F_FlowId in
+            <foreach collection="map.flowList" item="value" separator="," open="(" close=")">
+                #{value}
+            </foreach>
+        </if>
+
+        <if test="map.flowCategory != null and map.flowCategory!=''">
+            AND t.F_FlowCategory = #{map.flowCategory}
+        </if>
+
+        <if test="map.creatorUserId != null and map.creatorUserId!=''">
+            AND t.F_CreatorUserId = #{map.creatorUserId}
+        </if>
+
+        <if test="map.flowUrgent != null and map.flowUrgent!=''">
+            AND t.F_FlowUrgent = #{map.flowUrgent}
+        </if>
+        Order by F_CreatorTime DESC
+    </select>
+
+    <select id="getWaitList" parameterType="map" resultMap="FlowTask">
+        SELECT o.F_Id AS F_Id, t.F_ProcessId, t.F_EnCode, t.F_FullName, t.F_FlowUrgent, t.F_FlowId , t.F_FlowCode
+        ,t.F_FlowName, t.F_FlowCategory,
+        t.F_StartTime, t.F_EndTime, t.F_ThisStep, n.F_Id as F_ThisStepId, t.F_Status, t.F_Completion, t.F_CreatorUserId,
+        o.F_CreatorTime, o.F_HandleId, t.F_LastModifyUserId,t.F_TemplateId,
+        t.F_LastModifyTime, n.F_NodePropertyJson,o.F_Description,o.F_NodeName,t.F_FlowVersion FROM flow_taskoperator o
+        left join flow_task t on o.F_TaskId = t.F_Id left join flow_tasknode n on o.F_TaskNodeId = n.F_Id
+        WHERE 1=1 AND o.F_Completion = 0 AND t.F_Status = 1 AND o.F_State = '0'
+        <if test="map.handleId != null and map.handleId.size()>0">
+            AND o.F_HandleId in
+            <foreach collection="map.handleId" item="value" separator="," open="(" close=")">
+                #{value}
+            </foreach>
+        </if>
+
+        <if test="map.keyWord != null and map.keyWord!=''">
+            AND (t.F_EnCode like #{map.keyWord} or t.F_FullName like #{map.keyWord})
+        </if>
+
+        <if test="map.startTime != null and map.startTime!='' and map.endTime != null and map.endTime!=''">
+            <choose>
+                <when test="map.oracle != null and map.oracle!=''">
+                    AND o.F_CreatorTime Between TO_DATE(#{map.startTime},'yyyy-mm-dd HH24:mi:ss') AND
+                    TO_DATE(#{map.endTime},'yyyy-mm-dd HH24:mi:ss')
+                </when>
+                <otherwise>
+                    AND o.F_CreatorTime Between #{map.startTime} and #{map.endTime}
+                </otherwise>
+            </choose>
+        </if>
+
+        <if test="map.flowCategory != null and map.flowCategory!=''">
+            AND t.F_FlowCategory = #{map.flowCategory}
+        </if>
+
+        <if test="map.creatorUserId != null and map.creatorUserId!=''">
+            AND t.F_CreatorUserId = #{map.creatorUserId}
+        </if>
+
+        <if test="map.nodeCode != null and map.nodeCode!=''">
+            AND o.F_NodeCode = #{map.nodeCode}
+        </if>
+
+        <if test="map.templateId != null and map.templateId!=''">
+            AND t.F_TemplateId = #{map.templateId}
+        </if>
+
+        <if test="map.flowList != null and map.flowList.size()>0">
+            AND t.F_FlowId in
+            <foreach collection="map.flowList" item="value" separator="," open="(" close=")">
+                #{value}
+            </foreach>
+        </if>
+
+        <if test="map.isBatch != null and map.isBatch!=''">
+            AND t.F_IsBatch = #{map.isBatch}
+        </if>
+
+        <if test="map.flowUrgent != null and map.flowUrgent!=''">
+            AND t.F_FlowUrgent = #{map.flowUrgent}
+        </if>
+        Order by F_CreatorTime DESC
+    </select>
+
+    <select id="getVisualFormId" parameterType="string" resultType="string">
+        SELECT f_id as id FROM flow_engineform where F_FlowId = #{id}
+    </select>
+</mapper>

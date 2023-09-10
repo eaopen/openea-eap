@@ -1,7 +1,7 @@
 package org.openea.eap.extj.engine.model.flowbefore;
 
 import org.openea.eap.extj.engine.model.flowengine.shuntjson.childnode.Properties;
-import org.openea.eap.extj.model.form.FlowFormVo;
+import org.openea.eap.extj.form.model.form.FlowFormVo;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 

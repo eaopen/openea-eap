@@ -25,7 +25,7 @@ import org.openea.eap.extj.engine.model.flowtemplate.FlowTemplateListVO;
 import org.openea.eap.extj.engine.model.flowtemplate.FlowTemplateVO;
 import org.openea.eap.extj.engine.model.flowtemplatejson.FlowJsonModel;
 import org.openea.eap.extj.engine.model.flowtemplatejson.FlowTemplateJsonPage;
-import org.openea.eap.extj.entity.FlowFormEntity;
+import org.openea.eap.extj.form.entity.FlowFormEntity;
 import org.openea.eap.extj.exception.WorkFlowException;
 import org.openea.eap.extj.permission.entity.UserEntity;
 import org.openea.eap.extj.util.*;
@@ -34,8 +34,6 @@ import org.openea.eap.extj.engine.service.FlowEngineVisibleService;
 import org.openea.eap.extj.engine.service.FlowTaskService;
 import org.openea.eap.extj.engine.service.FlowTemplateJsonService;
 import org.openea.eap.extj.engine.service.FlowTemplateService;
-import org.openea.eap.extj.util.*;
-import org.openea.eap.extj.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

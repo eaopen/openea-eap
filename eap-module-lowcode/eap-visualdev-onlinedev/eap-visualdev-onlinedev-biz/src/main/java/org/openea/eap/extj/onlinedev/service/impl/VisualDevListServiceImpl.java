@@ -31,7 +31,7 @@ import org.openea.eap.extj.engine.service.FlowTaskService;
 import org.openea.eap.extj.engine.service.FlowTemplateJsonService;
 import org.openea.eap.extj.engine.service.FlowTemplateService;
 import org.openea.eap.extj.exception.WorkFlowException;
-import org.openea.eap.extj.mapper.FlowFormDataMapper;
+import org.openea.eap.extj.form.mapper.FlowFormDataMapper;
 import org.openea.eap.extj.model.visual.JnpfKeyConsts;
 import org.openea.eap.extj.model.visualJson.*;
 import org.openea.eap.extj.model.visualJson.analysis.FormAllModel;
@@ -47,8 +47,10 @@ import org.openea.eap.extj.onlinedev.util.OnlineDevDbUtil;
 import org.openea.eap.extj.onlinedev.util.onlineDevUtil.*;
 import org.openea.eap.extj.permission.model.authorize.OnlineDynamicSqlModel;
 import org.openea.eap.extj.permission.service.AuthorizeService;
-import org.openea.eap.extj.service.FlowFormService;
+import org.openea.eap.extj.form.service.FlowFormService;
 import org.openea.eap.extj.util.*;
+import org.openea.eap.extj.form.util.FlowFormDataUtil;
+import org.openea.eap.extj.form.util.TableFeildsEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -202,7 +204,7 @@ public class VisualDevListServiceImpl extends SuperServiceImpl<VisualdevModelDat
         realList = onlineSwapDataUtils.getSwapList(realList, fields, visualDevJsonModel.getId(), inlineEdit, new ArrayList<>());
 
         //取回传主键
-        String pkeyId = visualDevJsonModel.getPkeyId()!=null ? visualDevJsonModel.getPkeyId():TableFeildsEnum.FID.getField();
+        String pkeyId = visualDevJsonModel.getPkeyId()!=null ? visualDevJsonModel.getPkeyId(): TableFeildsEnum.FID.getField();
         //结果集添加id
         for (Map<String, Object> objectMap : realList) {
             for(String key : objectMap.keySet()){

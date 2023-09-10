@@ -18,11 +18,11 @@ import org.openea.eap.extj.database.model.entity.DbLinkEntity;
 import org.openea.eap.extj.database.util.ConnUtil;
 import org.openea.eap.extj.database.util.DynamicDataSourceUtil;
 import org.openea.eap.extj.exception.DataException;
-import org.openea.eap.extj.mapper.FlowFormDataMapper;
+import org.openea.eap.extj.form.mapper.FlowFormDataMapper;
 import org.openea.eap.extj.model.visualJson.TableModel;
-import org.openea.eap.extj.util.FlowFormDataUtil;
-import org.openea.eap.extj.util.FormPublicUtils;
-import org.openea.eap.extj.util.TableFeildsEnum;
+import org.openea.eap.extj.form.util.FlowFormDataUtil;
+import org.openea.eap.extj.form.util.FormPublicUtils;
+import org.openea.eap.extj.form.util.TableFeildsEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

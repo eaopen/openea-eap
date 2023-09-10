@@ -10,7 +10,7 @@ import org.openea.eap.extj.model.visual.JnpfKeyConsts;
 import org.openea.eap.extj.onlinedev.model.OnlineDevListModel.OnlineColumnFieldModel;
 import org.openea.eap.extj.onlinedev.model.OnlineDevListModel.OnlineDevListDataVO;
 import org.openea.eap.extj.onlinedev.model.OnlineDevListModel.VisualColumnSearchVO;
-import org.openea.eap.extj.util.FormPublicUtils;
+import org.openea.eap.extj.form.util.FormPublicUtils;
 import org.openea.eap.extj.util.StringUtil;
 
 import java.util.*;

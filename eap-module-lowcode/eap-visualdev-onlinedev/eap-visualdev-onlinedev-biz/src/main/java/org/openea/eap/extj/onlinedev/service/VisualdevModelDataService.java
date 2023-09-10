@@ -7,7 +7,7 @@ import org.openea.eap.extj.base.model.VisualDevJsonModel;
 import org.openea.eap.extj.base.service.SuperService;
 import org.openea.eap.extj.exception.DataException;
 import org.openea.eap.extj.exception.WorkFlowException;
-import org.openea.eap.extj.model.flow.DataModel;
+import org.openea.eap.extj.form.model.flow.DataModel;
 import org.openea.eap.extj.model.visualJson.FormDataField;
 import org.openea.eap.extj.onlinedev.entity.VisualdevModelDataEntity;
 import org.openea.eap.extj.onlinedev.model.PaginationModelExport;

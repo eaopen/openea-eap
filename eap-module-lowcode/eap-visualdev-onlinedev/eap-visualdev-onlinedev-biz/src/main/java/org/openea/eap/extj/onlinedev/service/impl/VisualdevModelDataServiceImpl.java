@@ -19,7 +19,7 @@ import org.openea.eap.extj.constant.MsgCode;
 import org.openea.eap.extj.database.model.entity.DbLinkEntity;
 import org.openea.eap.extj.exception.DataException;
 import org.openea.eap.extj.exception.WorkFlowException;
-import org.openea.eap.extj.model.flow.DataModel;
+import org.openea.eap.extj.form.model.flow.DataModel;
 import org.openea.eap.extj.model.visual.JnpfKeyConsts;
 import org.openea.eap.extj.model.visualJson.*;
 import org.openea.eap.extj.model.visualJson.analysis.FormModel;
@@ -36,6 +36,7 @@ import org.openea.eap.extj.onlinedev.util.onlineDevUtil.OnlineDevInfoUtils;
 import org.openea.eap.extj.onlinedev.util.onlineDevUtil.OnlinePublicUtils;
 import org.openea.eap.extj.onlinedev.util.onlineDevUtil.OnlineSwapDataUtils;
 import org.openea.eap.extj.util.*;
+import org.openea.eap.extj.form.util.FlowFormDataUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

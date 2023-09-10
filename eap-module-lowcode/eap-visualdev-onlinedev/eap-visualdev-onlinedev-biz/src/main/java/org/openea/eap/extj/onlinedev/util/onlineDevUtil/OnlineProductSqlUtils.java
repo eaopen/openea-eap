@@ -25,10 +25,10 @@ import org.openea.eap.extj.permission.model.authorize.OnlineDynamicSqlModel;
 import org.openea.eap.extj.permission.service.OrganizeService;
 import org.openea.eap.extj.permission.service.UserRelationService;
 import org.openea.eap.extj.permission.service.UserService;
-import org.openea.eap.extj.util.FlowFormDataUtil;
+import org.openea.eap.extj.form.util.FlowFormDataUtil;
 import org.openea.eap.extj.util.JsonUtil;
 import org.openea.eap.extj.util.StringUtil;
-import org.openea.eap.extj.util.TableFeildsEnum;
+import org.openea.eap.extj.form.util.TableFeildsEnum;
 import org.openea.eap.extj.util.context.SpringContext;
 
 import java.math.BigDecimal;

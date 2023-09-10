@@ -11,7 +11,7 @@ import org.mybatis.dynamic.sql.select.QueryExpressionDSL;
 import org.mybatis.dynamic.sql.select.SelectModel;
 import org.openea.eap.extj.database.source.DbBase;
 import org.openea.eap.extj.util.DateUtil;
-import org.openea.eap.extj.util.FormPublicUtils;
+import org.openea.eap.extj.form.util.FormPublicUtils;
 import org.openea.eap.extj.util.JsonUtil;
 import org.openea.eap.extj.util.StringUtil;
 
