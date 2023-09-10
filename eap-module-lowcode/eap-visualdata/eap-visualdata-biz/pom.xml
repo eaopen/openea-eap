@@ -19,6 +19,13 @@
         </dependency>
 
         <dependency>
+            <groupId>org.openea.eap</groupId>
+            <artifactId>eap-extj-provider</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+
+        <dependency>
             <groupId>com.squareup.okhttp3</groupId>
             <artifactId>okhttp</artifactId>
         </dependency>
