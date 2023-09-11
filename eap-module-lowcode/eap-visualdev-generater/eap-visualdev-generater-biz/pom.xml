@@ -11,6 +11,10 @@
 
     <artifactId>eap-visualdev-generater-biz</artifactId>
 
+    <properties>
+        <mybatis-plus-generator34.version>3.4.1</mybatis-plus-generator34.version>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.openea.eap</groupId>
@@ -35,6 +39,7 @@
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-generator</artifactId>
+            <version>${mybatis-plus-generator34.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>com.baomidou</groupId>

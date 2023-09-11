@@ -31,7 +31,8 @@
         <!-- DB 相关 -->
         <druid.version>1.2.18</druid.version>
         <mybatis-plus.version>3.5.3.1</mybatis-plus.version>
-        <mybatis-plus-generator.version>3.4.1</mybatis-plus-generator.version>
+        <mybatis-plus-generator.version>3.5.3.1</mybatis-plus-generator.version>
+        <mybatis-plus-generator34.version>3.4.1</mybatis-plus-generator34.version>
         <dynamic-datasource.version>3.6.1</dynamic-datasource.version>
         <mybatis-plus-join-boot-starter.version>1.4.5</mybatis-plus-join-boot-starter.version>
         <mybatis-dynamic-sql.version>1.5.0</mybatis-dynamic-sql.version>

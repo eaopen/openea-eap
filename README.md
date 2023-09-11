@@ -324,6 +324,15 @@ https://github.com/renrenio/renren-fast-vue
 
 https://github.com/renrenio/renren-security
 
+* RuoYi-Flowable-Plus
+
+本项目基于 RuoYi-Vue-Plus 进行二次开发扩展Flowable工作流功能，支持在线表单设计和丰富的工作流程设计能力。
+
+http://rfp-doc.konbai.work/
+
+https://github.com/KonBAI-Q/RuoYi-Flowable-Plus
+
+
 * vue-element-admin
 
 vue-element-admin 是一个后台前端解决方案，它基于 vue 和 element-ui实现。
