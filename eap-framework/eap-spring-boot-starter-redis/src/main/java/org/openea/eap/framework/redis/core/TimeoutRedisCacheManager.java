@@ -2,7 +2,6 @@ package org.openea.eap.framework.redis.core;
 
 import cn.hutool.core.util.NumberUtil;
 import cn.hutool.core.util.StrUtil;
-import org.springframework.boot.convert.DurationStyle;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.redis.cache.RedisCache;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
@@ -10,7 +9,6 @@ import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.cache.RedisCacheWriter;
 
 import java.time.Duration;
-import java.time.temporal.ChronoUnit;
 
 /**
  * 支持自定义过期时间的 {@link RedisCacheManager} 实现类
@@ -46,7 +44,7 @@ public class TimeoutRedisCacheManager extends RedisCacheManager {
             Duration duration = parseDuration(names[1]);
             cacheConfig = cacheConfig.entryTtl(duration);
         }
-        return super.createRedisCache(names[0], cacheConfig);
+        return super.createRedisCache(name, cacheConfig);
     }
 
     /**

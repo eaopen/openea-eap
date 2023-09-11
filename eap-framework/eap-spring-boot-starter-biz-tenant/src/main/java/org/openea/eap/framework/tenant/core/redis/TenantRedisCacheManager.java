@@ -1,7 +1,8 @@
 package org.openea.eap.framework.tenant.core.redis;
 
-import org.openea.eap.framework.tenant.core.context.TenantContextHolder;
 import lombok.extern.slf4j.Slf4j;
+import org.openea.eap.framework.redis.core.TimeoutRedisCacheManager;
+import org.openea.eap.framework.tenant.core.context.TenantContextHolder;
 import org.springframework.cache.Cache;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
@@ -15,7 +16,7 @@ import org.springframework.data.redis.cache.RedisCacheWriter;
  * @author airhead
  */
 @Slf4j
-public class TenantRedisCacheManager extends RedisCacheManager {
+public class TenantRedisCacheManager extends TimeoutRedisCacheManager {
 
     public TenantRedisCacheManager(RedisCacheWriter cacheWriter,
                                    RedisCacheConfiguration defaultCacheConfiguration) {
