@@ -24,6 +24,10 @@
 <!--        <module>eap-obpm</module>-->
         <!-- 集成OpenBPM -->
         <module>eap-integration-obpm</module>
+
+        <!-- 集成flowable -->
+        <module>eap-flowable</module>
+
         <!-- 简单工作流workflow -->
         <module>eap-flow-form</module>
         <module>eap-flow-engine</module>
