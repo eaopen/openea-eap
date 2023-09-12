@@ -60,6 +60,7 @@ public interface DictTypeService {
      * @return 字典类型
      */
     DictTypeDO getDictType(Long id);
+    DictTypeDO getDictTypeById(String id);
 
     /**
      * 获得字典类型详情

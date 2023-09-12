@@ -7,6 +7,11 @@ select
 from base_dictionarytype t2
 where not EXISTS (select t1.type from system_dict_type t1 where t2.F_EnCode = t1.type);
 
+-- 旧id
+update system_dict_type t, base_dictionarytype t2
+set t.ref_id = t2.F_Id
+where t.ref_id is null and t.type=t2.F_EnCode;
+
 -- 数据准备
 -- 更新type id
 update base_dictionarydata t

@@ -1,6 +1,11 @@
 package org.openea.eap.module.system.service.dict;
 
+import cn.hutool.core.map.MapUtil;
+import cn.hutool.core.util.NumberUtil;
 import cn.hutool.core.util.StrUtil;
+import com.google.common.annotations.VisibleForTesting;
+import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.openea.eap.framework.common.pojo.PageResult;
 import org.openea.eap.framework.common.util.date.LocalDateTimeUtils;
 import org.openea.eap.module.system.controller.admin.dict.vo.type.DictTypeCreateReqVO;
@@ -10,12 +15,13 @@ import org.openea.eap.module.system.controller.admin.dict.vo.type.DictTypeUpdate
 import org.openea.eap.module.system.convert.dict.DictTypeConvert;
 import org.openea.eap.module.system.dal.dataobject.dict.DictTypeDO;
 import org.openea.eap.module.system.dal.mysql.dict.DictTypeMapper;
-import com.google.common.annotations.VisibleForTesting;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 import static org.openea.eap.framework.common.exception.util.ServiceExceptionUtil.exception;
 import static org.openea.eap.module.system.enums.ErrorCodeConstants.*;
@@ -25,7 +31,11 @@ import static org.openea.eap.module.system.enums.ErrorCodeConstants.*;
  *
  */
 @Service
+@Slf4j
 public class DictTypeServiceImpl implements DictTypeService {
+
+    @Resource
+    private JdbcTemplate jdbcTemplate;
 
     @Resource
     private DictDataService dictDataService;
@@ -46,6 +56,41 @@ public class DictTypeServiceImpl implements DictTypeService {
     @Override
     public DictTypeDO getDictType(Long id) {
         return dictTypeMapper.selectById(id);
+    }
+
+    @SneakyThrows
+    @Override
+    public DictTypeDO getDictTypeById(String id) {
+        if(NumberUtil.isLong(id)){
+            return dictTypeMapper.selectById(id);
+        }
+        // workaround for extn old data
+        Long longId = null;
+       if(jdbcTemplate!=null){
+           try{
+               List<Map<String, Object>> list = jdbcTemplate.queryForList(
+                       "select id, type from system_dict_type where ref_id=?", id);
+               if(list!=null && list.size()>0){
+                   longId =  MapUtil.getLong(list.get(0), "id");
+                   return dictTypeMapper.selectById(longId);
+               }
+           }catch (Throwable t){
+               log.warn(t.getMessage());
+           }
+           if(longId==null){
+               try{
+                   List<Map<String, Object>> list = jdbcTemplate.queryForList(
+                           "select F_EnCode as type from base_dictionarytype where F_id=?", id);
+                   if(list!=null && list.size()>0){
+                       String type =  MapUtil.getStr(list.get(0), "type");
+                       return dictTypeMapper.selectByType(type);
+                   }
+               }catch (Throwable t){
+                   log.warn(t.getMessage());
+               }
+           }
+       }
+        return null;
     }
 
     @Override

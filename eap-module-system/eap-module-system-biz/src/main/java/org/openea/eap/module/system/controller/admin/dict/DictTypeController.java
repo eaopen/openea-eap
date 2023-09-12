@@ -150,9 +150,10 @@ public class DictTypeController {
     })
     @GetMapping("/{dictionaryTypeId}/Data/Selector")
     public CommonResult<Map> selectorOneTreeView(@PathVariable("dictionaryTypeId") String dictionaryTypeId) {
-        DictTypeDO dictType = dictTypeService.getDictType(Long.parseLong(dictionaryTypeId));
+        DictTypeDO dictType = dictTypeService.getDictTypeById(dictionaryTypeId);
         List<Map<String,Object>> listV1=new ArrayList<>();
-        List<DictDataDO> collect = dictDataService.getDictData(dictType.getType());
+        if(dictType!=null){
+            List<DictDataDO> collect = dictDataService.getDictData(dictType.getType());
 //        List<DictDataDO> collect = dictDataService.getDictDataList().stream().filter(t -> dictType.getType().equals(t.getDictType())).collect(Collectors.toList());
             for (DictDataDO dictDataDO : collect) {
                 Map<String,Object> map=new HashMap<>();
@@ -163,10 +164,12 @@ public class DictTypeController {
                 map.put("hasChildren",false);
                 listV1.add(map);
             }
+        }
         Map map=new HashMap();
         map.put("list",listV1);
         return success(map);
     }
+
     Map transToMap(DictTypeDO dictTypeDO){
         Map<String,Object> map=new HashMap<>();
         map.put("id",dictTypeDO.getId());
