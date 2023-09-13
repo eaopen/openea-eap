@@ -288,7 +288,7 @@ public class PortalController extends SuperController<PortalService, PortalEntit
 
     @Operation(summary = "获取菜单下拉列表")
     @GetMapping("/Selector/All")
-    public ActionResult<Map> getSelectorAll(){
+    public ActionResult<Map> getSelectorAll(@RequestParam(required = false) String type){
         AdminUserDO user = userService.getUser(getLoginUserId());
         List<MenuDO> menuList = permissionService.getUserMenuListByUser(user.getId(), user.getUsername());
         // i18n
@@ -311,7 +311,11 @@ public class PortalController extends SuperController<PortalService, PortalEntit
                 parentNode.put("children",new ArrayList<>());
             }
             List<Map<String,Object>> children = (List<Map<String, Object>>) parentNode.get("children");
-            children.add(childNode);
+            if (type==null || StringUtil.isEmpty(type)) {
+                children.add(childNode);
+            }else if (MapUtil.getStr(childNode,"type").equals(type)){
+                children.add(childNode);
+            }
             parentNode.put("children",children);
         });
         List<Map> rootMenue = filterList(treeNodeMap.values(), node -> MenuDO.ID_ROOT.toString().equals(MapUtil.getStr(node, "parentId")));
@@ -333,7 +337,7 @@ public class PortalController extends SuperController<PortalService, PortalEntit
         map.put("propertyJson", null);
         map.put("sortCode", menuDO.getSort());
         map.put("systemId", null);
-        map.put("type", 0);
+        map.put("type", menuDO.getType());
         map.put("urlAddress", menuDO.getPath());
         return map;
     }
