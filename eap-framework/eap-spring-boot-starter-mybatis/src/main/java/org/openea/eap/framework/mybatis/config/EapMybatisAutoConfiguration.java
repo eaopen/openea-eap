@@ -56,6 +56,10 @@ public class EapMybatisAutoConfiguration {
         return mybatisPlusInterceptor;
     }
 
+    @Bean
+    public ISqlInjector sqlInjector(){
+        return new MyDefaultSqlInjector();
+    }
 
     @Bean
     public Interceptor myMasterSlaveAutoRoutingPlugin(DataSource dataSource){
