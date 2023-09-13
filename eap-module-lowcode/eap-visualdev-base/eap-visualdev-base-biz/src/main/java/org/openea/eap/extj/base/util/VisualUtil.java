@@ -378,8 +378,8 @@ public class VisualUtil {
 		errorMsg = formDataModel== null ?  MsgCode.VS401.get() + Action + "!" : null;
 		if (entity.getWebType()==2){
 			ColumnDataModel columnDataModel = JsonUtil.getJsonToBean(entity.getColumnData(), ColumnDataModel.class);
-//			errorMsg = columnDataModel== null ?  MsgCode.VS402.get() + Action + "!" : null;
-			errorMsg=null;
+			errorMsg = columnDataModel== null ?  MsgCode.VS402.get() + Action + "!" : null;
+//			errorMsg=null;
 		}
 		return errorMsg;
 	}

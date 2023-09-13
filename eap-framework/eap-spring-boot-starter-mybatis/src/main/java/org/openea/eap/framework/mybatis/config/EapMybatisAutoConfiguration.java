@@ -4,6 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.baomidou.mybatisplus.core.incrementer.IKeyGenerator;
+import com.baomidou.mybatisplus.core.injector.ISqlInjector;
 import com.baomidou.mybatisplus.extension.incrementer.*;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor;
@@ -71,6 +72,10 @@ public class EapMybatisAutoConfiguration {
         return new ResultSetInterceptor();
     }
 
+    @Bean
+    public ISqlInjector sqlInjector(){
+        return new MyDefaultSqlInjector();
+    }
 
     @Bean
     public MetaObjectHandler defaultMetaObjectHandler(){
