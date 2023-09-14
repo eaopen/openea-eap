@@ -1,15 +1,23 @@
 package org.openea.eap.extj.base.util;
 
+import com.xingyuv.http.util.StringUtil;
 import org.openea.eap.extj.base.UserInfo;
+import org.openea.eap.extj.util.DateUtil;
 import org.openea.eap.extj.util.RandomUtil;
 import org.openea.eap.extj.base.entity.ModuleEntity;
 import org.openea.eap.extj.base.service.ModuleService;
 import org.openea.eap.extj.util.EapUserProvider;
 import org.openea.eap.extj.base.model.online.PerColModels;
 import org.openea.eap.extj.base.model.online.VisualMenuModel;
+import org.openea.eap.module.system.controller.admin.permission.vo.menu.MenuBaseVO;
+import org.openea.eap.module.system.convert.permission.MenuConvert;
+import org.openea.eap.module.system.dal.dataobject.permission.MenuDO;
+import org.openea.eap.module.system.dal.mysql.permission.MenuMapper;
+import org.openea.eap.module.system.service.permission.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
 import java.util.List;
 
 @Component
@@ -19,12 +27,15 @@ public class PubulishUtil {
     private EapUserProvider userProvider;
     @Autowired
     private ModuleService moduleService;
+    @Autowired
+    private MenuMapper menuMapper;
+    @Autowired
+    private MenuService menuService;
 
-
- /**
- * 功能类型
- */
-private final static Integer Type = 3;
+    /**
+     * 功能类型
+     */
+    private final static Integer Type = 2;
 
     /**
      * pc父级菜单 默认
@@ -64,105 +75,51 @@ private final static Integer Type = 3;
 
     public Integer publishMenu(VisualMenuModel visualMenuModel) {
         UserInfo userInfo = userProvider.get();
-
+        MenuDO menuDO1 = menuMapper.selectById(visualMenuModel.getId());
         List<ModuleEntity> moduleList = moduleService.getModuleList(visualMenuModel.getId());
 
-        ModuleEntity moduleEntity = new ModuleEntity();
-        String uuid = RandomUtil.uuId();
-        String appUuid = RandomUtil.uuId();
-
-        PerColModels pcPerCols = visualMenuModel.getPcPerCols();
-        PerColModels appPerCols = visualMenuModel.getAppPerCols();
-
-        moduleEntity.setCategory(pcCategory);
-
-//        moduleEntity.setFullName(visualMenuModel.getFullName());
-//        moduleEntity.setEnCode(visualMenuModel.getEncode());
-//        moduleEntity.setIcon(icon);
-//        moduleEntity.setType(Type);
-//        moduleEntity.setModuleId(visualMenuModel.getId());
-//        PropertyJsonModel jsonModel = new PropertyJsonModel();
-//        jsonModel.setModuleId(visualMenuModel.getId());
-//        jsonModel.setIconBackgroundColor("" );
-//        jsonModel.setIsTree(0);
-//        moduleEntity.setPropertyJson(JsonUtil.getObjectToString(jsonModel));
-//        moduleEntity.setSortCode((999L));
-//        moduleEntity.setEnabledMark(1);
-//        moduleEntity.setIsButtonAuthorize(1);
-//        moduleEntity.setIsColumnAuthorize(1);
-//        moduleEntity.setIsDataAuthorize(1);
-//        moduleEntity.setIsFormAuthorize(1);
-//        moduleEntity.setCreatorTime(DateUtil.getNowDate());
-//        moduleEntity.setCreatorUserId(userInfo.getUserId());
-//        moduleEntity.setId(uuid);
-//        moduleEntity.setUrlAddress("model/" + moduleEntity.getEnCode());
+        MenuDO menuDO = new MenuDO();
+        menuDO.setId(Long.valueOf(RandomUtil.uuId()));
+        menuDO.setName(visualMenuModel.getFullName());
+        menuDO.setType(Type);
+        menuDO.setSort(999);
+        menuDO.setParentId(Long.valueOf(visualMenuModel.getPcModuleParentId()));
+        menuDO.setPath("model/" + visualMenuModel.getEncode());
+        menuDO.setIcon(icon);
+        menuDO.setStatus(0);
+        menuDO.setVisible(true);
+        menuDO.setKeepAlive(true);
+        menuDO.setAlwaysShow(true);
+        if (menuDO.getType() == 1) {//功能
+            menuDO.setComponent("extn/dataInterface");
+        } else if (menuDO.getType() == 2) {//表单
+            menuDO.setComponent("extn/dynamicModel");
+        } else if (menuDO.getType() == 3) {//外部链接
+            menuDO.setComponent("extn/externalLink");
+        } else if (menuDO.getType() == 4) {//字典
+            menuDO.setComponent("extn/dynamicDictionary");
+        } else if (menuDO.getType() == 5) {//报表
+            menuDO.setComponent("extn/dynamicDataReport");
+        } else {//门户
+            menuDO.setComponent("extn/dynamicPortal");
+        }
 
         boolean menu = false;
 
-//        if (1 == visualMenuModel.getPc()) {
-//            List<ModuleEntity> pcModuleList = moduleList.stream().filter(module -> pcCategory.equals(module.getCategory())).collect(Collectors.toList());
-//            //是否生成过菜单
-//            if (pcModuleList.size() > 0) {
-//                for (ModuleEntity entity : pcModuleList) {
-//                    String menuId = entity.getId();
-//                    //变更权限
-//                    alterPer(entity, pcPerCols);
-//                    moduleEntity.setParentId(entity.getParentId());
-//                    moduleEntity.setSystemId(entity.getSystemId());
-//                    moduleEntity.setId(menuId);
-//                    moduleEntity.setEnCode(entity.getEnCode());
-//                    moduleEntity.setUrlAddress("model/" + moduleEntity.getEnCode());
-//                    //更新菜单
-//                    menu = moduleService.update(entity.getId(), moduleEntity);
-//                }
-//            } else {
-//                //创建菜单
-//                moduleEntity.setParentId(visualMenuModel.getPcModuleParentId());
-//                moduleEntity.setSystemId(visualMenuModel.getPcSystemId());
-//                if (StringUtil.isEmpty(moduleEntity.getParentId())) {
-//                    return 3;
-//                }
-//                menu = this.createMenu(moduleEntity);
-//
-//                batchCreatePermissions(pcPerCols, uuid);
-//            }
-//            if (!menu) {
-//                return 2;
-//            }
-//        }
-        moduleEntity.setCategory(appCategory);
-        moduleEntity.setId(appUuid);
-        moduleEntity.setUrlAddress("/pages/apply/dynamicModel/index?id=" + visualMenuModel.getId());
-        moduleEntity.setEnCode(visualMenuModel.getEncode());
-//        if (1 == visualMenuModel.getApp()) {
-//            List<ModuleEntity> appModuleList = moduleList.stream().filter(module -> appCategory.equals(module.getCategory())).collect(Collectors.toList());
-//            if (appModuleList.size() > 0) {
-//                for (ModuleEntity entity : appModuleList) {
-//                    String menuId = entity.getId();
-//                    //变更权限
-//                    alterPer(entity, appPerCols);
-//                    moduleEntity.setParentId(entity.getParentId());
-//                    moduleEntity.setSystemId(entity.getSystemId());
-//                    moduleEntity.setId(menuId);
-//                    moduleEntity.setEnCode(entity.getEnCode());
-//                    //更新菜单
-//                    menu = moduleService.update(entity.getId(), moduleEntity);
-//                }
-//            } else {
-//                moduleEntity.setParentId(visualMenuModel.getAppModuleParentId());
-//                moduleEntity.setSystemId(visualMenuModel.getAppSystemId());
-//                if (StringUtil.isEmpty(moduleEntity.getParentId())) {
-//                    return 3;
-//                }
-//                menu = this.createMenu(moduleEntity);
-//                batchCreatePermissions(appPerCols, appUuid);
-//            }
-//        }
-
-//        if (!menu) {
-//            //创建失败，编码或名称是否重复
-//            return 2;
-//        }
+        if (1 == visualMenuModel.getPc()) {
+            //是否生成过菜单
+            if (menuDO1 != null) {
+                //更新菜单
+                return 2;
+            } else {
+                //创建菜单
+                if (StringUtil.isEmpty(String.valueOf(menuDO.getParentId()))) {
+                    return 3;
+                }
+                menuMapper.insert(menuDO);
+            }
+        }
         return 1;//同步成功
     }
 }
+
