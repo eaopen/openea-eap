@@ -4,6 +4,9 @@ import org.openea.eap.framework.quartz.core.enums.JobDataKeyEnum;
 import org.openea.eap.framework.quartz.core.handler.JobHandlerInvoker;
 import org.quartz.*;
 
+import static org.openea.eap.framework.common.exception.enums.GlobalErrorCodeConstants.NOT_IMPLEMENTED;
+import static org.openea.eap.framework.common.exception.util.ServiceExceptionUtil.exception0;
+
 /**
  * {@link org.quartz.Scheduler} 的管理器，负责创建任务
  *
@@ -36,6 +39,7 @@ public class SchedulerManager {
     public void addJob(Long jobId, String jobHandlerName, String jobHandlerParam, String cronExpression,
                        Integer retryCount, Integer retryInterval)
             throws SchedulerException {
+        validateScheduler();
         // 创建 JobDetail 对象
         JobDetail jobDetail = JobBuilder.newJob(JobHandlerInvoker.class)
                 .usingJobData(JobDataKeyEnum.JOB_ID.name(), jobId)
@@ -60,6 +64,7 @@ public class SchedulerManager {
     public void updateJob(String jobHandlerName, String jobHandlerParam, String cronExpression,
                           Integer retryCount, Integer retryInterval)
             throws SchedulerException {
+        validateScheduler();
         // 创建新 Trigger 对象
         Trigger newTrigger = this.buildTrigger(jobHandlerName, jobHandlerParam, cronExpression, retryCount, retryInterval);
         // 修改调度
@@ -73,6 +78,7 @@ public class SchedulerManager {
      * @throws SchedulerException 删除异常
      */
     public void deleteJob(String jobHandlerName) throws SchedulerException {
+        validateScheduler();
         scheduler.deleteJob(new JobKey(jobHandlerName));
     }
 
@@ -83,6 +89,7 @@ public class SchedulerManager {
      * @throws SchedulerException 暂停异常
      */
     public void pauseJob(String jobHandlerName) throws SchedulerException {
+        validateScheduler();
         scheduler.pauseJob(new JobKey(jobHandlerName));
     }
 
@@ -93,6 +100,7 @@ public class SchedulerManager {
      * @throws SchedulerException 启动异常
      */
     public void resumeJob(String jobHandlerName) throws SchedulerException {
+        validateScheduler();
         scheduler.resumeJob(new JobKey(jobHandlerName));
         scheduler.resumeTrigger(new TriggerKey(jobHandlerName));
     }
@@ -107,6 +115,7 @@ public class SchedulerManager {
      */
     public void triggerJob(Long jobId, String jobHandlerName, String jobHandlerParam)
             throws SchedulerException {
+        validateScheduler();
         JobDataMap data = new JobDataMap(); // 无需重试，所以不设置 retryCount 和 retryInterval
         data.put(JobDataKeyEnum.JOB_ID.name(), jobId);
         data.put(JobDataKeyEnum.JOB_HANDLER_NAME.name(), jobHandlerName);
@@ -125,5 +134,13 @@ public class SchedulerManager {
                 .usingJobData(JobDataKeyEnum.JOB_RETRY_INTERVAL.name(), retryInterval)
                 .build();
     }
+
+    private void validateScheduler() {
+        if (scheduler == null) {
+            throw exception0(NOT_IMPLEMENTED.getCode(),
+                    "[定时任务 - 已禁用][参考 https://doc.iocoder.cn/job/ 开启]");
+        }
+    }
+
 
 }

@@ -117,7 +117,10 @@ spring:
     database: ${redis_db:4} # 数据库索引
     password: ${redis_password:nopass} # 密码，建议生产环境开启
 
-
+  data:
+    redis:
+      repositories:
+        enabled: false # 项目未使用到 Spring Data Redis 的 Repository，所以直接禁用，保证启动速度
 
 
 --- #################### 接口文档配置 ####################
