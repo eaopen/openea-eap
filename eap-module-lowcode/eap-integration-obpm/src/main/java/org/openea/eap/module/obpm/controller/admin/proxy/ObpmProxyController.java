@@ -56,13 +56,13 @@ public class ObpmProxyController {
         StreamUtils.copy(webRes.bodyStream(), response.getOutputStream());
     }
 
+//    "/bpm/instance/**", "/bpm/task/**", "/bpm/form/**",
+//    "/form/formDefData/**", "/form/formCustDialog/**",
+//    "/form/formCustSql/**",
+//    "/sys/tools/**","/sys/dataDict/**"
     @SneakyThrows
     @RequestMapping( method = RequestMethod.GET,
-            value={"/obpm-server/**","/obpm-api/**","/obpm/**",
-                    "/bpm/instance/**", "/bpm/task/**", "/bpm/form/**",
-                    "/form/formDefData/**", "/form/formCustDialog/**",
-                    "/form/formCustSql/**",
-                    "/sys/tools/**","/sys/dataDict/**"})
+            value={"/obpm-server/**","/obpm-api/**","/obpm/**"})
     public JSONObject proxyGet(HttpServletRequest request, @RequestHeader Map<String, String> headers) {
         String url = checkRequestUrl(request);
         String obpmUrl = obmpClientService.getProxyUrl(url);
@@ -77,11 +77,7 @@ public class ObpmProxyController {
 
     @SneakyThrows
     @RequestMapping( method = RequestMethod.POST,
-            value={"/obpm-server/**","/obpm-api/**","/obpm/**",
-                    "/bpm/instance/**", "/bpm/task/**", "/bpm/form/**",
-                    "/form/formDefData/**", "/form/formCustDialog/**",
-                    "/form/formCustSql/**",
-                    "/sys/tools/**","/sys/dataDict/**"})
+            value={"/obpm-server/**","/obpm-api/**","/obpm/**"})
     public JSONObject proxyPost(HttpServletRequest request, @RequestBody(required = false) String body, @RequestHeader Map<String, String> headers) {
         String url = checkRequestUrl(request);
         String obpmUrl = obmpClientService.getProxyUrl(url);

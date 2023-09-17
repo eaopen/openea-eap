@@ -135,6 +135,8 @@ eap:
     webBaseUrl: ${obpm_web_baseurl:http://localhost:3002}
     adminBaseUrl: ${obpm_admin_baseurl:http://localhost:3002}
 
+flowable:
+  database-schema-update: true
 
 chatgpt:
   token: ${chatgpt_token:sk-xxxxxxxxxxxxxxxxxxxx} #必填
