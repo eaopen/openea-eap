@@ -20,15 +20,17 @@
     </properties>
 
     <modules>
+        <!-- bpm/flowable -->
+<!--        <module>eap-bpm-api</module>-->
+<!--        <module>eap-bpm-biz</module>-->
+
         <!-- 工作流平台 OpenBpm -->
-<!--        <module>eap-obpm</module>-->
+        <!-- 独立OpenBPM服务(profile=obpmServer, 启用module eap-obpm)  -->
         <!-- 集成OpenBPM -->
         <module>eap-integration-obpm</module>
 
-        <!-- 集成flowable -->
-        <module>eap-flowable</module>
-
         <!-- 简单工作流workflow -->
+        <!-- 保留配置简单，实现待整合到flowable中 -->
         <module>eap-flow-form</module>
         <module>eap-flow-engine</module>
         <module>eap-form-app</module>
