@@ -21,8 +21,8 @@
 
     <modules>
         <!-- bpm/flowable -->
-<!--        <module>eap-bpm-api</module>-->
-<!--        <module>eap-bpm-biz</module>-->
+        <module>eap-bpm-api</module>
+        <module>eap-bpm-biz</module>
 
         <!-- 工作流平台 OpenBpm -->
         <!-- 独立OpenBPM服务(profile=obpmServer, 启用module eap-obpm)  -->
