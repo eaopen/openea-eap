@@ -419,6 +419,7 @@ logging:
     springfox.documentation.builders.FormParameterSpecificationProvider: ERROR
     springfox.documentation.swagger.readers.operation.OperationImplicitParameterReader: ERROR
     org.openea.eap.framework.i18n.core.I18nUtil: ERROR
+    org.openea.eap.framework.i18n.core.EapMessageResource: ERROR
   file:
     name: ${user.home}/logs/${spring.application.name}.log # 日志文件名，全路径
 
