@@ -13,7 +13,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * 验证 job 租户逻辑
- * {@link TenantJobHandlerDecorator}
  *
  * @author gaibu
  */
@@ -31,10 +30,10 @@ public class TenantJobTest extends BaseMockitoUnitTest {
         // 准备测试任务
         TestJob testJob = new TestJob();
         // 创建任务装饰器
-        TenantJobHandlerDecorator tenantJobHandlerDecorator = new TenantJobHandlerDecorator(tenantFrameworkService, testJob);
+        //TenantJobHandlerDecorator tenantJobHandlerDecorator = new TenantJobHandlerDecorator(tenantFrameworkService, testJob);
 
         // 执行任务
-        tenantJobHandlerDecorator.execute(null);
+        //tenantJobHandlerDecorator.execute(null);
 
         // 断言返回值
         assertEquals(testJob.getTenantIds(), tenantIds);

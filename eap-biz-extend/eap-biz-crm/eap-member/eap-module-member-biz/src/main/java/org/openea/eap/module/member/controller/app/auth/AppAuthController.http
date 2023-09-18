@@ -28,6 +28,18 @@ tenant-id: {{appTenentId}}
   "code": 9999
 }
 
+### 请求 /social-login 接口 => 成功
+POST {{appApi}}/member/auth/social-login
+Content-Type: application/json
+tenant-id: {{appTenentId}}
+
+{
+  "type": 34,
+  "code": "0e1oc9000CTjFQ1oim200bhtb61oc90g",
+  "state": "default"
+}
+
+
 ### 请求 /weixin-mini-app-login 接口 => 成功
 POST {{appApi}}/member/auth/weixin-mini-app-login
 Content-Type: application/json

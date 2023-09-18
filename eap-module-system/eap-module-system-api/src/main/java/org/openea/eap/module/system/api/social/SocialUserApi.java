@@ -2,6 +2,7 @@ package org.openea.eap.module.system.api.social;
 
 import org.openea.eap.framework.common.exception.ServiceException;
 import org.openea.eap.module.system.api.social.dto.SocialUserBindReqDTO;
+import org.openea.eap.module.system.api.social.dto.SocialUserRespDTO;
 import org.openea.eap.module.system.api.social.dto.SocialUserUnbindReqDTO;
 import org.openea.eap.module.system.enums.social.SocialTypeEnum;
 
@@ -26,8 +27,9 @@ public interface SocialUserApi {
      * 绑定社交用户
      *
      * @param reqDTO 绑定信息
+     * @return 社交用户 openid
      */
-    void bindSocialUser(@Valid SocialUserBindReqDTO reqDTO);
+    String bindSocialUser(@Valid SocialUserBindReqDTO reqDTO);
 
     /**
      * 取消绑定社交用户
@@ -46,7 +48,10 @@ public interface SocialUserApi {
      * @param code 授权码
      * @param state state
      * @return 绑定用户编号
+     * @return 社交用户
      */
-    Long getBindUserId(Integer userType, Integer type, String code, String state);
+    SocialUserRespDTO getSocialUser(Integer userType, Integer type,
+                                    String code, String state);
+
 
 }

@@ -1,37 +1,38 @@
 package org.openea.eap.module.system.service.sms;
 
+import org.junit.jupiter.api.Test;
 import org.openea.eap.framework.common.enums.CommonStatusEnum;
 import org.openea.eap.framework.common.pojo.PageResult;
+import org.openea.eap.framework.sms.core.client.SmsClient;
 import org.openea.eap.framework.sms.core.client.SmsClientFactory;
+import org.openea.eap.framework.sms.core.property.SmsChannelProperties;
 import org.openea.eap.framework.test.core.ut.BaseDbUnitTest;
 import org.openea.eap.module.system.controller.admin.sms.vo.channel.SmsChannelCreateReqVO;
 import org.openea.eap.module.system.controller.admin.sms.vo.channel.SmsChannelPageReqVO;
 import org.openea.eap.module.system.controller.admin.sms.vo.channel.SmsChannelUpdateReqVO;
+import org.openea.eap.module.system.convert.sms.SmsChannelConvert;
 import org.openea.eap.module.system.dal.dataobject.sms.SmsChannelDO;
 import org.openea.eap.module.system.dal.mysql.sms.SmsChannelMapper;
-import org.openea.eap.module.system.mq.producer.sms.SmsProducer;
-import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 
 import javax.annotation.Resource;
-
 import java.util.List;
 
-import static org.openea.eap.framework.common.util.date.LocalDateTimeUtils.buildBetweenTime;
-import static org.openea.eap.framework.common.util.date.LocalDateTimeUtils.buildTime;
-import static org.openea.eap.framework.common.util.object.ObjectUtils.cloneIgnoreId;
-import static org.openea.eap.framework.test.core.util.AssertUtils.*;
-import static org.openea.eap.framework.test.core.util.RandomUtils.*;
-import static org.openea.eap.module.system.enums.ErrorCodeConstants.SMS_CHANNEL_HAS_CHILDREN;
-import static org.openea.eap.module.system.enums.ErrorCodeConstants.SMS_CHANNEL_NOT_EXISTS;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
+import static org.openea.eap.framework.common.util.date.LocalDateTimeUtils.buildBetweenTime;
+import static org.openea.eap.framework.common.util.date.LocalDateTimeUtils.buildTime;
+import static org.openea.eap.framework.common.util.object.ObjectUtils.cloneIgnoreId;
+import static org.openea.eap.framework.test.core.util.AssertUtils.assertPojoEquals;
+import static org.openea.eap.framework.test.core.util.AssertUtils.assertServiceException;
+import static org.openea.eap.framework.test.core.util.RandomUtils.*;
+import static org.openea.eap.module.system.enums.ErrorCodeConstants.SMS_CHANNEL_HAS_CHILDREN;
+import static org.openea.eap.module.system.enums.ErrorCodeConstants.SMS_CHANNEL_NOT_EXISTS;
 
 @Import(SmsChannelServiceImpl.class)
 public class SmsChannelServiceTest extends BaseDbUnitTest {
-
     @Resource
     private SmsChannelServiceImpl smsChannelService;
 
@@ -42,27 +43,6 @@ public class SmsChannelServiceTest extends BaseDbUnitTest {
     private SmsClientFactory smsClientFactory;
     @MockBean
     private SmsTemplateService smsTemplateService;
-
-    @Test
-    public void testInitLocalCache_success() {
-        // mock 数据
-        SmsChannelDO smsChannelDO01 = randomPojo(SmsChannelDO.class);
-        smsChannelMapper.insert(smsChannelDO01);
-        SmsChannelDO smsChannelDO02 = randomPojo(SmsChannelDO.class);
-        smsChannelMapper.insert(smsChannelDO02);
-
-        // 调用
-        smsChannelService.initLocalCache();
-        // 校验调用
-        verify(smsClientFactory, times(1)).createOrUpdateSmsClient(
-                argThat(properties -> isPojoEquals(smsChannelDO01, properties)));
-        verify(smsClientFactory, times(1)).createOrUpdateSmsClient(
-                argThat(properties -> isPojoEquals(smsChannelDO02, properties)));
-        // 断言 channelCache 缓存
-        assertEquals(2, smsChannelService.getChannelCache().size());
-        assertPojoEquals(smsChannelDO01, smsChannelService.getChannelCache().get(0));
-        assertPojoEquals(smsChannelDO02, smsChannelService.getChannelCache().get(1));
-    }
 
     @Test
     public void testCreateSmsChannel_success() {
@@ -76,6 +56,9 @@ public class SmsChannelServiceTest extends BaseDbUnitTest {
         // 校验记录的属性是否正确
         SmsChannelDO smsChannel = smsChannelMapper.selectById(smsChannelId);
         assertPojoEquals(reqVO, smsChannel);
+        // 断言 cache
+        assertNull(smsChannelService.getIdClientCache().getIfPresent(smsChannel.getId()));
+        assertNull(smsChannelService.getCodeClientCache().getIfPresent(smsChannel.getCode()));
     }
 
     @Test
@@ -95,6 +78,9 @@ public class SmsChannelServiceTest extends BaseDbUnitTest {
         // 校验是否更新正确
         SmsChannelDO smsChannel = smsChannelMapper.selectById(reqVO.getId()); // 获取最新的
         assertPojoEquals(reqVO, smsChannel);
+        // 断言 cache
+        assertNull(smsChannelService.getIdClientCache().getIfPresent(smsChannel.getId()));
+        assertNull(smsChannelService.getCodeClientCache().getIfPresent(smsChannel.getCode()));
     }
 
     @Test
@@ -118,6 +104,9 @@ public class SmsChannelServiceTest extends BaseDbUnitTest {
         smsChannelService.deleteSmsChannel(id);
         // 校验数据不存在了
         assertNull(smsChannelMapper.selectById(id));
+        // 断言 cache
+        assertNull(smsChannelService.getIdClientCache().getIfPresent(dbSmsChannel.getId()));
+        assertNull(smsChannelService.getCodeClientCache().getIfPresent(dbSmsChannel.getCode()));
     }
 
     @Test
@@ -201,4 +190,45 @@ public class SmsChannelServiceTest extends BaseDbUnitTest {
         assertPojoEquals(dbSmsChannel, pageResult.getList().get(0));
     }
 
+    @Test
+    public void testGetSmsClient_id() {
+        // mock 数据
+        SmsChannelDO channel = randomPojo(SmsChannelDO.class);
+        smsChannelMapper.insert(channel);
+        // mock 参数
+        Long id = channel.getId();
+        // mock 方法
+        SmsClient mockClient = mock(SmsClient.class);
+        when(smsClientFactory.getSmsClient(eq(id))).thenReturn(mockClient);
+
+        // 调用
+        SmsClient client = smsChannelService.getSmsClient(id);
+        // 断言
+        assertSame(client, mockClient);
+        verify(smsClientFactory).createOrUpdateSmsClient(argThat(arg -> {
+            SmsChannelProperties properties = SmsChannelConvert.INSTANCE.convert02(channel);
+            return properties.equals(arg);
+        }));
+    }
+
+    @Test
+    public void testGetSmsClient_code() {
+        // mock 数据
+        SmsChannelDO channel = randomPojo(SmsChannelDO.class);
+        smsChannelMapper.insert(channel);
+        // mock 参数
+        String code = channel.getCode();
+        // mock 方法
+        SmsClient mockClient = mock(SmsClient.class);
+        when(smsClientFactory.getSmsClient(eq(code))).thenReturn(mockClient);
+
+        // 调用
+        SmsClient client = smsChannelService.getSmsClient(code);
+        // 断言
+        assertSame(client, mockClient);
+        verify(smsClientFactory).createOrUpdateSmsClient(argThat(arg -> {
+            SmsChannelProperties properties = SmsChannelConvert.INSTANCE.convert02(channel);
+            return properties.equals(arg);
+        }));
+    }
 }

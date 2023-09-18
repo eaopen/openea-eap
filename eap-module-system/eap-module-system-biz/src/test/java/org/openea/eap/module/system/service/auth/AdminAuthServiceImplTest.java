@@ -1,11 +1,16 @@
 package org.openea.eap.module.system.service.auth;
 
 import cn.hutool.core.util.ReflectUtil;
+import com.xingyuv.captcha.model.common.ResponseModel;
+import com.xingyuv.captcha.service.CaptchaService;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.openea.eap.framework.common.enums.CommonStatusEnum;
 import org.openea.eap.framework.common.enums.UserTypeEnum;
 import org.openea.eap.framework.test.core.ut.BaseDbUnitTest;
 import org.openea.eap.module.system.api.sms.SmsCodeApi;
 import org.openea.eap.module.system.api.social.dto.SocialUserBindReqDTO;
+import org.openea.eap.module.system.api.social.dto.SocialUserRespDTO;
 import org.openea.eap.module.system.controller.admin.auth.vo.*;
 import org.openea.eap.module.system.dal.dataobject.oauth2.OAuth2AccessTokenDO;
 import org.openea.eap.module.system.dal.dataobject.user.AdminUserDO;
@@ -18,10 +23,6 @@ import org.openea.eap.module.system.service.member.MemberService;
 import org.openea.eap.module.system.service.oauth2.OAuth2TokenService;
 import org.openea.eap.module.system.service.social.SocialUserService;
 import org.openea.eap.module.system.service.user.AdminUserService;
-import com.xingyuv.captcha.model.common.ResponseModel;
-import com.xingyuv.captcha.service.CaptchaService;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 
@@ -31,15 +32,15 @@ import javax.validation.Validation;
 import javax.validation.Validator;
 
 import static cn.hutool.core.util.RandomUtil.randomEle;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.*;
 import static org.openea.eap.framework.test.core.util.AssertUtils.assertPojoEquals;
 import static org.openea.eap.framework.test.core.util.AssertUtils.assertServiceException;
 import static org.openea.eap.framework.test.core.util.RandomUtils.randomPojo;
 import static org.openea.eap.framework.test.core.util.RandomUtils.randomString;
 import static org.openea.eap.module.system.enums.ErrorCodeConstants.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.*;
 
 @Import(AdminAuthServiceImpl.class)
 public class AdminAuthServiceImplTest extends BaseDbUnitTest {
@@ -235,8 +236,8 @@ public class AdminAuthServiceImplTest extends BaseDbUnitTest {
         AuthSocialLoginReqVO reqVO = randomPojo(AuthSocialLoginReqVO.class);
         // mock 方法（绑定的用户编号）
         Long userId = 1L;
-        when(socialUserService.getBindUserId(eq(UserTypeEnum.ADMIN.getValue()), eq(reqVO.getType()),
-                eq(reqVO.getCode()), eq(reqVO.getState()))).thenReturn(userId);
+        when(socialUserService.getSocialUser(eq(UserTypeEnum.ADMIN.getValue()), eq(reqVO.getType()),
+                eq(reqVO.getCode()), eq(reqVO.getState()))).thenReturn(new SocialUserRespDTO(randomString(), userId));
         // mock（用户）
         AdminUserDO user = randomPojo(AdminUserDO.class, o -> o.setId(userId));
         when(userService.getUser(eq(userId))).thenReturn(user);

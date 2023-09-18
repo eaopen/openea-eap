@@ -1,14 +1,13 @@
 package org.openea.eap.framework.tenant.config;
 
-import cn.hutool.core.annotation.AnnotationUtil;
+import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.inner.TenantLineInnerInterceptor;
 import org.openea.eap.framework.common.enums.WebFilterOrderEnum;
 import org.openea.eap.framework.mybatis.core.util.MyBatisUtils;
-import org.openea.eap.framework.quartz.core.handler.JobHandler;
 import org.openea.eap.framework.redis.config.EapCacheProperties;
 import org.openea.eap.framework.tenant.core.aop.TenantIgnoreAspect;
 import org.openea.eap.framework.tenant.core.db.TenantDatabaseInterceptor;
-import org.openea.eap.framework.tenant.core.job.TenantJob;
-import org.openea.eap.framework.tenant.core.job.TenantJobHandlerDecorator;
+import org.openea.eap.framework.tenant.core.job.TenantJobAspect;
 import org.openea.eap.framework.tenant.core.mq.TenantRedisMessageInterceptor;
 import org.openea.eap.framework.tenant.core.redis.TenantRedisCacheManager;
 import org.openea.eap.framework.tenant.core.security.TenantSecurityWebFilter;
@@ -18,10 +17,6 @@ import org.openea.eap.framework.tenant.core.web.TenantContextWebFilter;
 import org.openea.eap.framework.web.config.WebProperties;
 import org.openea.eap.framework.web.core.handler.GlobalExceptionHandler;
 import org.openea.eap.module.system.api.tenant.TenantApi;
-import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
-import com.baomidou.mybatisplus.extension.plugins.inner.TenantLineInnerInterceptor;
-import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -99,26 +94,8 @@ public class EapTenantAutoConfiguration {
 
     // ========== Job ==========
 
-    @Bean
-    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
-    public BeanPostProcessor jobHandlerBeanPostProcessor(TenantFrameworkService tenantFrameworkService) {
-        return new BeanPostProcessor() {
-
-            @Override
-            public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
-                if (!(bean instanceof JobHandler)) {
-                    return bean;
-                }
-                // 有 TenantJob 注解的情况下，才会进行处理
-                if (!AnnotationUtil.hasAnnotation(bean.getClass(), TenantJob.class)) {
-                    return bean;
-                }
-
-                // 使用 TenantJobHandlerDecorator 装饰
-                return new TenantJobHandlerDecorator(tenantFrameworkService, (JobHandler) bean);
-            }
-
-        };
+    public TenantJobAspect tenantJobAspect(TenantFrameworkService tenantFrameworkService) {
+        return new TenantJobAspect(tenantFrameworkService);
     }
 
     // ========== Redis ==========

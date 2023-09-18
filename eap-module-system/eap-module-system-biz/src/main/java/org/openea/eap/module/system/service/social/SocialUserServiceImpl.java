@@ -2,24 +2,24 @@ package org.openea.eap.module.system.service.social;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.lang.Assert;
-import lombok.extern.slf4j.Slf4j;
-import org.openea.eap.framework.common.util.http.HttpUtils;
-import org.openea.eap.framework.social.core.EapAuthRequestFactory;
-import org.openea.eap.module.system.api.social.dto.SocialUserBindReqDTO;
-import org.openea.eap.module.system.dal.dataobject.social.SocialUserBindDO;
-import org.openea.eap.module.system.dal.dataobject.social.SocialUserDO;
-import org.openea.eap.module.system.dal.mysql.social.SocialUserBindMapper;
-import org.openea.eap.module.system.dal.mysql.social.SocialUserMapper;
-import org.openea.eap.module.system.enums.social.SocialTypeEnum;
 import com.xingyuv.jushauth.model.AuthCallback;
 import com.xingyuv.jushauth.model.AuthResponse;
 import com.xingyuv.jushauth.model.AuthUser;
 import com.xingyuv.jushauth.request.AuthRequest;
 import com.xingyuv.jushauth.utils.AuthStateUtils;
+import lombok.extern.slf4j.Slf4j;
+import org.openea.eap.framework.common.util.http.HttpUtils;
+import org.openea.eap.framework.social.core.EapAuthRequestFactory;
+import org.openea.eap.module.system.api.social.dto.SocialUserBindReqDTO;
+import org.openea.eap.module.system.api.social.dto.SocialUserRespDTO;
+import org.openea.eap.module.system.dal.dataobject.social.SocialUserBindDO;
+import org.openea.eap.module.system.dal.dataobject.social.SocialUserDO;
+import org.openea.eap.module.system.dal.mysql.social.SocialUserBindMapper;
+import org.openea.eap.module.system.dal.mysql.social.SocialUserMapper;
+import org.openea.eap.module.system.enums.social.SocialTypeEnum;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
-
 
 import javax.annotation.Resource;
 import java.util.Collections;
@@ -98,7 +98,7 @@ public class SocialUserServiceImpl implements SocialUserService {
 
     @Override
     @Transactional
-    public void bindSocialUser(SocialUserBindReqDTO reqDTO) {
+    public String bindSocialUser(SocialUserBindReqDTO reqDTO) {
         // 获得社交用户
         SocialUserDO socialUser = authSocialUser(reqDTO.getType(), reqDTO.getCode(), reqDTO.getState());
         Assert.notNull(socialUser, "社交用户不能为空");
@@ -115,6 +115,7 @@ public class SocialUserServiceImpl implements SocialUserService {
                 .userId(reqDTO.getUserId()).userType(reqDTO.getUserType())
                 .socialUserId(socialUser.getId()).socialType(socialUser.getType()).build();
         socialUserBindMapper.insert(socialUserBind);
+        return socialUser.getOpenid();
     }
 
     @Override
@@ -130,7 +131,7 @@ public class SocialUserServiceImpl implements SocialUserService {
     }
 
     @Override
-    public Long getBindUserId(Integer userType, Integer type, String code, String state) {
+    public SocialUserRespDTO getSocialUser(Integer userType, Integer type, String code, String state) {
         // 获得社交用户
         SocialUserDO socialUser = authSocialUser(type, code, state);
         Assert.notNull(socialUser, "社交用户不能为空");
@@ -141,7 +142,7 @@ public class SocialUserServiceImpl implements SocialUserService {
         if (socialUserBind == null) {
             throw exception(AUTH_THIRD_LOGIN_NOT_BIND);
         }
-        return socialUserBind.getUserId();
+        return new SocialUserRespDTO(socialUser.getOpenid(), socialUserBind.getUserId());
     }
 
     /**
@@ -163,5 +164,4 @@ public class SocialUserServiceImpl implements SocialUserService {
         }
         return (AuthUser) authResponse.getData();
     }
-
 }

@@ -6,17 +6,18 @@ import com.xingyuv.jushauth.model.AuthResponse;
 import com.xingyuv.jushauth.model.AuthUser;
 import com.xingyuv.jushauth.request.AuthRequest;
 import com.xingyuv.jushauth.utils.AuthStateUtils;
+import org.junit.jupiter.api.Test;
+import org.mockito.MockedStatic;
 import org.openea.eap.framework.common.enums.UserTypeEnum;
 import org.openea.eap.framework.social.core.EapAuthRequestFactory;
 import org.openea.eap.framework.test.core.ut.BaseDbAndRedisUnitTest;
 import org.openea.eap.module.system.api.social.dto.SocialUserBindReqDTO;
+import org.openea.eap.module.system.api.social.dto.SocialUserRespDTO;
 import org.openea.eap.module.system.dal.dataobject.social.SocialUserBindDO;
 import org.openea.eap.module.system.dal.dataobject.social.SocialUserDO;
 import org.openea.eap.module.system.dal.mysql.social.SocialUserBindMapper;
 import org.openea.eap.module.system.dal.mysql.social.SocialUserMapper;
 import org.openea.eap.module.system.enums.social.SocialTypeEnum;
-import org.junit.jupiter.api.Test;
-import org.mockito.MockedStatic;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 
@@ -25,14 +26,15 @@ import java.util.List;
 
 import static cn.hutool.core.util.RandomUtil.randomLong;
 import static cn.hutool.core.util.RandomUtil.randomString;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.*;
 import static org.openea.eap.framework.common.util.json.JsonUtils.toJsonString;
 import static org.openea.eap.framework.test.core.util.AssertUtils.assertPojoEquals;
 import static org.openea.eap.framework.test.core.util.AssertUtils.assertServiceException;
 import static org.openea.eap.framework.test.core.util.RandomUtils.randomPojo;
 import static org.openea.eap.module.system.enums.ErrorCodeConstants.SOCIAL_USER_AUTH_FAILURE;
 import static org.openea.eap.module.system.enums.ErrorCodeConstants.SOCIAL_USER_NOT_FOUND;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
 
 @Import(SocialUserServiceImpl.class)
 public class SocialUserServiceImplTest extends BaseDbAndRedisUnitTest {
@@ -195,10 +197,11 @@ public class SocialUserServiceImplTest extends BaseDbAndRedisUnitTest {
                 .setSocialType(SocialTypeEnum.GITEE.getType()).setSocialUserId(socialUser.getId()));
 
         // 调用
-        socialUserService.bindSocialUser(reqDTO);
+        String openid = socialUserService.bindSocialUser(reqDTO);
         // 断言
         List<SocialUserBindDO> socialUserBinds = socialUserBindMapper.selectList();
         assertEquals(1, socialUserBinds.size());
+        assertEquals(socialUser.getOpenid(), openid);
     }
 
     @Test
@@ -232,25 +235,26 @@ public class SocialUserServiceImplTest extends BaseDbAndRedisUnitTest {
     }
 
     @Test
-    public void testGetBindUserId() {
+    public void testGetSocialUser() {
         // 准备参数
         Integer userType = UserTypeEnum.ADMIN.getValue();
         Integer type = SocialTypeEnum.GITEE.getType();
         String code = "tudou";
         String state = "yuanma";
         // mock 社交用户
-        SocialUserDO socialUser = randomPojo(SocialUserDO.class).setType(type).setCode(code).setState(state);
-        socialUserMapper.insert(socialUser);
+        SocialUserDO socialUserDO = randomPojo(SocialUserDO.class).setType(type).setCode(code).setState(state);
+        socialUserMapper.insert(socialUserDO);
         // mock 社交用户的绑定
         Long userId = randomLong();
         SocialUserBindDO socialUserBind = randomPojo(SocialUserBindDO.class).setUserType(userType).setUserId(userId)
-                .setSocialType(type).setSocialUserId(socialUser.getId());
+                .setSocialType(type).setSocialUserId(socialUserDO.getId());
         socialUserBindMapper.insert(socialUserBind);
 
         // 调用
-        Long result = socialUserService.getBindUserId(userType, type, code, state);
+        SocialUserRespDTO socialUser = socialUserService.getSocialUser(userType, type, code, state);
         // 断言
-        assertEquals(userId, result);
+        assertEquals(userId, socialUser.getUserId());
+        assertEquals(socialUserDO.getOpenid(), socialUser.getOpenid());
     }
 
 }

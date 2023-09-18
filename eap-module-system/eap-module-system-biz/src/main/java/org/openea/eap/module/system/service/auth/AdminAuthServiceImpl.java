@@ -1,6 +1,11 @@
 package org.openea.eap.module.system.service.auth;
 
 import cn.hutool.core.util.ObjectUtil;
+import com.google.common.annotations.VisibleForTesting;
+import com.xingyuv.captcha.model.common.ResponseModel;
+import com.xingyuv.captcha.model.vo.CaptchaVO;
+import com.xingyuv.captcha.service.CaptchaService;
+import lombok.extern.slf4j.Slf4j;
 import org.openea.eap.framework.common.enums.CommonStatusEnum;
 import org.openea.eap.framework.common.enums.UserTypeEnum;
 import org.openea.eap.framework.common.util.monitor.TracerUtils;
@@ -9,6 +14,7 @@ import org.openea.eap.framework.common.util.validation.ValidationUtils;
 import org.openea.eap.module.system.api.logger.dto.LoginLogCreateReqDTO;
 import org.openea.eap.module.system.api.sms.SmsCodeApi;
 import org.openea.eap.module.system.api.social.dto.SocialUserBindReqDTO;
+import org.openea.eap.module.system.api.social.dto.SocialUserRespDTO;
 import org.openea.eap.module.system.controller.admin.auth.vo.*;
 import org.openea.eap.module.system.convert.auth.AuthConvert;
 import org.openea.eap.module.system.dal.dataobject.oauth2.OAuth2AccessTokenDO;
@@ -22,19 +28,10 @@ import org.openea.eap.module.system.service.member.MemberService;
 import org.openea.eap.module.system.service.oauth2.OAuth2TokenService;
 import org.openea.eap.module.system.service.social.SocialUserService;
 import org.openea.eap.module.system.service.user.AdminUserService;
-import com.xingyuv.captcha.model.common.ResponseModel;
-import com.xingyuv.captcha.model.vo.CaptchaVO;
-import com.xingyuv.captcha.service.CaptchaService;
-import com.google.common.annotations.VisibleForTesting;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 import javax.validation.Validator;
 import java.util.Objects;
 
@@ -163,14 +160,14 @@ public class AdminAuthServiceImpl implements AdminAuthService {
     @Override
     public AuthLoginRespVO socialLogin(AuthSocialLoginReqVO reqVO) {
         // 使用 code 授权码，进行登录。然后，获得到绑定的用户编号
-        Long userId = socialUserService.getBindUserId(UserTypeEnum.ADMIN.getValue(), reqVO.getType(),
+        SocialUserRespDTO socialUser = socialUserService.getSocialUser(UserTypeEnum.ADMIN.getValue(), reqVO.getType(),
                 reqVO.getCode(), reqVO.getState());
-        if (userId == null) {
+        if (socialUser == null) {
             throw exception(AUTH_THIRD_LOGIN_NOT_BIND);
         }
 
         // 获得用户
-        AdminUserDO user = userService.getUser(userId);
+        AdminUserDO user = userService.getUser(socialUser.getUserId());
         if (user == null) {
             throw exception(USER_NOT_EXISTS);
         }
