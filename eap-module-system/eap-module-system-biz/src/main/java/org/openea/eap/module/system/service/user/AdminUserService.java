@@ -1,6 +1,7 @@
 package org.openea.eap.module.system.service.user;
 
 import cn.hutool.core.collection.CollUtil;
+import org.openea.eap.extj.base.Pagination;
 import org.openea.eap.framework.common.util.collection.CollectionUtils;
 import org.openea.eap.module.system.controller.admin.user.vo.profile.UserProfileUpdatePasswordReqVO;
 import org.openea.eap.module.system.controller.admin.user.vo.profile.UserProfileUpdateReqVO;
@@ -144,6 +145,13 @@ public interface AdminUserService {
      */
     List<AdminUserDO> getUserList(Collection<Long> ids);
 
+    /**
+     * 分页获取用户列表
+     * @param pagination
+     * @param filterCurrentUser
+     * @return
+     */
+    PageResult<AdminUserDO> getUserList(Pagination pagination, Boolean filterCurrentUser);
     /**
      * 校验用户们是否有效。如下情况，视为无效：
      * 1. 用户编号不存在

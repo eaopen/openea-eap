@@ -9,10 +9,7 @@ import org.openea.eap.extj.permission.model.organize.OrganizeConditionModel;
 import org.openea.eap.extj.permission.service.OrganizeService;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Function;
 
 @Service
@@ -428,7 +425,7 @@ public class EapOrganizeService implements OrganizeService {
      */
     @Override
     public List<OrganizeEntity> getList() {
-        return null;
+        return Collections.emptyList();
     }
 
     /**

@@ -1,6 +1,9 @@
 package org.openea.eap.module.system.dal.mysql.user;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.xingyuv.http.util.StringUtil;
+import org.openea.eap.extj.base.Pagination;
+import org.openea.eap.framework.common.pojo.PageParam;
 import org.openea.eap.framework.common.pojo.PageResult;
 import org.openea.eap.framework.mybatis.core.mapper.BaseMapperX;
 import org.openea.eap.framework.mybatis.core.query.LambdaQueryWrapperX;
@@ -11,6 +14,8 @@ import org.apache.ibatis.annotations.Mapper;
 
 import java.util.Collection;
 import java.util.List;
+
+import static org.openea.eap.framework.security.core.util.SecurityFrameworkUtils.getLoginUserId;
 
 @Mapper
 public interface AdminUserMapper extends BaseMapperX<AdminUserDO> {
@@ -67,6 +72,26 @@ public interface AdminUserMapper extends BaseMapperX<AdminUserDO> {
 
     default List<AdminUserDO> selectListByDeptIds(Collection<Long> deptIds) {
         return selectList(AdminUserDO::getDeptId, deptIds);
+    }
+
+    default PageResult<AdminUserDO> selectListByPage(Pagination pagination, Boolean filterCurrentUser) {
+        PageParam pageParam=new PageParam();
+        pageParam.setPageNo((int)pagination.getCurrentPage());
+        pageParam.setPageSize((int)pagination.getPageSize());
+        LambdaQueryWrapperX<AdminUserDO> queryWrapper = new LambdaQueryWrapperX<>();
+        if (filterCurrentUser) {
+            String userId = String.valueOf(getLoginUserId());
+            queryWrapper.ne(AdminUserDO::getId, userId);
+        }
+            return selectPage(pageParam, new LambdaQueryWrapperX<AdminUserDO>()
+                    .orderByDesc(AdminUserDO::getId)
+                    .and(
+                            t -> t.like(AdminUserDO::getUsername, pagination.getKeyword())
+                                    .or().like(AdminUserDO::getMobile, pagination.getKeyword())
+                                    .or().like(AdminUserDO::getStatus, pagination.getKeyword())
+                                    .or().like(AdminUserDO::getNickname, pagination.getKeyword())
+                    ));
+
     }
 
 }

@@ -10,6 +10,7 @@ import org.openea.eap.extj.permission.service.UserRelationService;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -29,7 +30,7 @@ public class EapUserRelationService implements UserRelationService {
      */
     @Override
     public List<UserRelationEntity> getListByUserId(String userId) {
-        return null;
+        return Collections.emptyList();
     }
 
     @Override

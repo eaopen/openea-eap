@@ -14,6 +14,7 @@ import org.openea.eap.extj.permission.model.user.vo.UserByRoleVO;
 import org.openea.eap.extj.permission.model.user.vo.UserExportVO;
 import org.openea.eap.extj.permission.model.user.vo.UserImportVO;
 import org.openea.eap.extj.permission.service.UserService;
+import org.openea.eap.framework.common.pojo.PageResult;
 import org.openea.eap.module.system.dal.dataobject.user.AdminUserDO;
 import org.openea.eap.module.system.service.user.AdminUserService;
 import org.springframework.stereotype.Service;
@@ -31,6 +32,7 @@ public class EapUserService implements UserService {
 
     @Resource
     private AdminUserService adminUserService;
+    private PageResult<AdminUserDO> userList;
 
     private UserEntity covertUser(AdminUserDO adminUser){
         UserEntity user = new UserEntity();
@@ -436,7 +438,13 @@ public class EapUserService implements UserService {
      */
     @Override
     public List<UserEntity> getList(Pagination pagination, Boolean filterCurrentUser) {
-        return null;
+        PageResult<AdminUserDO> userList = adminUserService.getUserList(pagination, filterCurrentUser);
+        List<AdminUserDO> list = userList.getList();
+        List<UserEntity> userEntityList=new ArrayList<>();
+        for (AdminUserDO adminUserDO : list) {
+            userEntityList.add(covertUser(adminUserDO));
+        }
+        return userEntityList;
     }
 
     /**

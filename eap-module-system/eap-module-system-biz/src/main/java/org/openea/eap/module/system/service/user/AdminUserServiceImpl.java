@@ -4,6 +4,7 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.util.StrUtil;
+import org.openea.eap.extj.base.Pagination;
 import org.openea.eap.framework.common.enums.CommonStatusEnum;
 import org.openea.eap.framework.common.exception.ServiceException;
 import org.openea.eap.framework.common.pojo.PageResult;
@@ -250,6 +251,10 @@ public class AdminUserServiceImpl implements AdminUserService {
             return Collections.emptyList();
         }
         return userMapper.selectBatchIds(ids);
+    }
+    @Override
+    public PageResult<AdminUserDO> getUserList(Pagination pagination, Boolean filterCurrentUser) {
+        return userMapper.selectListByPage(pagination,filterCurrentUser);
     }
 
     @Override
