@@ -425,7 +425,7 @@ logging:
 
 
 --- #################### extj相关配置 ####################
-
+## todo , will remove extj config
 config:
   # ===============静态资源目录映射==================
   WebAnnexFilePath: WebAnnexFile
@@ -466,7 +466,7 @@ config:
   #===================== 系统及错误报告反馈相关 =====================
   SoftName: java-boot #项目名
   SoftFullName: 快速开发平台 #项目全名
-  SoftVersion: v3.4.7 #版本号
+  SoftVersion: v3.4.0 #版本号
 
   RecordLog: false #系统日志启用
   ErrorReport: false #软件错误报告
@@ -474,7 +474,7 @@ config:
   IgexinEnabled: false #推送启动
 
   #===================== APP =====================
-  AppVersion: V3.4.7 #APP版本号
+  AppVersion: V3.4.0 #APP版本号
   IgexinAppid: 11HLFY9T2d1z7MySY8hwGwh4 #APPID：应用的唯一标识
   IgexinAppkey: 116Uiduugq648YDChhCjAt59 #APPKEY：公匙（相当于账号）
   IgexinMastersecret: 11pEyQm156SJ9iS7PbyjLCZ6 #Mastersecret：私匙（相当于密码）

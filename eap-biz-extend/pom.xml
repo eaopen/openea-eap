@@ -15,7 +15,7 @@
 
     <modules>
         <!-- example -->
-        <module>eap-example</module>
+<!--        <module>eap-example</module>-->
 
         <!-- business extend -->
 <!--        <module>eap-biz-cms</module>-->
