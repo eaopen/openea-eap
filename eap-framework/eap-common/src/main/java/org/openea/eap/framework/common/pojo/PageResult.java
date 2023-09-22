@@ -26,6 +26,13 @@ public final class PageResult<T> implements Serializable {
     public PageResult(List<T> list, Long total) {
         this.list = list;
         this.total = total;
+        // 针对返回全部数据进行优化
+        if(this.pagination!=null){
+            this.pagination.total = this.total;
+            if(this.list!=null && this.list.size()>this.pagination.pageSize){
+                this.pagination.pageSize = (list.size()+1)%10*10;
+            }
+        }
     }
 
     public PageResult(List<T> list, PaginationVO pagination){
