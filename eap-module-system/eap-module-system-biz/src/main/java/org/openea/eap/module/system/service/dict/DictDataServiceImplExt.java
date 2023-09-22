@@ -214,7 +214,9 @@ public class DictDataServiceImplExt extends DictDataServiceImpl implements DictD
             for(String field2: mappingFields){
                 if(jsonItem.containsKey(field2)){
                     fieldValue = jsonItem.getString(field2);
-                    jsonItem.remove(field2);
+                    if(!dictDataIndexField.equals(field2)){
+                        jsonItem.remove(field2);
+                    }
                     if(ObjectUtil.isNotEmpty(fieldValue)){
                         break;
                     }
