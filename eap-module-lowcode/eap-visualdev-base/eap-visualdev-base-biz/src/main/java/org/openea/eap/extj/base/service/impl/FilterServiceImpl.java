@@ -97,7 +97,7 @@ public class FilterServiceImpl extends SuperServiceImpl<FilterMapper, FilterEnti
 
             entity.setConfigApp(ruleListApp);
         }
-        if(pc==1 && StringUtils.isNotBlank(ruleList)){
+        if(pc==1 && StringUtils.isNotBlank(ruleList) && !ruleList.equals("[]")){
             for(String key : tableMap.keySet()){
                 ruleList = ruleList.replaceAll(key,tableMap.get(key));
             }
