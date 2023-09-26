@@ -67,9 +67,14 @@ public class ObpmOrgSyncService implements InitializingBean {
 //        }
         log.info("sync obpm start ");
         int count = 0;
-        count += syncOrg(lastSyncTime);
-        count += syncRole(lastSyncTime);
-        count += syncUser(lastSyncTime);
+        try{
+            count += syncOrg(lastSyncTime);
+            count += syncRole(lastSyncTime);
+            count += syncUser(lastSyncTime);
+        }catch (Throwable t){
+            log.warn("syncObpm fail", t);
+        }
+
         log.info("sync obpm end, add/update total count="+count);
         return count;
     }
