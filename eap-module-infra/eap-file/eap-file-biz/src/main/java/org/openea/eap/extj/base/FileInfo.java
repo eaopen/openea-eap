@@ -2,19 +2,18 @@ package org.openea.eap.extj.base;
 
 import cn.hutool.core.lang.Dict;
 import lombok.Data;
-
-import java.util.Date;
+import org.openea.eap.module.infra.dal.dataobject.file.FileDO;
 
 @Data
-public class FileInfo {
+public class FileInfo extends FileDO {
 
-    private String id;
+//    private String id;
     private String url;
-    private Long size;
-    private String filename;
+//    private Long size;
+    private String filename;  //name
     private String originalFilename;
     private String basePath;
-    private String path;
+//    private String path;
     private String ext;
     private String contentType;
     private String platform;
@@ -25,5 +24,5 @@ public class FileInfo {
     private String objectId;
     private String objectType;
     private Dict attr;
-    private Date createTime;
+//    private Date createTime;
 }

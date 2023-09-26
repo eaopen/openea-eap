@@ -15,9 +15,10 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.nio.charset.Charset;
-import java.util.*;
-
-import static org.openea.eap.framework.common.util.collection.CollectionUtils.convertSet;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 @ConditionalOnProperty(prefix = "eap", name = "enableOpenBpm", havingValue = "true")
@@ -167,7 +168,7 @@ public class ObpmPermissionServiceImpl extends PermissionServiceImpl implements 
                         +path.substring(path.indexOf("formCustSqlView.html?")+20);
             }
             // 2.3 form
-            // /form/formDef/vueFormDefPreview.html?key=xxx
+            // /form/formDef/vueFormDefPreview.html?key=xxx&&id=xxx
             if(resUrl.indexOf("form/formDef/vueFormDefPreview.html")>=0){
                 component = "obpm/easyForm";
                 String key = getParamValueFromPath(path, "key");
@@ -203,6 +204,16 @@ public class ObpmPermissionServiceImpl extends PermissionServiceImpl implements 
                 path = "obpm/taskStart/"+id
                         +path.substring(path.indexOf("start.html?")+10);
             }
+
+
+            // 2.6 http/https
+            // _blank:http://  _blank新tab或新窗口？
+
+            // 2.7 javascript
+            // javascript:scope.exportData(scope);
+
+            // path中参数${}由前端处理
+            // /brand/submitTasks/${ids}
 
 
             //2.6

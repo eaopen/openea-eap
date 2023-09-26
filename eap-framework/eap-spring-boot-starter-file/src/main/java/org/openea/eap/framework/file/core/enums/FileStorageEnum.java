@@ -15,6 +15,8 @@ import org.openea.eap.framework.file.core.client.sftp.SftpFileClient;
 import org.openea.eap.framework.file.core.client.sftp.SftpFileClientConfig;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.openea.eap.framework.file.core.client.webdav.WebDavFileClient;
+import org.openea.eap.framework.file.core.client.webdav.WebDavFileClientConfig;
 
 /**
  * 文件存储器枚举
@@ -29,6 +31,7 @@ public enum FileStorageEnum {
     LOCAL(10, LocalFileClientConfig.class, LocalFileClient.class),
     FTP(11, FtpFileClientConfig.class, FtpFileClient.class),
     SFTP(12, SftpFileClientConfig.class, SftpFileClient.class),
+    WebDav(16, WebDavFileClientConfig.class, WebDavFileClient.class),
 
     S3(20, S3FileClientConfig.class, S3FileClient.class),
     ;

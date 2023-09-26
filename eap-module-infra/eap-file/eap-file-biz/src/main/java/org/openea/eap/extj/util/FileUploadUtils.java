@@ -23,7 +23,7 @@ public class FileUploadUtils {
      */
     public static FileInfo uploadFile(byte[] bytes, String path, String fileName) {
         FileInfo fileInfo=new FileInfo();
-        fileInfo.setId(RandomUtil.uuId());
+        //fileInfo.setId(RandomUtil.uuId());
         fileInfo.setPath(path);
         fileInfo.setFilename(fileName);
         // todo 上传文件
