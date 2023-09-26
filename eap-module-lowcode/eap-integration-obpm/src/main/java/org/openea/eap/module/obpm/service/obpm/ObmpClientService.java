@@ -101,6 +101,9 @@ public class ObmpClientService {
         List<JSONObject> userList = null;
         Map<String, Object> params = new HashMap<>();
         params.put("lastSyncTime", lastSyncTime);
+        String userKey = "admin";
+        params.put("user", userKey);
+        params.put("sign", eapSign(userKey));
         String result = HttpUtil.get(obpmClientBaseUrl+"/eap/userList", params, 60000);
         JSONObject resultObj = JSONUtil.parseObj(result);
         if(resultObj.getBool("isOk")){
