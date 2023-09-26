@@ -47,8 +47,6 @@ public class ObpmOrgSyncService implements InitializingBean {
     @Resource
     private ObpmUserServiceImpl obpmUserService;
 
-    @Resource
-    private ObmpClientService obmpClientService;
 
     @Override
     public void afterPropertiesSet() throws Exception {
@@ -156,6 +154,15 @@ public class ObpmOrgSyncService implements InitializingBean {
     }
 
     private List<JSONObject> getObpmUsers(Date lastSyncTime){
+        ObmpClientService obmpClientService = EapAppUtil.getBean(ObmpClientService.class);
+        if(obmpClientService==null){
+            log.warn("queryObpmListData fail: obmpClientService is null");
+            return null;
+        }
+        JdbcTemplate obpmJdbcTemplate = obmpClientService.getObpmJdbcTemplate();
+        if(obpmJdbcTemplate!=null){
+            return getObpmUsers2(lastSyncTime);
+        }
         return obmpClientService.queryUserList(lastSyncTime);
     }
 
