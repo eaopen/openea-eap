@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import javax.sql.DataSource;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,7 +25,7 @@ public class ObmpClientService {
     @Value("${eap.obpm.apiBaseUrl:/obpm-server}")
     private String obpmClientBaseUrl;
 
-    private int timeoutMillSecs = 5000; //milliseconds
+    private int timeoutMillSecs = 10000; //milliseconds
 
     @Resource
     private DataSource dataSource;
@@ -94,6 +95,21 @@ public class ObmpClientService {
             throw new RuntimeException(resultObj.getStr("msg"));
         }
         return userInfo;
+    }
+
+    public List<JSONObject> queryUserList(Date lastSyncTime){
+        List<JSONObject> userList = null;
+        Map<String, Object> params = new HashMap<>();
+        params.put("lastSyncTime", lastSyncTime);
+        String result = HttpUtil.get(obpmClientBaseUrl+"/eap/userList", params, 60000);
+        JSONObject resultObj = JSONUtil.parseObj(result);
+        if(resultObj.getBool("isOk")){
+            userList = resultObj.getBeanList("data", JSONObject.class);
+        }else{
+            //jsonResult.put("msg", resultObj.getString("msg"));
+            throw new RuntimeException(resultObj.getStr("msg"));
+        }
+        return userList;
     }
 
     public List<JSONObject> queryUserMenu(String userKey, String systemKey, boolean withButton){

@@ -47,6 +47,9 @@ public class ObpmOrgSyncService implements InitializingBean {
     @Resource
     private ObpmUserServiceImpl obpmUserService;
 
+    @Resource
+    private ObmpClientService obmpClientService;
+
     @Override
     public void afterPropertiesSet() throws Exception {
         syncObpmAll();
@@ -147,8 +150,11 @@ public class ObpmOrgSyncService implements InitializingBean {
         return count;
     }
 
-
     private List<JSONObject> getObpmUsers(Date lastSyncTime){
+        return obmpClientService.queryUserList(lastSyncTime);
+    }
+
+    private List<JSONObject> getObpmUsers2(Date lastSyncTime){
         String queryUserSql = "select id_ as id, account_ as username, fullname_ as fullname, password_ as password" +
                 ", email_ as email, mobile_ as mobile, sex_ as sex" +
                 ", status_ as status" +
