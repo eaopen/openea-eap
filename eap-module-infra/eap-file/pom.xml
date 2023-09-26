@@ -13,8 +13,12 @@
     <packaging>pom</packaging>
 
     <modules>
+        <!-- 文件管理 -->
         <module>eap-file-biz</module>
+        <!-- 文件预览 -->
 <!--        <module>eap-file-view</module>-->
+        <!-- 文档处理 -->
+        <module>eap-doc-proc</module>
     </modules>
 
 
