@@ -99,18 +99,23 @@ public class ObmpClientService {
 
     public List<JSONObject> queryUserList(Date lastSyncTime){
         List<JSONObject> userList = null;
-        Map<String, Object> params = new HashMap<>();
-        params.put("lastSyncTime", lastSyncTime);
-        String userKey = "admin";
-        params.put("user", userKey);
-        params.put("sign", eapSign(userKey));
-        String result = HttpUtil.get(obpmClientBaseUrl+"/eap/userList", params, 60000);
-        JSONObject resultObj = JSONUtil.parseObj(result);
-        if(resultObj.getBool("isOk")){
-            userList = resultObj.getBeanList("data", JSONObject.class);
-        }else{
-            //jsonResult.put("msg", resultObj.getString("msg"));
-            throw new RuntimeException(resultObj.getStr("msg"));
+        String result = null;
+        try{
+            Map<String, Object> params = new HashMap<>();
+            params.put("lastSyncTime", lastSyncTime);
+            String userKey = "admin";
+            params.put("user", userKey);
+            params.put("sign", eapSign(userKey));
+            result = HttpUtil.get(obpmClientBaseUrl+"/eap/userList", params, 60000);
+            JSONObject resultObj = JSONUtil.parseObj(result);
+            if(resultObj.getBool("isOk")){
+                userList = resultObj.getBeanList("data", JSONObject.class);
+            }else{
+                //jsonResult.put("msg", resultObj.getString("msg"));
+                throw new RuntimeException(resultObj.getStr("msg"));
+            }
+        }catch (Throwable t){
+            log.warn("queryUserList fail:"+t.getMessage()+" , result="+result);
         }
         return userList;
     }
@@ -120,12 +125,13 @@ public class ObmpClientService {
         // get/post /eap/userMenu
         // user=[userKey]  system=[systemKey] withButton=[withButton]
         JSONObject resultObj = null;
+        String result = null;
         try{
             Map<String, Object> params = new HashMap<>();
             params.put("user", userKey);
             params.put("system", systemKey);
             params.put("sign", eapSign(userKey));
-            String result = HttpUtil.get(obpmClientBaseUrl+"/eap/userMenu", params, timeoutMillSecs);
+            result = HttpUtil.get(obpmClientBaseUrl+"/eap/userMenu", params, timeoutMillSecs);
             resultObj = JSONUtil.parseObj(result);
             if(resultObj!=null && resultObj.getBool("isOk")){
                 JSONObject resultData = resultObj.getJSONObject("data");
@@ -135,7 +141,7 @@ public class ObmpClientService {
             }
         }catch (Exception e){
             //throw new ServiceException(1, e.getMessage());
-            log.warn("queryUserMenu(user="+userKey+") fail: "+e.getMessage());
+            log.warn("queryUserMenu(user="+userKey+") fail: "+e.getMessage()+", result="+result);
         }
         if(resultObj!=null && resultObj.containsKey("msg")){
             //throw new ServiceException(1, resultObj.getString("msg"));
