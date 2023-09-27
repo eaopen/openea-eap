@@ -24,5 +24,8 @@ public class DocumentTemplate  extends BaseDO {
      */
     private Long id;
 
+    // 分类
+
+    // 模版间关系，文档处理中多个模板
 
 }
