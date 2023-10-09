@@ -1022,7 +1022,7 @@
                         <groupId>commons-io</groupId>
                     </exclusion>
                 </exclusions>
-                <version>1.7.3</version>
+                <version>1.7.4</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
