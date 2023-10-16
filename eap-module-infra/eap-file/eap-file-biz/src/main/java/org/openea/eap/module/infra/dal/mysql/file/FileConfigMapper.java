@@ -21,9 +21,6 @@ public interface FileConfigMapper extends BaseMapperX<FileConfigDO> {
                 .orderByDesc(FileConfigDO::getId));
     }
 
-//    @Select("SELECT COUNT(*) FROM infra_file_config WHERE update_time > #{maxUpdateTime}")
-//    Long selectCountByUpdateTimeGt(LocalDateTime maxUpdateTime);
-
     default FileConfigDO selectByMaster(){
         return selectOne(FileConfigDO::getMaster, true);
     }

@@ -23,6 +23,8 @@ public interface FileClient {
      */
     String upload(byte[] content, String path, String type) throws  Exception;
 
+    //String upload(InputStream stream, String path, String type) throws  Exception;
+
     /**
      * 删除文件
      *

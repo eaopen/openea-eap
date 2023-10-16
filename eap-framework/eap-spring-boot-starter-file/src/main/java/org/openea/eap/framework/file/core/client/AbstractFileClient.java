@@ -65,4 +65,13 @@ public abstract class AbstractFileClient<Config extends FileClientConfig> implem
         return StrUtil.format("{}/admin-api/infra/file/{}/get/{}", domain, getId(), path);
     }
 
+
+//    public String upload(byte[] content, String path, String type) throws Exception {
+//        return upload(new ByteArrayInputStream(content), path, type);
+//    }
+
+//    public String upload(InputStream stream, String path, String type) throws  Exception{
+//        throw new UnsupportedOperationException("upload with stream");
+//    }
+
 }
