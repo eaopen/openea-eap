@@ -6,7 +6,7 @@
 
     <!-- 由于方便大家拷贝，使用不使用 eap 作为 Maven parent -->
 
-    <groupId>org.openea.eap</groupId>
+    <groupId>io.github.eaopen</groupId>
     <artifactId>eap-sso-demo-by-password</artifactId>
     <version>1.0.0-snapshot</version>
     <packaging>jar</packaging>

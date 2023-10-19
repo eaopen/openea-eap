@@ -11,7 +11,7 @@
 
     <artifactId>eoa-server</artifactId>
     <packaging>jar</packaging>
-    <version>2.0-snapshot</version>
+    <version>${revision}</version>
 
     <name>${project.artifactId}</name>
     <description>
@@ -21,27 +21,23 @@
     </description>
     <url>https://github.com/eaopen/openea-eap</url>
 
-    <properties>
-        <eoa.version>2.0-snapshot</eoa.version>
-    </properties>
-
     <dependencies>
         <dependency>
-            <groupId>org.openea.eap</groupId>
+            <groupId>io.github.eaopen</groupId>
             <artifactId>eap-module-system-rest</artifactId>
-            <version>${revision}</version>
+            <version>${eap.version}</version>
         </dependency>
 
         <dependency>
-            <groupId>org.openea.eap</groupId>
+            <groupId>io.github.eaopen</groupId>
             <artifactId>eap-module-infra-rest</artifactId>
-            <version>${revision}</version>
+            <version>${eap.version}</version>
         </dependency>
 
         <dependency>
-            <groupId>org.openea.eap</groupId>
+            <groupId>io.github.eaopen</groupId>
             <artifactId>eap-module-lowcode-rest</artifactId>
-            <version>${revision}</version>
+            <version>${eap.version}</version>
         </dependency>
 
 
@@ -53,12 +49,12 @@
 <!--        </dependency>-->
 
         <dependency>
-            <groupId>org.openea.eap</groupId>
+            <groupId>io.github.eaopen</groupId>
             <artifactId>eap-spring-boot-starter-biz-error-code</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>org.openea.eap</groupId>
+            <groupId>io.github.eaopen</groupId>
             <artifactId>eap-spring-boot-starter-biz-i18n</artifactId>
         </dependency>
 
@@ -70,13 +66,13 @@
             <optional>true</optional>
         </dependency>
         <dependency>
-            <groupId>org.openea.eap</groupId>
+            <groupId>io.github.eaopen</groupId>
             <artifactId>eap-spring-boot-starter-banner</artifactId>
         </dependency>
 
         <!-- 服务保障相关 -->
         <dependency>
-            <groupId>org.openea.eap</groupId>
+            <groupId>io.github.eaopen</groupId>
             <artifactId>eap-spring-boot-starter-protection</artifactId>
         </dependency>
 

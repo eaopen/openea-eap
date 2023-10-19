@@ -8,21 +8,8 @@
     <version>${revision}</version>
     <packaging>pom</packaging>
     <modules>
-
-        <!-- dependencies/framework, support boot & cloud -->
-        <module>eap-dependencies/eap-dependencies</module>
-<!--        <module>eap-dependencies/eap-cloud-dependencies</module>-->
-        <module>eap-framework</module>
-
-        <!-- boot only -->
-        <!-- Server 主项目 -->
-        <module>eap-server</module>
-
-
-        <!-- 各种 module 拓展 -->
-        <module>eap-module-system</module>
-        <module>eap-module-infra</module>
-        <module>eap-module-lowcode</module>
+        <!-- eoa-server是基于eap-server的企业定制版本 -->
+        <module>eoa-server</module>
 
         <!-- 扩展项目，包含示例项目 -->
         <module>eap-biz-extend</module>
@@ -34,7 +21,9 @@
     <url>https://github.com/eaopen/openea-eap</url>
 
     <properties>
-        <revision>2.1.1-snapshot</revision>
+        <revision>2.2.0</revision>
+        <eap.version>2.2.0</eap.version>
+
         <!-- Maven 相关 -->
         <java.version>1.8</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
@@ -53,9 +42,9 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>org.openea.eap</groupId>
+                <groupId>io.github.eaopen</groupId>
                 <artifactId>eap-dependencies</artifactId>
-                <version>${revision}</version>
+                <version>${eap.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -200,46 +189,6 @@
             </properties>
         </profile>
 
-        <!-- EOA -->
-        <profile>
-            <id>eoaServer</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <modules>
-                <!-- eoa-server是基于eap-server的企业定制版本 -->
-                <module>eoa-server</module>
-            </modules>
-        </profile>
-        <!-- SpringCloud运行环境 -->
-        <profile>
-            <id>springCloud</id>
-            <properties>
-                <!--Nacos服务地址-->
-                <config.server-addr>eap-cloud-nacos:8848</config.server-addr>
-                <!--Nacos配置中心命名空间,用于支持多环境.这里必须使用ID，不能使用名称,默认为空-->
-                <config.namespace></config.namespace>
-                <!--Nacos配置分组名称-->
-                <config.group>DEFAULT_GROUP</config.group>
-            </properties>
-            <modules>
-                <!-- 微服务模块-->
-                <!-- eap-cloud 微服务平台框架，包含config/gateway/monitor等 -->
-                <module>eap-dependencies/eap-cloud-dependencies</module>
-                <module>eap-cloud</module>
-            </modules>
-            <dependencyManagement>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.openea.eap</groupId>
-                        <artifactId>eap-cloud-dependencies</artifactId>
-                        <version>${revision}</version>
-                        <type>pom</type>
-                        <scope>import</scope>
-                    </dependency>
-                </dependencies>
-            </dependencyManagement>
-        </profile>
     </profiles>
 
 </project>

@@ -1,6 +1,0 @@
-org.openea.eap.framework.apilog.config.EapApiLogAutoConfiguration
-org.openea.eap.framework.jackson.config.EapJacksonAutoConfiguration
-com.github.xiaoymin.knife4j.spring.configuration.Knife4jAutoConfiguration
-org.openea.eap.framework.swagger.config.EapSwaggerAutoConfiguration
-org.openea.eap.framework.web.config.EapWebAutoConfiguration
-org.openea.eap.framework.xss.config.EapXssAutoConfiguration

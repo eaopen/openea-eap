@@ -9,25 +9,22 @@
         <version>${revision}</version>
     </parent>
 
+    <groupId>io.github.eaopen</groupId>
     <artifactId>eap-biz-extend</artifactId>
     <packaging>pom</packaging>
-
 
     <modules>
         <!-- example -->
 <!--        <module>eap-example</module>-->
 
         <!-- business extend -->
-<!--        <module>eap-biz-cms</module>-->
-<!--        <module>eap-biz-crm</module>-->
-<!--        <module>eap-biz-mall</module>-->
     </modules>
 
     <profiles>
         <profile>
             <id>bizCms</id>
             <activation>
-                <activeByDefault>true</activeByDefault>
+                <activeByDefault>false</activeByDefault>
             </activation>
             <modules>
                 <module>eap-biz-cms</module>

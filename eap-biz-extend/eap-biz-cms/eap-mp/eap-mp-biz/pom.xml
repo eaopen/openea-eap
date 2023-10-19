@@ -3,7 +3,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <groupId>org.openea.eap</groupId>
+        <groupId>io.github.eaopen</groupId>
         <artifactId>eap-mp</artifactId>
         <version>${revision}</version>
     </parent>
@@ -19,38 +19,38 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.openea.eap</groupId>
+            <groupId>io.github.eaopen</groupId>
             <artifactId>eap-mp-api</artifactId>
             <version>${revision}</version>
         </dependency>
         <dependency>
-            <groupId>org.openea.eap</groupId>
+            <groupId>io.github.eaopen</groupId>
             <artifactId>eap-module-system-api</artifactId>
-            <version>${revision}</version>
+            <version>${eap.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.openea.eap</groupId>
+            <groupId>io.github.eaopen</groupId>
             <artifactId>eap-module-infra-api</artifactId>
-            <version>${revision}</version>
+            <version>${eap.version}</version>
         </dependency>
 
         <!-- 业务组件 -->
         <dependency>
-            <groupId>org.openea.eap</groupId>
+            <groupId>io.github.eaopen</groupId>
             <artifactId>eap-spring-boot-starter-biz-operatelog</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.openea.eap</groupId>
+            <groupId>io.github.eaopen</groupId>
             <artifactId>eap-spring-boot-starter-biz-weixin</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.openea.eap</groupId>
+            <groupId>io.github.eaopen</groupId>
             <artifactId>eap-spring-boot-starter-biz-tenant</artifactId>
         </dependency>
 
         <!-- Web 相关 -->
         <dependency>
-            <groupId>org.openea.eap</groupId>
+            <groupId>io.github.eaopen</groupId>
             <artifactId>eap-spring-boot-starter-security</artifactId>
         </dependency>
 
@@ -61,31 +61,31 @@
 
         <!-- DB 相关 -->
         <dependency>
-            <groupId>org.openea.eap</groupId>
+            <groupId>io.github.eaopen</groupId>
             <artifactId>eap-spring-boot-starter-mybatis</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>org.openea.eap</groupId>
+            <groupId>io.github.eaopen</groupId>
             <artifactId>eap-spring-boot-starter-redis</artifactId>
         </dependency>
 
         <!-- 消息队列相关 -->
         <dependency>
-            <groupId>org.openea.eap</groupId>
+            <groupId>io.github.eaopen</groupId>
             <artifactId>eap-spring-boot-starter-mq</artifactId>
         </dependency>
 
         <!-- Test 测试相关 -->
         <dependency>
-            <groupId>org.openea.eap</groupId>
+            <groupId>io.github.eaopen</groupId>
             <artifactId>eap-spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
 
         <!-- 工具类相关 -->
         <dependency>
-            <groupId>org.openea.eap</groupId>
+            <groupId>io.github.eaopen</groupId>
             <artifactId>eap-spring-boot-starter-excel</artifactId>
         </dependency>
 
