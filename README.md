@@ -169,27 +169,20 @@ OpenEAP前后端分离，采用后端Spring boot 2.x单体多模块，前端vue2
 
 ### 项目
 
-* openea-eap 综合版本   
-  https://github.com/eaopen/openea-eap  
+* [openea-eap](https://github.com/eaopen/openea-eap) 综合版本
   * 分支dev/eap22为最新版本，分拆项目为maven库依赖
-  * 分支eap2.1为旧版本，所有代码在同一项目中
-    https://github.com/eaopen/openea-eap/tree/eap2.1
+  * 分支[eap2.1](https://github.com/eaopen/openea-eap/tree/eap2.1)为旧版本，所有代码在同一项目中 
 
 
 * 后端项目(eap 后端源代码)
-  * eoa-app (eap后端模板template)
-    https://github.com/eaopen/eoa-app
-  * eap-base (eap基础包)
-    https://github.com/eaopen/eap-base
-  * eap-boot (eap boot版本，多模块版本)
-    https://github.com/eaopen/eap-boot
-  * eap-cloud (eap cloud版本，微服务版本)
-    https://github.com/eaopen/eap-cloud
+  * [eoa-app](https://github.com/eaopen/eoa-app)  eap后端模板template
+  * [eap-base](https://github.com/eaopen/eap-base)  eap基础包
+  * [eap-boot](https://github.com/eaopen/eap-boot)  eap boot版本，多模块版本
+  * [eap-cloud](https://github.com/eaopen/eap-cloud)  eap cloud版本，微服务版本
 
 
 * 前端项目(eap 前端源代码)
-  * eap-ui-admin (管理前端模板template)  
-    https://github.com/eaopen/eap-ui-admin 
+  * [eap-ui-admin](https://github.com/eaopen/eap-ui-admin) 管理前端模板template   
   * eap-ui-admin-uniapp
   * eap-ui-app
 
