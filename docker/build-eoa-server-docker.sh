@@ -1,6 +1,28 @@
 #!/bin/bash
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
+EAP_PROJ_DIR=${DIR}/../..
+
+# check eap-base
+if [ -d "${EAP_PROJ_DIR}/eap-base" ]; then
+  cd "${EAP_PROJ_DIR}/eap-base"
+  git checkout .
+  git pull
+  mvn clean install -DskipTests=true
+else
+  echo "${EAP_PROJ_DIR}/eap-base not exist."
+fi
+
+# check eap-boot
+if [ -d "${EAP_PROJ_DIR}/eap-boot" ]; then
+  cd "${EAP_PROJ_DIR}/eap-boot"
+  git checkout .
+  git pull
+  mvn clean install -DskipTests=true
+else
+  echo "${EAP_PROJ_DIR}/eap-boot not exist."
+fi
+
 # change to top dir
 cd ${DIR}/..
 
