@@ -21,8 +21,19 @@
     <url>https://github.com/eaopen/openea-eap</url>
 
     <properties>
-        <revision>2.2.0</revision>
-        <eap.version>2.2.0</eap.version>
+        <revision>2.6.0-SNAPSHOT</revision>
+        <eap-boot.version>2.6.0-SNAPSHOT</eap-boot.version>
+        <spring.boot.version>2.7.18</spring.boot.version>
+
+        <!-- eap 扩展模块版本 -->
+        <!-- suite1(func) -->
+        <eap-report.version>2.6.0-SNAPSHOT</eap-report.version>
+        <eap-cms.version>2.6.0-SNAPSHOT</eap-cms.version>
+        <!-- suite2(2b) -->
+        <eap-crm.version>2.6.0-SNAPSHOT</eap-crm.version>
+        <eap-erp.version>2.6.0-SNAPSHOT</eap-erp.version>
+        <!-- suite3(2c) -->
+        <eap-mall.version>2.6.0-SNAPSHOT</eap-mall.version>
 
         <!-- Maven 相关 -->
         <java.version>1.8</java.version>
@@ -30,66 +41,100 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
-        <maven-deploy-plugin.version>3.1.1</maven-deploy-plugin.version>
-
-        <!-- 看看咋放到 bom 里 -->
-        <lombok.version>1.18.28</lombok.version>
-        <spring.boot.version>2.7.14</spring.boot.version>
+        <flatten-maven-plugin.version>1.5.0</flatten-maven-plugin.version>
+        <lombok.version>1.18.30</lombok.version>
         <mapstruct.version>1.5.5.Final</mapstruct.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    <scm>
+        <url>https://github.com/eaopen/openea-eap</url>
+        <connection>https://github.com/eaopen/openea-eap.git</connection>
+        <developerConnection>https://github.com/eaopen</developerConnection>
+    </scm>
+    <developers>
+        <developer>
+            <name>openea</name>
+            <email>github@eaopen.github.io</email>
+            <url>https://github.com/eaopen</url>
+        </developer>
+    </developers>
+
     <dependencyManagement>
+        <!-- eap 框架依赖版本 -->
         <dependencies>
             <dependency>
                 <groupId>io.github.eaopen</groupId>
                 <artifactId>eap-dependencies</artifactId>
-                <version>${eap.version}</version>
+                <version>${eap-boot.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+
+            <dependency>
+                <groupId>io.github.eaopen</groupId>
+                <artifactId>eap-boot-starter</artifactId>
+                <version>${eap-boot.version}</version>
+            </dependency>
+
+            <!-- eap 模块依赖版本 -->
+
         </dependencies>
     </dependencyManagement>
 
+    <distributionManagement>
+        <snapshotRepository>
+            <id>openea-reps-mvn</id>
+            <name>mvn</name>
+            <url>https://openea-maven.pkg.coding.net/repository/reps/mvn/</url>
+        </snapshotRepository>
+        <!--        <snapshotRepository>-->
+        <!--            <id>ossrh</id>-->
+        <!--            <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>-->
+        <!--        </snapshotRepository>-->
+        <repository>
+            <id>ossrh</id>
+            <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
+
+    <!-- 使用 aliyun 的 Maven 源，提升下载速度 -->
+    <repositories>
+        <repository>
+            <id>aliyunmaven</id>
+            <name>aliyun</name>
+            <url>https://maven.aliyun.com/repository/public</url>
+        </repository>
+        <repository>
+            <id>openea-reps-mvn</id>
+            <name>mvn</name>
+            <url>https://openea-maven.pkg.coding.net/repository/reps/mvn/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>aliyun-plugin</id>
+            <url>https://maven.aliyun.com/repository/public</url>
+        </pluginRepository>
+    </pluginRepositories>
 
     <build>
-        <plugins>
-            <!-- 添加flatten-maven-plugin插件 -->
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>flatten-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
         <pluginManagement>
             <plugins>
-                <!-- 添加flatten-maven-plugin插件 -->
-                <plugin>
-                    <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>flatten-maven-plugin</artifactId>
-                    <version>1.5.0</version>
-                    <executions>
-                        <execution>
-                            <id>flatten</id>
-                            <phase>process-resources</phase>
-                            <goals>
-                                <goal>flatten</goal>
-                            </goals>
-                        </execution>
-                        <execution>
-                            <id>flatten.clean</id>
-                            <phase>clean</phase>
-                            <goals>
-                                <goal>clean</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                    <inherited>true</inherited>
-                    <configuration>
-                        <!-- 避免IDE将 .flattened-pom.xml 自动识别为功能模块 -->
-                        <updatePomFile>true</updatePomFile>
-                        <flattenMode>resolveCiFriendliesOnly</flattenMode>
-                    </configuration>
-                </plugin>
                 <!-- maven-surefire-plugin 插件，用于运行单元测试。 -->
                 <!-- 注意，需要使用 3.0.X+，因为要支持 Junit 5 版本 -->
                 <plugin>
@@ -125,70 +170,107 @@
                 </plugin>
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>versions-maven-plugin</artifactId>
-                    <version>2.8.1</version>
-                    <configuration>
-                        <!-- Optional configuration -->
-                    </configuration>
+                    <artifactId>flatten-maven-plugin</artifactId>
                 </plugin>
             </plugins>
         </pluginManagement>
+
+        <plugins>
+            <!-- 统一 revision 版本 -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>flatten-maven-plugin</artifactId>
+                <version>${flatten-maven-plugin.version}</version>
+                <configuration>
+                    <flattenMode>resolveCiFriendliesOnly</flattenMode>
+                    <updatePomFile>true</updatePomFile>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>flatten</goal>
+                        </goals>
+                        <id>flatten</id>
+                        <phase>process-resources</phase>
+                    </execution>
+                    <execution>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                        <id>flatten.clean</id>
+                        <phase>clean</phase>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>2.2.1</version>
+                <configuration>
+                    <skipSource>false</skipSource>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.5.0</version>
+                <configuration>
+                    <doclint>none</doclint>
+                    <failOnError>false</failOnError>
+                    <skip>false</skip>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>1.6</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                        <configuration>
+                            <keyname>CFE1227A</keyname>
+                            <passphraseServerId>CFE1227A</passphraseServerId>
+                            <gpgArguments>
+                                <arg>--pinentry-mode</arg>
+                                <arg>loopback</arg>
+                            </gpgArguments>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>1.6.8</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <serverId>ossrh</serverId>
+                    <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
+                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                </configuration>
+            </plugin>
+
+        </plugins>
     </build>
-
-    <distributionManagement>
-        <repository>
-            <id>github-mvn-openea</id>
-            <name>github-openea</name>
-            <url>https://maven.pkg.github.com/eaopen/mvn-repo</url>
-        </repository>
-    </distributionManagement>
-    <!-- 使用 aliyun 的 Maven 源，提升下载速度 -->
-    <repositories>
-        <repository>
-            <id>aliyunmaven</id>
-            <name>aliyun</name>
-            <url>https://maven.aliyun.com/repository/public</url>
-        </repository>
-        <repository>
-            <id>github-mvn-openea</id>
-            <name>github-openea</name>
-            <url>https://maven.pkg.github.com/eaopen/mvn-repo</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-                <updatePolicy>always</updatePolicy>
-            </snapshots>
-        </repository>
-        <repository>
-            <id>openea-reps-mvn</id>
-            <name>mvn</name>
-            <url>https://openea-maven.pkg.coding.net/repository/reps/mvn/</url>
-        </repository>
-    </repositories>
-    <pluginRepositories>
-        <pluginRepository>
-            <id>aliyun-plugin</id>
-            <url>https://maven.aliyun.com/repository/public</url>
-        </pluginRepository>
-    </pluginRepositories>
-
-    <!-- 环境 -->
-    <profiles>
-        <!-- 开发 -->
-        <profile>
-            <id>dev</id>
-            <activation>
-                <!--默认激活配置-->
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <properties>
-                <!--当前环境-->
-                <profile.name>dev</profile.name>
-            </properties>
-        </profile>
-
-    </profiles>
 
 </project>

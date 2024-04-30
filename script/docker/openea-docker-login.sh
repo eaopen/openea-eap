@@ -1,0 +1,1 @@
+docker login -u docker-1655366065315 -p 78404fb214a59224b212e3f22969b3916054c60f openea-docker.pkg.coding.net

@@ -14,40 +14,10 @@
     <packaging>pom</packaging>
 
     <modules>
-        <!-- example -->
-<!--        <module>eap-example</module>-->
 
         <!-- business extend -->
     </modules>
 
-    <profiles>
-        <profile>
-            <id>bizCms</id>
-            <activation>
-                <activeByDefault>false</activeByDefault>
-            </activation>
-            <modules>
-                <module>eap-biz-cms</module>
-            </modules>
-        </profile>
-        <profile>
-            <id>bizCrm</id>
-            <activation>
-                <activeByDefault>false</activeByDefault>
-            </activation>
-            <modules>
-                <module>eap-biz-crm</module>
-            </modules>
-        </profile>
-        <profile>
-            <id>bizMall</id>
-            <activation>
-                <activeByDefault>false</activeByDefault>
-            </activation>
-            <modules>
-                <module>eap-biz-mall</module>
-            </modules>
-        </profile>
-    </profiles>
+
 
 </project>

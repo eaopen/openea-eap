@@ -164,21 +164,21 @@ OpenEAP前后端分离，采用后端Spring boot 2.x单体多模块，前端vue2
     - [ ] 监控集成
 
 
-
 ## 🐨 技术栈
 
 ### 项目
 
 * [openea-eap](https://github.com/eaopen/openea-eap) 综合版本
-  * 分支dev/eap22为最新版本，分拆项目为maven库依赖
-  * 分支[eap2.1](https://github.com/eaopen/openea-eap/tree/eap2.1)为旧版本，所有代码在同一项目中 
-
+  * 分支dev为最新版
 
 * 后端项目(eap 后端源代码)
-  * [eoa-app](https://github.com/eaopen/eoa-app)  eap后端模板template
   * [eap-base](https://github.com/eaopen/eap-base)  eap基础包
   * [eap-boot](https://github.com/eaopen/eap-boot)  eap boot版本，多模块版本
   * [eap-cloud](https://github.com/eaopen/eap-cloud)  eap cloud版本，微服务版本
+  * [eap-saas](https://github.com/eaopen/eap-saas)  eap saas版本，多租户版本
+  * [eap-suite1](https://github.com/eaopen/eap-suite1) 功能扩展为主，包含单点登录sso、报表report、知识库kms、网站内容管理wcms等
+  * [eap-suite2](https://github.com/eaopen/eap-suite2) 企业管理及2B为主，包含客户管理crm、企业资源计划管理erp等
+  * [eap-suite3](https://github.com/eaopen/eap-suite3) 企业电商及2C为主，包含电商商城mall等
 
 
 * 前端项目(eap 前端源代码)
@@ -188,16 +188,24 @@ OpenEAP前后端分离，采用后端Spring boot 2.x单体多模块，前端vue2
 
 ### 模块
 
-| 大项         | 项目                   | 说明                          |
-|------------|----------------------|-----------------------------|
-| eap-base   | `eap-dependencies`   | Maven 依赖版本管理                |
-| eap-base   | `eap-framework`      | Java 框架拓展                   |
-| eap-boot   | `eap-module-system`  | 系统功能的 Module 模块, 包含boot和cloud |
-| eap-boot   | `eap-module-infra`   | 基础设施的 Module 模块, 包含boot和cloud |
-| eap-boot   | `eap-module-lowcode` | 集成基于工作流的低代码平台               |
-| eap-app    | `eap-server`         | 管理后台 + 用户 APP 的服务端          |
-| openea-eap | `eoa-server`         | OA + 管理后台 + 用户 APP 的服务端     |
+| 大项         | 项目                   | 说明                              |
+|------------|----------------------|---------------------------------|
+| openea-eap | `eoa-server`         | eap整合，OA + 管理后台 + 用户 APP 的服务端   |
+| eap-base   | `eap-dependencies`   | Maven 依赖版本管理                    |
+| eap-base   | `eap-framework`      | Java 框架拓展                       |
+| eap-boot   | `eap-module-system`  | 系统功能的 Module 模块                 |
+| eap-boot   | `eap-module-infra`   | 基础设施的 Module 模块                 |
+| eap-boot   | `eap-module-lowcode` | 集成低代码平台                         |
+| eap-boot   | `eap-module-bpm`     | 集成基于工作流平台                       |
+| eap-boot   | `eap-server`         | 管理后台 + 用户 APP 的服务端              |
 | eap-cloud  | `eap-cloud`          | 微服务基础平台，包含网关APISIX/追踪Skywalking |
+| eap-saas   | `eap-saas`           | saas平台，多租户管理                    |
+| eap-suite1 | `eap-report`         | 报表模块                            |
+| eap-suite1 | `eap-cms`            | 网站及内容管理                         |
+| eap-suite1 | `eap-ai`             | AI大模型及知识库                       |
+| eap-suite2 | `eap-crm`            | 客户关系管理                          |
+| eap-suite2 | `eap-erp`            | 企业资源计划管理                        |
+| eap-suite3 | `eap-mall`           | 企业电商                            |
 
 ### 框架
 
